@@ -79,6 +79,7 @@ tile.diode.name=Kabel Diode
 tile.energydistributor.name=Energie Distributor
 tile.manutrafo.name=Manualeller Trafo
 tile.radiohatch.name=Radio Hülle
+tile.ExpReversePump.0.name=Anti-Pumpe (Experimentell)
 tooltip.LESU.0.name=Maximale Kapazität!
 tooltip.LESU.1.name=Mehrere Kontroller!
 tooltip.bw.0.name=Hinzugefügt von

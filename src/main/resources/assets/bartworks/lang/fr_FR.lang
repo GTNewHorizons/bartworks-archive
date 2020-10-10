@@ -143,6 +143,7 @@ tile.biovat.name=Bio Cuve
 tile.radiohatch.name=Trappe Radioactive
 tile.bw.windmill.name=Eolienne
 tile.manutrafo.name=Transformateur Manuel
+tile.ExpReversePump.0.name=Pompe Inversée (Expérimental)
 
 item.TRISOPellet.name=Galet TRISO
 item.TRISOPelletBall.name=Boule De Galets TRISO

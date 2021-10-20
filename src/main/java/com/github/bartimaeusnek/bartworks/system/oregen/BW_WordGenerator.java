@@ -23,7 +23,10 @@
 package com.github.bartimaeusnek.bartworks.system.oregen;
 
 
+import com.sinthoras.visualprospecting.Utils;
+import com.sinthoras.visualprospecting.VP;
 import cpw.mods.fml.common.IWorldGenerator;
+import cpw.mods.fml.common.Loader;
 import gregtech.api.objects.XSTR;
 import gregtech.api.util.GT_Log;
 import net.minecraft.world.ChunkCoordIntPair;
@@ -110,6 +113,11 @@ public class BW_WordGenerator implements IWorldGenerator {
                                     int attempts = 0;
                                     do {
                                         placed = tWorldGen.executeWorldgen(this.mWorld, random, "", this.mDimensionType, xCenter, zCenter, this.mChunkGenerator, this.mChunkProvider);
+                                        if(placed) {
+                                            if(Loader.isModLoaded("visualprospecting")) {
+                                                VP.serverCache.notifyOreVeinGeneration(mWorld.provider.dimensionId, Utils.mapToCenterOreChunkCoord(Utils.coordBlockToChunk(mX)), Utils.mapToCenterOreChunkCoord(Utils.coordBlockToChunk(mZ)), tWorldGen.mWorldGenName);
+                                            }
+                                        }
                                         ++attempts;
                                     }
                                     while ((!placed) && attempts < 25);

@@ -98,13 +98,13 @@ public class PlatinumSludgeOverHaul {
         for (Werkstoff w : Werkstoff.werkstoffHashSet)
             if (w.containsStuff(Materials.Sulfur) && (w.containsStuff(Materials.Copper) || w.containsStuff(Materials.Nickel))) {
                 GT_Values.RA.addChemicalRecipe(w.get(crushedPurified), GT_Utility.getIntegratedCircuit(1), AquaRegia.getFluidOrGas(150), PTConcentrate.getFluidOrGas(150), null, 250);
-                GT_Values.RA.addChemicalRecipe(w.get(crushedPurified), GT_Utility.getIntegratedCircuit(9), AquaRegia.getFluidOrGas(1350), PTConcentrate.getFluidOrGas(1350), null, 2250);
+                GT_Values.RA.addChemicalRecipe(w.get(crushedPurified, 9), GT_Utility.getIntegratedCircuit(9), AquaRegia.getFluidOrGas(1350), PTConcentrate.getFluidOrGas(1350), null, 2250);
                 GT_Values.RA.addChemicalRecipe(w.get(crushedPurified, 9), PTMetallicPowder.get(dust, 9), AquaRegia.getFluidOrGas(10350), PTConcentrate.getFluidOrGas(10350), PTResidue.get(dust), 2250);
             }
         for (Materials m : Materials.values())
             if (PlatinumSludgeOverHaul.materialsContains(m, Materials.Sulfur) && (PlatinumSludgeOverHaul.materialsContains(m, Materials.Copper) || PlatinumSludgeOverHaul.materialsContains(m, Materials.Nickel))) {
                 GT_Values.RA.addChemicalRecipe(GT_OreDictUnificator.get(crushedPurified, m, 1), GT_Utility.getIntegratedCircuit(1), AquaRegia.getFluidOrGas(150), PTConcentrate.getFluidOrGas(150), null, 250);
-                GT_Values.RA.addChemicalRecipe(GT_OreDictUnificator.get(crushedPurified, m, 1), GT_Utility.getIntegratedCircuit(9), AquaRegia.getFluidOrGas(1350), PTConcentrate.getFluidOrGas(1350), null, 2250);
+                GT_Values.RA.addChemicalRecipe(GT_OreDictUnificator.get(crushedPurified, m, 9), GT_Utility.getIntegratedCircuit(9), AquaRegia.getFluidOrGas(1350), PTConcentrate.getFluidOrGas(1350), null, 2250);
                 GT_Values.RA.addChemicalRecipe(GT_OreDictUnificator.get(crushedPurified, m, 9), PTMetallicPowder.get(dust, 9), AquaRegia.getFluidOrGas(10350), PTConcentrate.getFluidOrGas(10350), PTResidue.get(dust), 2250);
             }
         //Pt

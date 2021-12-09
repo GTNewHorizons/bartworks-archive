@@ -76,6 +76,7 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_MetaTileEntity_ElectricBl
             .addShape("main", createShape())
             .addElement('t', ofHatchAdderOptional(GT_TileEntity_MegaBlastFurnace::addOutputHatchToTopList, CASING_INDEX, 1, GregTech_API.sBlockCasings1, CASING_INDEX))
             .addElement('m', ofHatchAdder(GT_TileEntity_MegaBlastFurnace::addMufflerToMachineList, CASING_INDEX, 2))
+            .addElement('o', ofHatchAdderOptional(GT_TileEntity_MegaBlastFurnace::addMufflerToMachineList, CASING_INDEX, 2, GregTech_API.sBlockCasings1, CASING_INDEX))
             .addElement('C', ofCoil(GT_TileEntity_MegaBlastFurnace::setCoilLevel, GT_MetaTileEntity_ElectricBlastFurnace::getCoilLevel))
             .addElement('g', ofBlockAdder(GT_TileEntity_MegaBlastFurnace::addGlas, ItemRegistry.bw_glasses[0], 1))
             .addElement('b', ofHatchAdderOptional(GT_TileEntity_MegaBlastFurnace::addBottomHatch, CASING_INDEX, 3, GregTech_API.sBlockCasings1, CASING_INDEX))
@@ -86,11 +87,12 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_MetaTileEntity_ElectricBl
 
         raw[0] = new String[15];
         String topCasing   = "ttttttttttttttt";
-        String mufflerLine = "tmmmmmmmmmmmmmt";
+        String mufflerLine = "tooooooooooooot";
         raw[0][0] = topCasing;
         for (int i = 1; i < 14; i++) {
             raw[0][i] = mufflerLine;
         }
+        raw[0][7] = "toooooomoooooot";
         raw[0][14] = topCasing;
 
         raw[1] = new String[15];
@@ -163,9 +165,7 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_MetaTileEntity_ElectricBl
         return tt;
     }
 
-    @SuppressWarnings("rawtypes")
     public ArrayList<Object> TTTunnels = new ArrayList<>();
-    @SuppressWarnings("rawtypes")
     public ArrayList<Object> TTMultiAmp = new ArrayList<>();
 
     @Override

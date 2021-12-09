@@ -237,7 +237,7 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_MetaTileEntity_ElectricBl
 
     /**
      * Taken from the GTNH fork, made originally by Tec
-     * Calcualtes overclocked ness using long integers
+     * Calculates overclocked ness using long integers
      *
      * @param aEUt      - recipe EUt
      * @param aDuration - recipe Duration

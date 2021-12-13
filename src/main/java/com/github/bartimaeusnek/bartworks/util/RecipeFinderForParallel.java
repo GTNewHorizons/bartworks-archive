@@ -84,7 +84,6 @@ public class RecipeFinderForParallel {
             if (tItem >> 16 == Short.MAX_VALUE) {
                 for (ItemStack tInputItem : aItemStacks) {
                     int InputID = GT_Utility.stackToInt(tInputItem);
-                    GT_Log.out.print(InputID + " " + tItem + "\n");
                     if ((InputID & 0xffff) == (tItem & 0xffff)) {
                         if (tInputItem.stackSize >= tCompressedItemRecipe.get(tItem)) {
                             tInputItem.stackSize -= tCompressedItemRecipe.get(tItem);

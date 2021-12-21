@@ -1,8 +1,10 @@
 // Add your dependencies here
 
 dependencies {
-    compile("com.github.GTNewHorizons:GalacticGregGT5:master-SNAPSHOT:dev")
     compile("com.github.GTNewHorizons:TecTech:master-SNAPSHOT:dev")
+    compile("com.github.GTNewHorizons:GalacticGregGT5:master-SNAPSHOT:dev") {
+        exclude group:"com.github.GTNewHorizons", module:"bartworks"
+    }
 
     compileOnly("com.github.GTNewHorizons:AppleCore:master-SNAPSHOT:dev") {
         transitive = false

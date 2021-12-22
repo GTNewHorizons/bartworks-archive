@@ -325,7 +325,7 @@ public class RecipeLoader {
                         RecipeLoader.BITSD,
                         new Object[]{
                                 "HRH",
-                                "HCH",
+                                "KCK",
                                 "HKH",
                                 'H', ItemList.Battery_Hull_LV.get(1L),
                                 'K', GT_OreDictUnificator.get(OrePrefixes.cableGt01, Materials.Tin, 1L),

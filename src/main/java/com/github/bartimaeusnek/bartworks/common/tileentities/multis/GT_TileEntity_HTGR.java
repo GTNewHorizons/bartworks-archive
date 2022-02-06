@@ -176,6 +176,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
 
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack itemStack) {
+        this.mCasing = 0;
         return (
             checkPiece("main", 5, 11, 0) &&
             this.mCasing >= 500 &&

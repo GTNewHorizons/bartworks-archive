@@ -233,6 +233,13 @@ public class GT_TileEntity_MegaOilCracker extends GT_MetaTileEntity_OilCracker i
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         glasTier = 0;
+        if (this.glasTier != 8 && !this.mEnergyHatches.isEmpty()) {
+            for (GT_MetaTileEntity_Hatch_Energy hatchEnergy : this.mEnergyHatches) {
+                if (this.glasTier < hatchEnergy.mTier) {
+                    return false;
+                }
+            }
+        }
         if (LoaderReference.tectech) {
             this.getTecTechEnergyMultis().clear();
             this.getTecTechEnergyTunnels().clear();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 skycatv587
+ * Copyright (c) 2018-2020 bartimaeusnek
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +33,7 @@ import com.github.bartimaeusnek.crossmod.tectech.TecTechEnabledMulti;
 import com.github.bartimaeusnek.crossmod.tectech.helper.TecTechUtils;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import com.gtnewhorizon.structurelib.structure.StructureUtility;
 import cpw.mods.fml.common.Optional;
 import gregtech.api.GregTech_API;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
@@ -73,7 +74,7 @@ public class GT_TileEntity_MegaChemicalReactor extends GT_MetaTileEntity_LargeCh
     @Override
     public GT_Multiblock_Tooltip_Builder createTooltip() {
         final GT_Multiblock_Tooltip_Builder tt = new GT_Multiblock_Tooltip_Builder();
-        tt.addMachineType("Molecular Surgery Machine")
+        tt.addMachineType("Chemical Reactor")
                 .addInfo("Controller block for the Chemical Reactor")
                 .addInfo("What molecule do you want to synthesize")
                 .addInfo("Or you want to replace something in this molecule")
@@ -82,13 +83,13 @@ public class GT_TileEntity_MegaChemicalReactor extends GT_MetaTileEntity_LargeCh
                 .addSeparator()
                 .beginStructureBlock(5, 5,  9,  false)
                 .addController("Front bottom")
-                .addEnergyHatch("Hint block with dot 3")
-                .addMaintenanceHatch("Hint block with dot 2")
-                .addInputHatch("Hint block with dot 1")
-                .addInputBus("Hint block with dot 1")
-                .addOutputBus("Hint block with dot 1")
-                .addOutputHatch("Hint block with dot 1")
-                .addStructureHint("This Mega Multiblock is too big to have its structure hologram displayed fully.")
+                .addStructureInfo("The glass tier limits the Energy Input tier")
+                .addEnergyHatch("Hint block ", 3)
+                .addMaintenanceHatch("Hint block ",2)
+                .addInputHatch("Hint block ",1)
+                .addInputBus("Hint block ",1)
+                .addOutputBus("Hint block ",1)
+                .addOutputHatch("Hint block ",1)
                 .toolTipFinisher(BW_Tooltip_Reference.ADDED_BY_BARTIMAEUSNEK_VIA_BARTWORKS.get());
         return tt;
     }
@@ -197,6 +198,15 @@ public class GT_TileEntity_MegaChemicalReactor extends GT_MetaTileEntity_LargeCh
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         glasTier = 0;
+        if (LoaderReference.tectech) {
+            this.getTecTechEnergyMultis().clear();
+            this.getTecTechEnergyTunnels().clear();
+        }
+
+        if(checkPiece(STRUCTURE_PIECE_MAIN,2,2,0)&&(mMaintenanceHatches.size()==1)){
+            return false;
+        }
+
         if (this.glasTier != 8 && !this.mEnergyHatches.isEmpty()) {
             for (GT_MetaTileEntity_Hatch_Energy hatchEnergy : this.mEnergyHatches) {
                 if (this.glasTier < hatchEnergy.mTier) {
@@ -204,11 +214,9 @@ public class GT_TileEntity_MegaChemicalReactor extends GT_MetaTileEntity_LargeCh
                 }
             }
         }
-        if (LoaderReference.tectech) {
-            this.getTecTechEnergyMultis().clear();
-            this.getTecTechEnergyTunnels().clear();
-        }
-        return  checkPiece(STRUCTURE_PIECE_MAIN,2,2,0)&&(mMaintenanceHatches.size()==1);
+
+
+        return true;
     }
 
     private static final int CASING_INDEX = 176;
@@ -236,7 +244,7 @@ public class GT_TileEntity_MegaChemicalReactor extends GT_MetaTileEntity_LargeCh
                     onElementPass(GT_TileEntity_MegaChemicalReactor::onCasingAdded, ofBlock(GregTech_API.sBlockCasings8, 0))
             ))
             .addElement('c', ofChain(
-                    onElementPass(GT_TileEntity_MegaChemicalReactor::onCoilAdded, ofBlock(GregTech_API.sBlockCasings4, 7))
+                    ofBlock(GregTech_API.sBlockCasings4, 7)
             ))
             .addElement('g', ofChain(
                     ofBlockAdder(GT_TileEntity_MegaChemicalReactor::addGlas, ItemRegistry.bw_glasses[0], 1)
@@ -244,16 +252,8 @@ public class GT_TileEntity_MegaChemicalReactor extends GT_MetaTileEntity_LargeCh
             .build();
 
     private int mCasingAmount;
-    private int mCoilAmount;
 
-    @Override
-    public String[] getStructureDescription(ItemStack itemStack){
-        return new String[]{
-                "Hint block with dot 1：inputbus，outputbus，inputhatch，outputhatch",
-                "Hint block with dot 2：MaintenanceHatch",
-                "Hint block with dot 3：EnergyHatch"
-        };
-    }
+
 
     @Override
     public IStructureDefinition<GT_MetaTileEntity_LargeChemicalReactor> getStructureDefinition() {
@@ -276,10 +276,6 @@ public class GT_TileEntity_MegaChemicalReactor extends GT_MetaTileEntity_LargeCh
         }
         glasTier = tier;
         return true;
-    }
-
-    private void onCoilAdded() {
-        mCoilAmount++;
     }
 
     @Override

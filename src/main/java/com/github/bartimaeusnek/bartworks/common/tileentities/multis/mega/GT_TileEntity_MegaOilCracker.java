@@ -38,7 +38,6 @@ import com.gtnewhorizon.structurelib.StructureLibAPI;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.IStructureElement;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-//import com.sun.istack.internal.NotNull;
 import cpw.mods.fml.common.Optional;
 import gregtech.api.GregTech_API;
 import gregtech.api.enums.HeatingCoilLevel;
@@ -98,13 +97,13 @@ public class GT_TileEntity_MegaOilCracker extends GT_MetaTileEntity_OilCracker i
                 .addSeparator()
                 .beginStructureBlock(13, 7, 9, true)
                 .addController("Front bottom")
+                .addStructureInfo("The glass tier limits the Energy Input tier")
                 .addInfo("Gets 10% EU/t reduction per coil tier, up to a maximum of 50%")
-                .addEnergyHatch("Hint block with dot 3")
-                .addMaintenanceHatch("Hint block with dot 1")
-                .addInputHatch("Hint block with dot 2,3")
-                .addOutputHatch("Hint block with dot 2,3")
-                .addInputHatch("Steam/Hydrogen ONLY, Hint block with dot 4")
-                .addStructureHint("This Mega Multiblock is too big to have its structure hologram displayed fully.")
+                .addEnergyHatch("Hint block",1)
+                .addMaintenanceHatch("Hint block",1)
+                .addInputHatch("Hint block",2,3)
+                .addOutputHatch("Hint block",2,3)
+                .addInputHatch("Steam/Hydrogen ONLY, Hint block",4)
                 .toolTipFinisher(BW_Tooltip_Reference.ADDED_BY_BARTIMAEUSNEK_VIA_BARTWORKS.get());
         return tt;
     }
@@ -233,6 +232,17 @@ public class GT_TileEntity_MegaOilCracker extends GT_MetaTileEntity_OilCracker i
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         glasTier = 0;
+
+        if (LoaderReference.tectech) {
+            this.getTecTechEnergyMultis().clear();
+            this.getTecTechEnergyTunnels().clear();
+        }
+
+        if(checkPiece(STRUCTURE_PIECE_MAIN,6,6,0)&&(mMaintenanceHatches.size()==1)&&(mEnergyHatches.size()<=2)){
+            return false;
+        }
+
+
         if (this.glasTier != 8 && !this.mEnergyHatches.isEmpty()) {
             for (GT_MetaTileEntity_Hatch_Energy hatchEnergy : this.mEnergyHatches) {
                 if (this.glasTier < hatchEnergy.mTier) {
@@ -240,11 +250,8 @@ public class GT_TileEntity_MegaOilCracker extends GT_MetaTileEntity_OilCracker i
                 }
             }
         }
-        if (LoaderReference.tectech) {
-            this.getTecTechEnergyMultis().clear();
-            this.getTecTechEnergyTunnels().clear();
-        }
-        return  checkPiece(STRUCTURE_PIECE_MAIN,6,6,0)&&(mMaintenanceHatches.size()==1)&&(mEnergyHatches.size()<=2);
+
+        return  true;
     }
 
     private static final int CASING_INDEX = 49;
@@ -284,66 +291,8 @@ public class GT_TileEntity_MegaOilCracker extends GT_MetaTileEntity_OilCracker i
 
     private HeatingCoilLevel heatLevel;
 
-
-    private int mCasingAmount;
     private int mCoilAmount;
 
-    /*
-    private static <T> IStructureElement<T> ofReboltedCasing(Werkstoff werkstoff) {
-        return new IStructureElement<T>() {
-            private IIcon[] icons;
-
-            @Override
-            public boolean spawnHint(T t, World world, int x, int y, int z, ItemStack trigger) {
-                if (icons == null) {
-                    icons = new IIcon[6];
-                    Arrays.fill(icons, PrefixTextureLinker.texMapBlocks.get(WerkstoffLoader.blockCasingAdvanced).get(werkstoff.getTexSet()).getIcon());
-                }
-                StructureLibAPI.hintParticleTinted(world, x, y, z, icons, werkstoff.getRGBA());
-                return true;
-            }
-
-            @Override
-            public boolean placeBlock(T t, World world, int x, int y, int z, ItemStack trigger) {
-                ItemStack stack = werkstoff.get(WerkstoffLoader.blockCasingAdvanced);
-                if (stack.getItem() instanceof ItemBlock) {
-                    ItemBlock item = (ItemBlock) stack.getItem();
-
-                    return item.placeBlockAt(stack, null, world, x, y, z, 6, 0, 0, 0, werkstoff.getmID());
-                }
-                return false;
-            }
-
-            @Override
-            public boolean check(T t, World world, int x, int y, int z) {
-                TileEntity tile = world.getTileEntity(x, y, z);
-                if (tile instanceof BW_MetaGeneratedBlocks_CasingAdvanced_TE) {
-                    BW_MetaGeneratedBlocks_CasingAdvanced_TE tileCasingAdvanced = (BW_MetaGeneratedBlocks_CasingAdvanced_TE) null;
-                    if (tileCasingAdvanced.isInvalid()) {
-                        return false;
-                    }
-                    return tileCasingAdvanced.mMetaData == werkstoff.getmID();
-                }
-                return false;
-            }
-        };
-    }
-
-     */
-
-
-
-    @Override
-    public String[] getStructureDescription(ItemStack itemStack){
-        return new String[]{
-                "Hint block with dot 1: EnergyHatch,MaintenanceHatch",
-                "Hint block with dot 2: InputHatch/OutputHatch",
-                "Hint block with dot 3: OutputHatch/InputHatch",
-                "Hint block with dot 4: Steam/Hydrogen InputHatch"
-        };
-    }
-
-    @Override
     public HeatingCoilLevel getCoilLevel() {
         return heatLevel;
     }

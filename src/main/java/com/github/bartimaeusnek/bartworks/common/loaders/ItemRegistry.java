@@ -217,8 +217,8 @@ public class ItemRegistry {
             ItemRegistry.compressedHatch = new GT_MetaTileEntity_CompressedFluidHatch(ConfigHandler.IDOffset + GT_Values.VN.length * 8 + 8, "CompressedFluidHatch", "Liquid Air Fluid Hatch").getStackForm(1L);
             ItemRegistry.giantOutputHatch = new GT_MetaTileEntity_GiantOutputHatch(ConfigHandler.IDOffset + GT_Values.VN.length * 8 + 9, "GiantOutputHatch", "Giant Output Hatch").getStackForm(1L);
             ItemRegistry.megaMachines[2] = new GT_TileEntity_MegaDistillTower(ConfigHandler.IDOffset + GT_Values.VN.length * 8 + 10, "MegaDistillationTower", "Mega Distillation Tower").getStackForm(1L);
-            ItemRegistry.megaMachines[3] = new GT_TileEntity_MegaChemicalReactor(13111, "MegaChemicalReactor", "Mega Chemical Reactor").getStackForm(1L);
-            ItemRegistry.megaMachines[4] = new GT_TileEntity_MegaChemicalReactor(13112, "MegaOilCracker", "Mega Oil Cracker").getStackForm(1L);
+            ItemRegistry.megaMachines[3] = new GT_TileEntity_MegaChemicalReactor(ConfigHandler.IDOffset+GT_Values.VN.length * 8 + 638, "MegaChemicalReactor", "Mega Chemical Reactor").getStackForm(1L);
+            ItemRegistry.megaMachines[4] = new GT_TileEntity_MegaOilCracker(ConfigHandler.IDOffset+GT_Values.VN.length * 8 + 639, "MegaOilCracker", "Mega Oil Cracker").getStackForm(1L);
 
 
             if (LoaderReference.galacticgreg && WerkstoffLoader.gtnhGT) {

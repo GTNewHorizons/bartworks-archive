@@ -293,15 +293,6 @@ public class GT_TileEntity_MegaOilCracker extends GT_MetaTileEntity_OilCracker i
 
     private int mCoilAmount;
 
-    public HeatingCoilLevel getCoilLevel() {
-        return heatLevel;
-    }
-
-    @Override
-    public void setCoilLevel(HeatingCoilLevel aCoilLevel) {
-        heatLevel = aCoilLevel;
-    }
-
     private boolean addLeftHatchToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
         if (aTileEntity == null) {
             return false;

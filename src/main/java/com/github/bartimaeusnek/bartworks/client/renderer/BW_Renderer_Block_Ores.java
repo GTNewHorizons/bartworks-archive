@@ -71,7 +71,7 @@ public class BW_Renderer_Block_Ores implements ISimpleBlockRenderingHandler {
     @Override
     public boolean renderWorldBlock(IBlockAccess aWorld, int aX, int aY, int aZ, Block aBlock, int modelId, RenderBlocks aRenderer) {
         BW_MetaGenerated_Block_TE tTileEntity = ((BW_MetaGenerated_Blocks)aBlock).getProperTileEntityForRendering();
-        tTileEntity.mMetaData = (short) aWorld.getBlockMetadata(aX, aY, aZ);
+        tTileEntity.mMetaData = ((BW_MetaGenerated_Block_TE) aWorld.getTileEntity(aX, aY, aZ)).mMetaData;
         aRenderer.useInventoryTint = false;
         aBlock.setBlockBounds(blockMin, blockMin, blockMin, blockMax, blockMax, blockMax);
         aRenderer.enableAO = Minecraft.isAmbientOcclusionEnabled() && GT_Mod.gregtechproxy.mRenderTileAmbientOcclusion;

@@ -273,7 +273,7 @@ public class StaticRecipeChangeLoaders {
         }
 
         for (OrePrefixes prefixes : OrePrefixes.values())
-            if (werkstoff.hasItemType(prefixes)) {
+            if (werkstoff.hasItemType(prefixes) && werkstoff.getBridgeMaterial() != null) {
                 GT_OreDictUnificator.set(prefixes, werkstoff.getBridgeMaterial(), werkstoff.get(prefixes), true, true);
                 for (ItemStack stack : OreDictionary.getOres(prefixes + werkstoff.getVarName())) {
                     GT_OreDictUnificator.addAssociation(prefixes, werkstoff.getBridgeMaterial(), stack, false);

@@ -109,7 +109,7 @@ public class BorosilicateGlass {
         if (minTier > maxTier || minTier < 0) throw new IllegalArgumentException();
         return lazy(t -> ofBlocksTiered(
                 (block1, meta) -> checkWithinBound(getTier(block1, meta), minTier, maxTier),
-                getRepresentatives().stream().skip(minTier - 3).limit(maxTier - minTier + 1).collect(Collectors.toList()),
+                getRepresentatives().stream().skip(Math.max(minTier - 3, 0)).limit(maxTier - minTier + 1).collect(Collectors.toList()),
                 initialValue,
                 setter,
                 getter

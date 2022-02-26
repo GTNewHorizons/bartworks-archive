@@ -83,7 +83,7 @@ public class GT_TileEntity_MegaChemicalReactor extends GT_MetaTileEntity_LargeCh
                 .addInfo("Follow the Structure Lib hologram projector to build the main structure.")
                 .addSeparator()
                 .beginStructureBlock(5, 5,  9,  false)
-                .addController("Front bottom")
+                .addController("Front center")
                 .addStructureInfo("The glass tier limits the Energy Input tier")
                 .addEnergyHatch("Hint block ", 3)
                 .addMaintenanceHatch("Hint block ",2)

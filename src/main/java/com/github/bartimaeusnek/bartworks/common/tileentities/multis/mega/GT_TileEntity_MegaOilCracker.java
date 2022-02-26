@@ -78,7 +78,7 @@ public class GT_TileEntity_MegaOilCracker extends GT_MetaTileEntity_OilCracker i
         tt.addMachineType("Oil Cracking Unit")
                 .addInfo("Controller block for the Mega Oil Cracking")
                 .addInfo("Thermally cracks heavy hydrocarbons into lighter fractions")
-                .addInfo("More efficient than the Chemical Reactor")
+                .addInfo("More efficient than the Oil Cracking Unit")
                 .addInfo("Gives different benefits whether it hydro or steam-cracks:")
                 .addInfo("Hydro - Consumes 20% less Hydrogen and outputs 25% more cracked fluid")
                 .addInfo("Steam - Outputs 50% more cracked fluid")

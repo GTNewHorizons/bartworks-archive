@@ -78,10 +78,10 @@ public class GT_TileEntity_MegaOilCracker extends GT_MetaTileEntity_OilCracker i
     @Override
     public GT_Multiblock_Tooltip_Builder createTooltip() {
         final GT_Multiblock_Tooltip_Builder tt = new GT_Multiblock_Tooltip_Builder();
-        tt.addMachineType("Oil Cracking Unit")
+        tt.addMachineType("Cracker")
                 .addInfo("Controller block for the Mega Oil Cracking")
                 .addInfo("Thermally cracks heavy hydrocarbons into lighter fractions")
-                .addInfo("More efficient than the Oil Cracking Unit")
+                .addInfo("More efficient than the Chemical Reactor")
                 .addInfo("Gives different benefits whether it hydro or steam-cracks:")
                 .addInfo("Hydro - Consumes 20% less Hydrogen and outputs 25% more cracked fluid")
                 .addInfo("Steam - Outputs 50% more cracked fluid")

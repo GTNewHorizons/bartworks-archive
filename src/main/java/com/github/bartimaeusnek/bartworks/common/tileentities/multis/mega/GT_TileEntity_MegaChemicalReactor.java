@@ -199,17 +199,16 @@ public class GT_TileEntity_MegaChemicalReactor extends GT_MetaTileEntity_LargeCh
             this.getTecTechEnergyTunnels().clear();
         }
 
-        if(checkPiece(STRUCTURE_PIECE_MAIN,2,2,0)&&(mMaintenanceHatches.size()==1)){
+        if(!checkPiece(STRUCTURE_PIECE_MAIN,2,2,0))
             return false;
-        }
 
-        if (this.glasTier < 8 && !this.mEnergyHatches.isEmpty()) {
-            for (GT_MetaTileEntity_Hatch_Energy hatchEnergy : this.mEnergyHatches) {
-                if (this.glasTier < hatchEnergy.mTier) {
+        if(mMaintenanceHatches.size() != 1)
+            return false;
+
+        if (this.glasTier < 8 && !this.mEnergyHatches.isEmpty())
+            for (GT_MetaTileEntity_Hatch_Energy hatchEnergy : this.mEnergyHatches)
+                if (this.glasTier < hatchEnergy.mTier)
                     return false;
-                }
-            }
-        }
 
 
         return true;

@@ -223,18 +223,16 @@ public class GT_TileEntity_MegaOilCracker extends GT_MetaTileEntity_OilCracker i
             this.getTecTechEnergyTunnels().clear();
         }
 
-        if(checkPiece(STRUCTURE_PIECE_MAIN,6,6,0)&&(mMaintenanceHatches.size()==1)&&(mEnergyHatches.size()<=2)){
+        if(!checkPiece(STRUCTURE_PIECE_MAIN,6,6,0))
             return false;
-        }
 
+        if(mMaintenanceHatches.size() != 1)
+            return false;
 
-        if (this.glasTier < 8 && !this.mEnergyHatches.isEmpty()) {
-            for (GT_MetaTileEntity_Hatch_Energy hatchEnergy : this.mEnergyHatches) {
-                if (this.glasTier < hatchEnergy.mTier) {
+        if (this.glasTier < 8 && !this.mEnergyHatches.isEmpty())
+            for (GT_MetaTileEntity_Hatch_Energy hatchEnergy : this.mEnergyHatches)
+                if (this.glasTier < hatchEnergy.mTier)
                     return false;
-                }
-            }
-        }
 
         return  true;
     }

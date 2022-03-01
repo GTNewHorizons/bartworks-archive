@@ -23,6 +23,7 @@
 package com.github.bartimaeusnek.bartworks.common.tileentities.multis;
 
 import com.gtnewhorizon.structurelib.StructureLibAPI;
+import com.gtnewhorizon.structurelib.alignment.IAlignmentLimits;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.IStructureElement;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
@@ -124,6 +125,11 @@ public class GT_TileEntity_ElectricImplosionCompressor extends GT_MetaTileEntity
     @Override
     public IStructureDefinition<GT_TileEntity_ElectricImplosionCompressor> getStructureDefinition() {
         return STRUCTURE_DEFINITION;
+    }
+
+    @Override
+    protected IAlignmentLimits getInitialAlignmentLimits() {
+        return (d, r, f) -> d.offsetY == 0 && r.isNotRotated() && f.isNotFlipped();
     }
 
     @Override

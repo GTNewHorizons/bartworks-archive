@@ -112,7 +112,7 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
             onElementPass(e -> e.mCasing++, ofBlock(GregTech_API.sBlockCasings4, 1))
         ))
         .addElement('a', ofChain(
-            ofBlock(Blocks.air, 0),
+            isAir(),
             ofBlockAnyMeta(FluidLoader.bioFluidBlock)
         ))
         .addElement('g', new IStructureElement<GT_TileEntity_BioVat>(){

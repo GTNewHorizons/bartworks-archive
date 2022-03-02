@@ -141,6 +141,11 @@ public class GT_TileEntity_MegaVacuumFreezer extends GT_MetaTileEntity_EnhancedM
     }
 
     @Override
+    public GT_Recipe.GT_Recipe_Map getRecipeMap() {
+        return GT_Recipe.GT_Recipe_Map.sVacuumRecipes;
+    }
+
+    @Override
     public boolean checkRecipe(ItemStack itemStack) {
         ItemStack[] tInputs = this.getStoredInputs().toArray(new ItemStack[0]);
         FluidStack[] tInputFluids = this.getStoredFluids().toArray(new FluidStack[0]);

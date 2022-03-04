@@ -28,6 +28,7 @@ import com.github.bartimaeusnek.bartworks.common.tileentities.classic.BW_RotorBl
 import com.github.bartimaeusnek.bartworks.server.container.BW_Container_Windmill;
 import com.github.bartimaeusnek.bartworks.util.BW_Util;
 import com.gtnewhorizon.structurelib.StructureLibAPI;
+import com.gtnewhorizon.structurelib.alignment.IAlignmentLimits;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -115,6 +116,11 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
     @Override
     public IStructureDefinition<GT_TileEntity_Windmill> getStructureDefinition() {
         return STRUCTURE_DEFINITION;
+    }
+
+    @Override
+    protected IAlignmentLimits getInitialAlignmentLimits() {
+        return (d, r, f) -> d.offsetY == 0 && r.isNotRotated() && f.isNotFlipped();
     }
 
     @Override

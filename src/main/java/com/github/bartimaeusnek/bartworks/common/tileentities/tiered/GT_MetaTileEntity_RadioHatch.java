@@ -293,7 +293,7 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch {
 
     @Override
     public String[] getInfoData() {
-        if (GT_MetaTileEntity_RadioHatch.calcDecayTicks(this.sievert) != 0)
+        if (this.sievert != 0)
             return new String[]{
                     StatCollector.translateToLocal("tooltip.tile.radhatch.2.name") + " " + this.material,
                     StatCollector.translateToLocal("tooltip.tile.radhatch.3.name") + " " + this.sievert,

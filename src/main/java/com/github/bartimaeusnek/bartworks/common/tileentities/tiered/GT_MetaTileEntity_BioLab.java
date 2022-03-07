@@ -110,9 +110,9 @@ public class GT_MetaTileEntity_BioLab extends GT_MetaTileEntity_BasicMachine {
                         if (this.mTier < rTier + cultureDNABioData.getTier())
                             return GT_MetaTileEntity_BasicMachine.FOUND_RECIPE_BUT_DID_NOT_MEET_REQUIREMENTS;
 
-                        for (int i = 4; i < 8; i++) {
-                            if (this.mInventory[i] != null)
-                                this.mInventory[i].stackSize--;
+                        for (int i = 0; i < 4; i++) {
+                            if (this.mInventory[getInputSlot() + i] != null)
+                                this.mInventory[getInputSlot() + i].stackSize--;
                         }
 
                         this.mFluid.amount -= 1000;
@@ -142,9 +142,9 @@ public class GT_MetaTileEntity_BioLab extends GT_MetaTileEntity_BasicMachine {
                         if (this.mTier < 1 + rTier + cultureDNABioData.getTier())
                             return GT_MetaTileEntity_BasicMachine.FOUND_RECIPE_BUT_DID_NOT_MEET_REQUIREMENTS;
 
-                        for (int i = 4; i < 8; i++) {
-                            if (this.mInventory[i] != null)
-                                this.mInventory[i].stackSize--;
+                        for (int i = 0; i < 4; i++) {
+                            if (this.mInventory[getInputSlot() + i] != null)
+                                this.mInventory[getInputSlot() + i].stackSize--;
                         }
 
                         this.mFluid.amount -= 1000;
@@ -182,9 +182,9 @@ public class GT_MetaTileEntity_BioLab extends GT_MetaTileEntity_BasicMachine {
                             return super.checkRecipe(skipOC);
                         if (this.mTier < 1 + rTier + cultureDNABioData.getTier())
                             return GT_MetaTileEntity_BasicMachine.FOUND_RECIPE_BUT_DID_NOT_MEET_REQUIREMENTS;
-                        for (int i = 4; i < 6; i++) {
-                            if (this.mInventory[i] != null)
-                                this.mInventory[i].stackSize--;
+                        for (int i = 0; i < 2; i++) {
+                            if (this.mInventory[getInputSlot() + i] != null)
+                                this.mInventory[getInputSlot() + i].stackSize--;
                         }
                         this.mFluid.amount -= 1000;
                         if (cultureDNABioData.getChance() > new XSTR().nextInt(10000)) {
@@ -209,9 +209,9 @@ public class GT_MetaTileEntity_BioLab extends GT_MetaTileEntity_BasicMachine {
                             return super.checkRecipe(skipOC);
                         if (this.mTier < 3 + rTier + cultureDNABioData.getTier())
                             return GT_MetaTileEntity_BasicMachine.FOUND_RECIPE_BUT_DID_NOT_MEET_REQUIREMENTS;
-                        for (int i = 4; i < 7; i++) {
-                            if (this.mInventory[i] != null)
-                                this.mInventory[i].stackSize--;
+                        for (int i = 0; i < 3; i++) {
+                            if (this.mInventory[getInputSlot() + i] != null)
+                                this.mInventory[getInputSlot() + i].stackSize--;
                         }
                         this.mFluid.amount -= 1000;
                         bioCulture = bioCulture.setPlasmid(BioPlasmid.convertDataToPlasmid(cultureDNABioData));
@@ -241,9 +241,9 @@ public class GT_MetaTileEntity_BioLab extends GT_MetaTileEntity_BasicMachine {
                             return super.checkRecipe(skipOC);
                         if (this.mTier < 3 + rTier + cultureDNABioData.getTier())
                             return GT_MetaTileEntity_BasicMachine.FOUND_RECIPE_BUT_DID_NOT_MEET_REQUIREMENTS;
-                        for (int i = 4; i < 7; i++) {
-                            if (this.mInventory[i] != null)
-                                this.mInventory[i].stackSize--;
+                        for (int i = 0; i < 3; i++) {
+                            if (this.mInventory[getInputSlot() + i] != null)
+                                this.mInventory[getInputSlot() + i].stackSize--;
                         }
                         this.mFluid.amount -= 8000;
                         if (cultureDNABioData.getChance() > new XSTR().nextInt(10000)) {

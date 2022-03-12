@@ -48,7 +48,7 @@ public class ArtificialMicaLine {
         GT_Recipe.GT_Recipe_Map.sVacuumRecipes.addRecipe(new GT_Recipe(false, new ItemStack[]{ItemList.Shape_Mold_Plate.get(0)}, new ItemStack[]{WerkstoffLoader.Fluorophlogopite.get(OrePrefixes.plate, 1)}, null, null, new FluidStack[]{WerkstoffLoader.HotFluorophlogopite.getFluidOrGas(144)}, null, 10, 120, 0));
         //Fluorophlogopite = 4Insulator Foil
         if (LoaderReference.dreamcraft)
-            GT_Values.RA.addBenderRecipe(WerkstoffLoader.Fluorophlogopite.get(OrePrefixes.plate, 1), GT_Utility.getIntegratedCircuit(1), GT_ModHandler.getModItem("dreamcraft", "item.MicaInsulatorFoil", 4), 100, 30);
+            GT_Values.RA.addBenderRecipe(WerkstoffLoader.Fluorophlogopite.get(OrePrefixes.plate, 1), GT_Utility.getIntegratedCircuit(1), GT_ModHandler.getModItem("dreamcraft", "item.MicaInsulatorFoil", 4), 10, 600);
     }
 
 }

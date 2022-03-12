@@ -1473,7 +1473,7 @@ public class WerkstoffLoader {
         "Fluorophlogopite",
         new Werkstoff.Stats(),
         Werkstoff.Types.MIXTURE,
-        new Werkstoff.GenerationFeatures().disable().addMetalItems(),
+        new Werkstoff.GenerationFeatures().disable().onlyDust().addMetalItems(),
         104,
         TextureSet.SET_SHINY
     );

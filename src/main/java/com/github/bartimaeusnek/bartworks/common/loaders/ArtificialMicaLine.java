@@ -38,7 +38,7 @@ public class ArtificialMicaLine {
         GT_Values.RA.addMixerRecipe(Materials.CertusQuartz.getDust(62), WerkstoffLoader.Potassiumfluorosilicate.get(OrePrefixes.dust, 10), WerkstoffLoader.Alumina.get(OrePrefixes.dust, 12), WerkstoffLoader.PotassiumCarbonate.get(OrePrefixes.dust, 4), null, GT_Utility.getIntegratedCircuit(4), null, null, null, null, null, WerkstoffLoader.RawFluorophlogopite.get(OrePrefixes.dust, 64), WerkstoffLoader.RawFluorophlogopite.get(OrePrefixes.dust, 27), null, null, 600, 120);
         //MgO(s) = MgO(l)
         GT_Values.RA.addFluidExtractionRecipe(Materials.Magnesia.getDust(1), null, Materials.Magnesia.getMolten(144), 0, 20, 120);
-        //27Raw Fluorophlogopite Dust + 432MgO(l) = 4464Fluorophlogopite(l)
+        //27Raw Fluorophlogopite Dust + 432MgO(l) = 4608Fluorophlogopite(l)
         GT_Values.RA.addBlastRecipe(WerkstoffLoader.RawFluorophlogopite.get(OrePrefixes.dust, 27), null, BW_GT_MaterialReference.Magnesia.getMolten(432), WerkstoffLoader.HotFluorophlogopite.getFluidOrGas(4608), Materials.Glass.getDust(1), null, 600, 480, 1700);
         //144Fluorophlogopite(l) = Fluorophlogopite
         GT_Recipe.GT_Recipe_Map.sVacuumRecipes.addRecipe(new GT_Recipe(false, new ItemStack[]{ItemList.Shape_Mold_Plate.get(0)}, new ItemStack[]{WerkstoffLoader.Fluorophlogopite.get(OrePrefixes.plate, 1)}, null, null, new FluidStack[]{WerkstoffLoader.HotFluorophlogopite.getFluidOrGas(144)}, null, 10, 120, 0));

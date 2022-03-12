@@ -25,8 +25,6 @@ public class ArtificialMicaLine {
         GT_Values.RA.addChemicalRecipe(Materials.Potassium.getDust(1), GT_Utility.getIntegratedCircuit(2), Materials.Chlorine.getGas(1000), null, Materials.RockSalt.getDust(2), 20, 8);
         //2KCl + H2SiF6 = 2HCl + K2SiF6
         GT_Values.RA.addMixerRecipe(Materials.RockSalt.getDust(2), null, null, null, WerkstoffLoader.HexafluorosilicicAcid.getFluidOrGas(1000), Materials.HydrochloricAcid.getGas(2000), WerkstoffLoader.Potassiumfluorosilicate.get(OrePrefixes.dust, 1), 20, 8);
-        //2Al + 3O = 2Al2O3
-        GT_Values.RA.addChemicalRecipe(Materials.Aluminium.getDust(2), GT_Utility.getIntegratedCircuit(5), Materials.Oxygen.getGas(3000), null, WerkstoffLoader.Alumina.get(OrePrefixes.dust, 2), 10, 8);
         //2K + CO2 + O = 6K2CO3
         GT_Values.RA.addChemicalRecipe(Materials.Potassium.getDust(2), Materials.CarbonDioxide.getCells(1), Materials.Oxygen.getGas(1000), null, WerkstoffLoader.PotassiumCarbonate.get(OrePrefixes.dust, 6), 40, 8);
         //K2O + CO2 = 6K2CO3

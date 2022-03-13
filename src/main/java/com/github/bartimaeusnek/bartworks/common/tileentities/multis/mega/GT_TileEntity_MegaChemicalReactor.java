@@ -145,6 +145,7 @@ public class GT_TileEntity_MegaChemicalReactor extends GT_TileEntity_MegaMultiBl
             found_Recipe = true;
             long tMaxPara = Math.min(ConfigHandler.megaMachinesMax, nominalV / tRecipe.mEUt);
             int tCurrentPara = handleParallelRecipe(tRecipe, tInputFluids, tInputs, (int) tMaxPara);
+            this.updateSlots();
             if (tCurrentPara <= 0) {
                 return false;
             }
@@ -171,7 +172,6 @@ public class GT_TileEntity_MegaChemicalReactor extends GT_TileEntity_MegaMultiBl
             this.mOutputItems = outputItems.toArray(this.mOutputItems);
             this.mOutputFluids = new FluidStack[outputFluids.size()];
             this.mOutputFluids = outputFluids.toArray(this.mOutputFluids);
-            this.updateSlots();
             return true;
         }
         return false;

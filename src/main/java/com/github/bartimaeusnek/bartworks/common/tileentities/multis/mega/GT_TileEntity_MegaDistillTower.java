@@ -306,6 +306,7 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
                     found_Recipe = true;
                     long tMaxPara = Math.min(ConfigHandler.megaMachinesMax, nominalV / tRecipe.mEUt);
                     int tCurrentPara = handleParallelRecipe(tRecipe, new FluidStack[]{tFluid}, null, (int) tMaxPara);
+                    this.updateSlots();
                     processed = tCurrentPara;
                     Outputs = getMultiOutput(tRecipe, tCurrentPara);
                     outputFluids = Outputs.getKey();
@@ -330,7 +331,6 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
                     this.mOutputItems = outputItems.toArray(new ItemStack[0]);
                 else
                     this.mOutputItems = null;
-                this.updateSlots();
                 return true;
             }
         }

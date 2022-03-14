@@ -45,10 +45,7 @@ public class GT_MetaTileEntity_CompressedFluidHatch extends GT_MetaTileEntity_Ha
         return 100000000;
     }
 
-    @Override
-    public boolean isFluidInputAllowed(FluidStack aFluid) {
-        return GT_Utility.areFluidsEqual(aFluid, Materials.LiquidAir.getFluid(1));
-    }
+  
 
     @Override
     public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {

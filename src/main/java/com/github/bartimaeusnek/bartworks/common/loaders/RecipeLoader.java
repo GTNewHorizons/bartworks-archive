@@ -964,7 +964,7 @@ public class RecipeLoader {
                 }
             }
 
-            GT_Recipe.GT_Recipe_Map.sAssemblerRecipes.add(new BWRecipes.DynamicGTRecipe(false, new ItemStack[]{ItemList.Hatch_Input_HV.get(64), Materials.LiquidAir.getCells(1), GT_Utility.getIntegratedCircuit(17)}, new ItemStack[]{ItemRegistry.compressedHatch.copy()}, null, null, null, null, 300, BW_Util.getMachineVoltageFromTier(3), 0));
+            GT_Recipe.GT_Recipe_Map.sAssemblerRecipes.add(new BWRecipes.DynamicGTRecipe(false, new ItemStack[]{ItemList.Hatch_Input_HV.get(64), GT_Utility.getIntegratedCircuit(17)}, new ItemStack[]{ItemRegistry.compressedHatch.copy()}, null, null, null, null, 300, BW_Util.getMachineVoltageFromTier(3), 0));
             GT_Recipe.GT_Recipe_Map.sAssemblerRecipes.add(new BWRecipes.DynamicGTRecipe(false, new ItemStack[]{ItemList.Hatch_Output_HV.get(64), GT_Utility.getIntegratedCircuit(17)}, new ItemStack[]{ItemRegistry.giantOutputHatch.copy()}, null, null, null, null, 300, BW_Util.getMachineVoltageFromTier(3), 0));
 
             GT_Values.RA.addAssemblylineRecipe(

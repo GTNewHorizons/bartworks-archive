@@ -46,12 +46,19 @@ public class TecTechUtils {
             if(mte.mTier != aTier && aTier != -1)
                 return -1;
 
-            if (mte instanceof GT_MetaTileEntity_Hatch_Energy)
-                baseTE.getVanillaEnergyHatches().add((GT_MetaTileEntity_Hatch_Energy) mte);
-            else if (mte instanceof GT_MetaTileEntity_Hatch_EnergyTunnel)
-                baseTE.getTecTechEnergyTunnels().add((GT_MetaTileEntity_Hatch_EnergyTunnel) mte);
-            else if (mte instanceof GT_MetaTileEntity_Hatch_EnergyMulti)
-                baseTE.getTecTechEnergyMultis().add((GT_MetaTileEntity_Hatch_EnergyMulti) mte);
+            if (mte instanceof GT_MetaTileEntity_Hatch_EnergyTunnel)
+                if(baseTE.getVanillaEnergyHatches().isEmpty() && baseTE.getTecTechEnergyMultis().isEmpty())
+                    baseTE.getTecTechEnergyTunnels().add((GT_MetaTileEntity_Hatch_EnergyTunnel) mte);
+                else
+                    return -1;
+            else if(baseTE.getTecTechEnergyTunnels().isEmpty()) {
+                if (mte instanceof GT_MetaTileEntity_Hatch_Energy)
+                    baseTE.getVanillaEnergyHatches().add((GT_MetaTileEntity_Hatch_Energy) mte);
+                else if (mte instanceof GT_MetaTileEntity_Hatch_EnergyMulti)
+                    baseTE.getTecTechEnergyMultis().add((GT_MetaTileEntity_Hatch_EnergyMulti) mte);
+                else
+                    return -1;
+            }
             else
                 return -1;
 
@@ -147,7 +154,7 @@ public class TecTechUtils {
         }
         for (GT_MetaTileEntity_Hatch_EnergyTunnel tHatch : base.getTecTechEnergyTunnels()) {
             if (GT_MetaTileEntity_MultiBlockBase.isValidMetaTileEntity(tHatch)) {
-                rVoltage += getEUPerTickFromLaser(tHatch);
+                rVoltage += tHatch.maxEUInput();
             }
         }
         return rVoltage;
@@ -167,7 +174,7 @@ public class TecTechUtils {
         }
         for (GT_MetaTileEntity_Hatch_EnergyTunnel tHatch : base.getTecTechEnergyTunnels()) {
             if (GT_MetaTileEntity_MultiBlockBase.isValidMetaTileEntity(tHatch)) {
-                rAmperage += 1;
+                rAmperage += tHatch.Amperes;
             }
         }
         return rAmperage;

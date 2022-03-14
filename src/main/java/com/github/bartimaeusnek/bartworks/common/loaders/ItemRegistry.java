@@ -154,6 +154,7 @@ public class ItemRegistry {
     public static ItemStack eic;
     public static ItemStack cal;
     public static ItemStack compressedHatch;
+    public static ItemStack compressedSteamHatch;
     public static ItemStack giantOutputHatch;
 
     public static ItemStack[][][] TecTechLaserAdditions = new ItemStack[3][4][4];
@@ -217,6 +218,7 @@ public class ItemRegistry {
             ItemRegistry.megaMachines[1] = new GT_TileEntity_MegaVacuumFreezer(ConfigHandler.IDOffset + GT_Values.VN.length * 8 + 3, "MegaVacuumFreezer", StatCollector.translateToLocal("tile.bw.mvf.name")).getStackForm(1L);
             ItemRegistry.cal = new GT_TileEntity_CircuitAssemblyLine(ConfigHandler.IDOffset + GT_Values.VN.length * 8 + 7, "CircuitAssemblyLine", "Circuit Assembly Line").getStackForm(1L);
             ItemRegistry.compressedHatch = new GT_MetaTileEntity_CompressedFluidHatch(ConfigHandler.IDOffset + GT_Values.VN.length * 8 + 8, "CompressedFluidHatch", "Liquid Air Fluid Hatch").getStackForm(1L);
+            ItemRegistry.compressedSteamHatch = new GT_MetaTileEntity_CompressedSteamHatch(ConfigHandler.IDOffset + GT_Values.VN.length * 8 + 640, "CompressedSteamHatch", "Giant Steam Input Hatch").getStackForm(1L);
             ItemRegistry.giantOutputHatch = new GT_MetaTileEntity_GiantOutputHatch(ConfigHandler.IDOffset + GT_Values.VN.length * 8 + 9, "GiantOutputHatch", "Giant Output Hatch").getStackForm(1L);
             ItemRegistry.megaMachines[2] = new GT_TileEntity_MegaDistillTower(ConfigHandler.IDOffset + GT_Values.VN.length * 8 + 10, "MegaDistillationTower", "Mega Distillation Tower").getStackForm(1L);
             ItemRegistry.megaMachines[3] = new GT_TileEntity_MegaChemicalReactor(ConfigHandler.IDOffset+GT_Values.VN.length * 8 + 638, "MegaChemicalReactor", "Mega Chemical Reactor").getStackForm(1L);

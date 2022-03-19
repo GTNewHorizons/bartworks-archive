@@ -7,6 +7,8 @@ import com.github.bartimaeusnek.bartworks.util.ChatColorHelper;
 import com.gtnewhorizon.structurelib.alignment.IAlignmentLimits;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import gregtech.api.GregTech_API;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Textures;
@@ -36,10 +38,12 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -307,6 +311,18 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
     @Override
     public boolean explodesOnComponentBreak(ItemStack itemStack) {
         return false;
+    }
+
+    @Override
+    public String[] getInfoData() {
+        List<String> info = new ArrayList<>(Arrays.asList(
+            "Max slots: " + EnumChatFormatting.GREEN + this.mMaxSlots + EnumChatFormatting.RESET,
+            "Used slots: " + EnumChatFormatting.GREEN + this.mStorage.size() + EnumChatFormatting.RESET
+        ));
+        for(int i = 0; i < mStorage.size(); i++)
+            info.add("Slot " + i + ": " + EnumChatFormatting.GREEN + "x" + this.mStorage.get(i).input.stackSize + " " + this.mStorage.get(i).input.getDisplayName() + EnumChatFormatting.RESET);
+        info.addAll(Arrays.asList(super.getInfoData()));
+        return info.toArray(new String[0]);
     }
 
     @Override
@@ -614,6 +630,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
         }
     }
 
+    @SideOnly(Side.CLIENT)
     public static class cropVisualizer extends EntityFX{
         int meta;
 

@@ -298,7 +298,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             }
             this.mOutputItems = outputs.toArray(new ItemStack[0]);
         }
-        this.mEUt = -(int) v;
+        this.mEUt = -(int)((double)v * 0.99d);
         this.mEfficiency = (10000 - (getIdealStatus() - getRepairStatus()) * 1000);
         this.mEfficiencyIncrease = 10000;
         return true;

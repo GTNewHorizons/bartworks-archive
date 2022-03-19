@@ -17,6 +17,7 @@ import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_EnhancedMultiBlockBase;
+import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Energy;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
 import gregtech.api.util.GT_Utility;
@@ -55,6 +56,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
     private int mMaxSlots = 0;
     private int setupphase = 1;
     private boolean isIC2Mode = false;
+    private byte glasTier = 0;
     private static final int CASING_INDEX = 49;
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private static final IStructureDefinition<GT_TileEntity_ExtremeIndustrialGreenhouse> STRUCTURE_DEFINITION = StructureDefinition.<GT_TileEntity_ExtremeIndustrialGreenhouse>builder()
@@ -74,7 +76,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             ofHatchAdder(GT_TileEntity_ExtremeIndustrialGreenhouse::addOutputToMachineList, CASING_INDEX, 1)
         ))
         .addElement('l', LoaderReference.ProjRedIllumination ? ofBlock(Block.getBlockFromName("ProjRed|Illumination:projectred.illumination.lamp"), 10) : ofBlock(Blocks.redstone_lamp, 0))
-        .addElement('g', BorosilicateGlass.ofBoroGlassAnyTier())
+        .addElement('g', BorosilicateGlass.ofBoroGlass((byte) 0, (byte) 1, Byte.MAX_VALUE, (te, t) -> te.glasTier = t, te -> te.glasTier))
         .addElement('d', ofBlock(LoaderReference.RandomThings ? Block.getBlockFromName("RandomThings:fertilizedDirt_tilled") : Blocks.farmland, 0))
         .addElement('w', ofBlock(Blocks.water, 0))
         .build();
@@ -157,6 +159,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             addInfo("Will automatically craft seeds if they are not dropped").
             addInfo("-------------------- IC2    CROPS --------------------").
             addInfo("Minimal tier: UV").
+            addInfo("Need UV glass tier").
             addInfo("Starting with 4 slots").
             addInfo("Every slot gives 1 crop").
             addInfo("Every tier past UV, slots are multiplied by 4").
@@ -168,6 +171,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             addController("Front bottom center").
             addCasingInfo("Clean Stainless Steel Casings", 70).
             addOtherStructurePart("Borosilicate Glass", "Hollow two middle layers", 2).
+            addStructureInfo("The glass tier limits the Energy Input tier").
             addMaintenanceHatch("Any casing", 1).
             addInputBus("Any casing", 1).
             addOutputBus("Any casing", 1).
@@ -180,6 +184,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
+        aNBT.setByte("glasTier", glasTier);
         aNBT.setInteger("setupphase", setupphase);
         aNBT.setBoolean("isIC2Mode", isIC2Mode);
         aNBT.setInteger("mStorageSize", mStorage.size());
@@ -190,6 +195,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
     @Override
     public void loadNBTData(NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
+        glasTier = aNBT.getByte("glasTier");
         setupphase = aNBT.getInteger("setupphase");
         isIC2Mode = aNBT.getBoolean("isIC2Mode");
         for(int i = 0; i < aNBT.getInteger("mStorageSize"); i++)
@@ -283,6 +289,8 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
         // OVERCLOCK
         if(isIC2Mode)
         {
+            if(glasTier < 8)
+                return false;
             this.mMaxProgresstime = 100;
             List<ItemStack> outputs = new ArrayList<>();
             for (int i = 0; i < Math.min(mMaxSlots, mStorage.size()); i++)
@@ -308,8 +316,16 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
     @Override
     public boolean checkMachine(IGregTechTileEntity iGregTechTileEntity, ItemStack itemStack) {
         mCasing = 0;
+        glasTier = 0;
+
         if(!checkPiece(STRUCTURE_PIECE_MAIN, 2, 5, 0))
             return false;
+
+        if (this.glasTier < 8 && !this.mEnergyHatches.isEmpty())
+            for (GT_MetaTileEntity_Hatch_Energy hatchEnergy : this.mEnergyHatches)
+                if (this.glasTier < hatchEnergy.mTier)
+                    return false;
+
         return  this.mMaintenanceHatches.size() == 1 &&
                 this.mEnergyHatches.size() >= 1 &&
                 this.mCasing >= 70;

@@ -601,7 +601,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             int r = rn.nextInt(10);
             if(drops.size() <= r)
                 return null;
-            ItemStack s = drops.get(rn.nextInt(r)).copy();
+            ItemStack s = drops.get(r).copy();
             dropprogress += ((double)s.stackSize * ((double)timeelapsed / (double)growthticks));
             s.stackSize = (int) dropprogress;
             dropprogress -= (double) ((int)dropprogress);

@@ -2,6 +2,7 @@ package com.github.bartimaeusnek.bartworks.common.tileentities.multis;
 
 import com.github.bartimaeusnek.bartworks.API.BorosilicateGlass;
 import com.github.bartimaeusnek.bartworks.API.LoaderReference;
+import com.github.bartimaeusnek.bartworks.client.renderer.BW_CropVisualizer;
 import com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference;
 import com.github.bartimaeusnek.bartworks.util.ChatColorHelper;
 import com.gtnewhorizon.structurelib.alignment.IAlignmentLimits;
@@ -26,9 +27,6 @@ import ic2.core.crop.TileEntityCrop;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.EntityFX;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.InventoryCrafting;
@@ -40,7 +38,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
-import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,7 +53,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
 
     private int mCasing = 0;
     private int mMaxSlots = 0;
-    private boolean setupphase = true;
+    private int setupphase = 1;
     private boolean isIC2Mode = false;
     private static final int CASING_INDEX = 49;
     private static final String STRUCTURE_PIECE_MAIN = "main";
@@ -114,8 +111,10 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
                 GT_Utility.sendChatToPlayer(aPlayer, "You cant enable/disable setup if the machine is working!");
                 return;
             }
-            this.setupphase = !this.setupphase;
-            GT_Utility.sendChatToPlayer(aPlayer, "EIG is now running in " + (this.setupphase ? "setup mode." : "normal operation."));
+            this.setupphase++;
+            if(this.setupphase == 3)
+                this.setupphase = 0;
+            GT_Utility.sendChatToPlayer(aPlayer, "EIG is now running in " + (this.setupphase == 1 ? "setup mode (input)." : ( this.setupphase == 2 ? "setup mode (output)." : "normal operation.")));
         }
     }
 
@@ -141,8 +140,13 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             addMachineType("Crop Farm").
             addInfo("Controller block for the Extreme Industrial Greenhouse").
             addInfo("Grow your crops like a chad !").
-            addInfo("Use screwdriver to enable/disable setup phase").
-            addInfo("Use screwdriver with sneaking to enable/disable IC2 mode").
+            addInfo("Use screwdriver to enable/change/disable setup mode").
+            addInfo("Use screwdriver while sneaking to enable/disable IC2 mode").
+            addInfo("-------------------- SETUP   MODE --------------------").
+            addInfo("Does not take power").
+            addInfo("There are two modes: input / output").
+            addInfo("Input mode: machine will take seeds from input bus and plant them").
+            addInfo("Output mode: machine will take planted seeds and output them").
             addInfo("-------------------- NORMAL CROPS --------------------").
             addInfo("Minimal tier: EV").
             addInfo("Starting with 1 slot").
@@ -176,7 +180,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
-        aNBT.setBoolean("setupphase", setupphase);
+        aNBT.setInteger("setupphase", setupphase);
         aNBT.setBoolean("isIC2Mode", isIC2Mode);
         aNBT.setInteger("mStorageSize", mStorage.size());
         for(int i = 0; i < mStorage.size(); i++)
@@ -186,10 +190,16 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
     @Override
     public void loadNBTData(NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
-        setupphase = aNBT.getBoolean("setupphase");
+        setupphase = aNBT.getInteger("setupphase");
         isIC2Mode = aNBT.getBoolean("isIC2Mode");
         for(int i = 0; i < aNBT.getInteger("mStorageSize"); i++)
             mStorage.add(new GreenHouseSlot(aNBT.getCompoundTag("mStorage." + i)));
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void spawnVisualCrop(World world, int x, int y, int z, int meta, int age){
+        BW_CropVisualizer crop = new BW_CropVisualizer(world, x, y, z, meta, age);
+        Minecraft.getMinecraft().effectRenderer.addEffect(crop);
     }
 
     @Override
@@ -208,18 +218,25 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
                         xyz[0] += aBaseMetaTileEntity.getXCoord();
                         xyz[1] += aBaseMetaTileEntity.getYCoord();
                         xyz[2] += aBaseMetaTileEntity.getZCoord();
-                        cropVisualizer crop = new cropVisualizer(aBaseMetaTileEntity.getWorld(), xyz[0], xyz[1], xyz[2], aBaseMetaTileEntity.getRandomNumber(8), 40);
-                        Minecraft.getMinecraft().effectRenderer.addEffect(crop);
+                        spawnVisualCrop(aBaseMetaTileEntity.getWorld(), xyz[0], xyz[1], xyz[2], aBaseMetaTileEntity.getRandomNumber(8), 40);
                     }
             }
         }
-        if(aBaseMetaTileEntity.isServerSide() && this.mMaxProgresstime > 0 && setupphase && mStorage.size() < mMaxSlots && aTick % 5 == 0)
+        if(aBaseMetaTileEntity.isServerSide() && this.mMaxProgresstime > 0 && setupphase > 0 && aTick % 5 == 0)
         {
-            List<ItemStack> inputs = getStoredInputs();
-            for (ItemStack input : inputs)
-                if(addCrop(input))
-                    break;
-            this.updateSlots();
+            if(setupphase == 1 && mStorage.size() < mMaxSlots) {
+                List<ItemStack> inputs = getStoredInputs();
+                for (ItemStack input : inputs)
+                    if (addCrop(input))
+                        break;
+                this.updateSlots();
+            }
+            else if(setupphase == 2 && mStorage.size() > 0)
+            {
+                this.addOutput(this.mStorage.get(0).input.copy());
+                this.mStorage.remove(0);
+                this.updateSlots();
+            }
         }
     }
 
@@ -252,8 +269,8 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
                 i--;
             }
         }
-        if(setupphase) {
-            if(mStorage.size() >= mMaxSlots)
+        if(setupphase > 0) {
+            if((mStorage.size() >= mMaxSlots && setupphase == 1) || (mStorage.size() == 0 && setupphase == 2))
                 return false;
             this.mMaxProgresstime = 20;
             this.mEUt = 0;
@@ -316,6 +333,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
     @Override
     public String[] getInfoData() {
         List<String> info = new ArrayList<>(Arrays.asList(
+            "Running in mode: " + EnumChatFormatting.GREEN + (setupphase == 0 ? (isIC2Mode ? "IC2 crops" : "Normal crops") : ("Setup mode " + (setupphase == 1 ? "(input)" : "(output)"))) + EnumChatFormatting.RESET,
             "Max slots: " + EnumChatFormatting.GREEN + this.mMaxSlots + EnumChatFormatting.RESET,
             "Used slots: " + EnumChatFormatting.GREEN + this.mStorage.size() + EnumChatFormatting.RESET
         ));
@@ -630,48 +648,5 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
         }
     }
 
-    @SideOnly(Side.CLIENT)
-    public static class cropVisualizer extends EntityFX{
-        int meta;
 
-        protected cropVisualizer(World world, int x, int y, int z, int meta, int age) {
-            super(world, (double)x, ((double)y - 0.0625d), (double)z);
-            this.prevPosX = this.posX;
-            this.prevPosY = this.posY;
-            this.prevPosZ = this.posZ;
-            this.particleMaxAge = age;
-            this.meta = meta;
-        }
-
-        @Override
-        public void onUpdate() {
-            if (this.particleAge++ >= this.particleMaxAge)
-                this.setDead();
-        }
-
-        @Override
-        public void renderParticle(Tessellator p_70539_1_, float p_70539_2_, float p_70539_3_, float p_70539_4_, float p_70539_5_, float p_70539_6_, float p_70539_7_) {
-            Tessellator tessellator = Tessellator.instance;
-            GL11.glDisable(GL11.GL_CULL_FACE);
-            GL11.glDepthMask(false);
-            tessellator.setColorRGBA(255, 255, 255, 255);
-            float f11 = (float)(this.prevPosX + (this.posX - this.prevPosX) * (double)p_70539_2_ - interpPosX);
-            float f12 = (float)(this.prevPosY + (this.posY - this.prevPosY) * (double)p_70539_2_ - interpPosY);
-            float f13 = (float)(this.prevPosZ + (this.posZ - this.prevPosZ) * (double)p_70539_2_ - interpPosZ);
-            RenderBlocks.getInstance().renderBlockCropsImpl(Blocks.wheat, meta, f11, f12 , f13);
-            GL11.glEnable(GL11.GL_CULL_FACE);
-            GL11.glDepthMask(true);
-        }
-
-        @Override
-        public int getFXLayer() {
-            return 1;
-        }
-
-        @Override
-        public boolean shouldRenderInPass(int pass) {
-            return pass==2;
-        }
-
-    }
 }

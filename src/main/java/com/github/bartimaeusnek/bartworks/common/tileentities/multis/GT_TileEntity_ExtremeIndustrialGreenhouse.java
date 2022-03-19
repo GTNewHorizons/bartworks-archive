@@ -161,7 +161,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             addInfo("Every slot gives 1 crop").
             addInfo("Every tier past UV, slots are multiplied by 4").
             addInfo("Process time: 5 sec").
-            addInfo("All crops are accelerated by x256 times").
+            addInfo("All crops are accelerated by x32 times").
             addInfo(BW_Tooltip_Reference.TT_BLUEPRINT).
             addSeparator().
             beginStructureBlock(5, 4, 5, false).
@@ -500,6 +500,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             CropCard cc = Crops.instance.getCropCard(input);
             if(cc.tier() > 15) // dont process primordial
                 return;
+            this.input.stackSize = 1;
             NBTTagCompound nbt = input.getTagCompound();
             byte gr = nbt.getByte("growth");
             byte ga = nbt.getByte("gain");

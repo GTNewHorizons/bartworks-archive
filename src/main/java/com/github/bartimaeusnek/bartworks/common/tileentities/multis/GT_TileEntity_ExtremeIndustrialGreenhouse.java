@@ -40,10 +40,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static gregtech.api.enums.Textures.BlockIcons.*;
@@ -294,7 +291,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             this.mMaxProgresstime = 100;
             List<ItemStack> outputs = new ArrayList<>();
             for (int i = 0; i < Math.min(mMaxSlots, mStorage.size()); i++)
-                outputs.add(mStorage.get(i).getIC2Drop(this.mMaxProgresstime / 8));
+                outputs.addAll(mStorage.get(i).getIC2Drops(this.mMaxProgresstime / 8));
             this.mOutputItems = outputs.toArray(new ItemStack[0]);
         }
         else {
@@ -406,6 +403,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
         boolean isValid;
         boolean isIC2Crop;
         int growthticks;
+        List<List<ItemStack>> generations;
 
         Random rn;
         IRecipe recipe;
@@ -414,10 +412,21 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
         public NBTTagCompound toNBTTagCompound(){
             NBTTagCompound aNBT = new NBTTagCompound();
             aNBT.setTag("input", input.writeToNBT(new NBTTagCompound()));
-            if(!isIC2Crop) aNBT.setInteger("crop", Block.getIdFromBlock(crop));
-            aNBT.setInteger("dropscount", drops.size());
-            for(int i = 0; i < drops.size(); i++)
-                aNBT.setTag("drop." + i, drops.get(i).writeToNBT(new NBTTagCompound()));
+            if(!isIC2Crop) {
+                aNBT.setInteger("crop", Block.getIdFromBlock(crop));
+                aNBT.setInteger("dropscount", drops.size());
+                for (int i = 0; i < drops.size(); i++)
+                    aNBT.setTag("drop." + i, drops.get(i).writeToNBT(new NBTTagCompound()));
+            }
+            else {
+                aNBT.setInteger("generationscount", generations.size());
+                for(int i = 0; i < generations.size(); i++)
+                {
+                    aNBT.setInteger("generation." + i + ".count", generations.get(i).size());
+                    for(int j = 0; j < generations.get(i).size(); j++)
+                        aNBT.setTag("generation." + i + "." + j, generations.get(i).get(j).writeToNBT(new NBTTagCompound()));
+                }
+            }
             aNBT.setBoolean("isValid", isValid);
             aNBT.setBoolean("isIC2Crop", isIC2Crop);
             if(isIC2Crop) aNBT.setInteger("growthticks", growthticks);
@@ -429,12 +438,24 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             isIC2Crop = aNBT.getBoolean("isIC2Crop");
             isValid = aNBT.getBoolean("isValid");
             input = ItemStack.loadItemStackFromNBT(aNBT.getCompoundTag("input"));
-            if(!isIC2Crop) crop = (BlockCrops)Block.getBlockById(aNBT.getInteger("crop"));
-            drops = new ArrayList<>();
-            for(int i = 0; i < aNBT.getInteger("dropscount"); i++)
-                drops.add(ItemStack.loadItemStackFromNBT(aNBT.getCompoundTag("drop." + i)));
-            if(isIC2Crop) growthticks = aNBT.getInteger("growthticks");
-            if(isIC2Crop) rn = new Random();
+            if(!isIC2Crop) {
+                crop = (BlockCrops) Block.getBlockById(aNBT.getInteger("crop"));
+                drops = new ArrayList<>();
+                for (int i = 0; i < aNBT.getInteger("dropscount"); i++)
+                    drops.add(ItemStack.loadItemStackFromNBT(aNBT.getCompoundTag("drop." + i)));
+            }
+            else
+            {
+                generations = new ArrayList<>();
+                for(int i = 0; i < aNBT.getInteger("generationscount"); i++)
+                {
+                    generations.add(new ArrayList<>());
+                    for(int j = 0; j < aNBT.getInteger("generation." + i + ".count"); j++)
+                        generations.get(i).add(ItemStack.loadItemStackFromNBT(aNBT.getCompoundTag("generation." + i + "." + j)));
+                }
+                growthticks = aNBT.getInteger("growthticks");
+                rn = new Random();
+            }
         }
 
         public boolean addAll(World world, ItemStack input){
@@ -547,7 +568,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
                 if(!cc.canBeHarvested(te))
                     return;
                 // GENERATE DROPS
-                drops = new ArrayList<>();
+                generations = new ArrayList<>();
                 for(int i = 0; i < 10; i++) // get 10 generations
                 {
                     ItemStack[] st = te.harvest_automated(false);
@@ -558,12 +579,9 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
                     }
                     if (st.length == 0)
                         continue;
-                    if(st.length > 1)
-                        for(int j = 1; j < st.length; j++)
-                            st[0].stackSize += st[j].stackSize;
-                    drops.add(st[0]);
+                    generations.add(new ArrayList<>(Arrays.asList(st)));
                 }
-                if(drops.isEmpty())
+                if(generations.isEmpty())
                     return;
                 rn = new Random();
                 input.stackSize --;
@@ -595,19 +613,38 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             return drops;
         }
 
-        double dropprogress = 0d;
+        Map<String, Double> dropprogress = new HashMap<>();
+        static Map<String, ItemStack> dropstacks = new HashMap<>();
 
-        public ItemStack getIC2Drop(int timeelapsed){
+        public List<ItemStack> getIC2Drops(int timeelapsed){
             int r = rn.nextInt(10);
-            if(drops.size() <= r)
-                return null;
-            ItemStack s = drops.get(r).copy();
-            dropprogress += ((double)s.stackSize * ((double)timeelapsed / (double)growthticks));
-            s.stackSize = (int) dropprogress;
-            dropprogress -= (double) ((int)dropprogress);
-            if(s.stackSize == 0)
-                s = null;
-            return s;
+            if(generations.size() <= r)
+                return new ArrayList<>();
+            double growthPercent = ((double)timeelapsed / (double)growthticks);
+            List<ItemStack> generation = generations.get(r);
+            List<ItemStack> copied = new ArrayList<>();
+            for(ItemStack g : generation)
+                copied.add(g.copy());
+            for(ItemStack s : copied)
+            {
+                double pro = ((double)s.stackSize * growthPercent);
+                s.stackSize = 1;
+                if(dropprogress.containsKey(s.toString()))
+                    dropprogress.put(s.toString(), dropprogress.get(s.toString()) + pro);
+                else
+                    dropprogress.put(s.toString(), pro);
+                if(!dropstacks.containsKey(s.toString()))
+                    dropstacks.put(s.toString(), s.copy());
+            }
+            copied.clear();
+            for(Map.Entry<String, Double> entry : dropprogress.entrySet())
+                if(entry.getValue() >= 1d)
+                {
+                    copied.add(dropstacks.get(entry.getKey()).copy());
+                    copied.get(copied.size()-1).stackSize = entry.getValue().intValue();
+                    entry.setValue(entry.getValue() - (double)entry.getValue().intValue());
+                }
+            return copied;
         }
 
         public int addDrops(World world, int count, boolean autocraft){

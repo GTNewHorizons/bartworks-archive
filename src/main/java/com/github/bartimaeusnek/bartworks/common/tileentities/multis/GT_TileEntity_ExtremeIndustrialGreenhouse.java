@@ -39,6 +39,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.*;
 
@@ -54,6 +56,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
     private int setupphase = 1;
     private boolean isIC2Mode = false;
     private byte glasTier = 0;
+    private int waterusage = 0;
     private static final int CASING_INDEX = 49;
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private static final IStructureDefinition<GT_TileEntity_ExtremeIndustrialGreenhouse> STRUCTURE_DEFINITION = StructureDefinition.<GT_TileEntity_ExtremeIndustrialGreenhouse>builder()
@@ -141,6 +144,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             addInfo("Grow your crops like a chad !").
             addInfo("Use screwdriver to enable/change/disable setup mode").
             addInfo("Use screwdriver while sneaking to enable/disable IC2 mode").
+            addInfo("Uses 1000L of water per crop per operation").
             addInfo("-------------------- SETUP   MODE --------------------").
             addInfo("Does not take power").
             addInfo("There are two modes: input / output").
@@ -153,6 +157,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             addInfo("Every tier past EV adds additional 2 slots").
             addInfo("Base process time: 5 sec").
             addInfo("Process time is divided by number of tiers past HV (Minimum 1 sec)").
+            addInfo("All crops are grown at the end of the operation").
             addInfo("Will automatically craft seeds if they are not dropped").
             addInfo("-------------------- IC2    CROPS --------------------").
             addInfo("Minimal tier: UV").
@@ -283,6 +288,14 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
         }
         if(mStorage.isEmpty())
             return false;
+
+        waterusage = 0;
+        for(GreenHouseSlot s : mStorage)
+            waterusage += s.input.stackSize;
+
+        if(!depleteInput(new FluidStack(FluidRegistry.WATER, waterusage * 1000)))
+            return false;
+
         // OVERCLOCK
         if(isIC2Mode)
         {
@@ -347,6 +360,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
     public String[] getInfoData() {
         List<String> info = new ArrayList<>(Arrays.asList(
             "Running in mode: " + EnumChatFormatting.GREEN + (setupphase == 0 ? (isIC2Mode ? "IC2 crops" : "Normal crops") : ("Setup mode " + (setupphase == 1 ? "(input)" : "(output)"))) + EnumChatFormatting.RESET,
+            "Uses " + waterusage * 1000 + "L/s of water",
             "Max slots: " + EnumChatFormatting.GREEN + this.mMaxSlots + EnumChatFormatting.RESET,
             "Used slots: " + EnumChatFormatting.GREEN + this.mStorage.size() + EnumChatFormatting.RESET
         ));

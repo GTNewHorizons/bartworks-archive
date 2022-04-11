@@ -44,13 +44,13 @@ import gregtech.api.util.GT_Utility;
 import gregtech.common.GT_Worldgen_GT_Ore_Layer;
 import gregtech.common.GT_Worldgen_GT_Ore_SmallPieces;
 import gregtech.common.tileentities.machines.multi.GT_MetaTileEntity_DrillerBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.ChunkProviderServer;
 import net.minecraftforge.fluids.FluidStack;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,6 +80,8 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
 
     protected byte TIER_MULTIPLIER;
 
+    private boolean mBlacklist = false;
+
     public static void addMatierialToDimensionList(int DimensionID, ISubTagContainer Material, float weight) {
         if (Material instanceof Materials)
             getExtraDropsDimMap().put(DimensionID, new Pair<>(new Pair<>(((Materials)Material).mMetaItemSubID,false), weight));
@@ -100,12 +102,14 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
         aNBT.setByte("TIER_MULTIPLIER",TIER_MULTIPLIER);
+        aNBT.setBoolean("mBlacklist", mBlacklist);
     }
 
     @Override
     public void loadNBTData(NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
         TIER_MULTIPLIER = aNBT.getByte("TIER_MULTIPLIER");
+        mBlacklist = aNBT.getBoolean("mBlacklist");
     }
 
     public GT_TileEntity_VoidMiner_Base(String aName, int tier) {
@@ -163,8 +167,9 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
                 .addInfo("Consumes " + GT_Values.V[this.getMinTier()] + "EU/t")
                 .addInfo("Can be supplied with 2L/s of Neon(x4), Krypton(x8), Xenon(x16) or Oganesson(x64) for higher outputs.")
                 .addInfo("Will output "+(2*TIER_MULTIPLIER)+" Ores per Second depending on the Dimension it is build in")
-                .addInfo("Put the Ore into the input bus to set the white list")
-                .addInfo("Non whitelist ore will be voided")
+                .addInfo("Put the Ore into the input bus to set the Whitelist/Blacklist")
+                .addInfo("Use a screwdriver to toggle Whitelist/Blacklist")
+                .addInfo("Blacklist or non Whitelist Ore will be VOIDED")
                 .addSeparator()
                 .beginStructureBlock(3, 7, 3, false)
                 .addController("Front bottom")
@@ -420,15 +425,18 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
 
     private void handleOutputs() {
         Pair<Integer, Boolean> stats = getOreDamage();
-        final List<ItemStack> inputs = this.getStoredInputs().stream().filter(GT_Utility::isOre).collect(Collectors.toList());
+        final List<ItemStack> inputOres = this.getStoredInputs().stream().filter(GT_Utility::isOre).collect(Collectors.toList());
         final ItemStack output = new ItemStack(stats.getValue() ? WerkstoffLoader.BWOres : GregTech_API.sBlockOres1, multiplier, stats.getKey());
-        if (inputs.size() == 0) {
-            this.addOutput(output);
-        } else {
-            if (inputs.stream().anyMatch(is -> GT_Utility.areStacksEqual(is, output))) {
-                this.addOutput(output);
-            }
-        }
+        if (inputOres.size() == 0
+            || (mBlacklist && inputOres.stream().allMatch(is -> !GT_Utility.areStacksEqual(is, output)))
+            || (!mBlacklist && inputOres.stream().anyMatch(is -> GT_Utility.areStacksEqual(is, output)))
+        ) this.addOutput(output);
         this.updateSlots();
+    }
+
+    @Override
+    public void onScrewdriverRightClick(byte aSide, EntityPlayer aPlayer, float aX, float aY, float aZ) {
+        mBlacklist = !mBlacklist;
+        GT_Utility.sendChatToPlayer(aPlayer, "Mode: " + (mBlacklist ? "Blacklist" : "Whitelist"));
     }
 }

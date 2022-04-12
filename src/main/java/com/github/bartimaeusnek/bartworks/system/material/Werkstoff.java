@@ -183,7 +183,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
 
         this.mID = (short) mID;
         this.defaultName = defaultName;
-        this.localizedName = GT_LanguageManager.addStringLocalization("bw.werkstoff." + this.mID + ".name", defaultName);
+        this.localizedName = GT_LanguageManager.addStringLocalization(String.format("bw.werkstoff.%05d.name", this.mID), defaultName);
         this.stats = stats;
         this.type = type;
         this.generationFeatures = generationFeatures;
@@ -220,7 +220,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
 //        if (this.toolTip.length() > 25)
 //            this.toolTip = "The formula is to long...";
 
-        this.localizedToolTip = GT_LanguageManager.addStringLocalization("bw.werkstoff." + this.mID + ".tooltip", toolTip);
+        this.localizedToolTip = GT_LanguageManager.addStringLocalization(String.format("bw.werkstoff.%05d.tooltip", this.mID), toolTip);
 
         if (this.stats.protons == 0) {
             long tmpprotons = 0;

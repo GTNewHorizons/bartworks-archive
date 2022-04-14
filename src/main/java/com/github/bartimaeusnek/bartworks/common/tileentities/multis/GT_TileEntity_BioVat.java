@@ -64,6 +64,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -99,8 +100,8 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
     private int mSievert;
     private int mNeededSievert;
     private int mCasing = 0;
-    private int mExpectedTimes = 1;
-    private int mTimes = 1;
+    private int mExpectedTimes = 0;
+    private int mTimes = 0;
 
     public GT_TileEntity_BioVat(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -240,6 +241,21 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
         return BWRecipes.instance.getMappingsFor(BWRecipes.BACTERIALVATBYTE);
     }
 
+    /**
+     * Calculates the expected output multiplier based on the output hatch
+     * @param recipeFluidOutput the recipe fluid output
+     * @param needEqual if the recipeFluidOutput should be equal to the fluid in the output hatch
+     * @return the expected output multiplier
+     */
+    private int getExpectedTimes(@Nullable FluidStack recipeFluidOutput, boolean needEqual) {
+        FluidStack storedFluidOutputs = this.getStoredFluidOutputs();
+        if (storedFluidOutputs == null) return 1;
+        if (!needEqual || storedFluidOutputs.isFluidEqual(recipeFluidOutput)) {
+            return this.calcMod(storedFluidOutputs.amount) + 1;
+        }
+        return 1;
+    }
+
     private int calcMod(double x) {
         double y = (((double) this.getOutputCapacity()) / 2D),
                z = ConfigHandler.bioVatMaxParallelBonus;
@@ -320,18 +336,14 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
         this.mEfficiency = (10000 - (this.getIdealStatus() - this.getRepairStatus()) * 1000);
         this.mEfficiencyIncrease = 10000;
 
-        this.mExpectedTimes = 1;
-        this.mTimes = 1;
-
         if (!gtRecipe.isRecipeInputEqual(true, tFluids, tInputs)) return false;
 
         final FluidStack recipeFluidOutput = gtRecipe.getFluidOutput(0);
         final FluidStack recipeFluidInput = gtRecipe.mFluidInputs[0];
 
-        FluidStack storedFluidOutputs = this.getStoredFluidOutputs();
-        if (storedFluidOutputs != null && storedFluidOutputs.isFluidEqual(recipeFluidOutput))
-            this.mExpectedTimes += this.calcMod(storedFluidOutputs.amount);
+        this.mExpectedTimes = this.getExpectedTimes(recipeFluidOutput, true);
 
+        this.mTimes = 1;
         for (int i = 1; i < this.mExpectedTimes; i++) {
             if (this.depleteInput(recipeFluidInput)) {
                 this.mTimes++;
@@ -566,6 +578,12 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
             if (this.getBaseMetaTileEntity().isActive() && this.mNeededSievert > this.mSievert)
                 this.mOutputFluids = null;
         }
+        if (aBaseMetaTileEntity.isServerSide()) {
+            if (this.mMaxProgresstime <= 0) {
+                this.mTimes = 0;
+                this.mMaxProgresstime = 0;
+            }
+        }
     }
 
     @Override
@@ -663,9 +681,9 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
         final String[] infoData = new String[baseInfoData.length + 2];
         System.arraycopy(baseInfoData, 0, infoData, 0, baseInfoData.length);
         infoData[infoData.length - 2] = StatCollector.translateToLocal("BW.infoData.BioVat.expectedProduction") + ": " +
-            EnumChatFormatting.GREEN + mExpectedTimes * 100 + EnumChatFormatting.RESET + " %";
+            EnumChatFormatting.GREEN + (mMaxProgresstime <= 0 ? getExpectedTimes(null, false) : mExpectedTimes) * 100 + EnumChatFormatting.RESET + " %";
         infoData[infoData.length - 1] = StatCollector.translateToLocal("BW.infoData.BioVat.production") + ": " +
-            EnumChatFormatting.GREEN + mTimes * 100 + EnumChatFormatting.RESET + " %";
+            EnumChatFormatting.GREEN + (mMaxProgresstime <= 0 ? 0 : mTimes) * 100 + EnumChatFormatting.RESET + " %";
         return infoData;
     }
 }

@@ -55,6 +55,8 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -653,5 +655,17 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
     @Override
     public void construct(ItemStack itemStack, boolean b) {
         buildPiece(STRUCTURE_PIECE_MAIN, itemStack, b, 2, 3, 0);
+    }
+
+    @Override
+    public String[] getInfoData() {
+        final String[] baseInfoData = super.getInfoData();
+        final String[] infoData = new String[baseInfoData.length + 2];
+        System.arraycopy(baseInfoData, 0, infoData, 0, baseInfoData.length);
+        infoData[infoData.length - 2] = StatCollector.translateToLocal("BW.infoData.BioVat.expectedProduction") + ": " +
+            EnumChatFormatting.GREEN + mExpectedTimes * 100 + EnumChatFormatting.RESET + " %";
+        infoData[infoData.length - 1] = StatCollector.translateToLocal("BW.infoData.BioVat.production") + ": " +
+            EnumChatFormatting.GREEN + mTimes * 100 + EnumChatFormatting.RESET + " %";
+        return infoData;
     }
 }

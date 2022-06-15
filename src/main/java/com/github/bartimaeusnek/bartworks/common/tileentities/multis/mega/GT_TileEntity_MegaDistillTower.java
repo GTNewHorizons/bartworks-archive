@@ -275,29 +275,7 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
     @Override
     public boolean checkRecipe(ItemStack aStack) {
 
-        ArrayList<ItemStack> tInputList = new ArrayList<>();
-
-        if(getStackInSlot(1) != null && getStackInSlot(1).getUnlocalizedName().startsWith("gt.integrated_circuit")) {
-            tInputList.add(getStackInSlot(1));
-        }
-
-        int tInputList_sS = tInputList.size();
-        for (int i = 0; i < tInputList_sS - 1; i++) {
-            for (int j = i + 1; j < tInputList_sS; j++) {
-                if (GT_Utility.areStacksEqual(tInputList.get(i), tInputList.get(j))) {
-                    if (tInputList.get(i).stackSize >= tInputList.get(j).stackSize) {
-                        tInputList.remove(j--);
-                        tInputList_sS = tInputList.size();
-                    } else {
-                        tInputList.remove(i--);
-                        tInputList_sS = tInputList.size();
-                        break;
-                    }
-                }
-            }
-        }
-        tInputList.add(mInventory[1]);
-        ItemStack[] tItems = tInputList.toArray(new ItemStack[0]);
+        ItemStack[] tItems = getCompactedInputs();
 
         ArrayList<FluidStack> tFluidList = this.getStoredFluids();
 
@@ -312,8 +290,6 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
                 }
             }
         }
-
-
 
         long tVoltage = this.getMaxInputVoltage();
         byte tTier = (byte) Math.max(0, Math.min(GT_Utility.getTier(tVoltage), V.length - 1));

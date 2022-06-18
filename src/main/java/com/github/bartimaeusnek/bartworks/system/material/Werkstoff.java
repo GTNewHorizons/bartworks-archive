@@ -960,12 +960,13 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
             if (this.neutrons != that.neutrons) return false;
             if (this.electrons != that.electrons) return false;
             if (Math.abs(this.ebfGasRecipeTimeMultiplier - that.ebfGasRecipeTimeMultiplier) > 1.0e-6D) return false;
+            if (Math.abs(this.ebfGasRecipeConsumedAmountMultiplier - that.ebfGasRecipeConsumedAmountMultiplier) > 1.0e-6D) return false;
             return this.quality == that.quality;
         }
 
         @Override
         public int hashCode() {
-            return MurmurHash3.murmurhash3_x86_32(ByteBuffer.allocate(49).put(this.quality).putInt(this.boilingPoint).putInt(this.meltingPoint).putLong(this.protons).putLong(this.neutrons).putLong(this.electrons).putLong(this.mass).array(), 0, 49, 31);
+            return MurmurHash3.murmurhash3_x86_32(ByteBuffer.allocate(49).put(this.quality).putInt(this.boilingPoint).putInt(this.meltingPoint).putLong(this.protons).putLong(this.neutrons).putLong(this.electrons).putLong(this.mass).putDouble(this.ebfGasRecipeTimeMultiplier).putDouble(this.ebfGasRecipeConsumedAmountMultiplier).array(), 0, 49, 31);
         }
 
         public Werkstoff.Stats setMass(long mass) {

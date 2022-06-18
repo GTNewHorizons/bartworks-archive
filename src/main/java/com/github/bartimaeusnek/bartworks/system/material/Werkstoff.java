@@ -22,6 +22,7 @@
 
 package com.github.bartimaeusnek.bartworks.system.material;
 
+import com.github.bartimaeusnek.bartworks.common.loaders.StaticRecipeChangeLoaders;
 import com.github.bartimaeusnek.bartworks.system.oredict.OreDictHandler;
 import com.github.bartimaeusnek.bartworks.util.BW_ColorUtil;
 import com.github.bartimaeusnek.bartworks.util.BW_Util;
@@ -850,6 +851,33 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
             return this;
         }
 
+        public double getEbfGasRecipeTimeMultiplier() {
+            return this.ebfGasRecipeTimeMultiplier;
+        }
+
+        /**
+         * The generated EBF recipes using this gas will have their duration multiplied by this number.
+         * If set to a negative value, the default proton count-based logic is used.
+         * For GT Materials gases, add the overrides to {@link StaticRecipeChangeLoaders#addEBFGasRecipes()}
+         */
+        public Werkstoff.Stats setEbfGasRecipeTimeMultiplier(double timeMultiplier) {
+            this.ebfGasRecipeTimeMultiplier = timeMultiplier;
+            return this;
+        }
+
+        public double getEbfGasRecipeConsumedAmountMultiplier() {
+            return this.ebfGasRecipeConsumedAmountMultiplier;
+        }
+
+        /**
+         * The generated EBF recipes using this gas will have the amount of gas consumed multiplied by this number.
+         * For GT Materials gases, add the overrides to {@link StaticRecipeChangeLoaders#addEBFGasRecipes()}
+         */
+        public Werkstoff.Stats setEbfGasRecipeConsumedAmountMultiplier(double amountMultiplier) {
+            this.ebfGasRecipeConsumedAmountMultiplier = amountMultiplier;
+            return this;
+        }
+
         public int getDurOverride() {
             return durOverride;
         }
@@ -886,6 +914,8 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         private long neutrons;
         private long electrons;
         private long mass;
+        private double ebfGasRecipeTimeMultiplier = -1.0;
+        private double ebfGasRecipeConsumedAmountMultiplier = 1.0;
 
         float durMod = 1f;
 
@@ -929,6 +959,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
             if (this.protons != that.protons) return false;
             if (this.neutrons != that.neutrons) return false;
             if (this.electrons != that.electrons) return false;
+            if (Math.abs(this.ebfGasRecipeTimeMultiplier - that.ebfGasRecipeTimeMultiplier) > 1.0e-6D) return false;
             return this.quality == that.quality;
         }
 

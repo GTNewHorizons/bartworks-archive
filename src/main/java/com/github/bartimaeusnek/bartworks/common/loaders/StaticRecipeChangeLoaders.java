@@ -426,7 +426,7 @@ public class StaticRecipeChangeLoaders {
                 new ItemStack[]{GT_Values.NI},
                 new ItemStack[]{GT_ModHandler.getModItem("eternalsingularity", "eternal_singularity", 1L)},
                 null,
-                new FluidStack[]{Materials.SpaceTime.getFluid(1L)},
+                new FluidStack[]{Materials.SpaceTime.getMolten(1L)},
                 new FluidStack[]{GT_Values.NF},
                 100*20, 128_000_000, 1); // aSpecialVaue has no meaning here.
         }

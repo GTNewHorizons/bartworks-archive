@@ -1230,11 +1230,12 @@ public class WerkstoffLoader {
             subscriptNumbers("NaNO3"),
             new Werkstoff.Stats(),
             Werkstoff.Types.MIXTURE,
-            new Werkstoff.GenerationFeatures().disable().onlyDust().addChemicalRecipes(),
+            new Werkstoff.GenerationFeatures().disable().onlyDust(),
             82,
             TextureSet.SET_ROUGH,
             new Pair<>(Materials.Sodium, 1),
-            new Pair<>(Materials.NitricAcid, 1)
+            new Pair<>(Materials.Nitrogen, 1),
+            new Pair<>(Materials.Oxygen, 3)
     );
     public static final Werkstoff RHNitrate = new Werkstoff(
             new short[]{0x77, 0x66, 0x49},

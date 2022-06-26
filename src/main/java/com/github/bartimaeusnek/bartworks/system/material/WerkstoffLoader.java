@@ -1412,21 +1412,27 @@ public class WerkstoffLoader {
         new short[]{0x2c, 0x70, 0xb5},
         "Hexafluorosilicic Acid",
         subscriptNumbers("H2SiF6"),
-        new Werkstoff.Stats(),
+        new Werkstoff.Stats().setElektrolysis(true),
         Werkstoff.Types.COMPOUND,
         new Werkstoff.GenerationFeatures().disable().addCells(),
         98,
-        TextureSet.SET_FLUID
+        TextureSet.SET_FLUID,
+        new Pair<>(Materials.Hydrogen, 2),
+        new Pair<>(Materials.Silicon, 1),
+        new Pair<>(Materials.Fluorine, 6)
     );
     public static final Werkstoff Potassiumfluorosilicate = new Werkstoff(
         new short[]{0x2e, 0x97, 0xb2},
         "Potassiumfluorosilicate",
         subscriptNumbers("K2SiF6"),
-        new Werkstoff.Stats(),
+        new Werkstoff.Stats().setElektrolysis(true),
         Werkstoff.Types.COMPOUND,
         new Werkstoff.GenerationFeatures().disable().onlyDust(),
         99,
-        TextureSet.SET_SHINY
+        TextureSet.SET_SHINY,
+        new Pair<>(Materials.Potassium, 2),
+        new Pair<>(Materials.Silicon, 1),
+        new Pair<>(Materials.Fluorine, 6)
     );
     public static final Werkstoff Alumina = new Werkstoff(
         new short[]{0xa0, 0xad, 0xb1},

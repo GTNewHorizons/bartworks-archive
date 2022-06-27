@@ -179,7 +179,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             addInfo("Minimal tier: " + ChatColorHelper.DARKPURPLE + "EV").
             addInfo("Starting with 1 slot").
             addInfo("Every slot gives 64 crops").
-            addInfo("Every tier past " + ChatColorHelper.DARKPURPLE + "EV" + ChatColorHelper.GRAY + " adds additional 2 slots").
+            addInfo("Every tier past " + ChatColorHelper.DARKPURPLE + "EV" + ChatColorHelper.GRAY + ", slots are multiplied by 2").
             addInfo("Base process time: 5 sec").
             addInfo("Process time is divided by number of tiers past " + ChatColorHelper.GOLD + "HV" + ChatColorHelper.GRAY + " (Minimum 1 sec)").
             addInfo("All crops are grown at the end of the operation").
@@ -307,7 +307,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
         else if(isIC2Mode)
             mMaxSlots = 4 << (2 * (tier - 6));
         else
-            mMaxSlots = (tier - 4) * 2 + 1;
+            mMaxSlots = 1 << (tier - 4);
         if(mStorage.size() > mMaxSlots)
         {
             // Void if user just downgraded power

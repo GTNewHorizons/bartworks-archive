@@ -35,7 +35,7 @@ public class BW_Tooltip_Reference {
     public static final String TT = TT_NO_RESET + GRAY;
     public static final Supplier<String> ADDED_BY_BARTIMAEUSNEK_VIA_BARTWORKS = () -> StatCollector.translateToLocal("tooltip.bw.1.name") + " " + BW;
     public static final Supplier<String> ADDED_BY_BARTWORKS = () -> StatCollector.translateToLocal("tooltip.bw.0.name") + " " + BW;
-    public static final Function<String, String> ADDED_VIA_BARTWORKS = owner -> StatCollector.translateToLocal("tooltip.bw.0.name") + " " + owner + RESET + GRAY + " " + StatCollector.translateToLocal("tooltip.bw.via.name") + " " + BW;
+    public static final Function<String, String> ADDED_VIA_BARTWORKS = owner -> String.format(StatCollector.translateToLocal("tooltip.bw.via.name"), owner);
     public static final String ADV_STR_CHECK = "Uses an advanced "+ TT +" structure check, due to "+ BW;
     public static final String TT_BLUEPRINT = "To see the structure, use a "+ TT + " Blueprint on the Controller!";
 

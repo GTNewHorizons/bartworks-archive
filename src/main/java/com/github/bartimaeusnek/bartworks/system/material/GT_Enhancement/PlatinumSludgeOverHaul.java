@@ -194,7 +194,7 @@ public class PlatinumSludgeOverHaul {
         GT_Values.RA.addMixerRecipe(RHSalt.get(dust, 10), null, null, null, Materials.Water.getFluid(2000), RHSaltSolution.getFluidOrGas(2000), null, 300, 30);
         GT_Values.RA.addChemicalRecipe(SodiumNitrate.get(dust, 5), GT_Utility.getIntegratedCircuit(1), RHSaltSolution.getFluidOrGas(1000), null, RHNitrate.get(dust), Materials.Salt.getDust(2), 300);
         //Na + HNO3 = NaNO3 + H
-        GT_Values.RA.addChemicalRecipe(Materials.Sodium.getDust(1), GT_Values.NI, GT_Values.NF, Materials.Hydrogen.getGas(1000), SodiumNitrate.get(dust, 5), 8, 60);
+        GT_Values.RA.addChemicalRecipe(Materials.Sodium.getDust(1), GT_Values.NI, Materials.NitricAcid.getFluid(1000), Materials.Hydrogen.getGas(1000), SodiumNitrate.get(dust, 5), 8, 60);
         GT_Values.RA.addSifterRecipe(RHNitrate.get(dust), new ItemStack[]{
                 RhFilterCake.get(dust),
                 RhFilterCake.get(dust),

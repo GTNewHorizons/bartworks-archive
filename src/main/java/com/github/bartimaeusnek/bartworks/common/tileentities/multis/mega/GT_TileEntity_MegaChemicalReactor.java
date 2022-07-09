@@ -86,7 +86,7 @@ public class GT_TileEntity_MegaChemicalReactor extends GT_TileEntity_MegaMultiBl
                 .beginStructureBlock(5, 5,  9,  false)
                 .addController("Front center")
                 .addStructureInfo("46x Chemically Inert Machine Casing (minimum)")
-                .addSturcutreInfo("7x Fusion Coil Block")
+                .addStructureInfo("7x Fusion Coil Block")
                 .addStructureInfo("28x PTFE Pipe Casing")
                 .addStructureInfo("64x Borosilicate Glass Block (any tier)")
                 .addStructureInfo("The glass tier limits the Energy Input tier")

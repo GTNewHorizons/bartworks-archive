@@ -612,8 +612,33 @@ public class BW_Util {
             case "circuitSuperconductor": return 8;
             case "circuitInfinite": return 9;
             case "circuitBio": return 10;
+            case "circuitNano":
+            case "circuitOptical":
+                return 11;
+            case "circuitPiko":
+            case "circuitExotic":
+                return 12;
+            case "circuitQuantum":
+            case "circuitCosmic":
+                return 13;
+            case "circuitTranscendent":
+                return 14;
             default: return -1;
         }
+    }
+
+    public static byte getCircuitTierFromItemStack(ItemStack stack) {
+        for (String oreName : getOreNames(stack)) {
+            byte tier = getCircuitTierFromOreDictName(oreName);
+            if (tier != -1) {
+                return tier;
+            }
+        }
+        return -1;
+    }
+
+    public static boolean isTieredCircuit(ItemStack stack) {
+        return getCircuitTierFromItemStack(stack) != -1;
     }
 
     public static List<String> getOreNames(ItemStack stack) {

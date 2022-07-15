@@ -117,7 +117,7 @@ public class CircuitImprintLoader {
     }
 
     private static boolean isCircuitOreDict(ItemStack item) {
-        return BW_Util.getOreNames(item).stream().anyMatch(s -> s.contains("Circuit") || s.contains("circuit"));
+        return BW_Util.isTieredCircuit(item);
     }
 
     private static void exchangeRecipesInList(HashSet<GT_Recipe> toRem, HashSet<GT_Recipe> toAdd) {
@@ -138,7 +138,7 @@ public class CircuitImprintLoader {
     public static GT_Recipe makeMoreExpensive(GT_Recipe original) {
         GT_Recipe newRecipe = original.copy();
         for (ItemStack is : newRecipe.mInputs){
-            if (BW_Util.getOreNames(is).stream().noneMatch(s -> s.contains("circuit"))) {
+            if (!BW_Util.isTieredCircuit(is)) {
                 is.stackSize = Math.min(is.stackSize * 6, 64);
                 if (is.stackSize > is.getItem().getItemStackLimit() || is.stackSize > is.getMaxStackSize())
                     is.stackSize = is.getMaxStackSize();

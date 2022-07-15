@@ -49,6 +49,7 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import org.apache.commons.lang3.reflect.FieldUtils;
 
@@ -613,6 +614,14 @@ public class BW_Util {
             case "circuitBio": return 10;
             default: return -1;
         }
+    }
+
+    public static List<String> getOreNames(ItemStack stack) {
+        List<String> ret = new ArrayList<>();
+        for (int oreID : OreDictionary.getOreIDs(stack)) {
+            ret.add(OreDictionary.getOreName(oreID));
+        }
+        return ret;
     }
 
     private static Block bw_realglasRef;

@@ -456,7 +456,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             info.add(a.toString());
         }
         if(mStorage.size() > mMaxSlots)
-            info.add(EnumChatFormatting.DARK_RED + "There is too many crops inside to run !" + EnumChatFormatting.RESET);
+            info.add(EnumChatFormatting.DARK_RED + "There are too many crops inside to run !" + EnumChatFormatting.RESET);
         info.addAll(Arrays.asList(super.getInfoData()));
         return info.toArray(new String[0]);
     }

@@ -23,6 +23,7 @@
 package com.github.bartimaeusnek.bartworks.common.tileentities.multis;
 
 import com.gtnewhorizon.structurelib.StructureLibAPI;
+import com.gtnewhorizon.structurelib.alignment.IAlignmentLimits;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.IStructureElement;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
@@ -48,6 +49,7 @@ import static com.github.bartimaeusnek.bartworks.common.loaders.ItemRegistry.BW_
 import static com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference.MULTIBLOCK_ADDED_BY_BARTWORKS;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
+import static gregtech.api.enums.GT_Values.V;
 import static gregtech.api.util.GT_StructureUtility.ofHatchAdder;
 
 public class GT_TileEntity_ElectricImplosionCompressor extends GT_MetaTileEntity_EnhancedMultiBlockBase<GT_TileEntity_ElectricImplosionCompressor> {
@@ -127,10 +129,10 @@ public class GT_TileEntity_ElectricImplosionCompressor extends GT_MetaTileEntity
         return STRUCTURE_DEFINITION;
     }
 
-//    @Override
-//    protected IAlignmentLimits getInitialAlignmentLimits() {
-//        return (d, r, f) -> d.offsetY == 0 && r.isNotRotated() && f.isNotFlipped();
-//    }
+    @Override
+    protected IAlignmentLimits getInitialAlignmentLimits() {
+        return (d, r, f) -> d.offsetY == 0 && r.isNotRotated() && f.isNotFlipped();
+    }
 
     @Override
     protected GT_Multiblock_Tooltip_Builder createTooltip() {
@@ -166,9 +168,10 @@ public class GT_TileEntity_ElectricImplosionCompressor extends GT_MetaTileEntity
         FluidStack[] tFluidInputs  = getStoredFluids().toArray(new FluidStack[0]);
 
         long tVoltage = getMaxInputVoltage();
+        byte tTier = (byte) Math.max(1, GT_Utility.getTier(tVoltage));
 
         if ((tItemInputs.length > 0) || (tFluidInputs.length > 0)) {
-            GT_Recipe tRecipe = GT_TileEntity_ElectricImplosionCompressor.eicMap.findRecipe(getBaseMetaTileEntity(), false, 9223372036854775807L, getCompactedFluids(), getCompactedInputs());
+            GT_Recipe tRecipe = eicMap.findRecipe(getBaseMetaTileEntity(), false, V[tTier], tFluidInputs, tItemInputs);
             if (tRecipe != null && tRecipe.isRecipeInputEqual(true, tFluidInputs, tItemInputs)) {
                 this.mEfficiency = 10000 - (this.getIdealStatus() - this.getRepairStatus()) * 1000;
                 this.mEfficiencyIncrease = 10000;
@@ -282,7 +285,7 @@ public class GT_TileEntity_ElectricImplosionCompressor extends GT_MetaTileEntity
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack itemStack) {
         if(!checkPiece(STRUCTURE_PIECE_MAIN, 1, 6, 0))
             return false;
-        return (this.mMaintenanceHatches.size() == 1 && this.mEnergyHatches.size() == 2);
+        return this.mMaintenanceHatches.size() == 1 && this.mEnergyHatches.size() == 2;
     }
 
     @Override

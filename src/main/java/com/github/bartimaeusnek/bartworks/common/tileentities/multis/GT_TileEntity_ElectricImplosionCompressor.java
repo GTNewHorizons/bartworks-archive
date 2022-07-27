@@ -29,16 +29,15 @@ import com.gtnewhorizon.structurelib.structure.IStructureElement;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import gregtech.api.GregTech_API;
 import gregtech.api.enums.Textures;
-import gregtech.api.interfaces.IIconContainer;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_EnhancedMultiBlockBase;
+import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Energy;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
-import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Energy;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -48,8 +47,8 @@ import net.minecraftforge.fluids.FluidStack;
 import static com.github.bartimaeusnek.bartworks.common.loaders.ItemRegistry.BW_BLOCKS;
 import static com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference.MULTIBLOCK_ADDED_BY_BARTWORKS;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
-import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static gregtech.api.enums.GT_Values.V;
+import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GT_StructureUtility.ofHatchAdder;
 
 public class GT_TileEntity_ElectricImplosionCompressor extends GT_MetaTileEntity_EnhancedMultiBlockBase<GT_TileEntity_ElectricImplosionCompressor> {
@@ -316,10 +315,17 @@ public class GT_TileEntity_ElectricImplosionCompressor extends GT_MetaTileEntity
 
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, byte aSide, byte aFacing, byte aColorIndex, boolean aActive, boolean aRedstone) {
         if (aSide == aFacing) {
-            return aActive ? new ITexture[]{Textures.BlockIcons.casingTexturePages[0][16], TextureFactory.builder().addIcon(new IIconContainer[]{Textures.BlockIcons.OVERLAY_FRONT_IMPLOSION_COMPRESSOR_ACTIVE}).extFacing().build(), TextureFactory.builder().addIcon(new IIconContainer[]{Textures.BlockIcons.OVERLAY_FRONT_IMPLOSION_COMPRESSOR_ACTIVE_GLOW}).extFacing().glow().build()} : new ITexture[]{Textures.BlockIcons.casingTexturePages[0][16], TextureFactory.builder().addIcon(new IIconContainer[]{Textures.BlockIcons.OVERLAY_FRONT_IMPLOSION_COMPRESSOR}).extFacing().build(), TextureFactory.builder().addIcon(new IIconContainer[]{Textures.BlockIcons.OVERLAY_FRONT_IMPLOSION_COMPRESSOR_GLOW}).extFacing().glow().build()};
-        } else {
-            return new ITexture[]{Textures.BlockIcons.casingTexturePages[0][16]};
+            if (aActive)
+                return new ITexture[]{
+                    Textures.BlockIcons.getCasingTextureForId(CASING_INDEX),
+                    TextureFactory.builder().addIcon(OVERLAY_FRONT_IMPLOSION_COMPRESSOR_ACTIVE).extFacing().build(),
+                    TextureFactory.builder().addIcon(OVERLAY_FRONT_IMPLOSION_COMPRESSOR_ACTIVE_GLOW).extFacing().glow().build()};
+            return new ITexture[]{
+                Textures.BlockIcons.getCasingTextureForId(CASING_INDEX),
+                TextureFactory.builder().addIcon(OVERLAY_FRONT_IMPLOSION_COMPRESSOR).extFacing().build(),
+                TextureFactory.builder().addIcon(OVERLAY_FRONT_IMPLOSION_COMPRESSOR_GLOW).extFacing().glow().build()};
         }
+        return new ITexture[]{Textures.BlockIcons.getCasingTextureForId(CASING_INDEX)};
     }
 
     @Override

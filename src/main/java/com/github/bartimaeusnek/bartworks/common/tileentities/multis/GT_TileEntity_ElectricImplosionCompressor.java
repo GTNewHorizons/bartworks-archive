@@ -55,7 +55,7 @@ import static gregtech.api.util.GT_StructureUtility.ofHatchAdder;
 public class GT_TileEntity_ElectricImplosionCompressor extends GT_MetaTileEntity_EnhancedMultiBlockBase<GT_TileEntity_ElectricImplosionCompressor> {
 
     public static GT_Recipe.GT_Recipe_Map eicMap;
-    private static boolean pistonEnabled = false; // TODO: config
+    private static final boolean pistonEnabled = true; // TODO: config
     private Boolean piston = true;
 
     public GT_TileEntity_ElectricImplosionCompressor(int aID, String aName, String aNameRegional) {
@@ -164,8 +164,8 @@ public class GT_TileEntity_ElectricImplosionCompressor extends GT_MetaTileEntity
         if (this.mEnergyHatches.get(0).getEUVar() <= 0 || this.mEnergyHatches.get(1).getEUVar() <= 0)
             return false;
 
-        ItemStack[] tItemInputs = getStoredInputs().toArray(new ItemStack[0]);
-        FluidStack[] tFluidInputs  = getStoredFluids().toArray(new FluidStack[0]);
+        ItemStack[] tItemInputs = getCompactedInputs();
+        FluidStack[] tFluidInputs  = getCompactedFluids();
 
         long tVoltage = getMaxInputVoltage();
         byte tTier = (byte) Math.max(1, GT_Utility.getTier(tVoltage));

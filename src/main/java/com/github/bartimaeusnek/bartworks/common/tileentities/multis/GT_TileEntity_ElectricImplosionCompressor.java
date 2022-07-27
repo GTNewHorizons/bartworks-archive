@@ -151,6 +151,7 @@ public class GT_TileEntity_ElectricImplosionCompressor extends GT_MetaTileEntity
             addOtherStructurePart("Neutronium Blocks", "Layer 4,5,6").
             addMaintenanceHatch("Any bottom casing", 1).
             addInputBus("Any bottom casing", 1).
+            addInputHatch("Any bottom casing", 1).
             addOutputBus("Any bottom casing", 1).
             addEnergyHatch("Bottom and top middle", 2).
             toolTipFinisher(MULTIBLOCK_ADDED_BY_BARTWORKS);

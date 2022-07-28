@@ -22,6 +22,7 @@
 
 package com.github.bartimaeusnek.bartworks.common.tileentities.multis;
 
+import com.github.bartimaeusnek.bartworks.common.configs.ConfigHandler;
 import com.gtnewhorizon.structurelib.StructureLibAPI;
 import com.gtnewhorizon.structurelib.alignment.IAlignmentLimits;
 import com.gtnewhorizon.structurelib.alignment.enumerable.ExtendedFacing;
@@ -57,7 +58,7 @@ import static gregtech.api.util.GT_StructureUtility.ofHatchAdder;
 public class GT_TileEntity_ElectricImplosionCompressor extends GT_MetaTileEntity_EnhancedMultiBlockBase<GT_TileEntity_ElectricImplosionCompressor> {
 
     public static GT_Recipe.GT_Recipe_Map eicMap;
-    private static final boolean pistonEnabled = true; // TODO: config
+    private static final boolean pistonEnabled = !ConfigHandler.disablePistonInEIC;
     private Boolean piston = true;
     private static final String sound = GregTech_API.sSoundList.get(5);
     private final ArrayList<ChunkCoordinates> chunkCoordinates = new ArrayList<>(5);

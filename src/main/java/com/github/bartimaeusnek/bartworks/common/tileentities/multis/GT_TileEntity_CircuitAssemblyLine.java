@@ -45,6 +45,7 @@ import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -112,7 +113,7 @@ public class GT_TileEntity_CircuitAssemblyLine extends GT_MetaTileEntity_Enhance
             addStructureInfo("Up to 7 repeating slices, last is Output Bus").
 
             addController("Layer 3 first slice front").
-            addEnergyHatch("Any layer 3 casing", 1).
+            addOtherStructurePart("1x " + StatCollector.translateToLocal("GT5U.MBTT.EnergyHatch"), "Any layer 3 casing", 1).
             addInputHatch("Any layer 1 casing", 2).
             addInputBus("As specified on layer 1", 3, 4).
             addOutputBus("As specified in final slice on layer 1", 4).

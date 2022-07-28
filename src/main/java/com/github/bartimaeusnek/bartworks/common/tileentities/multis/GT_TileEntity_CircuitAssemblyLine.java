@@ -22,20 +22,21 @@
 
 package com.github.bartimaeusnek.bartworks.common.tileentities.multis;
 
-import com.github.bartimaeusnek.bartworks.common.loaders.ItemRegistry;
 import com.github.bartimaeusnek.bartworks.system.material.CircuitGeneration.BW_Meta_Items;
 import com.github.bartimaeusnek.bartworks.system.material.CircuitGeneration.CircuitImprintLoader;
 import com.github.bartimaeusnek.bartworks.util.BWRecipes;
 import com.github.bartimaeusnek.bartworks.util.BW_Util;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import cpw.mods.fml.common.registry.GameRegistry;
 import gregtech.api.GregTech_API;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
-import gregtech.api.metatileentity.implementations.*;
+import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_EnhancedMultiBlockBase;
+import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch;
+import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Input;
+import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_InputBus;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GT_LanguageManager;
 import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
@@ -49,6 +50,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import static com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference.ADDED_BY_BARTIMAEUSNEK_VIA_BARTWORKS;
+import static com.github.bartimaeusnek.bartworks.util.BW_Util.ofGlassTieredMixed;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GT_StructureUtility.ofHatchAdder;
@@ -70,18 +72,7 @@ public class GT_TileEntity_CircuitAssemblyLine extends GT_MetaTileEntity_Enhance
             .addElement('G', ofChain(
                     ofHatchAdder(GT_TileEntity_CircuitAssemblyLine::addEnergyInputToMachineList, 16, 1), //grate machine casings
                     ofBlock(GregTech_API.sBlockCasings3, 10)))
-            .addElement('g', ofChain(
-                    ofBlockAnyMeta(GameRegistry.findBlock("IC2", "blockAlloyGlass")),
-                    //Forgive me for I have sinned. But it works...
-                    ofBlock(ItemRegistry.bw_realglas, 1),
-                    ofBlock(ItemRegistry.bw_realglas, 2),
-                    ofBlock(ItemRegistry.bw_realglas, 3),
-                    ofBlock(ItemRegistry.bw_realglas, 4),
-                    ofBlock(ItemRegistry.bw_realglas, 5),
-                    ofBlock(ItemRegistry.bw_realglas, 12),
-                    ofBlock(ItemRegistry.bw_realglas, 13),
-                    ofBlock(ItemRegistry.bw_realglas, 14)
-            ))
+            .addElement('g', ofGlassTieredMixed((byte)4, (byte)255, 5))
             .addElement('l', ofBlock(GregTech_API.sBlockCasings2, 5)) //assembling line casings
             .addElement('b', ofChain(
                     ofHatchAdder(GT_TileEntity_CircuitAssemblyLine::addMaintenanceToMachineList, 16, 2),

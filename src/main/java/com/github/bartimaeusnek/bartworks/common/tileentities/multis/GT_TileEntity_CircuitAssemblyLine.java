@@ -101,8 +101,9 @@ public class GT_TileEntity_CircuitAssemblyLine extends GT_MetaTileEntity_Enhance
             addMachineType("Circuit Assembler").
             addInfo("Controller block for the Circuit Assembly Line").
             addInfo("Imprint this machine with a Circuit Imprint,").
-            addInfo("by putting the imprint in the controller.").
-            addInfo("Every Circuit Assembly Line can only be imprinted ONCE.").
+            addInfo("by putting the imprint in the controller").
+            addInfo("Every Circuit Assembly Line can only be imprinted ONCE").
+            addInfo("Does not lose efficiency when overclocked").
             addInfo(BW_Tooltip_Reference.TT_BLUEPRINT).
             addSeparator().
             beginVariableStructureBlock(2, 7, 3, 3, 3, 3, false).

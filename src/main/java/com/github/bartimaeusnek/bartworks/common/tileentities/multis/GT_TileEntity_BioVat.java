@@ -120,7 +120,7 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
             isAir(),
             ofBlockAnyMeta(FluidLoader.bioFluidBlock)
         ))
-        .addElement('g', ofGlassTiered((byte)0, (byte)255, (byte)0, (te, v) -> te.mGlassTier = v, te -> te.mGlassTier, 1))
+        .addElement('g', ofGlassTiered((byte)1, (byte)127, (byte)0, (te, v) -> te.mGlassTier = v, te -> te.mGlassTier, 1))
         .build();
 
     @Override

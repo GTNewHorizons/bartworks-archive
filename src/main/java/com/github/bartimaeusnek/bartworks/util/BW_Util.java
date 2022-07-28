@@ -682,7 +682,11 @@ public class BW_Util {
         return new IStructureElementNoPlacement<T>(){
             @Override
             public boolean check(T te, World world, int x, int y, int z) {
+                if(world.isAirBlock(x, y, z))
+                    return false;
                 byte glasstier = BW_Util.calculateGlassTier(world.getBlock(x, y, z), (byte)world.getBlockMetadata(x, y, z));
+                if(glasstier == 0) // is not a glass ?
+                    return false;
                 if(glasstier == notset)
                     return false;
                 if(glasstier < mintier)
@@ -706,7 +710,11 @@ public class BW_Util {
         return new IStructureElementNoPlacement<T>(){
             @Override
             public boolean check(T te, World world, int x, int y, int z) {
+                if(world.isAirBlock(x, y, z))
+                    return false;
                 byte glasstier = BW_Util.calculateGlassTier(world.getBlock(x, y, z), (byte)world.getBlockMetadata(x, y, z));
+                if(glasstier == 0) // is not a glass ?
+                    return false;
                 return glasstier >= mintier && glasstier <= maxtier;
             }
 

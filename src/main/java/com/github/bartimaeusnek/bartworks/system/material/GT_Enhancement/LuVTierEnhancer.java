@@ -142,7 +142,7 @@ public class LuVTierEnhancer implements Runnable {
     private static void rewriteCraftingRecipes(List<IRecipe> bufferedRecipeList, OrePrefixes[] LuVMaterialsGenerated, Predicate recipeFilter){
         for (OrePrefixes prefixes : LuVMaterialsGenerated) {
 
-            Consumer recipeAction = obj -> LuVTierEnhancer.doStacksCointainAndReplace(null, ((GT_Shaped_Recipe) obj).getInput(),
+            Consumer recipeAction = obj -> LuVTierEnhancer.doStacksContainAndReplace(null, ((GT_Shaped_Recipe) obj).getInput(),
                     GT_OreDictUnificator.get(prefixes, Materials.Chrome, 1), true,
                     WerkstoffLoader.LuVTierMaterial.get(prefixes));
 
@@ -152,39 +152,39 @@ public class LuVTierEnhancer implements Runnable {
     }
 
     private static void rewriteMachineRecipes(ItemStack stack, OrePrefixes[] LuVMaterialsGenerated, GT_Recipe recipe) {
-        if (LuVTierEnhancer.doStacksCointainAndReplace(recipe, recipe.mInputs, stack, false)) {
+        if (LuVTierEnhancer.doStacksContainAndReplace(recipe, recipe.mInputs, stack, false)) {
             for (OrePrefixes prefixes : LuVMaterialsGenerated) {
-                LuVTierEnhancer.doStacksCointainAndReplace(recipe, recipe.mInputs, GT_OreDictUnificator.get(prefixes, Materials.Chrome, 1), true, WerkstoffLoader.LuVTierMaterial.get(prefixes));
-                LuVTierEnhancer.doStacksCointainAndReplace(recipe, recipe.mOutputs, GT_OreDictUnificator.get(prefixes, Materials.Chrome, 1), true, WerkstoffLoader.LuVTierMaterial.get(prefixes));
+                LuVTierEnhancer.doStacksContainAndReplace(recipe, recipe.mInputs, GT_OreDictUnificator.get(prefixes, Materials.Chrome, 1), true, WerkstoffLoader.LuVTierMaterial.get(prefixes));
+                LuVTierEnhancer.doStacksContainAndReplace(recipe, recipe.mOutputs, GT_OreDictUnificator.get(prefixes, Materials.Chrome, 1), true, WerkstoffLoader.LuVTierMaterial.get(prefixes));
             }
-            LuVTierEnhancer.doStacksCointainAndReplace(recipe, recipe.mFluidInputs, Materials.Chrome.getMolten(1), true, WerkstoffLoader.LuVTierMaterial.getMolten(1).getFluid());
-            LuVTierEnhancer.doStacksCointainAndReplace(recipe, recipe.mFluidOutputs, Materials.Chrome.getMolten(1), true, WerkstoffLoader.LuVTierMaterial.getMolten(1).getFluid());
+            LuVTierEnhancer.doStacksContainAndReplace(recipe, recipe.mFluidInputs, Materials.Chrome.getMolten(1), true, WerkstoffLoader.LuVTierMaterial.getMolten(1).getFluid());
+            LuVTierEnhancer.doStacksContainAndReplace(recipe, recipe.mFluidOutputs, Materials.Chrome.getMolten(1), true, WerkstoffLoader.LuVTierMaterial.getMolten(1).getFluid());
         }
-        if (LuVTierEnhancer.doStacksCointainAndReplace(recipe, recipe.mOutputs, stack, false)) {
+        if (LuVTierEnhancer.doStacksContainAndReplace(recipe, recipe.mOutputs, stack, false)) {
             for (OrePrefixes prefixes : LuVMaterialsGenerated) {
-                LuVTierEnhancer.doStacksCointainAndReplace(recipe, recipe.mInputs, GT_OreDictUnificator.get(prefixes, Materials.Chrome, 1), true, WerkstoffLoader.LuVTierMaterial.get(prefixes));
-                LuVTierEnhancer.doStacksCointainAndReplace(recipe, recipe.mOutputs, GT_OreDictUnificator.get(prefixes, Materials.Chrome, 1), true, WerkstoffLoader.LuVTierMaterial.get(prefixes));
+                LuVTierEnhancer.doStacksContainAndReplace(recipe, recipe.mInputs, GT_OreDictUnificator.get(prefixes, Materials.Chrome, 1), true, WerkstoffLoader.LuVTierMaterial.get(prefixes));
+                LuVTierEnhancer.doStacksContainAndReplace(recipe, recipe.mOutputs, GT_OreDictUnificator.get(prefixes, Materials.Chrome, 1), true, WerkstoffLoader.LuVTierMaterial.get(prefixes));
             }
-            LuVTierEnhancer.doStacksCointainAndReplace(recipe, recipe.mFluidInputs, Materials.Chrome.getMolten(1), true, WerkstoffLoader.LuVTierMaterial.getMolten(1).getFluid());
-            LuVTierEnhancer.doStacksCointainAndReplace(recipe, recipe.mFluidOutputs, Materials.Chrome.getMolten(1), true, WerkstoffLoader.LuVTierMaterial.getMolten(1).getFluid());
+            LuVTierEnhancer.doStacksContainAndReplace(recipe, recipe.mFluidInputs, Materials.Chrome.getMolten(1), true, WerkstoffLoader.LuVTierMaterial.getMolten(1).getFluid());
+            LuVTierEnhancer.doStacksContainAndReplace(recipe, recipe.mFluidOutputs, Materials.Chrome.getMolten(1), true, WerkstoffLoader.LuVTierMaterial.getMolten(1).getFluid());
         }
     }
     private static void rewriteAsslineRecipes(ItemStack stack, OrePrefixes[] LuVMaterialsGenerated, GT_Recipe.GT_Recipe_AssemblyLine recipe){
         for (OrePrefixes prefixes : LuVMaterialsGenerated) {
-            if (LuVTierEnhancer.doStacksCointainAndReplace(recipe, recipe.mInputs, stack, false)) {
-                LuVTierEnhancer.doStacksCointainAndReplace(recipe, recipe.mInputs, GT_OreDictUnificator.get(prefixes, Materials.Chrome, 1), true, WerkstoffLoader.LuVTierMaterial.get(prefixes));
-                LuVTierEnhancer.doStacksCointainAndReplace(recipe, new Object[]{recipe.mOutput}, GT_OreDictUnificator.get(prefixes, Materials.Chrome, 1), true, WerkstoffLoader.LuVTierMaterial.get(prefixes));
+            if (LuVTierEnhancer.doStacksContainAndReplace(recipe, recipe.mInputs, stack, false)) {
+                LuVTierEnhancer.doStacksContainAndReplace(recipe, recipe.mInputs, GT_OreDictUnificator.get(prefixes, Materials.Chrome, 1), true, WerkstoffLoader.LuVTierMaterial.get(prefixes));
+                LuVTierEnhancer.doStacksContainAndReplace(recipe, new Object[]{recipe.mOutput}, GT_OreDictUnificator.get(prefixes, Materials.Chrome, 1), true, WerkstoffLoader.LuVTierMaterial.get(prefixes));
             }
-            if (LuVTierEnhancer.doStacksCointainAndReplace(recipe, new Object[]{recipe.mOutput}, stack, false)) {
-                LuVTierEnhancer.doStacksCointainAndReplace(recipe, recipe.mInputs, GT_OreDictUnificator.get(prefixes, Materials.Chrome, 1), true, WerkstoffLoader.LuVTierMaterial.get(prefixes));
-                LuVTierEnhancer.doStacksCointainAndReplace(recipe, new Object[]{recipe.mOutput}, GT_OreDictUnificator.get(prefixes, Materials.Chrome, 1), true, WerkstoffLoader.LuVTierMaterial.get(prefixes));
+            if (LuVTierEnhancer.doStacksContainAndReplace(recipe, new Object[]{recipe.mOutput}, stack, false)) {
+                LuVTierEnhancer.doStacksContainAndReplace(recipe, recipe.mInputs, GT_OreDictUnificator.get(prefixes, Materials.Chrome, 1), true, WerkstoffLoader.LuVTierMaterial.get(prefixes));
+                LuVTierEnhancer.doStacksContainAndReplace(recipe, new Object[]{recipe.mOutput}, GT_OreDictUnificator.get(prefixes, Materials.Chrome, 1), true, WerkstoffLoader.LuVTierMaterial.get(prefixes));
             }
         }
-        if (LuVTierEnhancer.doStacksCointainAndReplace(recipe, recipe.mInputs, stack, false)) {
-            LuVTierEnhancer.doStacksCointainAndReplace(recipe, recipe.mFluidInputs, Materials.Chrome.getMolten(1), true, WerkstoffLoader.LuVTierMaterial.getMolten(1).getFluid());
+        if (LuVTierEnhancer.doStacksContainAndReplace(recipe, recipe.mInputs, stack, false)) {
+            LuVTierEnhancer.doStacksContainAndReplace(recipe, recipe.mFluidInputs, Materials.Chrome.getMolten(1), true, WerkstoffLoader.LuVTierMaterial.getMolten(1).getFluid());
         }
-        if (LuVTierEnhancer.doStacksCointainAndReplace(recipe, new Object[]{recipe.mOutput}, stack, false)) {
-            LuVTierEnhancer.doStacksCointainAndReplace(recipe, recipe.mFluidInputs, Materials.Chrome.getMolten(1), true, WerkstoffLoader.LuVTierMaterial.getMolten(1).getFluid());
+        if (LuVTierEnhancer.doStacksContainAndReplace(recipe, new Object[]{recipe.mOutput}, stack, false)) {
+            LuVTierEnhancer.doStacksContainAndReplace(recipe, recipe.mFluidInputs, Materials.Chrome.getMolten(1), true, WerkstoffLoader.LuVTierMaterial.getMolten(1).getFluid());
         }
     }
 
@@ -254,7 +254,7 @@ public class LuVTierEnhancer implements Runnable {
         return stack;
     }
 
-    private static boolean doStacksCointainAndReplace(Object recipe, FluidStack[] stacks, FluidStack stack, boolean replace, Fluid... replacement) {
+    private static boolean doStacksContainAndReplace(Object recipe, FluidStack[] stacks, FluidStack stack, boolean replace, Fluid... replacement) {
         boolean replaced = false;
         for (int i = 0; i < stacks.length; i++) {
             if (GT_Utility.areFluidsEqual(stack, stacks[i]))
@@ -276,7 +276,7 @@ public class LuVTierEnhancer implements Runnable {
         return replaced;
     }
 
-    private static boolean doStacksCointainAndReplace(Object recipe, Object[] stacks, ItemStack stack, boolean replace, ItemStack... replacement) {
+    private static boolean doStacksContainAndReplace(Object recipe, Object[] stacks, ItemStack stack, boolean replace, ItemStack... replacement) {
         boolean replaced = false;
         for (int i = 0; i < stacks.length; i++) {
             if (!GT_Utility.isStackValid(stacks[i])) {

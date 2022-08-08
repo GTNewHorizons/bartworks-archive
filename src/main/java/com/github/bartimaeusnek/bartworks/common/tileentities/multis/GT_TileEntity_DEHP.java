@@ -142,6 +142,11 @@ public class GT_TileEntity_DEHP extends GT_MetaTileEntity_DrillerBase {
     }
 
     @Override
+    protected String getCasingName() {
+        return "Heat Proof Machine Casing";
+    }
+
+    @Override
     protected Materials getFrameMaterial() {
         return Materials.Tungsten;
     }

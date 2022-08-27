@@ -393,7 +393,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
 
         if (eff <= 0) return false;
 
-        int toReduce = MathUtils.floorInt((double) this.fuelsupply * 0.005D * eff);
+        int toReduce = MathUtils.floorInt((double) this.fuelsupply * 0.025D * eff);
 
         this.fuelsupply -= toReduce;
         int burnedballs = toReduce / 64;
@@ -412,7 +412,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
 
         this.mEfficiency = (int) (eff * 10000D);
         this.mEUt = -powerUsage;
-        this.mMaxProgresstime = 72000;
+        this.mMaxProgresstime = (int) (72000 * (1d - (eff / 4d)));
         return true;
     }
 
@@ -645,7 +645,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                 this.mainItem = mainItem;
                 this.secondaryItem = secondaryItem;
                 this.recycledFluid = recycledFluid;
-                for (int i = 0; i < recycledItems.length; i++) this.recycledItems[i] = recycledItems[i];
+                System.arraycopy(recycledItems, 0, this.recycledItems, 0, recycledItems.length);
                 this.recycleChances = recycleChances;
                 this.tooltip = tooltip;
             }
@@ -677,7 +677,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
             new Fuel_(
                     "Thorium",
                     "Thorium",
-                    WerkstoffLoader.Thorium232.get(OrePrefixes.dust, 64),
+                    WerkstoffLoader.Thorium232.get(OrePrefixes.dust, 32),
                     Materials.Uranium235.getDust(4),
                     GT_Values.NF,
                     new ItemStack[] {
@@ -687,14 +687,14 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                         Materials.Lutetium.getDust(1),
                         WerkstoffLoader.Thorium232.get(OrePrefixes.dust, 1)
                     },
-                    new int[] {9000, 9000, 9000, 9000, 1000},
+                    new int[] {9900, 9900, 9900, 4950, 50},
                     "Multiplies coolant by 1"),
             new Fuel_(
                     "Uranium",
                     "Uranium",
-                    Materials.Uranium.getDust(64),
+                    Materials.Uranium.getDust(32),
                     Materials.Uranium235.getDust(8),
-                    FluidRegistry.getFluidStack("krypton", 8),
+                    FluidRegistry.getFluidStack("krypton", 16),
                     new ItemStack[] {
                         Materials.Silicon.getDust(1),
                         Materials.Graphite.getDust(1),
@@ -702,14 +702,14 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                         Materials.Lead.getDust(1),
                         Materials.Uranium.getDust(1)
                     },
-                    new int[] {9000, 9000, 9000, 7000, 1000},
+                    new int[] {9900, 9900, 9900, 2500, 2500},
                     "Multiplies coolant by 1.5"),
             new Fuel_(
                     "Plutonium",
                     "Plutonium",
-                    Materials.Plutonium.getDust(64),
+                    Materials.Plutonium.getDust(32),
                     Materials.Plutonium241.getDust(4),
-                    FluidRegistry.getFluidStack("xenon", 8),
+                    FluidRegistry.getFluidStack("xenon", 16),
                     new ItemStack[] {
                         Materials.Silicon.getDust(1),
                         Materials.Graphite.getDust(1),
@@ -717,7 +717,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                         Materials.Lead.getDust(1),
                         Materials.Plutonium.getDust(1)
                     },
-                    new int[] {9000, 9000, 9000, 7000, 1000},
+                    new int[] {9900, 9900, 9900, 2500, 2500},
                     "Multiplies coolant by 2"),
         };
         static final CustomHTGRSimpleSubItemClass aHTGR_Materials;
@@ -750,23 +750,20 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
             GT_Values.RA.addAssemblerRecipe(
                     new ItemStack[] {
                         new ItemStack(GregTech_API.sBlockCasings3, 1, 12),
-                        GT_OreDictUnificator.get(OrePrefixes.plate, Materials.Europium, 6),
+                        GT_OreDictUnificator.get(OrePrefixes.foil, Materials.Europium, 6),
                         GT_OreDictUnificator.get(OrePrefixes.screw, Materials.Europium, 24)
                     },
-                    Materials.Lead.getMolten(1296),
+                    Materials.Lead.getMolten(864),
                     new ItemStack(GregTech_API.sBlockCasings8, 1, 5),
                     200,
                     BW_Util.getMachineVoltageFromTier(6));
             int i = 0;
             for (Fuel_ fuel : sHTGR_Fuel) {
                 GT_Values.RA.addMixerRecipe(
-                        fuel.mainItem,
-                        fuel.secondaryItem,
-                        GT_Utility.getIntegratedCircuit(1),
+                        new ItemStack[] {fuel.mainItem, fuel.secondaryItem, GT_Utility.getIntegratedCircuit(1)},
                         null,
+                        new ItemStack[] {new ItemStack(GT_TileEntity_HTGR.HTGRMaterials.aHTGR_Materials, 1, i)},
                         null,
-                        null,
-                        new ItemStack(GT_TileEntity_HTGR.HTGRMaterials.aHTGR_Materials, 1, i),
                         400,
                         30);
                 GT_Values.RA.addFormingPressRecipe(

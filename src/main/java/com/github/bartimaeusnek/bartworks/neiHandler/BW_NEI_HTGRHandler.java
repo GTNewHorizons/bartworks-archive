@@ -10,13 +10,12 @@ import gregtech.nei.GT_NEI_DefaultHandler;
 public class BW_NEI_HTGRHandler extends GT_NEI_DefaultHandler {
     public BW_NEI_HTGRHandler(GT_Recipe.GT_Recipe_Map aRecipeMap) {
         super(aRecipeMap);
-        if(!NEI_BW_Config.sIsAdded)
-        {
+        if (!NEI_BW_Config.sIsAdded) {
             FMLInterModComms.sendRuntimeMessage(
-                GT_Values.GT,
-                "NEIPlugins",
-                "register-crafting-handler",
-                "bartworks@" + this.getRecipeName() + "@" + this.getOverlayIdentifier());
+                    GT_Values.GT,
+                    "NEIPlugins",
+                    "register-crafting-handler",
+                    "bartworks@" + this.getRecipeName() + "@" + this.getOverlayIdentifier());
             GuiCraftingRecipe.craftinghandlers.add(this);
             GuiUsageRecipe.usagehandlers.add(this);
         }

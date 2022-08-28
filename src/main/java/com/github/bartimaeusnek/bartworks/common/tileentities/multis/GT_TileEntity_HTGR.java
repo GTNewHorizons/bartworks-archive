@@ -811,7 +811,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                         null,
                         null,
                         null,
-                        32000,
+                        12000,
                         30,
                         0);
                 GT_Recipe.GT_Recipe_Map.sCentrifugeRecipes.addRecipe(
@@ -825,7 +825,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                         null,
                         null,
                         null,
-                        48000,
+                        3000,
                         30,
                         0);
                 fakeRecipeMap.addFakeRecipe(

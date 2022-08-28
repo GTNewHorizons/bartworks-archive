@@ -291,7 +291,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                 .addInfo("Consumes up to 2.5% of total Fuel Pellets per Operation depending on efficiency")
                 .addInfo(
                         "Efficiency is calculated exponentially depending on the amount of pebbles in the internal buffer")
-                .addInfo("and affects total recipe time (at 100% eff, -25% total recipe time")
+                .addInfo("and affects total recipe time (at 100% eff, -50% total recipe time")
                 .addInfo(
                         "Reactor will take 4 000L/s of coolant multiplied by efficiency and by fuel coolant value (check tooltips)")
                 .addInfo("Uses " + GT_Utility.formatNumbers(powerUsage) + " EU/t")
@@ -358,18 +358,19 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
         super.onPostTick(aBaseMetaTileEntity, aTick);
         if (aBaseMetaTileEntity.isServerSide() && !this.empty) {
+            boolean updateneeded = false;
             if (this.HeliumSupply < GT_TileEntity_HTGR.HELIUM_NEEDED) {
                 for (FluidStack fluidStack : this.getStoredFluids()) {
                     if (fluidStack.isFluidEqual(Materials.Helium.getGas(1))) {
                         int toget = Math.min(GT_TileEntity_HTGR.HELIUM_NEEDED - this.HeliumSupply, fluidStack.amount);
                         fluidStack.amount -= toget;
                         this.HeliumSupply += toget;
-                        if (GT_TileEntity_HTGR.HELIUM_NEEDED == this.HeliumSupply && fluidStack.amount == 0)
-                            fluidStack = null;
+                        updateneeded = true;
                     }
                 }
             }
             if (this.fuelsupply < maxcapacity) {
+
                 for (ItemStack itemStack : this.getStoredInputs()) {
                     int type = -1;
                     if (itemStack == null) continue;
@@ -383,9 +384,10 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                     int toget = Math.min(maxcapacity - this.fuelsupply, itemStack.stackSize);
                     this.fuelsupply += toget;
                     itemStack.stackSize -= toget;
+                    updateneeded = true;
                 }
-                this.updateSlots();
             }
+            if (updateneeded) this.updateSlots();
         }
     }
 
@@ -425,8 +427,9 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
         this.coolanttaking = (int) (4000D * (((this.fueltype * 0.5D) + 1)) * eff);
 
         this.mEfficiency = (int) (eff * 10000D);
+        this.mEfficiencyIncrease = 0;
         this.mEUt = -powerUsage;
-        this.mMaxProgresstime = (int) (72000 * (1d - (eff / 4d)));
+        this.mMaxProgresstime = (int) (72000 * (1d - (eff / 2d)));
         return true;
     }
 
@@ -473,7 +476,10 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
             return true;
         }
         // USE DA POWAH
-        if (!super.onRunningTick(aStack)) return false;
+        if (!drainEnergyInput(-mEUt)) {
+            criticalStopMachine();
+            return false;
+        }
 
         if (runningtick % 20 == 0) {
             int takecoolant = coolanttaking;
@@ -617,18 +623,10 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
         private static class Base_ {
             public String sName;
             public String sEnglish;
-            public String sTooltip;
 
             public Base_(String a, String b) {
                 this.sName = a;
                 this.sEnglish = b;
-                this.sTooltip = "";
-            }
-
-            public Base_(String a, String b, String c) {
-                this.sName = a;
-                this.sEnglish = b;
-                this.sTooltip = c;
             }
         }
 
@@ -700,7 +698,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                         Materials.Lutetium.getDust(1),
                         WerkstoffLoader.Thorium232.get(OrePrefixes.dust, 1)
                     },
-                    new int[] {9900 / 4, 9900 / 4, 9900 / 4, 9900 / 4, 100 / 4},
+                    new int[] {9900 / 4, 9900 / 4, 9900 / 4, 9900 / 4, 162 / 4},
                     "Multiplies coolant by 1"),
             new Fuel_(
                     "Uranium",
@@ -747,7 +745,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                             "item." + sHTGR_Materials[i] + ".name", base.sEnglish + " (" + fuel.sEnglish + ")"));
                     if (((i + 1) % MATERIALS_PER_FUEL == (USABLE_FUEL_INDEX + 1))
                             && fuel.tooltip != null
-                            && fuel.tooltip != "") tooltip.put(i, fuel.tooltip);
+                            && !fuel.tooltip.isEmpty()) tooltip.put(i, fuel.tooltip);
                     i++;
                 }
             aHTGR_Materials = new CustomHTGRSimpleSubItemClass(tooltip, sHTGR_Materials);

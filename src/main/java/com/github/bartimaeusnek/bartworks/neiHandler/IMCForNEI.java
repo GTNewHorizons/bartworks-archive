@@ -7,6 +7,7 @@ public class IMCForNEI {
     public static void IMCSender() {
         sendCatalyst("gt.recipe.largechemicalreactor", "gregtech:gt.blockmachines:13366", -10);
         sendCatalyst("gt.recipe.craker", "gregtech:gt.blockmachines:13367", -10);
+        sendCatalyst("bw.recipe.htgr", "gregtech:gt.blockmachines:12791", 0);
     }
 
     private static void sendCatalyst(String aName, String aStack, int aPriority) {

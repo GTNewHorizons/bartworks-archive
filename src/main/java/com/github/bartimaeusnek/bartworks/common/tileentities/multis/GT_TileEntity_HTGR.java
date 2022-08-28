@@ -700,7 +700,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                         Materials.Lutetium.getDust(1),
                         WerkstoffLoader.Thorium232.get(OrePrefixes.dust, 1)
                     },
-                    new int[] {9900 / 4, 9900 / 4, 9900 / 4, 4950 / 4, 50 / 4},
+                    new int[] {9900 / 4, 9900 / 4, 9900 / 4, 9900 / 4, 100 / 4},
                     "Multiplies coolant by 1"),
             new Fuel_(
                     "Uranium",
@@ -715,7 +715,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                         Materials.Lead.getDust(1),
                         Materials.Uranium.getDust(1)
                     },
-                    new int[] {9900 / 4, 9900 / 4, 9900 / 4, 2500 / 4, 2500 / 4},
+                    new int[] {9900 / 4, 9900 / 4, 9900 / 4, 5000 / 4, 5000 / 4},
                     "Multiplies coolant by 1.5"),
             new Fuel_(
                     "Plutonium",
@@ -730,7 +730,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                         Materials.Lead.getDust(1),
                         Materials.Plutonium.getDust(1)
                     },
-                    new int[] {9900 / 4, 9900 / 4, 9900 / 4, 2500 / 4, 2500 / 4},
+                    new int[] {9900 / 4, 9900 / 4, 9900 / 4, 5000 / 4, 5000 / 4},
                     "Multiplies coolant by 2"),
         };
         static final CustomHTGRSimpleSubItemClass aHTGR_Materials;

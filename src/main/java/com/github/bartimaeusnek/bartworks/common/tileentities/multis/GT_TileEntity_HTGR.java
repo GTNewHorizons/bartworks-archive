@@ -235,11 +235,11 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                     // GregTech_API.sBlockCasings8, 5))
                     .build();
 
-    private static final GT_Recipe.GT_Recipe_Map fakeRecipeMap = new GT_Recipe.GT_Recipe_Map(
+    public static final GT_Recipe.GT_Recipe_Map fakeRecipeMap = new GT_Recipe.GT_Recipe_Map(
             new HashSet<>(),
             "bw.recipe.htgr",
-            "HTGR Map",
             "High Temperature Gas-cooled Reactor",
+            null,
             "gregtech:textures/gui/basicmachines/Default",
             1,
             1,
@@ -250,7 +250,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
             1,
             "",
             false,
-            true);
+            false);
     private static final int HELIUM_NEEDED = 730000;
     private static final int powerUsage = BW_Util.getMachineVoltageFromTier(6);
     private static final int maxcapacity = 720000;
@@ -285,11 +285,13 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
         GT_Multiblock_Tooltip_Builder tt = new GT_Multiblock_Tooltip_Builder();
         tt.addMachineType("Breeder Reactor")
                 .addInfo("Controller block for the High Temperature Gas-cooled Reactor (HTGR)")
+                .addInfo("You can clear internal buffer by changing the mode with a screwdriver")
                 .addInfo("Needs a constant supply of coolant while running")
                 .addInfo("Needs at least 72k Fuel pebbles to start operation (can hold up to 720k pebbles)")
-                .addInfo("Consumes up to 0.5% of total Fuel Pellets per Operation depending on efficiency")
+                .addInfo("Consumes up to 2.5% of total Fuel Pellets per Operation depending on efficiency")
                 .addInfo(
                         "Efficiency is calculated exponentially depending on the amount of pebbles in the internal buffer")
+                .addInfo("and affects total recipe time (at 100% eff, -25% total recipe time")
                 .addInfo(
                         "Reactor will take 4 000L/s of coolant multiplied by efficiency and by fuel coolant value (check tooltips)")
                 .addInfo("Uses " + GT_Utility.formatNumbers(powerUsage) + " EU/t")

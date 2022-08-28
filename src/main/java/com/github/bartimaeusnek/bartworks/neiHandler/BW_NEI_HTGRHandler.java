@@ -2,8 +2,8 @@ package com.github.bartimaeusnek.bartworks.neiHandler;
 
 import codechicken.nei.recipe.GuiCraftingRecipe;
 import codechicken.nei.recipe.GuiUsageRecipe;
+import com.github.bartimaeusnek.bartworks.MainMod;
 import cpw.mods.fml.common.event.FMLInterModComms;
-import gregtech.api.enums.GT_Values;
 import gregtech.api.util.GT_Recipe;
 import gregtech.nei.GT_NEI_DefaultHandler;
 
@@ -12,7 +12,7 @@ public class BW_NEI_HTGRHandler extends GT_NEI_DefaultHandler {
         super(aRecipeMap);
         if (!NEI_BW_Config.sIsAdded) {
             FMLInterModComms.sendRuntimeMessage(
-                    GT_Values.GT,
+                    MainMod.instance,
                     "NEIPlugins",
                     "register-crafting-handler",
                     "bartworks@" + this.getRecipeName() + "@" + this.getOverlayIdentifier());

@@ -1,23 +1,18 @@
 /*
- * Copyright (c) 2018-2020 bartimaeusnek
+ *  Copyright (C) 2022 kuba6000
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.github.bartimaeusnek.bartworks.common.tileentities.multis;
@@ -50,6 +45,7 @@ import gregtech.api.render.TextureFactory;
 import gregtech.api.util.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -239,6 +235,22 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                     // GregTech_API.sBlockCasings8, 5))
                     .build();
 
+    public static final GT_Recipe.GT_Recipe_Map fakeRecipeMap = new GT_Recipe.GT_Recipe_Map(
+            new HashSet<>(),
+            "bw.recipe.htgr",
+            "High Temperature Gas-cooled Reactor",
+            null,
+            "gregtech:textures/gui/basicmachines/Default",
+            1,
+            1,
+            1,
+            0,
+            1,
+            "",
+            1,
+            "",
+            false,
+            false);
     private static final int HELIUM_NEEDED = 730000;
     private static final int powerUsage = BW_Util.getMachineVoltageFromTier(6);
     private static final int maxcapacity = 720000;
@@ -273,11 +285,13 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
         GT_Multiblock_Tooltip_Builder tt = new GT_Multiblock_Tooltip_Builder();
         tt.addMachineType("Breeder Reactor")
                 .addInfo("Controller block for the High Temperature Gas-cooled Reactor (HTGR)")
+                .addInfo("You can clear internal buffer by changing the mode with a screwdriver")
                 .addInfo("Needs a constant supply of coolant while running")
                 .addInfo("Needs at least 72k Fuel pebbles to start operation (can hold up to 720k pebbles)")
-                .addInfo("Consumes up to 0.5% of total Fuel Pellets per Operation depending on efficiency")
+                .addInfo("Consumes up to 2.5% of total Fuel Pellets per Operation depending on efficiency")
                 .addInfo(
                         "Efficiency is calculated exponentially depending on the amount of pebbles in the internal buffer")
+                .addInfo("and affects total recipe time (at 100% eff, -25% total recipe time")
                 .addInfo(
                         "Reactor will take 4 000L/s of coolant multiplied by efficiency and by fuel coolant value (check tooltips)")
                 .addInfo("Uses " + GT_Utility.formatNumbers(powerUsage) + " EU/t")
@@ -393,7 +407,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
 
         if (eff <= 0) return false;
 
-        int toReduce = MathUtils.floorInt((double) this.fuelsupply * 0.005D * eff);
+        int toReduce = MathUtils.floorInt((double) this.fuelsupply * 0.025D * eff);
 
         this.fuelsupply -= toReduce;
         int burnedballs = toReduce / 64;
@@ -412,7 +426,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
 
         this.mEfficiency = (int) (eff * 10000D);
         this.mEUt = -powerUsage;
-        this.mMaxProgresstime = 72000;
+        this.mMaxProgresstime = (int) (72000 * (1d - (eff / 4d)));
         return true;
     }
 
@@ -458,9 +472,8 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
             }
             return true;
         }
-
-        if (!super.onRunningTick(aStack)) // USE DA POWAH
-        return false;
+        // USE DA POWAH
+        if (!super.onRunningTick(aStack)) return false;
 
         if (runningtick % 20 == 0) {
             int takecoolant = coolanttaking;
@@ -645,7 +658,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                 this.mainItem = mainItem;
                 this.secondaryItem = secondaryItem;
                 this.recycledFluid = recycledFluid;
-                for (int i = 0; i < recycledItems.length; i++) this.recycledItems[i] = recycledItems[i];
+                System.arraycopy(recycledItems, 0, this.recycledItems, 0, recycledItems.length);
                 this.recycleChances = recycleChances;
                 this.tooltip = tooltip;
             }
@@ -687,14 +700,14 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                         Materials.Lutetium.getDust(1),
                         WerkstoffLoader.Thorium232.get(OrePrefixes.dust, 1)
                     },
-                    new int[] {9000, 9000, 9000, 9000, 1000},
+                    new int[] {9900 / 4, 9900 / 4, 9900 / 4, 4950 / 4, 50 / 4},
                     "Multiplies coolant by 1"),
             new Fuel_(
                     "Uranium",
                     "Uranium",
                     Materials.Uranium.getDust(64),
                     Materials.Uranium235.getDust(8),
-                    FluidRegistry.getFluidStack("krypton", 8),
+                    FluidRegistry.getFluidStack("krypton", 4),
                     new ItemStack[] {
                         Materials.Silicon.getDust(1),
                         Materials.Graphite.getDust(1),
@@ -702,14 +715,14 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                         Materials.Lead.getDust(1),
                         Materials.Uranium.getDust(1)
                     },
-                    new int[] {9000, 9000, 9000, 7000, 1000},
+                    new int[] {9900 / 4, 9900 / 4, 9900 / 4, 2500 / 4, 2500 / 4},
                     "Multiplies coolant by 1.5"),
             new Fuel_(
                     "Plutonium",
                     "Plutonium",
                     Materials.Plutonium.getDust(64),
                     Materials.Plutonium241.getDust(4),
-                    FluidRegistry.getFluidStack("xenon", 8),
+                    FluidRegistry.getFluidStack("xenon", 4),
                     new ItemStack[] {
                         Materials.Silicon.getDust(1),
                         Materials.Graphite.getDust(1),
@@ -717,15 +730,15 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                         Materials.Lead.getDust(1),
                         Materials.Plutonium.getDust(1)
                     },
-                    new int[] {9000, 9000, 9000, 7000, 1000},
+                    new int[] {9900 / 4, 9900 / 4, 9900 / 4, 2500 / 4, 2500 / 4},
                     "Multiplies coolant by 2"),
         };
         static final CustomHTGRSimpleSubItemClass aHTGR_Materials;
-        static final ArrayList<LangEntry_> aHTGR_Localizations = new ArrayList<LangEntry_>();
+        static final ArrayList<LangEntry_> aHTGR_Localizations = new ArrayList<>();
 
         static {
             String[] sHTGR_Materials = new String[sHTGR_Bases.length * sHTGR_Fuel.length];
-            HashMap<Integer, String> tooltip = new HashMap<Integer, String>();
+            HashMap<Integer, String> tooltip = new HashMap<>();
             int i = 0;
             for (Fuel_ fuel : sHTGR_Fuel)
                 for (Base_ base : sHTGR_Bases) {
@@ -750,23 +763,20 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
             GT_Values.RA.addAssemblerRecipe(
                     new ItemStack[] {
                         new ItemStack(GregTech_API.sBlockCasings3, 1, 12),
-                        GT_OreDictUnificator.get(OrePrefixes.plate, Materials.Europium, 6),
+                        GT_OreDictUnificator.get(OrePrefixes.foil, Materials.Europium, 6),
                         GT_OreDictUnificator.get(OrePrefixes.screw, Materials.Europium, 24)
                     },
-                    Materials.Lead.getMolten(1296),
+                    Materials.Lead.getMolten(864),
                     new ItemStack(GregTech_API.sBlockCasings8, 1, 5),
                     200,
                     BW_Util.getMachineVoltageFromTier(6));
             int i = 0;
             for (Fuel_ fuel : sHTGR_Fuel) {
                 GT_Values.RA.addMixerRecipe(
-                        fuel.mainItem,
-                        fuel.secondaryItem,
-                        GT_Utility.getIntegratedCircuit(1),
+                        new ItemStack[] {fuel.mainItem, fuel.secondaryItem, GT_Utility.getIntegratedCircuit(1)},
                         null,
+                        new ItemStack[] {new ItemStack(GT_TileEntity_HTGR.HTGRMaterials.aHTGR_Materials, 1, i)},
                         null,
-                        null,
-                        new ItemStack(GT_TileEntity_HTGR.HTGRMaterials.aHTGR_Materials, 1, i),
                         400,
                         30);
                 GT_Values.RA.addFormingPressRecipe(
@@ -793,7 +803,12 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                             new ItemStack(GT_TileEntity_HTGR.HTGRMaterials.aHTGR_Materials, 1, i + 3),
                             GT_Utility.getIntegratedCircuit(17)
                         },
-                        new ItemStack[] {new ItemStack(GT_TileEntity_HTGR.HTGRMaterials.aHTGR_Materials, 64, i + 4)},
+                        new ItemStack[] {
+                            new ItemStack(GT_TileEntity_HTGR.HTGRMaterials.aHTGR_Materials, 64, i + 4),
+                            new ItemStack(GT_TileEntity_HTGR.HTGRMaterials.aHTGR_Materials, 64, i + 4),
+                            new ItemStack(GT_TileEntity_HTGR.HTGRMaterials.aHTGR_Materials, 64, i + 4),
+                            new ItemStack(GT_TileEntity_HTGR.HTGRMaterials.aHTGR_Materials, 64, i + 4)
+                        },
                         null,
                         null,
                         null,
@@ -814,6 +829,16 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                         null,
                         48000,
                         30,
+                        0);
+                fakeRecipeMap.addFakeRecipe(
+                        false,
+                        new ItemStack[] {new ItemStack(GT_TileEntity_HTGR.HTGRMaterials.aHTGR_Materials, 64, i + 4)},
+                        new ItemStack[] {new ItemStack(GT_TileEntity_HTGR.HTGRMaterials.aHTGR_Materials, 1, i + 5)},
+                        null,
+                        null,
+                        null,
+                        72000,
+                        powerUsage,
                         0);
                 GT_Values.RA.addCentrifugeRecipe(
                         new ItemStack(GT_TileEntity_HTGR.HTGRMaterials.aHTGR_Materials, 1, i + 6),

@@ -22,6 +22,8 @@
 
 package com.github.bartimaeusnek.bartworks.common.tileentities.tiered;
 
+import static gregtech.api.enums.GT_Values.ticksBetweenSounds;
+
 import com.github.bartimaeusnek.bartworks.MainMod;
 import com.github.bartimaeusnek.bartworks.client.gui.GT_GUIContainer_RadioHatch;
 import com.github.bartimaeusnek.bartworks.server.container.GT_Container_RadioHatch;
@@ -44,8 +46,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
-
-import static gregtech.api.enums.GT_Values.ticksBetweenSounds;
 
 public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch {
 
@@ -240,7 +240,8 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch {
     public String[] getInfoData() {
         if (this.sievert != 0)
             return new String[] {
-                StatCollector.translateToLocal("tooltip.tile.radhatch.2.name") + " " + StatCollector.translateToLocal(this.material),
+                StatCollector.translateToLocal("tooltip.tile.radhatch.2.name") + " "
+                        + StatCollector.translateToLocal(this.material),
                 StatCollector.translateToLocal("tooltip.tile.radhatch.3.name") + " " + this.sievert,
                 StatCollector.translateToLocal("tooltip.tile.radhatch.4.name") + " " + this.mass,
                 StatCollector.translateToLocal("tooltip.tile.radhatch.5.name") + " "

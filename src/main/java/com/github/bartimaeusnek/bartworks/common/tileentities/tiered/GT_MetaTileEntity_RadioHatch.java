@@ -33,6 +33,7 @@ import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.metatileentity.BaseMetaTileEntity;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GT_Recipe;
@@ -41,7 +42,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
+
+import static gregtech.api.enums.GT_Values.ticksBetweenSounds;
 
 public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch {
 
@@ -145,7 +149,8 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch {
     }
 
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTimer) {
-        if (this.getBaseMetaTileEntity().isServerSide()) {
+        BaseMetaTileEntity myMetaTileEntity = ((BaseMetaTileEntity) this.getBaseMetaTileEntity());
+        if (myMetaTileEntity.isServerSide()) {
 
             if (this.mass > 0) {
                 ++this.timer;
@@ -162,8 +167,19 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch {
                 }
             }
 
+            if (myMetaTileEntity.mTickTimer > (myMetaTileEntity.mLastSoundTick + ticksBetweenSounds)) {
+                if (this.sievert > 0) {
+                    sendLoopStart((byte) 1);
+                    myMetaTileEntity.mLastSoundTick = myMetaTileEntity.mTickTimer;
+                }
+            }
+
             if (this.mass == 0) {
                 ItemStack lStack = this.mInventory[0];
+
+                if (lStack == null) {
+                    return;
+                }
 
                 if (this.lastFail && GT_Utility.areStacksEqual(this.lastUsedItem, lStack, true)) {
                     return;
@@ -182,7 +198,7 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch {
                     }
                 }
 
-                if (this.lastRecipe == null) {
+                if (this.lastRecipe == null || this.lastFail) {
                     this.lastRecipe = BWRecipes.instance
                             .getMappingsFor(BWRecipes.RADHATCH)
                             .findRecipe(
@@ -308,5 +324,14 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch {
         this.material = aNBT.getString("mMaterial");
         this.decayTime = aNBT.getLong("decay");
         super.loadNBTData(aNBT);
+    }
+
+    @Override
+    public void startSoundLoop(byte aIndex, double aX, double aY, double aZ) {
+        super.startSoundLoop(aIndex, aX, aY, aZ);
+        ResourceLocation rl = new ResourceLocation(MainMod.MOD_ID, "hatch.RadOn");
+        if (aIndex == 1) {
+            GT_Utility.doSoundAtClient(rl, 10, 1.0F, aX, aY, aZ);
+        }
     }
 }

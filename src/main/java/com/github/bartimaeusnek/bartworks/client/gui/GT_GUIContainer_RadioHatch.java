@@ -84,6 +84,12 @@ public class GT_GUIContainer_RadioHatch extends GT_GUIContainerMetaTile_Machine 
                 65,
                 62,
                 4210752);
+        this.fontRendererObj.drawString(
+                StatCollector.translateToLocalFormatted(
+                        "BW.NEI.display.radhatch.0", ((GT_Container_RadioHatch) this.mContainer).sv),
+                60,
+                72,
+                4210752);
     }
 
     protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {

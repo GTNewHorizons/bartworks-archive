@@ -174,6 +174,7 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch {
                         this.mass = (byte) this.lastRecipe.mDuration;
                         this.decayTime = this.lastRecipe.mSpecialValue;
                         this.sievert = this.lastRecipe.mEUt;
+                        this.material = this.lastUsedItem.getDisplayName();
                         lStack.stackSize--;
                         updateSlots();
                     } else {
@@ -223,7 +224,7 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch {
     public String[] getInfoData() {
         if (this.sievert != 0)
             return new String[] {
-                StatCollector.translateToLocal("tooltip.tile.radhatch.2.name") + " " + this.material,
+                StatCollector.translateToLocal("tooltip.tile.radhatch.2.name") + " " + StatCollector.translateToLocal(this.material),
                 StatCollector.translateToLocal("tooltip.tile.radhatch.3.name") + " " + this.sievert,
                 StatCollector.translateToLocal("tooltip.tile.radhatch.4.name") + " " + this.mass,
                 StatCollector.translateToLocal("tooltip.tile.radhatch.5.name") + " "

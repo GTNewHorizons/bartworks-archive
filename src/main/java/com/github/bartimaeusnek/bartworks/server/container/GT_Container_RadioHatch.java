@@ -96,6 +96,7 @@ public class GT_Container_RadioHatch extends GT_Container_1by1 {
 
     @Override
     public void addCraftingToCrafters(ICrafting clientHandle) {
+        super.addCraftingToCrafters(clientHandle);
         this.buffer.put(0, mass);
         this.buffer.putShort(Byte.BYTES, sv);
         this.buffer.putShort(Byte.BYTES + Short.BYTES, sievert);
@@ -105,7 +106,6 @@ public class GT_Container_RadioHatch extends GT_Container_1by1 {
         this.buffer.putLong(Byte.BYTES + Short.BYTES * 5, teTimer);
         this.buffer.putLong(Byte.BYTES + Short.BYTES * 5 + Long.BYTES, decayTime);
         sendStateUpdate(clientHandle);
-        super.addCraftingToCrafters(clientHandle);
     }
 
     @SideOnly(Side.CLIENT)

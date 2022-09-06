@@ -10,6 +10,7 @@ public class IMCForNEI {
         sendCatalyst("gt.recipe.craker", "gregtech:gt.blockmachines:13367", -10);
         sendHandler("bw.recipe.htgr", "gregtech:gt.blockmachines:12791");
         sendCatalyst("bw.recipe.htgr", "gregtech:gt.blockmachines:12791");
+        sendHandler("bw.recipe.radhatch", "gregtech:gt.blockmachines:12713");
         sendCatalyst("bw.recipe.radhatch", "gregtech:gt.blockmachines:12713");
         sendCatalyst("bw.recipe.radhatch", "gregtech:gt.blockmachines:12714");
         sendCatalyst("bw.recipe.radhatch", "gregtech:gt.blockmachines:12715");
@@ -22,7 +23,6 @@ public class IMCForNEI {
         sendCatalyst("bw.recipe.radhatch", "gregtech:gt.blockmachines:12722");
         sendCatalyst("bw.recipe.radhatch", "gregtech:gt.blockmachines:12723");
         sendCatalyst("bw.recipe.radhatch", "gregtech:gt.blockmachines:12724");
-        sendHandler("bw.recipe.radhatch", "gregtech:gt.blockmachines:12713");
     }
 
     private static void sendHandler(String name, String block) {

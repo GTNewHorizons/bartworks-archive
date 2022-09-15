@@ -354,7 +354,11 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
                     itemStack,
                     (GT_OreDictUnificator.get(
                             OrePrefixes.dust, GT_OreDictUnificator.getAssociation(itemStack).mMaterial.mMaterial, 1L)));
-        } else if (OrePrefixes.ore.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)) {
+        } else if (OrePrefixes.ore.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
+                || OrePrefixes.oreBlackgranite.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
+                || OrePrefixes.oreRedgranite.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
+                || OrePrefixes.oreMarble.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
+                || OrePrefixes.oreBasalt.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)) {
             return hardOverride(
                     120000,
                     false,
@@ -363,6 +367,19 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
                             OrePrefixes.crushed,
                             GT_OreDictUnificator.getAssociation(itemStack).mMaterial.mMaterial,
                             1L)));
+        } else if (OrePrefixes.oreNether.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
+                || OrePrefixes.oreNetherrack.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
+                || OrePrefixes.oreDense.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
+                || OrePrefixes.oreEnd.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
+                || OrePrefixes.oreEndstone.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)) {
+            return hardOverride(
+                    120000,
+                    false,
+                    itemStack,
+                    (GT_OreDictUnificator.get(
+                            OrePrefixes.crushed,
+                            GT_OreDictUnificator.getAssociation(itemStack).mMaterial.mMaterial,
+                            2L)));
         } else if (OrePrefixes.nugget.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)) {
             return hardOverride(
                     30000,

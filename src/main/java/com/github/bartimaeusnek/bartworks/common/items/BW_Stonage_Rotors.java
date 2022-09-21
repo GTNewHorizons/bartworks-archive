@@ -48,10 +48,14 @@ public class BW_Stonage_Rotors extends Item implements IKineticRotor {
     private final IKineticRotor.GearboxType type;
     private final ResourceLocation tex;
     private final String itemTex;
+    private final float speed;
+    private final float mRotor;
 
     public BW_Stonage_Rotors(
             int diameter,
             float eff,
+            float speed,
+            float mRotor,
             int min,
             int max,
             int durability,
@@ -63,6 +67,8 @@ public class BW_Stonage_Rotors extends Item implements IKineticRotor {
         this.DiaMinMax[1] = min;
         this.DiaMinMax[2] = max;
         this.eff = eff;
+        this.mRotor = mRotor;
+        this.speed = speed;
         this.type = type;
         this.tex = tex;
         this.setMaxDamage(durability);
@@ -90,6 +96,8 @@ public class BW_Stonage_Rotors extends Item implements IKineticRotor {
         info.add(StatCollector.translateToLocal("tooltip.rotor.1.name") + " "
                 + (this.getMaxDamage() - this.getDamage(itemStack)) + "/" + this.getMaxDamage());
         info.add(StatCollector.translateToLocal("tooltip.rotor.2.name") + " " + this.eff);
+        info.add(StatCollector.translateToLocal("tooltip.rotor.3.name") + " " + this.speed);
+        info.add(StatCollector.translateToLocal("tooltip.rotor.4.name") + " " + this.mRotor);
         if (type != null) {
             info.add(StatCollector.translateToLocal(("ic2.itemrotor.fitsin." + this.isAcceptedType(itemStack, type))));
         }
@@ -124,5 +132,13 @@ public class BW_Stonage_Rotors extends Item implements IKineticRotor {
     @Override
     public boolean isAcceptedType(ItemStack itemStack, IKineticRotor.GearboxType gearboxType) {
         return gearboxType.equals(this.type);
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public float getmRotor() {
+        return mRotor;
     }
 }

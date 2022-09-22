@@ -73,7 +73,7 @@ public class ItemRegistry {
     public static final Item LEATHER_ROTOR = new BW_Stonage_Rotors(
             7,
             0.15f,
-            5f,
+            5,
             1.15f,
             1,
             50,
@@ -85,7 +85,7 @@ public class ItemRegistry {
     public static final Item WOOL_ROTOR = new BW_Stonage_Rotors(
             7,
             0.18f,
-            3f,
+            3,
             1.35f,
             1,
             50,
@@ -97,7 +97,7 @@ public class ItemRegistry {
     public static final Item PAPER_ROTOR = new BW_Stonage_Rotors(
             7,
             0.2f,
-            12f,
+            12,
             0.9f,
             1,
             50,
@@ -109,7 +109,7 @@ public class ItemRegistry {
     public static final Item COMBINED_ROTOR = new BW_Stonage_Rotors(
             9,
             0.22f,
-            7f,
+            7,
             1.05f,
             1,
             50,

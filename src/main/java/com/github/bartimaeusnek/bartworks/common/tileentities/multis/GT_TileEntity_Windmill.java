@@ -166,7 +166,7 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
 
     @Override
     public boolean onRunningTick(ItemStack aStack) {
-        if (this.mMaxProgresstime > 0) this.mProgresstime += this.rotorBlock.getGrindPower() * getSpeed(rotorBlock);
+        if (this.mMaxProgresstime > 0) this.mProgresstime += this.rotorBlock.getGrindPower();
         if (!rotorBlock.rotorSlot.isEmpty()) rotorBlock.rotorSlot.damage(this.rotorBlock.getGrindPower() / 10, false);
         return this.rotorBlock.getGrindPower() > 0;
     }
@@ -182,6 +182,7 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
     }
 
     private float[] multiplierRecipe(ItemStack itemStack) {
+        //will return max and min value of the multiplier, the average of these is used to calculate the multiplier.
         if (itemStack.getItem().equals(Items.wheat)) return new float[] {1.13f, 1.5f};
         else if (itemStack.getItem().equals(Items.bone)
               || Block.getBlockFromItem(itemStack.getItem()).equals(Blocks.glowstone)
@@ -246,7 +247,7 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
             float[] mRecipe = multiplierRecipe(itemStack);
             float multiper = Math.min(mRecipe[1], Math.max(mRecipe[0] ,
                  2f * ((float) Math.sqrt((float)1 / (this.rotorBlock.getWindStrength() + 1)))
-                    * getmRotor(rotorBlock)
+                    * OutputMultiplier(rotorBlock)
                     * (mRecipe[0] + mRecipe[1])));
             int amount = Math.round(multiper * (this.mOutputItems[0].stackSize * this.mMulti));
 
@@ -263,7 +264,7 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
             splitStacks.add(tmp);
             mOutputItems = splitStacks.toArray(new ItemStack[splitStacks.size()]);
         }
-        this.mMaxProgresstime = (tRecipe.mDuration * 2 * 100 * this.mMulti);
+        this.mMaxProgresstime =  (tRecipe.mDuration * 2 * 100 * this.mMulti) / (int) getSpeed(rotorBlock);
         this.mMulti = 16;
         return true;
     }
@@ -486,19 +487,19 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
                 STRUCTURE_PIECE_MAIN, stackSize, 3, 11, 0, elementBudget, source, actor, false, true);
     }
 
-    public float getmRotor(BW_RotorBlock rotorBlock) {
+    public float OutputMultiplier(BW_RotorBlock rotorBlock) {
         try {
             return ((BW_Stonage_Rotors) rotorBlock.rotorSlot.get().getItem()).getmRotor();
-        } catch (java.lang.NullPointerException e){
+        } catch (Exception e){
             return 1f;
         }
     }
 
-    public float getSpeed(BW_RotorBlock rotorBlock) {
+    public int getSpeed(BW_RotorBlock rotorBlock) {
         try {
             return ((BW_Stonage_Rotors) rotorBlock.rotorSlot.get().getItem()).getSpeed();
-        } catch (java.lang.NullPointerException e){
-            return rotorBlock.getefficiency();
+        } catch (Exception e){
+            return 1;
         }
     }
 }

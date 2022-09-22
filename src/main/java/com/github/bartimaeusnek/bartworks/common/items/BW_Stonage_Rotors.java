@@ -48,13 +48,13 @@ public class BW_Stonage_Rotors extends Item implements IKineticRotor {
     private final IKineticRotor.GearboxType type;
     private final ResourceLocation tex;
     private final String itemTex;
-    private final float speed;
+    private final int speed;
     private final float mRotor;
 
     public BW_Stonage_Rotors(
             int diameter,
             float eff,
-            float speed,
+            int speed,
             float mRotor,
             int min,
             int max,
@@ -134,7 +134,7 @@ public class BW_Stonage_Rotors extends Item implements IKineticRotor {
         return gearboxType.equals(this.type);
     }
 
-    public float getSpeed() {
+    public int getSpeed() {
         return speed;
     }
 

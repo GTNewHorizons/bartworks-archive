@@ -40,6 +40,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
+import net.minecraft.nbt.NBTTagCompound;
+import ic2.core.util.StackUtil;
 
 public class BW_Stonage_Rotors extends Item implements IKineticRotor {
 
@@ -50,6 +52,8 @@ public class BW_Stonage_Rotors extends Item implements IKineticRotor {
     private final String itemTex;
     private final int speed;
     private final float mRotor;
+    private final int maxDamageEx;
+    private int dura;
 
     public BW_Stonage_Rotors(
             int diameter,
@@ -71,7 +75,8 @@ public class BW_Stonage_Rotors extends Item implements IKineticRotor {
         this.speed = speed;
         this.type = type;
         this.tex = tex;
-        this.setMaxDamage(durability);
+        this.setMaxDamage(30000);
+        this.maxDamageEx = durability;
         this.setUnlocalizedName(Name);
         this.setCreativeTab(MainMod.BWT);
         this.itemTex = itemTex;
@@ -94,7 +99,7 @@ public class BW_Stonage_Rotors extends Item implements IKineticRotor {
         }
         info.add(StatCollector.translateToLocal("tooltip.rotor.0.name") + " " + this.DiaMinMax[0]);
         info.add(StatCollector.translateToLocal("tooltip.rotor.1.name") + " "
-                + (this.getMaxDamage() - this.getDamage(itemStack)) + "/" + this.getMaxDamage());
+                + ((this.getMaxDamageEx() - this.getDamageOfStack(itemStack)) / 100) + "/" + (this.getMaxDamageEx() / 100));
         info.add(StatCollector.translateToLocal("tooltip.rotor.2.name") + " " + this.eff);
         info.add(StatCollector.translateToLocal("tooltip.rotor.3.name") + " " + this.speed);
         info.add(StatCollector.translateToLocal("tooltip.rotor.4.name") + " " + this.mRotor);
@@ -140,5 +145,33 @@ public class BW_Stonage_Rotors extends Item implements IKineticRotor {
 
     public float getmRotor() {
         return mRotor;
+    }
+
+    public void setDamageForStack(ItemStack stack, int advDmg) {
+        NBTTagCompound nbtData = StackUtil.getOrCreateNbtData(stack);
+        nbtData.setInteger("DmgEx", advDmg);
+        if (this.maxDamageEx > 0) {
+            double p = (double) advDmg / (double) this.maxDamageEx;
+            int newDmg = (int) (stack.getMaxDamage() * p);
+            if (newDmg >= stack.getMaxDamage()) {
+                newDmg = stack.getMaxDamage() - 1;
+            }
+            stack.setItemDamage(newDmg);
+            this.dura = newDmg;
+        }
+    }
+
+    public int getDamageOfStack(ItemStack stack) {
+        NBTTagCompound nbtData = StackUtil.getOrCreateNbtData(stack);
+        this.dura = nbtData.getInteger("DmgEx");
+        return this.dura;
+    }
+
+    public int getMaxDamageEx() {
+        return this.maxDamageEx;
+    }
+
+    public void damageItemStack(ItemStack stack, int Dmg) {
+        setDamageForStack(stack, getDamageOfStack(stack) + Dmg);
     }
 }

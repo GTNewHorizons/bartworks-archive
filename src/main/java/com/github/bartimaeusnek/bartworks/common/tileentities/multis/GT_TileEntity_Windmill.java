@@ -167,7 +167,7 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
     @Override
     public boolean onRunningTick(ItemStack aStack) {
         if (this.mMaxProgresstime > 0) this.mProgresstime += this.rotorBlock.getGrindPower();
-        if (!rotorBlock.rotorSlot.isEmpty()) rotorBlock.rotorSlot.damage(this.rotorBlock.getGrindPower() / 10, false);
+        if (!rotorBlock.rotorSlot.isEmpty()) this.setRotorDamage(rotorBlock, this.rotorBlock.getGrindPower());
         return this.rotorBlock.getGrindPower() > 0;
     }
 
@@ -500,6 +500,14 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
             return ((BW_Stonage_Rotors) rotorBlock.rotorSlot.get().getItem()).getSpeed();
         } catch (Exception e){
             return 1;
+        }
+    }
+
+    public void setRotorDamage(BW_RotorBlock rotorBlock, int damage) {
+        try {
+            ((BW_Stonage_Rotors) rotorBlock.rotorSlot.get().getItem()).damageItemStack(rotorBlock.rotorSlot.get() , damage);
+        } catch (Exception e){
+            rotorBlock.rotorSlot.damage(damage, false);
         }
     }
 }

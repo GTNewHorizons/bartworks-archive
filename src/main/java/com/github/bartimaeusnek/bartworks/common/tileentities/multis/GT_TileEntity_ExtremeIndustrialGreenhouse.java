@@ -27,7 +27,6 @@ import com.github.bartimaeusnek.bartworks.API.LoaderReference;
 import com.github.bartimaeusnek.bartworks.client.renderer.BW_CropVisualizer;
 import com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference;
 import com.github.bartimaeusnek.bartworks.util.ChatColorHelper;
-import com.gtnewhorizon.gtnhlib.util.map.ItemStackMap;
 import com.gtnewhorizon.structurelib.alignment.IAlignmentLimits;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
@@ -46,7 +45,6 @@ import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
 import gregtech.api.util.GT_Utility;
 import gregtech.common.GT_DummyWorld;
-import gregtech.common.tileentities.machines.GT_MetaTileEntity_Hatch_InputBus_ME;
 import gregtech.common.tileentities.machines.GT_MetaTileEntity_Hatch_OutputBus_ME;
 import ic2.api.crops.CropCard;
 import ic2.api.crops.Crops;
@@ -323,21 +321,16 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             } else if (setupphase == 2 && mStorage.size() > 0) {
                 int emptySlots = 0;
                 boolean ignoreEmptiness = false;
-                for(GT_MetaTileEntity_Hatch_OutputBus i : mOutputBusses)
-                {
-                    if(i instanceof GT_MetaTileEntity_Hatch_OutputBus_ME)
-                    {
+                for (GT_MetaTileEntity_Hatch_OutputBus i : mOutputBusses) {
+                    if (i instanceof GT_MetaTileEntity_Hatch_OutputBus_ME) {
                         ignoreEmptiness = true;
                         break;
                     }
-                    for(int j = 0; j < i.getSizeInventory(); j++)
-                        if(i.isValidSlot(j))
-                            if(i.getStackInSlot(j) == null)
-                                emptySlots++;
+                    for (int j = 0; j < i.getSizeInventory(); j++)
+                        if (i.isValidSlot(j)) if (i.getStackInSlot(j) == null) emptySlots++;
                 }
-                while(mStorage.size() > 0) {
-                    if(!ignoreEmptiness && (emptySlots -= 2) < 0)
-                        break;
+                while (mStorage.size() > 0) {
+                    if (!ignoreEmptiness && (emptySlots -= 2) < 0) break;
                     this.addOutput(this.mStorage.get(0).input.copy());
                     if (this.mStorage.get(0).undercrop != null)
                         this.addOutput(this.mStorage.get(0).undercrop.copy());
@@ -392,14 +385,13 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         List<GT_MetaTileEntity_Hatch_Input> fluidsToUse = new ArrayList<>(fluids.size());
         int watercheck = waterusage;
         FluidStack waterStack = new FluidStack(FluidRegistry.WATER, 1);
-        for(GT_MetaTileEntity_Hatch_Input i : fluids){
-            if(!isValidMetaTileEntity(i)) continue;
-            if(i instanceof GT_MetaTileEntity_Hatch_MultiInput){
+        for (GT_MetaTileEntity_Hatch_Input i : fluids) {
+            if (!isValidMetaTileEntity(i)) continue;
+            if (i instanceof GT_MetaTileEntity_Hatch_MultiInput) {
                 int amount = ((GT_MetaTileEntity_Hatch_MultiInput) i).getFluidAmount(waterStack);
-                if(amount == 0) continue;
+                if (amount == 0) continue;
                 watercheck -= amount;
-            }
-            else {
+            } else {
                 FluidStack stack = i.getDrainableStack();
                 if (stack == null) continue;
                 if (!stack.isFluidEqual(waterStack)) continue;
@@ -407,11 +399,11 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                 watercheck -= stack.amount;
             }
             fluidsToUse.add(i);
-            if(watercheck <= 0) break;
+            if (watercheck <= 0) break;
         }
-        if(watercheck > 0 && !debug) return false;
+        if (watercheck > 0 && !debug) return false;
         watercheck = waterusage;
-        for(GT_MetaTileEntity_Hatch_Input i : fluidsToUse){
+        for (GT_MetaTileEntity_Hatch_Input i : fluidsToUse) {
             int used = i.drain(watercheck, true).amount;
             watercheck -= used;
         }

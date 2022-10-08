@@ -27,6 +27,7 @@ import com.github.bartimaeusnek.bartworks.API.LoaderReference;
 import com.github.bartimaeusnek.bartworks.client.renderer.BW_CropVisualizer;
 import com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference;
 import com.github.bartimaeusnek.bartworks.util.ChatColorHelper;
+import com.gtnewhorizon.gtnhlib.util.map.ItemStackMap;
 import com.gtnewhorizon.structurelib.alignment.IAlignmentLimits;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
@@ -40,14 +41,13 @@ import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
-import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_EnhancedMultiBlockBase;
-import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Energy;
-import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Input;
-import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_MultiInput;
+import gregtech.api.metatileentity.implementations.*;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
 import gregtech.api.util.GT_Utility;
 import gregtech.common.GT_DummyWorld;
+import gregtech.common.tileentities.machines.GT_MetaTileEntity_Hatch_InputBus_ME;
+import gregtech.common.tileentities.machines.GT_MetaTileEntity_Hatch_OutputBus_ME;
 import ic2.api.crops.CropCard;
 import ic2.api.crops.Crops;
 import ic2.core.Ic2Items;
@@ -318,13 +318,31 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             startRecipeProcessing();
             if (setupphase == 1 && mStorage.size() < mMaxSlots) {
                 List<ItemStack> inputs = getStoredInputs();
-                for (ItemStack input : inputs) if (addCrop(input)) break;
+                for (ItemStack input : inputs) addCrop(input);
                 this.updateSlots();
             } else if (setupphase == 2 && mStorage.size() > 0) {
-                this.addOutput(this.mStorage.get(0).input.copy());
-                if (this.mStorage.get(0).undercrop != null)
-                    this.addOutput(this.mStorage.get(0).undercrop.copy());
-                this.mStorage.remove(0);
+                int emptySlots = 0;
+                boolean ignoreEmptiness = false;
+                for(GT_MetaTileEntity_Hatch_OutputBus i : mOutputBusses)
+                {
+                    if(i instanceof GT_MetaTileEntity_Hatch_OutputBus_ME)
+                    {
+                        ignoreEmptiness = true;
+                        break;
+                    }
+                    for(int j = 0; j < i.getSizeInventory(); j++)
+                        if(i.isValidSlot(j))
+                            if(i.getStackInSlot(j) == null)
+                                emptySlots++;
+                }
+                while(mStorage.size() > 0) {
+                    if(!ignoreEmptiness && (emptySlots -= 2) < 0)
+                        break;
+                    this.addOutput(this.mStorage.get(0).input.copy());
+                    if (this.mStorage.get(0).undercrop != null)
+                        this.addOutput(this.mStorage.get(0).undercrop.copy());
+                    this.mStorage.remove(0);
+                }
                 this.updateSlots();
             }
             endRecipeProcessing();

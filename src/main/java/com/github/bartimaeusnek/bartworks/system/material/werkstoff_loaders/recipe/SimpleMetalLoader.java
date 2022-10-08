@@ -85,7 +85,7 @@ public class SimpleMetalLoader implements IWerkstoffRunnable {
             GT_ModHandler.addCraftingRecipe(
                     werkstoff.get(plate), GT_Proxy.tBits, new Object[] {"h", "X", "X", 'X', werkstoff.get(ingot)});
             GT_ModHandler.addCraftingRecipe(
-                    werkstoff.get(foil, 2), GT_Proxy.tBits, new Object[] {"hX", 'X', werkstoff.get(plant)});
+                    werkstoff.get(foil, 2), GT_Proxy.tBits, new Object[] {"hX", 'X', werkstoff.get(plate)});
 
             GT_Recipe.GT_Recipe_Map.sBenderRecipes.add(new BWRecipes.DynamicGTRecipe(
                     true,
@@ -116,11 +116,11 @@ public class SimpleMetalLoader implements IWerkstoffRunnable {
                     16);
 
             GT_Values.RA.addBenderRecipe(
-                    werkstoff.get(ingot),
+                    werkstoff.get(plate),
                     GT_Utility.getIntegratedCircuit(1),
                     werkstoff.get(foil, 4),
                     (int) Math.max(werkstoff.getStats().getMass() * 5L, 1L),
-                    (int) werkstoff.getStats().getProtons() * 20);
+                    48);
 
             GT_Values.RA.addForgeHammerRecipe(
                     werkstoff.get(stick, 2),

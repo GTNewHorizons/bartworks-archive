@@ -42,6 +42,8 @@ import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_EnhancedMultiBlockBase;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Energy;
+import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Input;
+import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_MultiInput;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
 import gregtech.api.util.GT_Utility;
@@ -366,8 +368,35 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
 
         waterusage = 0;
         for (GreenHouseSlot s : mStorage) waterusage += s.input.stackSize;
+        waterusage *= 1000;
 
-        if (!depleteInput(new FluidStack(FluidRegistry.WATER, waterusage * 1000)) && !debug) return false;
+        List<GT_MetaTileEntity_Hatch_Input> fluids = mInputHatches;
+        List<GT_MetaTileEntity_Hatch_Input> fluidsToUse = new ArrayList<>(fluids.size());
+        int watercheck = waterusage;
+        FluidStack waterStack = new FluidStack(FluidRegistry.WATER, 1);
+        for(GT_MetaTileEntity_Hatch_Input i : fluids){
+            if(!isValidMetaTileEntity(i)) continue;
+            if(i instanceof GT_MetaTileEntity_Hatch_MultiInput){
+                int amount = ((GT_MetaTileEntity_Hatch_MultiInput) i).getFluidAmount(waterStack);
+                if(amount == 0) continue;
+                watercheck -= amount;
+            }
+            else {
+                FluidStack stack = i.getDrainableStack();
+                if (stack == null) continue;
+                if (!stack.isFluidEqual(waterStack)) continue;
+                if (stack.amount <= 0) continue;
+                watercheck -= stack.amount;
+            }
+            fluidsToUse.add(i);
+            if(watercheck <= 0) break;
+        }
+        if(watercheck > 0 && !debug) return false;
+        watercheck = waterusage;
+        for(GT_MetaTileEntity_Hatch_Input i : fluidsToUse){
+            int used = i.drain(watercheck, true).amount;
+            watercheck -= used;
+        }
 
         // OVERCLOCK
         // FERTILIZER IDEA - IC2 +10% per fertilizer per crop per operation, NORMAL +200% per fertilizer per crop per
@@ -459,7 +488,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                                 ? (isIC2Mode ? "IC2 crops" : "Normal crops")
                                 : ("Setup mode " + (setupphase == 1 ? "(input)" : "(output)")))
                         + EnumChatFormatting.RESET,
-                "Uses " + waterusage * 1000 + "L/operation of water",
+                "Uses " + waterusage + "L/operation of water",
                 "Max slots: " + EnumChatFormatting.GREEN + this.mMaxSlots + EnumChatFormatting.RESET,
                 "Used slots: " + ((mStorage.size() > mMaxSlots) ? EnumChatFormatting.RED : EnumChatFormatting.GREEN)
                         + this.mStorage.size() + EnumChatFormatting.RESET));

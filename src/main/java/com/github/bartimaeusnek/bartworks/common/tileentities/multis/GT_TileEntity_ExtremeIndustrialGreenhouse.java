@@ -802,6 +802,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                     boolean cangrow = false;
                     ArrayList<ItemStack> inputs = tileEntity.getStoredInputs();
                     for (ItemStack a : inputs) {
+                        if (a.stackSize <= 0) continue;
                         Block b = Block.getBlockFromItem(a.getItem());
                         if (b == Blocks.air) continue;
                         world.setBlock(xyz[0], xyz[1] - 2, xyz[2], b, a.getItemDamage(), 0);

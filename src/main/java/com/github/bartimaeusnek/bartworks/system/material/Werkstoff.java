@@ -832,7 +832,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
          * Auto add MetalWorking(crafting components) Recipe 10000
          */
         public byte extraRecipes;
-        
+
         /*
          * Here so that new recipes don't fuck with existing functionality
          * Auto add Crafting Metal Solidifier recipes 1
@@ -840,7 +840,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
          * Auto add Multiple Ingot Metal Solidifier recipes 100 (Unused)
          */
         public byte extraRecipes2;
-        
+
         public short mixCircuit = -1;
 
         public Werkstoff.GenerationFeatures setBlacklist(OrePrefixes p) {
@@ -894,34 +894,34 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         public boolean hasChemicalRecipes() {
             return (this.extraRecipes & 1) != 0;
         }
-        
+
         public Werkstoff.GenerationFeatures addMetalCraftingSolidifierRecipes() {
-        	this.extraRecipes2 = (byte) (this.extraRecipes2 | 1);
-        	return this;
-        }  
-        
+            this.extraRecipes2 = (byte) (this.extraRecipes2 | 1);
+            return this;
+        }
+
         public boolean hasMetalCraftingSolidifierRecipes() {
-        	return (this.extraRecipes2 & 1) != 0;
+            return (this.extraRecipes2 & 1) != 0;
         }
-        
+
         public Werkstoff.GenerationFeatures addMetaSolidifierRecipes() {
-        	this.extraRecipes2 = (byte) (this.extraRecipes2 | 10);
-        	return this;
+            this.extraRecipes2 = (byte) (this.extraRecipes2 | 10);
+            return this;
         }
-        
+
         public boolean hasMetaSolidifierRecipes() {
-        	return (this.extraRecipes2 & 10) != 0;
+            return (this.extraRecipes2 & 10) != 0;
         }
-        
+
         public Werkstoff.GenerationFeatures addMultipleMetalSolidifierRecipes() {
-        	this.extraRecipes2 = (byte) (this.extraRecipes2 | 100);
-        	return this;
+            this.extraRecipes2 = (byte) (this.extraRecipes2 | 100);
+            return this;
         }
-        
+
         public boolean hasMultipleMetalSolidifierRecipes() {
-        	return (this.extraRecipes2 & 100) != 0;
+            return (this.extraRecipes2 & 100) != 0;
         }
-        
+
         public Werkstoff.GenerationFeatures addMixerRecipes() {
             this.extraRecipes = (byte) (this.extraRecipes | 10);
             return this;

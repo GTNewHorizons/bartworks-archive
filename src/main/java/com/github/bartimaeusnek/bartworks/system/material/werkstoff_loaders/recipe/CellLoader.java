@@ -61,9 +61,9 @@ public class CellLoader implements IWerkstoffRunnable {
                     werkstoff.getContents().getValue().toArray(new Pair[0])) {
                 if (container.getKey() instanceof Materials) {
                     if ((((Materials) container.getKey()).hasCorrespondingGas()
-                            || ((Materials) container.getKey()).hasCorrespondingFluid()
-                            || ((Materials) container.getKey()).mIconSet == TextureSet.SET_FLUID) &&
-                        ((Materials) container.getKey()).getDust(0) == null) {
+                                    || ((Materials) container.getKey()).hasCorrespondingFluid()
+                                    || ((Materials) container.getKey()).mIconSet == TextureSet.SET_FLUID)
+                            && ((Materials) container.getKey()).getDust(0) == null) {
                         FluidStack tmpFl = ((Materials) container.getKey()).getGas(1000L * container.getValue());
                         if (tmpFl == null || tmpFl.getFluid() == null) {
                             tmpFl = ((Materials) container.getKey()).getFluid(1000L * container.getValue());

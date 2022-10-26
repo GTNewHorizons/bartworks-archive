@@ -1356,7 +1356,9 @@ public class WerkstoffLoader {
                     .addMixerRecipes()
                     .addSimpleMetalWorkingItems()
                     .addCraftingMetalWorkingItems()
-                    .addMultipleIngotMetalWorkingItems(),
+                    .addMultipleIngotMetalWorkingItems()
+                   
+                    ,
             90,
             TextureSet.SET_METALLIC,
             new Pair<>(WerkstoffLoader.Ruthenium, 2),

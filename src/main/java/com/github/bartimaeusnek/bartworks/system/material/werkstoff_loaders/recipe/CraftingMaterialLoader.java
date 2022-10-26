@@ -162,7 +162,10 @@ public class CraftingMaterialLoader implements IWerkstoffRunnable {
 
             // molten -> metal
             if (werkstoff.hasItemType(WerkstoffLoader.cellMolten)) {
-                GT_Values.RA.addFluidSolidifierRecipe(
+                
+            	/* !! No more hardcoded gear, etc. recipe gen, now must go through GenerationFeatures() !!
+            	
+            	GT_Values.RA.addFluidSolidifierRecipe(
                         ItemList.Shape_Mold_Gear.get(0L), werkstoff.getMolten(576), werkstoff.get(gearGt), 128, 8);
                 GT_Values.RA.addFluidSolidifierRecipe(
                         ItemList.Shape_Mold_Gear_Small.get(0L),
@@ -188,6 +191,7 @@ public class CraftingMaterialLoader implements IWerkstoffRunnable {
                 if (WerkstoffLoader.rotorMold != null)
                     GT_Values.RA.addFluidSolidifierRecipe(
                             WerkstoffLoader.rotorMold.get(0L), werkstoff.getMolten(612), werkstoff.get(rotor), 100, 60);
+                */
             }
 
             GT_Values.RA.addPulveriserRecipe(

@@ -39,10 +39,12 @@ public class BW_CropVisualizer extends EntityFX {
         Tessellator tessellator = Tessellator.instance;
         GL11.glDisable(GL11.GL_CULL_FACE);
         GL11.glDepthMask(false);
+        double f11 = this.prevPosX + (this.posX - this.prevPosX) * (double) p_70539_2_ - interpPosX;
+        double f12 = this.prevPosY + (this.posY - this.prevPosY) * (double) p_70539_2_ - interpPosY;
+        double f13 = this.prevPosZ + (this.posZ - this.prevPosZ) * (double) p_70539_2_ - interpPosZ;
+        tessellator.setBrightness(Blocks.wheat.getMixedBrightnessForBlock(
+                worldObj, (int) f11, (int) Math.ceil(f12), (int) f13));
         tessellator.setColorRGBA(255, 255, 255, 255);
-        float f11 = (float) (this.prevPosX + (this.posX - this.prevPosX) * (double) p_70539_2_ - interpPosX);
-        float f12 = (float) (this.prevPosY + (this.posY - this.prevPosY) * (double) p_70539_2_ - interpPosY);
-        float f13 = (float) (this.prevPosZ + (this.posZ - this.prevPosZ) * (double) p_70539_2_ - interpPosZ);
         RenderBlocks.getInstance().renderBlockCropsImpl(Blocks.wheat, meta, f11, f12, f13);
         GL11.glEnable(GL11.GL_CULL_FACE);
         GL11.glDepthMask(true);

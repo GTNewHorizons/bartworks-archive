@@ -343,7 +343,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
 
             if (setupphase == 1) {
                 List<ItemStack> inputs = getStoredInputs();
-                for (ItemStack input : inputs) addCrop(input);
+                for (ItemStack input : inputs) addCrop(input.splitStack(64));
             } else if (setupphase == 2) {
                 int emptySlots = 0;
                 boolean ignoreEmptiness = false;
@@ -563,7 +563,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
     public boolean addCrop(ItemStack input) {
         if (!isIC2Mode)
             for (GreenHouseSlot g : mStorage)
-                if (GT_Utility.areStacksEqual(g.input, input)) {
+                if (g.input.stackSize < 64 && GT_Utility.areStacksEqual(g.input, input)) {
                     g.addAll(this.getBaseMetaTileEntity().getWorld(), input);
                     if (input.stackSize == 0) return true;
                 }

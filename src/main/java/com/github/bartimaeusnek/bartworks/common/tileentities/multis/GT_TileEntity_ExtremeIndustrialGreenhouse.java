@@ -19,6 +19,7 @@ package com.github.bartimaeusnek.bartworks.common.tileentities.multis;
 
 import static com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference.MULTIBLOCK_ADDED_VIA_BARTWORKS;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
+import static gregtech.api.enums.GT_Values.AuthorKuba;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GT_StructureUtility.ofHatchAdder;
 
@@ -205,6 +206,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         GT_Multiblock_Tooltip_Builder tt = new GT_Multiblock_Tooltip_Builder();
         tt.addMachineType("Crop Farm")
                 .addInfo("Controller block for the Extreme Industrial Greenhouse")
+                .addInfo(AuthorKuba)
                 .addInfo("Grow your crops like a chad !")
                 .addInfo("Use screwdriver to enable/change/disable setup mode")
                 .addInfo("Use screwdriver while sneaking to enable/disable IC2 mode")

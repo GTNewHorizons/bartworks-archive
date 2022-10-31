@@ -840,8 +840,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
 
                 int dur = cc.growthDuration(te);
                 int rate = te.calcGrowthRate();
-                if (rate == 0) // should not be possible with those stats
-                return;
+                if (rate == 0) return; // should not be possible with those stats
                 growthticks = dur / rate;
                 if (growthticks < 1) growthticks = 1;
 

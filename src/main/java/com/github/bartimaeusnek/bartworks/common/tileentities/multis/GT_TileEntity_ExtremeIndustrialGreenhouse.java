@@ -345,7 +345,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
 
             if (setupphase == 1) {
                 List<ItemStack> inputs = getStoredInputs();
-                for (ItemStack input : inputs) addCrop(input.splitStack(64));
+                for (ItemStack input : inputs) addCrop(input);
             } else if (setupphase == 2) {
                 int emptySlots = 0;
                 boolean ignoreEmptiness = false;
@@ -569,10 +569,8 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                     g.addAll(this.getBaseMetaTileEntity().getWorld(), input);
                     if (input.stackSize == 0) return true;
                 }
-        GreenHouseSlot h = new GreenHouseSlot(this, input.copy(), true, isIC2Mode);
+        GreenHouseSlot h = new GreenHouseSlot(this, input, true, isIC2Mode);
         if (h.isValid) {
-            if (isIC2Mode) input.stackSize--;
-            else input.stackSize = 0;
             mStorage.add(h);
             return true;
         }
@@ -726,7 +724,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                 if (i == Items.reeds) b = Blocks.reeds;
                 else {
                     b = Block.getBlockFromItem(i);
-                    if (!(b == Blocks.cactus)) return;
+                    if (b != Blocks.cactus) return;
                 }
                 needsreplanting = false;
             }
@@ -748,7 +746,9 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
 
             crop = b;
             isIC2Crop = false;
-            if (addDrops(world, input.stackSize, autocraft) == 0 && !drops.isEmpty()) {
+            int toUse = Math.min(64, input.stackSize);
+            if (addDrops(world, toUse, autocraft) == 0 && !drops.isEmpty()) {
+                input.stackSize -= toUse;
                 this.isValid = true;
             }
         }

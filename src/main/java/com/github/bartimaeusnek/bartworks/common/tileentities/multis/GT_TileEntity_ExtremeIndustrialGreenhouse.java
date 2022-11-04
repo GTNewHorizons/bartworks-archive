@@ -25,6 +25,7 @@ import static gregtech.api.util.GT_StructureUtility.ofHatchAdder;
 
 import com.github.bartimaeusnek.bartworks.API.BorosilicateGlass;
 import com.github.bartimaeusnek.bartworks.API.LoaderReference;
+import com.github.bartimaeusnek.bartworks.client.renderer.BW_CropVisualizer;
 import com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference;
 import com.github.bartimaeusnek.bartworks.util.ChatColorHelper;
 import com.gtnewhorizon.structurelib.alignment.IAlignmentLimits;
@@ -53,6 +54,7 @@ import ic2.core.crop.TileEntityCrop;
 import java.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStem;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -845,7 +847,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                 rn = new Random();
 
                 // CHECK GROWTH SPEED
-                te.humidity = (byte) (isNoHumidity == true ? 0 : 12); // humidity with full water storage
+                te.humidity = (byte) (isNoHumidity == true ? 0 : 12); // humidity with full water storage or 0 humidity
                 te.airQuality = 6; // air quality when sky is seen
                 te.nutrients = 8; // netrients with full nutrient storage
 

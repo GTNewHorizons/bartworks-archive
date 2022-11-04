@@ -25,7 +25,6 @@ import static gregtech.api.util.GT_StructureUtility.ofHatchAdder;
 
 import com.github.bartimaeusnek.bartworks.API.BorosilicateGlass;
 import com.github.bartimaeusnek.bartworks.API.LoaderReference;
-import com.github.bartimaeusnek.bartworks.client.renderer.BW_CropVisualizer;
 import com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference;
 import com.github.bartimaeusnek.bartworks.util.ChatColorHelper;
 import com.gtnewhorizon.structurelib.alignment.IAlignmentLimits;
@@ -54,7 +53,6 @@ import ic2.core.crop.TileEntityCrop;
 import java.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStem;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -84,6 +82,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
     private boolean isIC2Mode = false;
     private byte glasTier = 0;
     private int waterusage = 0;
+    private static boolean isNoHumidity = false;
     private static final int CASING_INDEX = 49;
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private static final Item forestryfertilizer = GameRegistry.findItem("Forestry", "fertilizerCompound");
@@ -183,6 +182,14 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
     }
 
     @Override
+    public boolean onWireCutterRightClick(
+            byte aSide, byte aWrenchingSide, EntityPlayer aPlayer, float aX, float aY, float aZ) {
+        isNoHumidity = !isNoHumidity;
+        GT_Utility.sendChatToPlayer(aPlayer, "Give incoming crops no humidity " + isNoHumidity);
+        return true;
+    }
+
+    @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity iGregTechTileEntity) {
         return new GT_TileEntity_ExtremeIndustrialGreenhouse(this.mName);
     }
@@ -269,6 +276,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         aNBT.setByte("glasTier", glasTier);
         aNBT.setInteger("setupphase", setupphase);
         aNBT.setBoolean("isIC2Mode", isIC2Mode);
+        aNBT.setBoolean("isNoHumidity", isNoHumidity);
         aNBT.setInteger("mStorageSize", mStorage.size());
         for (int i = 0; i < mStorage.size(); i++)
             aNBT.setTag("mStorage." + i, mStorage.get(i).toNBTTagCompound());
@@ -280,6 +288,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         glasTier = aNBT.getByte("glasTier");
         setupphase = aNBT.getInteger("setupphase");
         isIC2Mode = aNBT.getBoolean("isIC2Mode");
+        isNoHumidity = aNBT.getBoolean("isNoHumidity");
         for (int i = 0; i < aNBT.getInteger("mStorageSize"); i++)
             mStorage.add(new GreenHouseSlot(aNBT.getCompoundTag("mStorage." + i)));
     }
@@ -836,7 +845,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                 rn = new Random();
 
                 // CHECK GROWTH SPEED
-                te.humidity = 12; // humidity with full water storage
+                te.humidity = (byte) (isNoHumidity == true ? 0 : 12); // humidity with full water storage
                 te.airQuality = 6; // air quality when sky is seen
                 te.nutrients = 8; // netrients with full nutrient storage
 

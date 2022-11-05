@@ -84,7 +84,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
     private boolean isIC2Mode = false;
     private byte glasTier = 0;
     private int waterusage = 0;
-    private static boolean isNoHumidity = false;
+    private boolean isNoHumidity = false;
     private static final int CASING_INDEX = 49;
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private static final Item forestryfertilizer = GameRegistry.findItem("Forestry", "fertilizerCompound");
@@ -516,7 +516,8 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             if (!mStorage.get(i).isValid) continue;
             StringBuilder a = new StringBuilder(
                     "Slot " + i + ": " + EnumChatFormatting.GREEN + "x" + this.mStorage.get(i).input.stackSize + " "
-                            + this.mStorage.get(i).input.getDisplayName());
+                            + this.mStorage.get(i).input.getDisplayName() + " | Humidity: "
+                            + (this.mStorage.get(i).noHumidity ? 0 : 12));
             if (this.isIC2Mode) {
                 a.append(" : ");
                 for (Map.Entry<String, Double> entry :
@@ -580,7 +581,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                     g.addAll(this.getBaseMetaTileEntity().getWorld(), input);
                     if (input.stackSize == 0) return true;
                 }
-        GreenHouseSlot h = new GreenHouseSlot(this, input, true, isIC2Mode);
+        GreenHouseSlot h = new GreenHouseSlot(this, input, true, isIC2Mode, isNoHumidity);
         if (h.isValid) {
             mStorage.add(h);
             return true;
@@ -596,6 +597,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         List<ItemStack> drops;
         boolean isValid;
         boolean isIC2Crop;
+        boolean noHumidity;
         int growthticks;
         List<List<ItemStack>> generations;
 
@@ -633,6 +635,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                                 generations.get(i).get(j).writeToNBT(new NBTTagCompound()));
                 }
                 aNBT.setInteger("growthticks", growthticks);
+                aNBT.setBoolean("noHumidity", noHumidity);
             }
             return aNBT;
         }
@@ -717,13 +720,18 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         }
 
         public GreenHouseSlot(
-                GT_TileEntity_ExtremeIndustrialGreenhouse tileEntity, ItemStack input, boolean autocraft, boolean IC2) {
+                GT_TileEntity_ExtremeIndustrialGreenhouse tileEntity,
+                ItemStack input,
+                boolean autocraft,
+                boolean IC2,
+                boolean noHumidity) {
             super(null, 3, 3);
             World world = tileEntity.getBaseMetaTileEntity().getWorld();
             this.input = input.copy();
             this.isValid = false;
+            this.noHumidity = noHumidity;
             if (IC2) {
-                GreenHouseSlotIC2(tileEntity, world, input);
+                GreenHouseSlotIC2(tileEntity, world, input, noHumidity);
                 return;
             }
             Item i = input.getItem();
@@ -765,7 +773,10 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         }
 
         public void GreenHouseSlotIC2(
-                GT_TileEntity_ExtremeIndustrialGreenhouse tileEntity, World world, ItemStack input) {
+                GT_TileEntity_ExtremeIndustrialGreenhouse tileEntity,
+                World world,
+                ItemStack input,
+                boolean noHumidity) {
             if (!ItemList.IC2_Crop_Seeds.isStackEqual(input, true, true)) return;
             CropCard cc = Crops.instance.getCropCard(input);
             this.input.stackSize = 1;
@@ -847,7 +858,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                 rn = new Random();
 
                 // CHECK GROWTH SPEED
-                te.humidity = (byte) (isNoHumidity == true ? 0 : 12); // humidity with full water storage or 0 humidity
+                te.humidity = (byte) (noHumidity ? 0 : 12); // humidity with full water storage or 0 humidity
                 te.airQuality = 6; // air quality when sky is seen
                 te.nutrients = 8; // netrients with full nutrient storage
 

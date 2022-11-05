@@ -19,7 +19,6 @@ package com.github.bartimaeusnek.bartworks.common.tileentities.multis;
 
 import static com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference.MULTIBLOCK_ADDED_VIA_BARTWORKS;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
-import static gregtech.api.enums.GT_Values.AuthorKuba;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GT_StructureUtility.ofHatchAdder;
 
@@ -644,6 +643,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             super(null, 3, 3);
             isIC2Crop = aNBT.getBoolean("isIC2Crop");
             isValid = aNBT.getBoolean("isValid");
+            noHumidity = aNBT.getBoolean("noHumidity");
             input = ItemStack.loadItemStackFromNBT(aNBT.getCompoundTag("input"));
             if (!isIC2Crop) {
                 crop = Block.getBlockById(aNBT.getInteger("crop"));

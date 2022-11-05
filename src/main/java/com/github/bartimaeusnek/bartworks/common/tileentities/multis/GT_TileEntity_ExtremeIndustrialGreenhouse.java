@@ -19,7 +19,6 @@ package com.github.bartimaeusnek.bartworks.common.tileentities.multis;
 
 import static com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference.MULTIBLOCK_ADDED_VIA_BARTWORKS;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
-import static gregtech.api.enums.GT_Values.AuthorKuba;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GT_StructureUtility.ofHatchAdder;
 
@@ -219,6 +218,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                 .addInfo("Grow your crops like a chad !")
                 .addInfo("Use screwdriver to enable/change/disable setup mode")
                 .addInfo("Use screwdriver while sneaking to enable/disable IC2 mode")
+                .addInfo("Use wire cutters to give incoming IC2 crops 0 humidity")
                 .addInfo("Uses 1000L of water per crop per operation")
                 .addInfo("You can insert fertilizer each operation to get more drops (max +400%)")
                 .addInfo("-------------------- SETUP   MODE --------------------")
@@ -516,10 +516,9 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             if (!mStorage.get(i).isValid) continue;
             StringBuilder a = new StringBuilder(
                     "Slot " + i + ": " + EnumChatFormatting.GREEN + "x" + this.mStorage.get(i).input.stackSize + " "
-                            + this.mStorage.get(i).input.getDisplayName() + " | Humidity: "
-                            + (this.mStorage.get(i).noHumidity ? 0 : 12));
+                            + this.mStorage.get(i).input.getDisplayName());
             if (this.isIC2Mode) {
-                a.append(" : ");
+                a.append(" | Humidity: " + (this.mStorage.get(i).noHumidity ? 0 : 12) + " : ");
                 for (Map.Entry<String, Double> entry :
                         mStorage.get(i).dropprogress.entrySet())
                     a.append((int) (entry.getValue() * 100d)).append("% ");
@@ -644,7 +643,6 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             super(null, 3, 3);
             isIC2Crop = aNBT.getBoolean("isIC2Crop");
             isValid = aNBT.getBoolean("isValid");
-            noHumidity = aNBT.getBoolean("noHumidity");
             input = ItemStack.loadItemStackFromNBT(aNBT.getCompoundTag("input"));
             if (!isIC2Crop) {
                 crop = Block.getBlockById(aNBT.getInteger("crop"));
@@ -666,6 +664,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                                 .add(ItemStack.loadItemStackFromNBT(aNBT.getCompoundTag("generation." + i + "." + j)));
                 }
                 growthticks = aNBT.getInteger("growthticks");
+                noHumidity = aNBT.getBoolean("noHumidity");
                 rn = new Random();
             }
         }

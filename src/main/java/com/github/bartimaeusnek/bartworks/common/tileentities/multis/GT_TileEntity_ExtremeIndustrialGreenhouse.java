@@ -531,7 +531,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                     "Slot " + i + ": " + EnumChatFormatting.GREEN + "x" + this.mStorage.get(i).input.stackSize + " "
                             + this.mStorage.get(i).input.getDisplayName());
             if (this.isIC2Mode) {
-                a.append(" | Humidity: " + (this.mStorage.get(i).noHumidity ? 0 : 12) + " : ");
+                a.append(" | Humidity: ").append(this.mStorage.get(i).noHumidity ? 0 : 12).append(" : ");
                 for (Map.Entry<String, Double> entry :
                         mStorage.get(i).dropprogress.entrySet())
                     a.append((int) (entry.getValue() * 100d)).append("% ");

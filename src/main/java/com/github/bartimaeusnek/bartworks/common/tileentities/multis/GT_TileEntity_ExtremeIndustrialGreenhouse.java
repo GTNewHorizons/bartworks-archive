@@ -531,9 +531,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             StringBuilder a = new StringBuilder(EnumChatFormatting.GREEN + "x" + greenHouseSlot.input.stackSize + " "
                     + greenHouseSlot.input.getDisplayName());
             if (this.isIC2Mode) {
-                a.append(" | Humidity: ").append(greenHouseSlot.noHumidity ? 0 : 12); //        .append(" : ");
-                // for (Map.Entry<String, Double> entry : greenHouseSlot.dropprogress.entrySet())
-                //    a.append((int) (entry.getValue() * 100d)).append("% ");
+                a.append(" | Humidity: ").append(greenHouseSlot.noHumidity ? 0 : 12);
             }
             a.append(EnumChatFormatting.RESET);
             storageList.merge(a.toString(), 1, Integer::sum);

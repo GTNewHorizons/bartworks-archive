@@ -108,7 +108,7 @@ public class BorosilicateGlass {
         if (!Loader.instance().hasReachedState(LoaderState.INITIALIZATION))
             throw new IllegalStateException("register too early!");
         if (!isValidTier(tier)) throw new IllegalArgumentException("not a valid tier: " + tier);
-        getAllLevels().put(tier, Pair.of(block, meta));
+        doRegister(tier, block, meta, getAllLevels());
     }
 
     /**

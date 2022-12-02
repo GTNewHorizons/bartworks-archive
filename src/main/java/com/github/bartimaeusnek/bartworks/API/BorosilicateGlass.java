@@ -60,7 +60,6 @@ public class BorosilicateGlass {
             SetMultimap<Byte, Pair<Block, Integer>> ret = LinkedHashMultimap.create();
             Block block = getGlassBlock();
             doRegister((byte) 3, block, 0, ret);
-            doRegister((byte) 3, block, 0, ret);
             doRegister((byte) 4, block, 1, ret);
             doRegister((byte) 5, block, 2, ret);
             doRegister((byte) 6, block, 3, ret);

@@ -395,7 +395,7 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
                         this.getBaseMetaTileEntity(), false, V[tTier], tFluids, tInputs);
             }
         }
-        
+
         if (tRecipe == null) return false;
 
         ArrayList<ItemStack> outputItems = new ArrayList<>();

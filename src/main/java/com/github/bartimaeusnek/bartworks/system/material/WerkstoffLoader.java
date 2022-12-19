@@ -69,7 +69,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Level;
 
-@SuppressWarnings({"unchecked", "deprecation"})
+@Deprecated
 public class WerkstoffLoader {
     private WerkstoffLoader() {}
 

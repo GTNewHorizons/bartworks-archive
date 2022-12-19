@@ -45,7 +45,7 @@ import java.util.*;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
-@SuppressWarnings("ALL")
+@Deprecated
 public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
 
     public static final LinkedHashSet<Werkstoff> werkstoffHashSet = new LinkedHashSet<>();

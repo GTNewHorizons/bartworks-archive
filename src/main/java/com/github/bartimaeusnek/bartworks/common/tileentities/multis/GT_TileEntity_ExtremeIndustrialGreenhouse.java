@@ -759,7 +759,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             Item i = input.getItem();
             Block b = null;
             boolean detectedCustomHandler = false;
-            // There will be custom handlers here some day
+            // Custom handlers
             // FLOWERS //
             Block bb = Block.getBlockFromItem(i);
             if (bb == Blocks.air) bb = null;

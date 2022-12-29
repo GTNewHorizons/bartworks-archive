@@ -56,6 +56,7 @@ import ic2.core.Ic2Items;
 import ic2.core.crop.TileEntityCrop;
 import java.util.*;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockStem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -759,6 +760,15 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             Block b = null;
             boolean detectedCustomHandler = false;
             // There will be custom handlers here some day
+            // FLOWERS //
+            Block bb = Block.getBlockFromItem(i);
+            if (bb == Blocks.air) bb = null;
+            if (bb instanceof BlockFlower) {
+                detectedCustomHandler = true;
+                needsreplanting = false;
+                customDrops = new ArrayList<>(Collections.singletonList(input.copy()));
+                customDrops.get(0).stackSize = 1;
+            }
             if (!detectedCustomHandler) {
                 if (i instanceof IPlantable) {
                     if (i instanceof ItemSeeds) b = ((ItemSeeds) i).getPlant(world, 0, 0, 0);

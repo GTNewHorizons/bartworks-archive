@@ -320,8 +320,8 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
     }
 
     @SideOnly(Side.CLIENT)
-    public void spawnVisualCrop(World world, int x, int y, int z, int meta, int age) {
-        BW_CropVisualizer crop = new BW_CropVisualizer(world, x, y, z, meta, age);
+    public void spawnVisualCrops(World world, int x, int y, int z, int age) {
+        BW_CropVisualizer crop = new BW_CropVisualizer(world, x, y, z, age);
         Minecraft.getMinecraft().effectRenderer.addEffect(crop);
     }
 
@@ -330,23 +330,13 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         super.onPostTick(aBaseMetaTileEntity, aTick);
         if (aBaseMetaTileEntity.isClientSide()) {
             if (aBaseMetaTileEntity.isActive() && aTick % 40 == 0) {
-                for (int x = -1; x <= 1; x++)
-                    for (int z = -1; z <= 1; z++) {
-                        if (x == 0 && z == 0) continue;
-                        int[] abc = new int[] {x, -2, z + 2};
-                        int[] xyz = new int[] {0, 0, 0};
-                        this.getExtendedFacing().getWorldOffset(abc, xyz);
-                        xyz[0] += aBaseMetaTileEntity.getXCoord();
-                        xyz[1] += aBaseMetaTileEntity.getYCoord();
-                        xyz[2] += aBaseMetaTileEntity.getZCoord();
-                        spawnVisualCrop(
-                                aBaseMetaTileEntity.getWorld(),
-                                xyz[0],
-                                xyz[1],
-                                xyz[2],
-                                aBaseMetaTileEntity.getRandomNumber(8),
-                                40);
-                    }
+                int[] abc = new int[] {0, -2, 2};
+                int[] xyz = new int[] {0, 0, 0};
+                this.getExtendedFacing().getWorldOffset(abc, xyz);
+                xyz[0] += aBaseMetaTileEntity.getXCoord();
+                xyz[1] += aBaseMetaTileEntity.getYCoord();
+                xyz[2] += aBaseMetaTileEntity.getZCoord();
+                spawnVisualCrops(aBaseMetaTileEntity.getWorld(), xyz[0], xyz[1], xyz[2], 40);
             }
         }
         if (aBaseMetaTileEntity.isServerSide()) {

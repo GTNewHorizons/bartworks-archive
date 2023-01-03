@@ -389,7 +389,10 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
 
             if (setupphase == 1) {
                 List<ItemStack> inputs = getStoredInputs();
-                for (ItemStack input : inputs) addCrop(input);
+                for (ItemStack input : inputs) {
+                    addCrop(input);
+                    if (mStorage.size() >= mMaxSlots) break;
+                }
             } else if (setupphase == 2) {
                 int emptySlots = 0;
                 boolean ignoreEmptiness = false;

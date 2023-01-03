@@ -179,18 +179,18 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
     public void onScrewdriverRightClick(byte aSide, EntityPlayer aPlayer, float aX, float aY, float aZ) {
         if (aPlayer.isSneaking()) {
             if (this.mMaxProgresstime > 0) {
-                GT_Utility.sendChatToPlayer(aPlayer, "You cant change IC2 mode if the machine is working!");
+                GT_Utility.sendChatToPlayer(aPlayer, "You can't change IC2 mode if the machine is working!");
                 return;
             }
             if (!mStorage.isEmpty()) {
-                GT_Utility.sendChatToPlayer(aPlayer, "You cant change IC2 mode if there are seeds inside!");
+                GT_Utility.sendChatToPlayer(aPlayer, "You can't change IC2 mode if there are seeds inside!");
                 return;
             }
             this.isIC2Mode = !this.isIC2Mode;
             GT_Utility.sendChatToPlayer(aPlayer, "IC2 mode is now " + (this.isIC2Mode ? "enabled" : "disabled."));
         } else {
             if (this.mMaxProgresstime > 0) {
-                GT_Utility.sendChatToPlayer(aPlayer, "You cant enable/disable setup if the machine is working!");
+                GT_Utility.sendChatToPlayer(aPlayer, "You can't enable/disable setup if the machine is working!");
                 return;
             }
             this.setupphase++;
@@ -614,7 +614,6 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                             })
                             .setBackground(() -> new IDrawable[] {
                                 getBaseMetaTileEntity().getGUITextureSet().getItemSlot(),
-                                /*GT_UITextures.OVERLAY_SLOT_BEE_QUEEN,*/
                                 new ItemDrawable(drawables.size() > ID ? drawables.get(ID) : null)
                                         .withFixedSize(16, 16, 1, 1)
                             })
@@ -682,7 +681,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                                     if (!(player instanceof EntityPlayerMP)) return;
                                     if (this.mMaxProgresstime > 0) {
                                         GT_Utility.sendChatToPlayer(
-                                                player, "You cant enable/disable setup if the machine is working!");
+                                                player, "You can't enable/disable setup if the machine is working!");
                                         return;
                                     }
                                     this.setupphase = val;
@@ -722,12 +721,12 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                                     if (!(player instanceof EntityPlayerMP)) return;
                                     if (this.mMaxProgresstime > 0) {
                                         GT_Utility.sendChatToPlayer(
-                                                player, "You cant change IC2 mode if the machine is working!");
+                                                player, "You can't change IC2 mode if the machine is working!");
                                         return;
                                     }
                                     if (!mStorage.isEmpty()) {
                                         GT_Utility.sendChatToPlayer(
-                                                player, "You cant change IC2 mode if there are seeds inside!");
+                                                player, "You can't change IC2 mode if there are seeds inside!");
                                         return;
                                     }
                                     this.isIC2Mode = val == 1;

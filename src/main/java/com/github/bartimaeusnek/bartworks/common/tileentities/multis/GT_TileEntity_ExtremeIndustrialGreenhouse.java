@@ -246,6 +246,8 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                 .addInfo("Use screwdriver while sneaking to enable/disable IC2 mode")
                 .addInfo("Use wire cutters to give incoming IC2 crops 0 humidity")
                 .addInfo("Uses 1000L of water per crop per operation")
+                .addInfo("If there are >= 1000 crops -> Uses 1L of Weed-EX 9000 per crop per second")
+                .addInfo("Otherwise, around 1% of crops will die each operation")
                 .addInfo("You can insert fertilizer each operation to get more drops (max +400%)")
                 .addInfo("-------------------- SETUP   MODE --------------------")
                 .addInfo("Does not take power")
@@ -461,7 +463,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         }
 
         // weedex
-        if (weedexusage > 0 && !this.depleteInput(new FluidStack(weedex, weedexusage))) {
+        if (weedexusage > 0 && !this.depleteInput(new FluidStack(weedex, isIC2Mode ? weedexusage * 5 : weedexusage))) {
             IGregTechTileEntity baseMTE = this.getBaseMetaTileEntity();
             int tokill = baseMTE.getRandomNumber((int) ((double) weedexusage * 0.02d) + 1);
             for (int i = 0; i < tokill; ) {
@@ -871,6 +873,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                                 : ("Setup mode " + (setupphase == 1 ? "(input)" : "(output)")))
                         + EnumChatFormatting.RESET,
                 "Uses " + waterusage + "L/operation of water",
+                "Uses " + weedexusage + "L/second of Weed-EX 9000",
                 "Max slots: " + EnumChatFormatting.GREEN + this.mMaxSlots + EnumChatFormatting.RESET,
                 "Used slots: " + ((mStorage.size() > mMaxSlots) ? EnumChatFormatting.RED : EnumChatFormatting.GREEN)
                         + this.mStorage.size() + EnumChatFormatting.RESET));

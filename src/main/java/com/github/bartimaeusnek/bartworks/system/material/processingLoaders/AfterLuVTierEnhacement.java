@@ -91,9 +91,9 @@ public class AfterLuVTierEnhacement {
                 ItemList.Depleted_Naquadah_4.get(8),
                 WerkstoffLoader.Zirconium.get(dust, 64),
                 WerkstoffLoader.Zirconium.get(dust, 64),
-                null,
-                null,
-                null,
+                GT_OreDictUnificator.get(dust, Materials.TungstenSteel, 64L),
+                GT_OreDictUnificator.get(dust, Materials.TungstenSteel, 64L),
+                GT_OreDictUnificator.get(dust, Materials.TungstenSteel, 48L),
                 new int[] {10_000, 5_000, 5_000},
                 2000,
                 8000);

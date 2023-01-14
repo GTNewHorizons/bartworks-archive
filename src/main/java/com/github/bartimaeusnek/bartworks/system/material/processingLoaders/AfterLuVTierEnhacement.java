@@ -94,7 +94,7 @@ public class AfterLuVTierEnhacement {
                 GT_OreDictUnificator.get(dust, Materials.TungstenSteel, 64L),
                 GT_OreDictUnificator.get(dust, Materials.TungstenSteel, 64L),
                 GT_OreDictUnificator.get(dust, Materials.TungstenSteel, 48L),
-                new int[] {10_000, 5_000, 5_000},
+                new int[] {10_000, 5_000, 5_000, 10_000, 10_000, 10_000},
                 2000,
                 8000);
     }

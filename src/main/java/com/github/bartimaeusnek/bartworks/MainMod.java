@@ -92,8 +92,7 @@ public final class MainMod {
 
     public static BW_Network BW_Network_instance = new BW_Network();
 
-    @Mod.EventHandler
-    public void modConstruction(FMLConstructionEvent modConstruction) {
+    public MainMod() {
         GregTech_API.sBeforeGTPreload.add(new BeforeGTPreload());
     }
 

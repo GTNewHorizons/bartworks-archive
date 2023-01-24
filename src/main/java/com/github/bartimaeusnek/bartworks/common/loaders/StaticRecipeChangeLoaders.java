@@ -36,7 +36,6 @@ import com.github.bartimaeusnek.bartworks.util.StreamUtils;
 import com.github.bartimaeusnek.bartworks.util.log.DebugLog;
 import com.github.bartimaeusnek.crossmod.BartWorksCrossmod;
 import com.google.common.collect.ArrayListMultimap;
-import com.gtnewhorizon.gtnhlib.reflect.Fields;
 import com.gtnewhorizons.modularui.common.widget.ProgressBar;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -694,23 +693,6 @@ public class StaticRecipeChangeLoaders {
                 || GT_Utility.areStacksEqual(input, GT_ModHandler.getIC2Item("industrialTnt", 1L))
                 || GT_Utility.areStacksEqual(input, GT_ModHandler.getIC2Item("dynamite", 1L))
                 || GT_Utility.areStacksEqual(input, ItemList.Block_Powderbarrel.get(1L)));
-    }
-
-    public static void patchEBFMapForCircuitUnification() {
-        try {
-            Fields.ofClass(GT_Recipe_Map.class)
-                    .getIntField(Fields.LookupType.PUBLIC, "mUsualInputCount")
-                    .setValue(GT_Recipe.GT_Recipe_Map.sBlastRecipes, 3);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void synchroniseCircuitUseMulti() {
-        GT_Recipe.GT_Recipe_Map[] gt_recipe_maps = {
-            GT_Recipe.GT_Recipe_Map.sMultiblockChemicalRecipes, GT_Recipe.GT_Recipe_Map.sBlastRecipes
-        };
-        getRecipesByCircuitID(gt_recipe_maps).forEach(StaticRecipeChangeLoaders::transformCircuitRecipes);
     }
 
     private static int getBlastLogic(GT_Recipe recipe) {

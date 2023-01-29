@@ -669,8 +669,8 @@ public class StaticRecipeChangeLoaders {
                     null,
                     new FluidStack[] {GT_Values.NF},
                     new FluidStack[] {GT_Values.NF},
-                    10 * 20,
-                    31_457_280,
+                    5 * 20,
+                    125_829_120,
                     1);
         }
 

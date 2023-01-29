@@ -46,6 +46,7 @@ import gregtech.api.util.GT_Utility;
 import gregtech.common.items.behaviors.Behaviour_DataOrb;
 import java.lang.reflect.Field;
 import java.util.Map;
+import java.util.Objects;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -152,7 +153,7 @@ public class AdditionalRecipes {
                         BioData.getBioDataFromNBTTag(stack.getTagCompound().getCompoundTag("DNA"));
                 BioData Plasmid =
                         BioData.getBioDataFromNBTTag(stack.getTagCompound().getCompoundTag("Plasmid"));
-                if (DNA.getName() != Plasmid.getName()) {
+                if (!Objects.equals(DNA.getName(), Plasmid.getName())) {
                     sBiolab.addFakeRecipe(
                             true,
                             new ItemStack[] {
@@ -162,7 +163,7 @@ public class AdditionalRecipes {
                             },
                             new ItemStack[] {stack, ItemList.Cell_Empty.get(1L)},
                             BioItemList.mBioLabParts[3],
-                            new int[] {10000, 10000},
+                            new int[] {Plasmid.getChance(), 10000},
                             new FluidStack[] {FluidRegistry.getFluidStack("ic2distilledwater", 1000)},
                             null,
                             500,
@@ -188,7 +189,7 @@ public class AdditionalRecipes {
                     },
                     BioItemList.mBioLabParts[4],
                     new int[] {7500, 10000},
-                    new FluidStack[] {new FluidStack(dnaFluid[0].getFluid(), 9000)},
+                    new FluidStack[] {new FluidStack(dnaFluid[0].getFluid(), 8000)},
                     null,
                     500,
                     BW_Util.getMachineVoltageFromTier(6),

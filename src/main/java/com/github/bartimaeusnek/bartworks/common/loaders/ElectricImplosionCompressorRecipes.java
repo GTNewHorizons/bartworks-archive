@@ -50,17 +50,17 @@ public class ElectricImplosionCompressorRecipes implements Runnable {
                     (int) TierEU.RECIPE_UMV);
 
             // Raw Exposed Optical Chip
-            eicMap.addRecipe(
-                    false,
+            addElectricImplosionRecipe(
+                    // IN.
                     new ItemStack[] { ItemList.Circuit_Silicon_Wafer7.get(1L),
+                            // Fluxed Electrum Singularity.
                             getModItem("universalsingularities", "universal.general.singularity", 1L, 20) },
+                    new FluidStack[] { GT_Values.NF },
+                    // OUT.
                     new ItemStack[] { ItemList.Circuit_Chip_Optical.get(16L) },
-                    null,
                     new FluidStack[] { GT_Values.NF },
-                    new FluidStack[] { GT_Values.NF },
-                    5 * 20,
                     (int) TierEU.RECIPE_UMV,
-                    1);
+                    5 * 20);
 
         }
 

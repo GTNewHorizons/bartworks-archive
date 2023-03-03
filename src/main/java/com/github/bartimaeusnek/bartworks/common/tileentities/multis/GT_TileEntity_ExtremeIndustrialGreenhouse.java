@@ -103,12 +103,14 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
     private boolean isIC2Mode = false;
     private byte glasTier = 0;
     private int waterusage = 0;
+    private int carbonDioxideUsage = 0;
     private int weedexusage = 0;
     private boolean isNoHumidity = false;
     private static final int CASING_INDEX = 49;
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private static final Item forestryfertilizer = GameRegistry.findItem("Forestry", "fertilizerCompound");
     private static final Fluid weedex = Materials.WeedEX9000.mFluid;
+    private static final Fluid carbonDioxide = Materials.CarbonDioxide.mGas;
     private static final IStructureDefinition<GT_TileEntity_ExtremeIndustrialGreenhouse> STRUCTURE_DEFINITION = StructureDefinition
             .<GT_TileEntity_ExtremeIndustrialGreenhouse>builder()
             .addShape(
@@ -250,13 +252,15 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                 .addInfo("Process time is divided by number of tiers past " + tierString(3) + " (Minimum 1 sec)")
                 .addInfo("All crops are grown at the end of the operation")
                 .addInfo("Will automatically craft seeds if they are not dropped")
-                .addInfo("1 Fertilizer per 1 crop +200%")
+                .addInfo("Uses 1000L of CO2 per crop per operation for +10% bonus production")
+                .addInfo("2 Fertilizer per 1 crop +200% bonus production")
                 .addInfo("-------------------- IC2    CROPS --------------------")
                 .addInfo("Minimal tier: " + tierString(6)).addInfo("Need " + tierString(6) + " glass tier")
-                .addInfo("Starting with 4 slots").addInfo("Every slot gives 1 crop")
+                .addInfo("Starting with 8 slots").addInfo("Every slot gives 1 crop")
                 .addInfo("Every tier past " + tierString(6) + ", slots are multiplied by 4")
                 .addInfo("Process time: 5 sec").addInfo("All crops are accelerated by x32 times")
-                .addInfo("1 Fertilizer per 1 crop +10%").addInfo(BW_Tooltip_Reference.TT_BLUEPRINT).addSeparator()
+                .addInfo("Uses 1000L of CO2 per crop per operation for +20% bonus growth speed")
+                .addInfo("2 Fertilizer per 1 crop +20% bonus growth speed").addInfo(BW_Tooltip_Reference.TT_BLUEPRINT).addSeparator()
                 .beginStructureBlock(5, 6, 5, false).addController("Front bottom center")
                 .addCasingInfo("Clean Stainless Steel Casings", 70)
                 .addOtherStructurePart("Borosilicate Glass", "Hollow two middle layers")
@@ -352,7 +356,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         long v = this.getMaxInputVoltage();
         int tier = GT_Utility.getTier(v);
         if (tier < (isIC2Mode ? 6 : 4)) mMaxSlots = 0;
-        else if (isIC2Mode) mMaxSlots = 4 << (2 * (tier - 6));
+        else if (isIC2Mode) mMaxSlots = 8 << (2 * (tier - 6));
         else mMaxSlots = 1 << (tier - 4);
     }
 
@@ -411,6 +415,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         for (GreenHouseSlot s : mStorage) waterusage += s.input.stackSize;
         if (waterusage >= 1000) weedexusage = waterusage;
         waterusage *= 1000;
+        carbonDioxideUsage = waterusage;
 
         List<GT_MetaTileEntity_Hatch_Input> fluids = mInputHatches;
         List<GT_MetaTileEntity_Hatch_Input> fluidsToUse = new ArrayList<>(fluids.size());
@@ -449,6 +454,9 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             }
         }
 
+        // carbon dioxide
+        boolean co2NeedsMet = this.depleteInput(new FluidStack(carbonDioxide, carbonDioxideUsage));
+
         // OVERCLOCK
         // FERTILIZER IDEA:
         // IC2 +10% per fertilizer per crop per operation
@@ -456,7 +464,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
 
         int boost = 0;
         int maxboost = 0;
-        for (GreenHouseSlot s : mStorage) maxboost += s.input.stackSize * (isIC2Mode ? 40 : 2);
+        for (GreenHouseSlot s : mStorage) maxboost += s.input.stackSize * 2;
 
         ArrayList<ItemStack> inputs = getStoredInputs();
         for (ItemStack i : inputs) {
@@ -470,17 +478,22 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             if (boost == maxboost) break;
         }
 
-        double multiplier = 1.d + (((double) boost / (double) maxboost) * 4d);
-
         if (isIC2Mode) {
             if (glasTier < 6) return false;
             this.mMaxProgresstime = 100;
+            final double progressTime = this.mMaxProgresstime * 32d;
+            final double bonusTimeTotal = progressTime +
+                progressTime * (co2NeedsMet ? 0.2 : 0d) +
+                progressTime * (0.2 * ((double) boost / (double) maxboost));
+
             List<ItemStack> outputs = new ArrayList<>();
             for (int i = 0; i < Math.min(mMaxSlots, mStorage.size()); i++)
-                outputs.addAll(mStorage.get(i).getIC2Drops(((double) this.mMaxProgresstime * 32d) * multiplier));
+                outputs.addAll(mStorage.get(i).getIC2Drops(bonusTimeTotal));
             this.mOutputItems = outputs.toArray(new ItemStack[0]);
         } else {
             this.mMaxProgresstime = Math.max(20, 100 / (tier - 3)); // Min 1 s
+            double multiplier = 1.d + (((double) boost / (double) maxboost) * 4d);
+            multiplier += co2NeedsMet ? 1d : 0d;
             List<ItemStack> outputs = new ArrayList<>();
             for (int i = 0; i < Math.min(mMaxSlots, mStorage.size()); i++) {
                 for (ItemStack drop : mStorage.get(i).getDrops()) {

@@ -103,7 +103,6 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
     private boolean isIC2Mode = false;
     private byte glasTier = 0;
     private int waterusage = 0;
-    private int carbonDioxideUsage = 0;
     private int weedexusage = 0;
     private boolean isNoHumidity = false;
     private static final int CASING_INDEX = 49;
@@ -260,8 +259,8 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                 .addInfo("Every tier past " + tierString(6) + ", slots are multiplied by 4")
                 .addInfo("Process time: 5 sec").addInfo("All crops are accelerated by x32 times")
                 .addInfo("Uses 1000L of CO2 per crop per operation for +20% bonus growth speed")
-                .addInfo("2 Fertilizer per 1 crop +20% bonus growth speed").addInfo(BW_Tooltip_Reference.TT_BLUEPRINT).addSeparator()
-                .beginStructureBlock(5, 6, 5, false).addController("Front bottom center")
+                .addInfo("2 Fertilizer per 1 crop +20% bonus growth speed").addInfo(BW_Tooltip_Reference.TT_BLUEPRINT)
+                .addSeparator().beginStructureBlock(5, 6, 5, false).addController("Front bottom center")
                 .addCasingInfo("Clean Stainless Steel Casings", 70)
                 .addOtherStructurePart("Borosilicate Glass", "Hollow two middle layers")
                 .addStructureInfo("The glass tier limits the Energy Input tier")
@@ -360,6 +359,53 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         else mMaxSlots = 1 << (tier - 4);
     }
 
+    private static class FluidInputDrainResults {
+
+        FluidInputDrainResults(boolean matchedAmount, int missingAmount,
+                List<GT_MetaTileEntity_Hatch_Input> fluidInputHatches) {
+            this.canDrainFullAmount = matchedAmount;
+            this.missingAmount = missingAmount;
+            this.fluidInputs = fluidInputHatches;
+        }
+
+        boolean canDrainFullAmount;
+        int missingAmount;
+        List<GT_MetaTileEntity_Hatch_Input> fluidInputs;
+    }
+
+    private FluidInputDrainResults getFluidInputsOfSize(int amountNeeded, Fluid fluid) {
+        List<GT_MetaTileEntity_Hatch_Input> fluids = mInputHatches;
+        List<GT_MetaTileEntity_Hatch_Input> fluidsToUse = new ArrayList<>(fluids.size());
+        FluidStack fluidStack = new FluidStack(fluid, 1);
+        for (GT_MetaTileEntity_Hatch_Input i : fluids) {
+            if (!isValidMetaTileEntity(i)) continue;
+            if (i instanceof GT_MetaTileEntity_Hatch_MultiInput) {
+                int amount = ((GT_MetaTileEntity_Hatch_MultiInput) i).getFluidAmount(fluidStack);
+                if (amount == 0) continue;
+                amountNeeded -= amount;
+            } else {
+                FluidStack stack = i.getDrainableStack();
+                if (stack == null) continue;
+                if (!stack.isFluidEqual(fluidStack)) continue;
+                if (stack.amount <= 0) continue;
+                amountNeeded -= stack.amount;
+            }
+            fluidsToUse.add(i);
+            if (amountNeeded <= 0) break;
+        }
+
+        return new FluidInputDrainResults(amountNeeded <= 0, amountNeeded, fluidsToUse);
+    }
+
+    private static void drainAmountFromInputs(int totalAmountToDrain,
+            List<GT_MetaTileEntity_Hatch_Input> inputsToDrain) {
+        int amountRemains = totalAmountToDrain;
+        for (GT_MetaTileEntity_Hatch_Input i : inputsToDrain) {
+            int amountDrained = i.drain(amountRemains, true).amount;
+            amountRemains -= amountDrained;
+        }
+    }
+
     @Override
     public boolean checkRecipe(ItemStack itemStack) {
         long v = this.getMaxInputVoltage();
@@ -415,34 +461,18 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         for (GreenHouseSlot s : mStorage) waterusage += s.input.stackSize;
         if (waterusage >= 1000) weedexusage = waterusage;
         waterusage *= 1000;
-        carbonDioxideUsage = waterusage;
 
-        List<GT_MetaTileEntity_Hatch_Input> fluids = mInputHatches;
-        List<GT_MetaTileEntity_Hatch_Input> fluidsToUse = new ArrayList<>(fluids.size());
-        int watercheck = waterusage;
-        FluidStack waterStack = new FluidStack(FluidRegistry.WATER, 1);
-        for (GT_MetaTileEntity_Hatch_Input i : fluids) {
-            if (!isValidMetaTileEntity(i)) continue;
-            if (i instanceof GT_MetaTileEntity_Hatch_MultiInput) {
-                int amount = ((GT_MetaTileEntity_Hatch_MultiInput) i).getFluidAmount(waterStack);
-                if (amount == 0) continue;
-                watercheck -= amount;
-            } else {
-                FluidStack stack = i.getDrainableStack();
-                if (stack == null) continue;
-                if (!stack.isFluidEqual(waterStack)) continue;
-                if (stack.amount <= 0) continue;
-                watercheck -= stack.amount;
-            }
-            fluidsToUse.add(i);
-            if (watercheck <= 0) break;
-        }
-        if (watercheck > 0 && !debug) return false;
-        watercheck = waterusage;
-        for (GT_MetaTileEntity_Hatch_Input i : fluidsToUse) {
-            int used = i.drain(watercheck, true).amount;
-            watercheck -= used;
-        }
+        final FluidInputDrainResults waterDrainResults = getFluidInputsOfSize(waterusage, FluidRegistry.WATER);
+        if (!waterDrainResults.canDrainFullAmount) return false;
+        drainAmountFromInputs(waterusage, waterDrainResults.fluidInputs);
+
+        // carbon dioxide
+        final int carbonDioxideOptimalAmount = waterusage;
+        final FluidInputDrainResults carbonDioxideDrainResults = getFluidInputsOfSize(
+                carbonDioxideOptimalAmount,
+                carbonDioxide);
+        final int carbonDioxideToDrain = carbonDioxideOptimalAmount - carbonDioxideDrainResults.missingAmount;
+        drainAmountFromInputs(carbonDioxideToDrain, carbonDioxideDrainResults.fluidInputs);
 
         // weedex
         if (weedexusage > 0 && !this.depleteInput(new FluidStack(weedex, isIC2Mode ? weedexusage * 5 : weedexusage))) {
@@ -453,9 +483,6 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                 i -= removed.input.stackSize;
             }
         }
-
-        // carbon dioxide
-        boolean co2NeedsMet = this.depleteInput(new FluidStack(carbonDioxide, carbonDioxideUsage));
 
         // OVERCLOCK
         // FERTILIZER IDEA:
@@ -482,9 +509,9 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             if (glasTier < 6) return false;
             this.mMaxProgresstime = 100;
             final double progressTime = this.mMaxProgresstime * 32d;
-            final double bonusTimeTotal = progressTime +
-                progressTime * (co2NeedsMet ? 0.2 : 0d) +
-                progressTime * (0.2 * ((double) boost / (double) maxboost));
+            final double bonusTimeTotal = progressTime
+                    + progressTime * (0.2 * ((double) carbonDioxideToDrain / (double) carbonDioxideOptimalAmount))
+                    + progressTime * (0.2 * ((double) boost / (double) maxboost));
 
             List<ItemStack> outputs = new ArrayList<>();
             for (int i = 0; i < Math.min(mMaxSlots, mStorage.size()); i++)
@@ -493,7 +520,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         } else {
             this.mMaxProgresstime = Math.max(20, 100 / (tier - 3)); // Min 1 s
             double multiplier = 1.d + (((double) boost / (double) maxboost) * 4d);
-            multiplier += co2NeedsMet ? 1d : 0d;
+            multiplier += (((double) carbonDioxideToDrain / (double) carbonDioxideOptimalAmount));
             List<ItemStack> outputs = new ArrayList<>();
             for (int i = 0; i < Math.min(mMaxSlots, mStorage.size()); i++) {
                 for (ItemStack drop : mStorage.get(i).getDrops()) {

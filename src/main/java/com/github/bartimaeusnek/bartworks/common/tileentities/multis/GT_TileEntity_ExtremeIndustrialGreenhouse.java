@@ -256,7 +256,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                 .addInfo("-------------------- IC2    CROPS --------------------")
                 .addInfo("Minimal tier: " + tierString(6)).addInfo("Need " + tierString(6) + " glass tier")
                 .addInfo("Starting with 8 slots").addInfo("Every slot gives 1 crop")
-                .addInfo("Every tier past " + tierString(6) + ", slots are multiplied by 4")
+                .addInfo("Every tier past " + tierString(6) + ", slots are multiplied by 2")
                 .addInfo("Process time: 5 sec").addInfo("All crops are accelerated by x32 times")
                 .addInfo("Uses 1000L of CO2 per crop slot for an additional +20% growth speed")
                 .addInfo("Uses 1 to 40 Fertilizer per crop slot for an additional 10% to 400% growth speed")
@@ -355,7 +355,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         long v = this.getMaxInputVoltage();
         int tier = GT_Utility.getTier(v);
         if (tier < (isIC2Mode ? 6 : 4)) mMaxSlots = 0;
-        else if (isIC2Mode) mMaxSlots = 8 << (2 * (tier - 6));
+        else if (isIC2Mode) mMaxSlots = 8 << (tier - 6);
         else mMaxSlots = 1 << (tier - 4);
     }
 

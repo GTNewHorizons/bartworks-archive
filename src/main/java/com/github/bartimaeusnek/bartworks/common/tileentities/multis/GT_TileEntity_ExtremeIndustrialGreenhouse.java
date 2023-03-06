@@ -519,8 +519,8 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             this.mOutputItems = outputs.toArray(new ItemStack[0]);
         } else {
             this.mMaxProgresstime = Math.max(20, 100 / (tier - 3)); // Min 1 s
-            double multiplier = 1.d + (((double) boost / (double) maxboost) * 4d);
-            multiplier += (((double) carbonDioxideToDrain / (double) carbonDioxideOptimalAmount));
+            final double multiplier = 1.d + (4d * ((double) boost / (double) maxboost))
+                    + (0.2d * ((double) carbonDioxideToDrain / (double) carbonDioxideOptimalAmount));
             List<ItemStack> outputs = new ArrayList<>();
             for (int i = 0; i < Math.min(mMaxSlots, mStorage.size()); i++) {
                 for (ItemStack drop : mStorage.get(i).getDrops()) {

@@ -510,8 +510,8 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             this.mMaxProgresstime = 100;
             final double progressTime = this.mMaxProgresstime * 32d;
             final double bonusTimeTotal = progressTime
-                    + progressTime * (0.2 * ((double) carbonDioxideToDrain / (double) carbonDioxideOptimalAmount))
-                    + progressTime * (0.2 * ((double) boost / (double) maxboost));
+                    + progressTime * (0.2d * ((double) carbonDioxideToDrain / (double) carbonDioxideOptimalAmount))
+                    + progressTime * (4d * ((double) boost / (double) maxboost));
 
             List<ItemStack> outputs = new ArrayList<>();
             for (int i = 0; i < Math.min(mMaxSlots, mStorage.size()); i++)

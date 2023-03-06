@@ -252,16 +252,16 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                 .addInfo("All crops are grown at the end of the operation")
                 .addInfo("Will automatically craft seeds if they are not dropped")
                 .addInfo("Uses 1000L of CO2 per crop per operation for +10% bonus production")
-                .addInfo("2 Fertilizer per 1 crop +200% bonus production")
+                .addInfo("1 Fertilizer per 1 crop +200% bonus production")
                 .addInfo("-------------------- IC2    CROPS --------------------")
                 .addInfo("Minimal tier: " + tierString(6)).addInfo("Need " + tierString(6) + " glass tier")
                 .addInfo("Starting with 8 slots").addInfo("Every slot gives 1 crop")
                 .addInfo("Every tier past " + tierString(6) + ", slots are multiplied by 4")
                 .addInfo("Process time: 5 sec").addInfo("All crops are accelerated by x32 times")
-                .addInfo("Uses 1000L of CO2 per crop per operation for +20% bonus growth speed")
-                .addInfo("2 Fertilizer per 1 crop +20% bonus growth speed").addInfo(BW_Tooltip_Reference.TT_BLUEPRINT)
-                .addSeparator().beginStructureBlock(5, 6, 5, false).addController("Front bottom center")
-                .addCasingInfo("Clean Stainless Steel Casings", 70)
+                .addInfo("Uses 1000L of CO2 per crop slot for an additional +20% growth speed")
+                .addInfo("Uses 1 to 40 Fertilizer per crop slot for an additional 10% to 400% growth speed")
+                .addInfo(BW_Tooltip_Reference.TT_BLUEPRINT).addSeparator().beginStructureBlock(5, 6, 5, false)
+                .addController("Front bottom center").addCasingInfo("Clean Stainless Steel Casings", 70)
                 .addOtherStructurePart("Borosilicate Glass", "Hollow two middle layers")
                 .addStructureInfo("The glass tier limits the Energy Input tier")
                 .addStructureInfo("The dirt is from RandomThings, must be tilled")
@@ -463,7 +463,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         waterusage *= 1000;
 
         final FluidInputDrainResults waterDrainResults = getFluidInputsOfSize(waterusage, FluidRegistry.WATER);
-        if (!waterDrainResults.canDrainFullAmount) return false;
+        if (!waterDrainResults.canDrainFullAmount && !debug) return false;
         drainAmountFromInputs(waterusage, waterDrainResults.fluidInputs);
 
         // carbon dioxide
@@ -491,7 +491,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
 
         int boost = 0;
         int maxboost = 0;
-        for (GreenHouseSlot s : mStorage) maxboost += s.input.stackSize * 2;
+        for (GreenHouseSlot s : mStorage) maxboost += s.input.stackSize * (isIC2Mode ? 40 : 2);
 
         ArrayList<ItemStack> inputs = getStoredInputs();
         for (ItemStack i : inputs) {

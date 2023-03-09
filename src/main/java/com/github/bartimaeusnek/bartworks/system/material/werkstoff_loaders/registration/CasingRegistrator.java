@@ -13,9 +13,7 @@
 
 package com.github.bartimaeusnek.bartworks.system.material.werkstoff_loaders.registration;
 
-import static com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader.blockCasing;
-import static com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader.blockCasingAdvanced;
-
+import gregtech.api.enums.OrePrefixes;
 import net.minecraft.item.ItemStack;
 
 import com.github.bartimaeusnek.bartworks.system.material.Werkstoff;
@@ -28,12 +26,12 @@ public class CasingRegistrator implements IWerkstoffRunnable {
     @Override
     public void run(Werkstoff werkstoff) {
         GT_OreDictUnificator.addAssociation(
-                blockCasing,
+                OrePrefixes.blockCasing,
                 werkstoff.getBridgeMaterial(),
                 new ItemStack(WerkstoffLoader.BWBlockCasings, 1, werkstoff.getmID()),
                 false);
         GT_OreDictUnificator.addAssociation(
-                blockCasingAdvanced,
+            OrePrefixes.blockCasingAdvanced,
                 werkstoff.getBridgeMaterial(),
                 new ItemStack(WerkstoffLoader.BWBlockCasingsAdvanced, 1, werkstoff.getmID()),
                 false);

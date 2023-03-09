@@ -41,7 +41,7 @@ public class GTMetaItemEnhancer {
 
     public static void init() {
         if (!WerkstoffLoader.gtnhGT) {
-            Item moltenCell = new BWGTMetaItems(WerkstoffLoader.cellMolten, null);
+            Item moltenCell = new BWGTMetaItems(OrePrefixes.cellMolten, null);
             Materials[] values = Materials.values();
             for (int i = 0, valuesLength = values.length; i < valuesLength; i++) {
                 Materials m = values[i];
@@ -69,14 +69,14 @@ public class GTMetaItemEnhancer {
         }
         NoMetaValue = Materials.getMaterialsMap().values().stream().filter(m -> m.mMetaItemSubID == -1)
                 .collect(Collectors.toList());
-        Item moltenCapsuls = new BWGTMetaItems(WerkstoffLoader.capsuleMolten, null);
+        Item moltenCapsuls = new BWGTMetaItems(OrePrefixes.capsuleMolten, null);
         Item capsuls = new BWGTMetaItems(OrePrefixes.capsule, NoMetaValue);
         // Item bottles = new BWGTMetaItems(OrePrefixes.bottle, NoMetaValue);
 
         Materials[] values = Materials.values();
         for (int i = 0, valuesLength = values.length; i < valuesLength; i++) {
             Materials m = values[i];
-            if (m.mStandardMoltenFluid != null && GT_OreDictUnificator.get(WerkstoffLoader.cellMolten, m, 1) != null) {
+            if (m.mStandardMoltenFluid != null && GT_OreDictUnificator.get(OrePrefixes.cellMolten, m, 1) != null) {
                 final FluidContainerRegistry.FluidContainerData emptyData = new FluidContainerRegistry.FluidContainerData(
                         m.getMolten(144),
                         new ItemStack(moltenCapsuls, 1, i),

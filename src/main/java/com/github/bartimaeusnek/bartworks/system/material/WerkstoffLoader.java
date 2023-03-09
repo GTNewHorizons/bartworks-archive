@@ -78,12 +78,8 @@ public class WerkstoffLoader {
     public static ItemList smallGearShape;
     public static ItemList ringMold;
     public static ItemList boltMold;
-    public static final boolean gtnhGT = true;
 
     public static void setUp() {
-        if (!gtnhGT) {
-            WerkstoffLoader.HDCS.getGenerationFeatures().extraRecipes ^= 10;
-        }
 
         OrePrefixes.cellMolten.mMaterialGenerationBits = 0b1000000;
         OrePrefixes.capsuleMolten.mMaterialGenerationBits = 0b1000000;
@@ -1607,10 +1603,9 @@ public class WerkstoffLoader {
             WerkstoffLoader.items.put(cellPlasma, new BW_MetaGenerated_Items(cellPlasma));
         }
         if ((WerkstoffLoader.toGenerateGlobal & 0b1000000) != 0) {
-            WerkstoffLoader.items
-                    .put(OrePrefixes.cellMolten, new BW_MetaGenerated_Items(OrePrefixes.cellMolten));
-            if (LoaderReference.Forestry)
-                WerkstoffLoader.items.put(OrePrefixes.capsuleMolten, new BW_MetaGenerated_Items(OrePrefixes.capsuleMolten));
+            WerkstoffLoader.items.put(OrePrefixes.cellMolten, new BW_MetaGenerated_Items(OrePrefixes.cellMolten));
+            if (LoaderReference.Forestry) WerkstoffLoader.items
+                    .put(OrePrefixes.capsuleMolten, new BW_MetaGenerated_Items(OrePrefixes.capsuleMolten));
         }
         if ((WerkstoffLoader.toGenerateGlobal & 0b10000000) != 0) {
             WerkstoffLoader.items.put(plate, new BW_MetaGenerated_Items(plate));
@@ -1674,12 +1669,12 @@ public class WerkstoffLoader {
                 Material.iron,
                 BW_MetaGeneratedBlocks_Casing_TE.class,
                 "bw.werkstoffblockscasing",
-            OrePrefixes.blockCasing);
+                OrePrefixes.blockCasing);
         WerkstoffLoader.BWBlockCasingsAdvanced = new BW_MetaGeneratedBlocks_Casing(
                 Material.iron,
                 BW_MetaGeneratedBlocks_CasingAdvanced_TE.class,
                 "bw.werkstoffblockscasingadvanced",
-            OrePrefixes.blockCasingAdvanced);
+                OrePrefixes.blockCasingAdvanced);
 
         GameRegistry.registerBlock(WerkstoffLoader.BWOres, BW_MetaGeneratedBlock_Item.class, "bw.blockores.01");
         GameRegistry.registerBlock(WerkstoffLoader.BWSmallOres, BW_MetaGeneratedBlock_Item.class, "bw.blockores.02");
@@ -1710,18 +1705,24 @@ public class WerkstoffLoader {
     }
 
     public static void addVanillaCasingsToGTOreDictUnificator() {
-        GT_OreDictUnificator
-                .addAssociation(OrePrefixes.blockCasing, Materials.Aluminium, ItemList.Casing_FrostProof.get(1L), false);
-        GT_OreDictUnificator.addAssociation(OrePrefixes.blockCasing, Materials.Nickel, ItemList.Casing_HeatProof.get(1L), false);
-        GT_OreDictUnificator.addAssociation(OrePrefixes.blockCasing, Materials.Lead, ItemList.Casing_RadiationProof.get(1L), false);
-        GT_OreDictUnificator.addAssociation(OrePrefixes.blockCasing, Materials.Steel, ItemList.Casing_SolidSteel.get(1L), false);
         GT_OreDictUnificator.addAssociation(
-            OrePrefixes.blockCasing,
+                OrePrefixes.blockCasing,
+                Materials.Aluminium,
+                ItemList.Casing_FrostProof.get(1L),
+                false);
+        GT_OreDictUnificator
+                .addAssociation(OrePrefixes.blockCasing, Materials.Nickel, ItemList.Casing_HeatProof.get(1L), false);
+        GT_OreDictUnificator
+                .addAssociation(OrePrefixes.blockCasing, Materials.Lead, ItemList.Casing_RadiationProof.get(1L), false);
+        GT_OreDictUnificator
+                .addAssociation(OrePrefixes.blockCasing, Materials.Steel, ItemList.Casing_SolidSteel.get(1L), false);
+        GT_OreDictUnificator.addAssociation(
+                OrePrefixes.blockCasing,
                 Materials.TungstenSteel,
                 ItemList.Casing_RobustTungstenSteel.get(1L),
                 false);
         GT_OreDictUnificator.addAssociation(
-            OrePrefixes.blockCasing,
+                OrePrefixes.blockCasing,
                 Materials.Polytetrafluoroethylene,
                 ItemList.Casing_Chemically_Inert.get(1L),
                 false);

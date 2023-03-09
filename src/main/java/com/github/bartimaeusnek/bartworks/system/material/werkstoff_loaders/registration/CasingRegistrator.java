@@ -13,12 +13,13 @@
 
 package com.github.bartimaeusnek.bartworks.system.material.werkstoff_loaders.registration;
 
-import gregtech.api.enums.OrePrefixes;
 import net.minecraft.item.ItemStack;
 
 import com.github.bartimaeusnek.bartworks.system.material.Werkstoff;
 import com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader;
 import com.github.bartimaeusnek.bartworks.system.material.werkstoff_loaders.IWerkstoffRunnable;
+
+import gregtech.api.enums.OrePrefixes;
 import gregtech.api.util.GT_OreDictUnificator;
 
 public class CasingRegistrator implements IWerkstoffRunnable {
@@ -31,7 +32,7 @@ public class CasingRegistrator implements IWerkstoffRunnable {
                 new ItemStack(WerkstoffLoader.BWBlockCasings, 1, werkstoff.getmID()),
                 false);
         GT_OreDictUnificator.addAssociation(
-            OrePrefixes.blockCasingAdvanced,
+                OrePrefixes.blockCasingAdvanced,
                 werkstoff.getBridgeMaterial(),
                 new ItemStack(WerkstoffLoader.BWBlockCasingsAdvanced, 1, werkstoff.getmID()),
                 false);

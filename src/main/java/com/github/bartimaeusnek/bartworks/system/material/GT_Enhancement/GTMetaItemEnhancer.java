@@ -24,7 +24,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 import com.github.bartimaeusnek.bartworks.API.LoaderReference;
-import com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader;
 
 import gregtech.api.enums.GT_Values;
 import gregtech.api.enums.Materials;
@@ -40,30 +39,6 @@ public class GTMetaItemEnhancer {
     private GTMetaItemEnhancer() {}
 
     public static void init() {
-        if (!WerkstoffLoader.gtnhGT) {
-            Item moltenCell = new BWGTMetaItems(OrePrefixes.cellMolten, null);
-            Materials[] values = Materials.values();
-            for (int i = 0, valuesLength = values.length; i < valuesLength; i++) {
-                Materials m = values[i];
-                if (m == null || m.mStandardMoltenFluid == null) continue;
-                final FluidContainerRegistry.FluidContainerData emptyData = new FluidContainerRegistry.FluidContainerData(
-                        m.getMolten(144),
-                        new ItemStack(moltenCell, 1, i),
-                        GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Empty, 1L));
-                FluidContainerRegistry.registerFluidContainer(emptyData);
-                GT_Utility.addFluidContainerData(emptyData);
-                GT_Values.RA.addFluidCannerRecipe(
-                        GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Empty, 1L),
-                        new ItemStack(moltenCell, 1, i),
-                        m.getMolten(144),
-                        GT_Values.NF);
-                GT_Values.RA.addFluidCannerRecipe(
-                        new ItemStack(moltenCell, 1, i),
-                        GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Empty, 1L),
-                        GT_Values.NF,
-                        m.getMolten(144));
-            }
-        }
         if (!LoaderReference.Forestry) {
             return;
         }

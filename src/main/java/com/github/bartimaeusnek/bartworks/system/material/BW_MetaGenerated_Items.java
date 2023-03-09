@@ -256,9 +256,11 @@ public class BW_MetaGenerated_Items extends GT_MetaGenerated_Item implements IRa
     @Override
     public int getCapacity(ItemStack aStack) {
         return this.orePrefixes == OrePrefixes.capsule || this.orePrefixes == OrePrefixes.cell
-                || this.orePrefixes == OrePrefixes.cellPlasma ? 1000
-                        : this.orePrefixes == OrePrefixes.cellMolten
-                                || this.orePrefixes == OrePrefixes.capsuleMolten ? 144 : 0;
+                || this.orePrefixes == OrePrefixes.cellPlasma
+                        ? 1000
+                        : this.orePrefixes == OrePrefixes.cellMolten || this.orePrefixes == OrePrefixes.capsuleMolten
+                                ? 144
+                                : 0;
     }
 
     @Override

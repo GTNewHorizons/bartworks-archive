@@ -269,15 +269,6 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
     }
 
     @Override
-    public boolean addMufflerToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
-        if (super.addMufflerToMachineList(aTileEntity, aBaseCasingIndex)) {
-            if (mufflerTier == -1) mufflerTier = this.mMufflerHatches.get(this.mMufflerHatches.size() - 1).mTier;
-            return mufflerTier == this.mMufflerHatches.get(this.mMufflerHatches.size() - 1).mTier;
-        }
-        return false;
-    }
-
-    @Override
     public int getPollutionPerTick(ItemStack aStack) {
         return this.polPtick;
     }

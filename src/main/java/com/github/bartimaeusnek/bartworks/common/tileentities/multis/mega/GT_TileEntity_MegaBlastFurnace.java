@@ -114,12 +114,12 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
 
         raw[0] = new String[15];
         String topCasing = "ttttttttttttttt";
-        String mufflerLine = "tmmmmmmmmmmmmmt";
+        String middleTopCasing = "tttttttmttttttt";
         raw[0][0] = topCasing;
-        for (int i = 1; i < 14; i++) {
-            raw[0][i] = mufflerLine;
+        for (int i = 1; i < 15; i++) {
+            raw[0][i] = topCasing;
         }
-        raw[0][14] = topCasing;
+        raw[0][7] = middleTopCasing;
 
         raw[1] = new String[15];
         String allGlass = "ggggggggggggggg";

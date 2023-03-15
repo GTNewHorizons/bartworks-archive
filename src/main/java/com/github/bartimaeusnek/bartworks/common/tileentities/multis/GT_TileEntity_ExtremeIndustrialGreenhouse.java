@@ -105,6 +105,9 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
     private int waterusage = 0;
     private int weedexusage = 0;
     private boolean isNoHumidity = false;
+    private static final int IC2_LIMITING_TIER = 6;
+    private static final int NORMAL_LIMITING_TIER = 4;
+    private static final int STARTING_IC2_SLOTS = 8;
     private static final int CASING_INDEX = 49;
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private static final Item forestryfertilizer = GameRegistry.findItem("Forestry", "fertilizerCompound");
@@ -244,24 +247,27 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                 .addInfo("[IC2] You need to also input block that is required under the crop")
                 .addInfo("Output mode: machine will take planted seeds and output them")
                 .addInfo("-------------------- NORMAL CROPS --------------------")
-                .addInfo("Minimal tier: " + tierString(4)).addInfo("Starting with 1 slot")
+                .addInfo("Minimal tier: " + tierString(NORMAL_LIMITING_TIER)).addInfo("Starting with 1 slot")
                 .addInfo("Every slot gives 64 crops")
-                .addInfo("Every tier past " + tierString(4) + ", slots are multiplied by 2")
+                .addInfo("Every tier past " + tierString(NORMAL_LIMITING_TIER) + ", slots are multiplied by 2")
                 .addInfo("Base process time: 5 sec")
-                .addInfo("Process time is divided by number of tiers past " + tierString(3) + " (Minimum 1 sec)")
+                .addInfo(
+                        "Process time is divided by number of tiers past " + tierString(NORMAL_LIMITING_TIER - 1)
+                                + " (Minimum 1 sec)")
                 .addInfo("All crops are grown at the end of the operation")
                 .addInfo("Will automatically craft seeds if they are not dropped")
                 .addInfo("Uses 1000L of CO2 per crop per operation for +10% bonus production")
                 .addInfo("1 Fertilizer per 1 crop +200% bonus production")
                 .addInfo("-------------------- IC2    CROPS --------------------")
-                .addInfo("Minimal tier: " + tierString(6)).addInfo("Need " + tierString(6) + " glass tier")
-                .addInfo("Starting with 8 slots").addInfo("Every slot gives 1 crop")
-                .addInfo("Every tier past " + tierString(6) + ", slots are multiplied by 2")
-                .addInfo("Process time: 5 sec").addInfo("All crops are accelerated by x32 times")
+                .addInfo("Minimal tier: " + tierString(IC2_LIMITING_TIER))
+                .addInfo("Need " + tierString(IC2_LIMITING_TIER) + " glass tier")
+                .addInfo("Starting with " + STARTING_IC2_SLOTS + " slots").addInfo("Every slot gives 1 crop")
+                .addInfo("Every tier past " + tierString(IC2_LIMITING_TIER) + ", slots are multiplied by 2")
+                .addInfo("Process time: 5 sec").addInfo("All crops are accelerated by tier - 1 world accelerator speed")
                 .addInfo("Uses 1000L of CO2 per crop slot for an additional +20% growth speed")
                 .addInfo("Uses 1 to 40 Fertilizer per crop slot for an additional 10% to 400% growth speed")
                 .addInfo(BW_Tooltip_Reference.TT_BLUEPRINT).addSeparator().beginStructureBlock(5, 6, 5, false)
-                .addController("Front bottom center").addCasingInfo("Clean Stainless Steel Casings", 70)
+                .addController("Front bottom center").addCasingInfoMin("Clean Stainless Steel Casings", 70, false)
                 .addOtherStructurePart("Borosilicate Glass", "Hollow two middle layers")
                 .addStructureInfo("The glass tier limits the Energy Input tier")
                 .addStructureInfo("The dirt is from RandomThings, must be tilled")
@@ -351,12 +357,16 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         return true;
     }
 
-    private void updateMaxSlots() {
+    private int getPowerTier() {
         long v = this.getMaxInputVoltage();
-        int tier = GT_Utility.getTier(v);
-        if (tier < (isIC2Mode ? 6 : 4)) mMaxSlots = 0;
-        else if (isIC2Mode) mMaxSlots = 8 << (tier - 6);
-        else mMaxSlots = 1 << (tier - 4);
+        return GT_Utility.getTier(v);
+    }
+
+    private void updateMaxSlots() {
+        int powerTier = getPowerTier();
+        if (powerTier < (isIC2Mode ? IC2_LIMITING_TIER : NORMAL_LIMITING_TIER)) mMaxSlots = 0;
+        else if (isIC2Mode) mMaxSlots = STARTING_IC2_SLOTS << (powerTier - IC2_LIMITING_TIER);
+        else mMaxSlots = 1 << (powerTier - NORMAL_LIMITING_TIER);
     }
 
     private static class FluidInputDrainResults {
@@ -408,8 +418,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
 
     @Override
     public boolean checkRecipe(ItemStack itemStack) {
-        long v = this.getMaxInputVoltage();
-        int tier = GT_Utility.getTier(v);
+        int tier = getPowerTier();
         updateMaxSlots();
 
         if (oldVersion != EIG_MATH_VERSION) {
@@ -506,9 +515,9 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         }
 
         if (isIC2Mode) {
-            if (glasTier < 6) return false;
+            if (glasTier < IC2_LIMITING_TIER) return false;
             this.mMaxProgresstime = 100;
-            final double progressTime = this.mMaxProgresstime * 32d;
+            final double progressTime = this.mMaxProgresstime * (1 << (tier - 1));
             final double bonusTimeTotal = progressTime
                     + progressTime * (0.2d * ((double) carbonDioxideToDrain / (double) carbonDioxideOptimalAmount))
                     + progressTime * (4d * ((double) boost / (double) maxboost));
@@ -870,7 +879,12 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                                         : ("Setup mode " + (setupphase == 1 ? "(input)" : "(output)")))
                                 + EnumChatFormatting.RESET,
                         "Uses " + waterusage + "L/operation of water",
-                        "Uses " + weedexusage + "L/second of Weed-EX 9000",
+                        "Uses " + weedexusage + "L/second of Weed-EX 9000"));
+        if (this.isIC2Mode) {
+            info.add("Current acceleration speed: " + (1 << (getPowerTier() - 1)));
+        }
+        info.addAll(
+                Arrays.asList(
                         "Max slots: " + EnumChatFormatting.GREEN + this.mMaxSlots + EnumChatFormatting.RESET,
                         "Used slots: "
                                 + ((mStorage.size() > mMaxSlots) ? EnumChatFormatting.RED : EnumChatFormatting.GREEN)

@@ -673,9 +673,7 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
         this.mSievert = aNBT.getInteger("mSievert");
         this.mNeededSievert = aNBT.getInteger("mNeededSievert");
         super.loadNBTData(aNBT);
-        if (aNBT.hasKey("isVisibleFluid")) {
-            this.isVisibleFluid = aNBT.getBoolean("isVisibleFluid");
-        }
+        this.isVisibleFluid = aNBT.getBoolean("isVisibleFluid");
     }
 
     @Override

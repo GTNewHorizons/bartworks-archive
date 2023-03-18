@@ -86,7 +86,6 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
     private int mExpectedMultiplier = 0;
     private int mTimes = 0;
     private boolean isVisibleFluid = false;
-    private boolean isEverBeenVisibleFluid = false;
 
     public GT_TileEntity_BioVat(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -463,7 +462,6 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
 
     private void placeFluid() {
         isVisibleFluid = true;
-        isEverBeenVisibleFluid = true;
         int xDir = getXDir();
         int zDir = getZDir();
         this.height = this.reCalculateHeight();
@@ -611,7 +609,6 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
         if (this.mFluid != null) aNBT.setString("mFluid", this.mFluid.getName());
         aNBT.setInteger("mSievert", this.mSievert);
         aNBT.setInteger("mNeededSievert", this.mNeededSievert);
-        aNBT.setBoolean("isEverBeenVisibleFluid", this.isEverBeenVisibleFluid);
         aNBT.setBoolean("isVisibleFluid", this.isVisibleFluid);
         super.saveNBTData(aNBT);
     }
@@ -623,7 +620,7 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
             int zDir = getZDir();
             removeFluid(xDir, zDir);
             sendRenderPackets(xDir, zDir);
-        } else if (this.getBaseMetaTileEntity().getWorld().getWorldTime() % 20 == 0 && isEverBeenVisibleFluid) {
+        } else if (this.getBaseMetaTileEntity().getWorld().getWorldTime() % 20 == 7) {
             sendRenderPackets();
         }
 
@@ -676,9 +673,6 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
         this.mSievert = aNBT.getInteger("mSievert");
         this.mNeededSievert = aNBT.getInteger("mNeededSievert");
         super.loadNBTData(aNBT);
-        if (aNBT.hasKey("isEverBeenVisibleFluid")) {
-            this.isEverBeenVisibleFluid = aNBT.getBoolean("isEverBeenVisibleFluid");
-        }
         if (aNBT.hasKey("isVisibleFluid")) {
             this.isVisibleFluid = aNBT.getBoolean("isVisibleFluid");
         }

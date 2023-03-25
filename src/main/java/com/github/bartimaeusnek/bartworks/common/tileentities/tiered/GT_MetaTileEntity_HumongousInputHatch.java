@@ -33,7 +33,7 @@ public class GT_MetaTileEntity_HumongousInputHatch extends GT_MetaTileEntity_Hat
 
     @Override
     public int getCapacity() {
-        return 2000000000;
+        return 2_000_000_000;
     }
 
     @Override

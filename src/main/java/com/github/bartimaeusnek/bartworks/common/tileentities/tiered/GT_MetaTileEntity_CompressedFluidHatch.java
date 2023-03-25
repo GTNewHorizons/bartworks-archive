@@ -27,7 +27,7 @@ public class GT_MetaTileEntity_CompressedFluidHatch extends GT_MetaTileEntity_Ha
 
     public GT_MetaTileEntity_CompressedFluidHatch(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional, 0);
-        this.mDescriptionArray[1] = "Capacity: 100000000L";
+        this.mDescriptionArray[1] = "Capacity: 100,000,000L";
     }
 
     public GT_MetaTileEntity_CompressedFluidHatch(String aName, int aTier, String[] aDescription,

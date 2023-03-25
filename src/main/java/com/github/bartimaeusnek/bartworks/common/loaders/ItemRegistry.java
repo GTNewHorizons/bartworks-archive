@@ -353,9 +353,9 @@ public class ItemRegistry {
                     "GiantOutputHatch",
                     "Giant Output Hatch").getStackForm(1L);
             ItemRegistry.humongousInputHatch = new GT_MetaTileEntity_HumongousInputHatch(
-                ConfigHandler.IDOffset + GT_Values.VN.length * 9 + 55,
-                "HumongousInputHatch",
-                "Humongous Input Hatch").getStackForm(1L);
+                    ConfigHandler.IDOffset + GT_Values.VN.length * 9 + 55,
+                    "HumongousInputHatch",
+                    "Humongous Input Hatch").getStackForm(1L);
             ItemRegistry.megaMachines[2] = new GT_TileEntity_MegaDistillTower(
                     ConfigHandler.IDOffset + GT_Values.VN.length * 8 + 10,
                     "MegaDistillationTower",

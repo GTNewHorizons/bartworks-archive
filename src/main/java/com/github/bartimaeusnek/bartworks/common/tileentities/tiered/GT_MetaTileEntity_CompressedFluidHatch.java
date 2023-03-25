@@ -37,7 +37,7 @@ public class GT_MetaTileEntity_CompressedFluidHatch extends GT_MetaTileEntity_Ha
 
     @Override
     public int getCapacity() {
-        return 100000000;
+        return 100_000_000;
     }
 
     @Override

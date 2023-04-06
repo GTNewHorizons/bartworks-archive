@@ -16,9 +16,10 @@ package com.github.bartimaeusnek.bartworks.common.tileentities.multis;
 import static com.github.bartimaeusnek.bartworks.common.loaders.ItemRegistry.BW_BLOCKS;
 import static com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference.MULTIBLOCK_ADDED_BY_BARTWORKS;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
+import static gregtech.api.enums.GT_HatchElement.*;
 import static gregtech.api.enums.GT_Values.V;
 import static gregtech.api.enums.Textures.BlockIcons.*;
-import static gregtech.api.util.GT_StructureUtility.ofHatchAdder;
+import static gregtech.api.util.GT_StructureUtility.buildHatchAdder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,7 @@ import com.github.bartimaeusnek.bartworks.common.net.EICPacket;
 import com.github.bartimaeusnek.bartworks.util.Coords;
 import com.gtnewhorizon.structurelib.StructureLibAPI;
 import com.gtnewhorizon.structurelib.alignment.IAlignmentLimits;
+import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
 import com.gtnewhorizon.structurelib.alignment.enumerable.ExtendedFacing;
 import com.gtnewhorizon.structurelib.structure.*;
 
@@ -61,7 +63,8 @@ import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
 
 public class GT_TileEntity_ElectricImplosionCompressor
-        extends GT_MetaTileEntity_EnhancedMultiBlockBase<GT_TileEntity_ElectricImplosionCompressor> {
+        extends GT_MetaTileEntity_EnhancedMultiBlockBase<GT_TileEntity_ElectricImplosionCompressor>
+        implements ISurvivalConstructable {
 
     public static GT_Recipe.GT_Recipe_Map eicMap;
     private static final boolean pistonEnabled = !ConfigHandler.disablePistonInEIC;
@@ -69,6 +72,7 @@ public class GT_TileEntity_ElectricImplosionCompressor
     private static final SoundResource sound = SoundResource.RANDOM_EXPLODE;
     private final ArrayList<ChunkCoordinates> chunkCoordinates = new ArrayList<>(5);
     private int mBlockTier = 0;
+    private int mCasing;
 
     public GT_TileEntity_ElectricImplosionCompressor(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -100,27 +104,16 @@ public class GT_TileEntity_ElectricImplosionCompressor
                             GT_TileEntity_ElectricImplosionCompressor::getBlockTier))
             .addElement(
                     'C',
-                    ofChain(
-                            ofHatchAdder(
-                                    GT_TileEntity_ElectricImplosionCompressor::addInputToMachineList,
-                                    CASING_INDEX,
-                                    1),
-                            ofHatchAdder(
-                                    GT_TileEntity_ElectricImplosionCompressor::addOutputToMachineList,
-                                    CASING_INDEX,
-                                    1),
-                            ofHatchAdder(
-                                    GT_TileEntity_ElectricImplosionCompressor::addMaintenanceToMachineList,
-                                    CASING_INDEX,
-                                    1),
-                            ofBlock(GregTech_API.sBlockCasings2, 0),
-                            ofBlock(GregTech_API.sBlockCasings3, 4)))
+                    buildHatchAdder(GT_TileEntity_ElectricImplosionCompressor.class)
+                            .atLeast(InputBus, OutputBus, Maintenance).casingIndex(CASING_INDEX).dot(1).buildAndChain(
+                                    onElementPass(x -> ++x.mCasing, ofBlock(GregTech_API.sBlockCasings2, 0)),
+                                    onElementPass(x -> ++x.mCasing, ofBlock(GregTech_API.sBlockCasings3, 4))))
             .addElement(
                     'e',
-                    ofHatchAdder(
-                            GT_TileEntity_ElectricImplosionCompressor::addEnergyInputToMachineList,
-                            CASING_INDEX,
-                            2))
+                    buildHatchAdder(GT_TileEntity_ElectricImplosionCompressor.class).atLeast(Energy.or(ExoticEnergy))
+                            .casingIndex(CASING_INDEX).dot(2).buildAndChain(
+                                    onElementPass(x -> ++x.mCasing, ofBlock(GregTech_API.sBlockCasings2, 0)),
+                                    onElementPass(x -> ++x.mCasing, ofBlock(GregTech_API.sBlockCasings3, 4))))
             .addElement('N', new IStructureElement<GT_TileEntity_ElectricImplosionCompressor>() {
 
                 // Much of this based on StructureUtility.ofBlocksTiered
@@ -169,6 +162,7 @@ public class GT_TileEntity_ElectricImplosionCompressor
                 @Override
                 public PlaceResult survivalPlaceBlock(GT_TileEntity_ElectricImplosionCompressor t, World world, int x,
                         int y, int z, ItemStack trigger, AutoPlaceEnvironment env) {
+                    // TODO: probably needs fix for piston state
                     return isAir().survivalPlaceBlock(t, world, x, y, z, trigger, env);
                 }
             }).build();
@@ -444,8 +438,9 @@ public class GT_TileEntity_ElectricImplosionCompressor
 
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack itemStack) {
+        this.mCasing = 0;
         boolean isOK = checkPiece(STRUCTURE_PIECE_MAIN, 1, 6, 0);
-        isOK = isOK && this.mMaintenanceHatches.size() == 1 && this.mEnergyHatches.size() == 2;
+        isOK = isOK && this.mMaintenanceHatches.size() == 1 && this.mEnergyHatches.size() >= 1;
         if (isOK) {
             activatePiston();
             return true;
@@ -498,5 +493,11 @@ public class GT_TileEntity_ElectricImplosionCompressor
     @Override
     public void construct(ItemStack itemStack, boolean b) {
         buildPiece(STRUCTURE_PIECE_MAIN, itemStack, b, 1, 6, 0);
+    }
+
+    @Override
+    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
+        if (mMachine) return -1;
+        return survivialBuildPiece(STRUCTURE_PIECE_MAIN, stackSize, 1, 6, 0, elementBudget, env, false, true);
     }
 }

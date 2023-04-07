@@ -26,9 +26,11 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -54,16 +56,12 @@ import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
-import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_EnhancedMultiBlockBase;
-import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Energy;
+import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_ExtendedPowerMultiBlockBase;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
-import gregtech.api.util.GT_ParallelHelper;
-import gregtech.api.util.GT_Recipe;
-import gregtech.api.util.GT_Utility;
+import gregtech.api.util.*;
 
 public class GT_TileEntity_ElectricImplosionCompressor
-        extends GT_MetaTileEntity_EnhancedMultiBlockBase<GT_TileEntity_ElectricImplosionCompressor>
+        extends GT_MetaTileEntity_ExtendedPowerMultiBlockBase<GT_TileEntity_ElectricImplosionCompressor>
         implements ISurvivalConstructable {
 
     public static GT_Recipe.GT_Recipe_Map eicMap;
@@ -243,7 +241,10 @@ public class GT_TileEntity_ElectricImplosionCompressor
 
     @Override
     public boolean checkRecipe(ItemStack aStack) {
-        if (this.mEnergyHatches.get(0).getEUVar() <= 0 || this.mEnergyHatches.get(1).getEUVar() <= 0) return false;
+        lEUt = 0;
+        mOutputItems = null;
+        mOutputFluids = null;
+        long tTotalEU = getMaxInputEu();
 
         ItemStack[] tItemInputs = getStoredInputs().toArray(new ItemStack[0]);
         FluidStack[] tFluidInputs = getStoredFluids().toArray(new FluidStack[0]);
@@ -258,47 +259,43 @@ public class GT_TileEntity_ElectricImplosionCompressor
             }
 
             int tCurrentMaxParallel = 1;
-            final int MIN_TIER = 10; // UEV (UHV hatches)
-            if (mBlockTier > 1 && tTier > MIN_TIER) {
-                tCurrentMaxParallel = (int) Math.pow(4, Math.min(mBlockTier - 1, tTier - MIN_TIER));
+            if (mBlockTier > 1) {
+                tCurrentMaxParallel = (int) Math.pow(4, Math.max(mBlockTier - 1, 0));
             }
 
-            // Parallel ignores EU, tiered only by energy hatches and block type
             GT_ParallelHelper helper = new GT_ParallelHelper().setRecipe(tRecipe).setItemInputs(tItemInputs)
-                    .setFluidInputs(tFluidInputs).setAvailableEUt(Long.MAX_VALUE).setMaxParallel(tCurrentMaxParallel)
-                    .enableConsumption();
+                    .setFluidInputs(tFluidInputs).setAvailableEUt(tTotalEU).setMaxParallel(tCurrentMaxParallel)
+                    .enableConsumption().enableOutputCalculation();
+
+            if (batchMode) {
+                helper.enableBatchMode(128);
+            }
 
             helper.build();
+
             if (helper.getCurrentParallel() == 0) {
                 return false;
             }
 
+            GT_OverclockCalculator calculator = new GT_OverclockCalculator().setRecipeEUt(tRecipe.mEUt)
+                    .setEUt(getAverageInputVoltage()).setAmperage(getMaxInputAmps()).setDuration(tRecipe.mDuration)
+                    .setParallel((int) Math.floor(helper.getCurrentParallel() / helper.getDurationMultiplier()))
+                    .calculate();
+
+            lEUt = -calculator.getConsumption();
+            mMaxProgresstime = (int) Math.ceil(calculator.getDuration() * helper.getDurationMultiplier());
+
             this.mEfficiency = 10000 - (this.getIdealStatus() - this.getRepairStatus()) * 1000;
             this.mEfficiencyIncrease = 10000;
-            calculateOverclockedNessMulti(tRecipe.mEUt, tRecipe.mDuration, 1, tVoltage);
+
             // In case recipe is too OP for that machine
-            if (mMaxProgresstime == Integer.MAX_VALUE - 1 && mEUt == Integer.MAX_VALUE - 1) return false;
-            if (this.mEUt > 0) {
-                this.mEUt = -this.mEUt;
+            if (mMaxProgresstime == Integer.MAX_VALUE - 1 && lEUt == Long.MAX_VALUE - 1) return false;
+            if (this.lEUt > 0) {
+                this.lEUt = -this.lEUt;
             }
 
-            ArrayList<ItemStack> tItemOutputs = new ArrayList<>();
-            ArrayList<FluidStack> tFluidOutputs = new ArrayList<>();
-
-            for (ItemStack itemOut : tRecipe.mOutputs) {
-                ItemStack clonedOut = itemOut.copy();
-                clonedOut.stackSize *= helper.getCurrentParallel();
-                tItemOutputs.add(clonedOut);
-            }
-
-            for (FluidStack fluidOut : tRecipe.mFluidOutputs) {
-                FluidStack clonedOut = fluidOut.copy();
-                clonedOut.amount *= helper.getCurrentParallel();
-                tFluidOutputs.add(clonedOut);
-            }
-
-            this.mOutputItems = tItemOutputs.toArray(new ItemStack[0]);
-            this.mOutputFluids = tFluidOutputs.toArray(new FluidStack[0]);
+            this.mOutputItems = helper.getItemOutputs();
+            this.mOutputFluids = helper.getFluidOutputs();
 
             this.updateSlots();
             return true;
@@ -326,17 +323,6 @@ public class GT_TileEntity_ElectricImplosionCompressor
     public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
         super.onFirstTick(aBaseMetaTileEntity);
         updateChunkCoordinates();
-    }
-
-    @Override
-    public boolean drainEnergyInput(long aEU) {
-        if (aEU <= 0) return true;
-        GT_MetaTileEntity_Hatch_Energy h1 = this.mEnergyHatches.get(0), h2 = this.mEnergyHatches.get(1);
-        if (!isValidMetaTileEntity(h1) || !isValidMetaTileEntity(h2)) return false;
-        if (!h1.getBaseMetaTileEntity().decreaseStoredEnergyUnits(aEU / 2, false)
-                || !h2.getBaseMetaTileEntity().decreaseStoredEnergyUnits(aEU / 2, false))
-            return false;
-        return true;
     }
 
     @Override
@@ -499,5 +485,21 @@ public class GT_TileEntity_ElectricImplosionCompressor
     public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
         if (mMachine) return -1;
         return survivialBuildPiece(STRUCTURE_PIECE_MAIN, stackSize, 1, 6, 0, elementBudget, env, false, true);
+    }
+
+    @Override
+    public boolean onWireCutterRightClick(byte aSide, byte aWrenchingSide, EntityPlayer aPlayer, float aX, float aY,
+            float aZ) {
+        if (aPlayer.isSneaking()) {
+            batchMode = !batchMode;
+            if (batchMode) {
+                GT_Utility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("misc.BatchModeTextOn"));
+            } else {
+                GT_Utility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("misc.BatchModeTextOff"));
+            }
+            return true;
+        }
+
+        return false;
     }
 }

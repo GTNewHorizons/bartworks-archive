@@ -368,9 +368,13 @@ public class GT_TileEntity_ElectricImplosionCompressor
         if (!this.piston) {
             List<Pair<Block, Integer>> tiers = getAllBlockTiers();
             Pair<Block, Integer> tieredBlock = tiers.get(Math.min(mBlockTier, tiers.size()) - 1);
-            chunkCoordinates.forEach(
-                    c -> aBaseMetaTileEntity.getWorld()
-                            .setBlock(c.posX, c.posY, c.posZ, tieredBlock.getKey(), tieredBlock.getValue(), 3));
+            chunkCoordinates.forEach(c -> {
+                // Don't replace real blocks in case user has placed something (e.g. tier upgrade)
+                if (aBaseMetaTileEntity.getWorld().isAirBlock(c.posX, c.posY, c.posZ)) {
+                    aBaseMetaTileEntity.getWorld()
+                            .setBlock(c.posX, c.posY, c.posZ, tieredBlock.getKey(), tieredBlock.getValue(), 3);
+                }
+            });
             this.piston = !this.piston;
         }
     }

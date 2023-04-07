@@ -229,6 +229,7 @@ public class GT_TileEntity_ElectricImplosionCompressor
                 .addInfo("Uses electricity instead of Explosives").addInfo("Can parallel up to 4^(Tier - 1)")
                 .addInfo("Tier is determined by containment block")
                 .addInfo("Valid blocks: Neutronium, Infinity, Transcendent Metal, Space Time")
+                .addInfo("Requires UHV or better energy hatch to work")
                 .addInfo("Supports " + TT + " energy hatches").addSeparator()
                 .beginStructureBlock(3, 9, 3, false).addController("Front 3rd layer center")
                 .addCasingInfo("Solid Steel Machine Casing", 8)
@@ -249,11 +250,16 @@ public class GT_TileEntity_ElectricImplosionCompressor
         mOutputFluids = null;
         long tTotalEU = getMaxInputEu();
 
-        ItemStack[] tItemInputs = getStoredInputs().toArray(new ItemStack[0]);
-        FluidStack[] tFluidInputs = getStoredFluids().toArray(new FluidStack[0]);
-
         long tVoltage = getMaxInputVoltage();
         byte tTier = (byte) Math.max(1, GT_Utility.getTier(tVoltage));
+
+        // Disallow energy hatches below UHV
+        if (tTier < 9) {
+            return false;
+        }
+
+        ItemStack[] tItemInputs = getStoredInputs().toArray(new ItemStack[0]);
+        FluidStack[] tFluidInputs = getStoredFluids().toArray(new FluidStack[0]);
 
         if ((tItemInputs.length > 0) || (tFluidInputs.length > 0)) {
             GT_Recipe tRecipe = eicMap.findRecipe(getBaseMetaTileEntity(), false, V[tTier], tFluidInputs, tItemInputs);

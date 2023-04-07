@@ -15,6 +15,7 @@ package com.github.bartimaeusnek.bartworks.common.tileentities.multis;
 
 import static com.github.bartimaeusnek.bartworks.common.loaders.ItemRegistry.BW_BLOCKS;
 import static com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference.MULTIBLOCK_ADDED_BY_BARTWORKS;
+import static com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference.TT;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static gregtech.api.enums.GT_HatchElement.*;
 import static gregtech.api.enums.GT_Values.V;
@@ -103,7 +104,8 @@ public class GT_TileEntity_ElectricImplosionCompressor
             .addElement(
                     'C',
                     buildHatchAdder(GT_TileEntity_ElectricImplosionCompressor.class)
-                            .atLeast(InputBus, OutputBus, Maintenance).casingIndex(CASING_INDEX).dot(1).buildAndChain(
+                            .atLeast(InputBus, OutputBus, Maintenance, InputHatch, OutputHatch)
+                            .casingIndex(CASING_INDEX).dot(1).buildAndChain(
                                     onElementPass(x -> ++x.mCasing, ofBlock(GregTech_API.sBlockCasings2, 0)),
                                     onElementPass(x -> ++x.mCasing, ofBlock(GregTech_API.sBlockCasings3, 4))))
             .addElement(
@@ -225,8 +227,9 @@ public class GT_TileEntity_ElectricImplosionCompressor
         tt.addMachineType("Implosion Compressor").addInfo("Explosions are fun")
                 .addInfo("Controller block for the Electric Implosion Compressor")
                 .addInfo("Uses electricity instead of Explosives").addInfo("Can parallel up to 4^(Tier - 1)")
-                .addInfo("Tier is determined by containment block and energy hatch tier")
-                .addInfo("UHV hatches and Neutronium Blocks are Tier 1").addSeparator()
+                .addInfo("Tier is determined by containment block")
+                .addInfo("Valid blocks: Neutronium, Infinity, Transcendent Metal, Space Time")
+                .addInfo("Supports " + TT + " energy hatches").addSeparator()
                 .beginStructureBlock(3, 9, 3, false).addController("Front 3rd layer center")
                 .addCasingInfo("Solid Steel Machine Casing", 8)
                 .addStructureInfo("Casings can be replaced with Explosion Warning Signs")
@@ -234,7 +237,7 @@ public class GT_TileEntity_ElectricImplosionCompressor
                 .addOtherStructurePart("Nickel-Zinc-Ferrite Blocks", "Inner layer 2,3,7,8")
                 .addOtherStructurePart("Containment Blocks", "Layer 4,5,6").addMaintenanceHatch("Any bottom casing", 1)
                 .addInputBus("Any bottom casing", 1).addInputHatch("Any bottom casing", 1)
-                .addOutputBus("Any bottom casing", 1).addEnergyHatch("Bottom and top middle", 2)
+                .addOutputBus("Any bottom casing", 1).addEnergyHatch("Bottom and/or top middle", 2)
                 .toolTipFinisher(MULTIBLOCK_ADDED_BY_BARTWORKS);
         return tt;
     }
@@ -430,7 +433,7 @@ public class GT_TileEntity_ElectricImplosionCompressor
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack itemStack) {
         this.mCasing = 0;
         boolean isOK = checkPiece(STRUCTURE_PIECE_MAIN, 1, 6, 0);
-        isOK = isOK && this.mMaintenanceHatches.size() == 1 && this.mEnergyHatches.size() >= 1;
+        isOK = isOK && this.mMaintenanceHatches.size() == 1 && getExoticAndNormalEnergyHatchList().size() >= 1;
         if (isOK) {
             activatePiston();
             return true;

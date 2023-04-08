@@ -162,7 +162,6 @@ public class GT_TileEntity_ElectricImplosionCompressor
                 @Override
                 public PlaceResult survivalPlaceBlock(GT_TileEntity_ElectricImplosionCompressor t, World world, int x,
                         int y, int z, ItemStack trigger, AutoPlaceEnvironment env) {
-                    // TODO: probably needs fix for piston state
                     return isAir().survivalPlaceBlock(t, world, x, y, z, trigger, env);
                 }
             }).build();
@@ -229,9 +228,8 @@ public class GT_TileEntity_ElectricImplosionCompressor
                 .addInfo("Uses electricity instead of Explosives").addInfo("Can parallel up to 4^(Tier - 1)")
                 .addInfo("Tier is determined by containment block")
                 .addInfo("Valid blocks: Neutronium, Infinity, Transcendent Metal, Space Time")
-                .addInfo("Requires UHV or better energy hatch to work")
-                .addInfo("Supports " + TT + " energy hatches").addSeparator()
-                .beginStructureBlock(3, 9, 3, false).addController("Front 3rd layer center")
+                .addInfo("Requires UHV or better energy hatch to work").addInfo("Supports " + TT + " energy hatches")
+                .addSeparator().beginStructureBlock(3, 9, 3, false).addController("Front 3rd layer center")
                 .addCasingInfo("Solid Steel Machine Casing", 8)
                 .addStructureInfo("Casings can be replaced with Explosion Warning Signs")
                 .addOtherStructurePart("Transformer-Winding Blocks", "Outer layer 2,3,7,8")

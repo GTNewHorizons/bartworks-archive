@@ -40,6 +40,9 @@ import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
 
+import static gregtech.api.enums.Mods.CropsPlusPlus;
+import static gregtech.api.enums.Mods.Gendustry;
+
 public class BioRecipeLoader {
 
     @SuppressWarnings("deprecation")
@@ -114,7 +117,7 @@ public class BioRecipeLoader {
                 500,
                 BW_Util.getMachineVoltageFromTier(6));
 
-        FluidStack dnaFluid = LoaderReference.gendustry ? FluidRegistry.getFluidStack("liquiddna", 1000)
+        FluidStack dnaFluid = Gendustry.isModLoaded() ? FluidRegistry.getFluidStack("liquiddna", 1000)
                 : Materials.Biomass.getFluid(1000L);
         GT_Values.RA.addMixerRecipe(
                 GT_Utility.getIntegratedCircuit(17),
@@ -334,7 +337,7 @@ public class BioRecipeLoader {
                     new ItemStack[] { new ItemStack(Items.sugar, 64) },
                     new FluidStack[] { new FluidStack(fluidStack, 100) },
                     BioCultureLoader.CommonYeast,
-                    new FluidStack[] { (LoaderReference.berriespp ? FluidRegistry.getFluidStack("potion.ghp", 1)
+                    new FluidStack[] { (CropsPlusPlus.isModLoaded() ? FluidRegistry.getFluidStack("potion.ghp", 1)
                             : Materials.Ethanol.getFluid(1L)) },
                     350,
                     BW_Util.getMachineVoltageFromTier(4));

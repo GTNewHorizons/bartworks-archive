@@ -19,6 +19,7 @@ import static com.github.bartimaeusnek.bartworks.util.RecipeFinderForParallel.ha
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static gregtech.api.enums.GT_HatchElement.*;
 import static gregtech.api.enums.GT_Values.V;
+import static gregtech.api.enums.Mods.TecTech;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GT_StructureUtility.*;
 
@@ -189,7 +190,7 @@ public class GT_TileEntity_MegaOilCracker extends GT_TileEntity_MegaMultiBlockBa
         ArrayList<ItemStack> outputItems = new ArrayList<>();
         ArrayList<FluidStack> outputFluids = new ArrayList<>();
 
-        long nominalV = LoaderReference.tectech ? TecTechUtils.getnominalVoltageTT(this)
+        long nominalV = TecTech.isModLoaded() ? TecTechUtils.getnominalVoltageTT(this)
                 : BW_Util.getnominalVoltage(this);
 
         byte tTier = (byte) Math.max(1, Math.min(GT_Utility.getTier(nominalV), V.length - 1));
@@ -280,7 +281,7 @@ public class GT_TileEntity_MegaOilCracker extends GT_TileEntity_MegaMultiBlockBa
         mOutputOnSide = -1;
         mMiddleInputHatches.clear();
 
-        if (LoaderReference.tectech) {
+        if (TecTech.isModLoaded()) {
             this.getTecTechEnergyMultis().clear();
             this.getTecTechEnergyTunnels().clear();
         }
@@ -289,7 +290,7 @@ public class GT_TileEntity_MegaOilCracker extends GT_TileEntity_MegaMultiBlockBa
 
         if (mMaintenanceHatches.size() != 1) return false;
 
-        if (LoaderReference.tectech && this.glasTier < 8)
+        if (TecTech.isModLoaded() && this.glasTier < 8)
             if (!areLazorsLowPowa() || areThingsNotProperlyTiered(this.getTecTechEnergyTunnels())
                     || areThingsNotProperlyTiered(this.getTecTechEnergyMultis()))
                 return false;

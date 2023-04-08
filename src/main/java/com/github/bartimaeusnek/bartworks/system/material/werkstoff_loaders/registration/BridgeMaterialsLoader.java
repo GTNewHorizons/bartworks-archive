@@ -13,6 +13,7 @@
 
 package com.github.bartimaeusnek.bartworks.system.material.werkstoff_loaders.registration;
 
+import static gregtech.api.enums.Mods.Thaumcraft;
 import static gregtech.api.enums.OrePrefixes.*;
 
 import java.util.ArrayList;
@@ -168,7 +169,9 @@ public class BridgeMaterialsLoader implements IWerkstoffRunnable {
                     werkstoffBridgeMaterial.mLocalizedName = GT_LanguageManager.addStringLocalization(
                             "Material." + werkstoffBridgeMaterial.mName.toLowerCase(),
                             werkstoffBridgeMaterial.mDefaultLocalName);
-                if (LoaderReference.Thaumcraft) werkstoffBridgeMaterial.mAspects = werkstoff.getGTWrappedTCAspects();
+                if (Thaumcraft.isModLoaded()) {
+                    werkstoffBridgeMaterial.mAspects = werkstoff.getGTWrappedTCAspects();
+                }
                 werkstoffBridgeMaterial.mMaterialInto = werkstoffBridgeMaterial;
                 werkstoffBridgeMaterial.mHandleMaterial = werkstoff.contains(SubTag.BURNING) ? Materials.Blaze
                         : werkstoff.contains(SubTag.MAGICAL) ? Materials.Thaumium

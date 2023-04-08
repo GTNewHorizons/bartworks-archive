@@ -13,6 +13,7 @@
 
 package com.github.bartimaeusnek.bartworks.system.material.werkstoff_loaders.recipe;
 
+import static gregtech.api.enums.Mods.Forestry;
 import static gregtech.api.enums.OrePrefixes.*;
 
 import java.util.Objects;
@@ -226,7 +227,7 @@ public class MoltenCellLoader implements IWerkstoffRunnable {
                 GT_Values.NF,
                 new FluidStack(Objects.requireNonNull(WerkstoffLoader.molten.get(werkstoff)), 144));
 
-        if (!LoaderReference.Forestry) return;
+        if (!Forestry.isModLoaded()) return;
 
         final FluidContainerRegistry.FluidContainerData emptyData = new FluidContainerRegistry.FluidContainerData(
                 new FluidStack(Objects.requireNonNull(WerkstoffLoader.molten.get(werkstoff)), 144),

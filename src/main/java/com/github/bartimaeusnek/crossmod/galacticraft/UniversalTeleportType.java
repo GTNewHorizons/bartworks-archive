@@ -28,6 +28,8 @@ import net.minecraft.world.WorldServer;
 
 import com.github.bartimaeusnek.bartworks.API.LoaderReference;
 
+import static gregtech.api.enums.Mods.GalacticraftMars;
+
 public class UniversalTeleportType implements ITeleportType {
 
     @Override
@@ -63,7 +65,7 @@ public class UniversalTeleportType implements ITeleportType {
             }
 
             EntityLanderBase elb;
-            if (LoaderReference.GalacticraftMars) elb = PlanetsHelperClass.getLanderType(player);
+            if (GalacticraftMars.isModLoaded()) elb = PlanetsHelperClass.getLanderType(player);
             else elb = new EntityLander(player);
 
             if (!newWorld.isRemote) {

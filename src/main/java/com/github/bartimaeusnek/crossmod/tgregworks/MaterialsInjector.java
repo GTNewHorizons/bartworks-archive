@@ -24,6 +24,8 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 
+import static gregtech.api.enums.Mods.TinkersGregworks;
+
 @Mod(
         modid = MaterialsInjector.MOD_ID,
         name = MaterialsInjector.NAME,
@@ -50,7 +52,7 @@ public class MaterialsInjector {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent init) {
-        if (LoaderReference.TGregworks) {
+        if (TinkersGregworks.isModLoaded()) {
             MaterialsInjector.preinit();
             MaterialsInjector.run();
         }

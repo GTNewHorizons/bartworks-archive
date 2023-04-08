@@ -20,6 +20,7 @@ import static com.gtnewhorizon.structurelib.structure.StructureUtility.transpose
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
 import static gregtech.api.enums.GT_HatchElement.*;
 import static gregtech.api.enums.GT_Values.V;
+import static gregtech.api.enums.Mods.TecTech;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GT_StructureUtility.buildHatchAdder;
 import static gregtech.api.util.GT_StructureUtility.ofCoil;
@@ -295,7 +296,7 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
     public boolean checkRecipe(ItemStack itemStack) {
         ItemStack[] tInputs = null;
         FluidStack[] tFluids = this.getStoredFluids().toArray(new FluidStack[0]);
-        long nominalV = LoaderReference.tectech ? TecTechUtils.getnominalVoltageTT(this)
+        long nominalV = TecTech.isModLoaded() ? TecTechUtils.getnominalVoltageTT(this)
                 : BW_Util.getnominalVoltage(this);
 
         byte tTier = (byte) Math.max(1, Math.min(GT_Utility.getTier(nominalV), V.length - 1));
@@ -467,7 +468,7 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
 
     @Override
     public boolean checkMachine(IGregTechTileEntity iGregTechTileEntity, ItemStack itemStack) {
-        if (LoaderReference.tectech) {
+        if (TecTech.isModLoaded()) {
             this.getTecTechEnergyMultis().clear();
             this.getTecTechEnergyTunnels().clear();
         }
@@ -486,7 +487,7 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
 
         if (mMaintenanceHatches.size() != 1) return false;
 
-        if (LoaderReference.tectech && this.glasTier < 8)
+        if (TecTech.isModLoaded() && this.glasTier < 8)
             if (!areLazorsLowPowa() || areThingsNotProperlyTiered(this.getTecTechEnergyTunnels())
                     || areThingsNotProperlyTiered(this.getTecTechEnergyMultis()))
                 return false;
@@ -494,7 +495,7 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
         if (this.glasTier < 8 && !this.mEnergyHatches.isEmpty())
             for (GT_MetaTileEntity_Hatch_Energy hatchEnergy : this.mEnergyHatches)
                 if (this.glasTier < hatchEnergy.mTier) return false;
-        long nominalV = LoaderReference.tectech ? TecTechUtils.getnominalVoltageTT(this)
+        long nominalV = TecTech.isModLoaded() ? TecTechUtils.getnominalVoltageTT(this)
                 : BW_Util.getnominalVoltage(this);
         this.mHeatingCapacity = (int) getCoilLevel().getHeat() + 100 * (BW_Util.getTier(nominalV) - 2);
 

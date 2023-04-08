@@ -14,6 +14,7 @@
 package com.github.bartimaeusnek.bartworks.system.material.GT_Enhancement;
 
 import static com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader.*;
+import static gregtech.api.enums.Mods.GTPlusPlus;
 import static gregtech.api.enums.OrePrefixes.*;
 
 import java.lang.reflect.Field;
@@ -881,7 +882,7 @@ public class PlatinumSludgeOverHaul {
             if (obj instanceof ShapedRecipes || (obj instanceof ShapelessRecipes)) {
                 inputName = "recipeOutput";
                 inputItemName = "recipeItems";
-            } else if (LoaderReference.miscutils) {
+            } else if (GTPlusPlus.isModLoaded()) {
                 try {
                     if (Class.forName("gtPlusPlus.api.objects.minecraft.ShapedRecipe").isAssignableFrom(obj.getClass()))
                         obj = CachedReflectionUtils.getField(obj.getClass(), "mRecipe").get(obj);
@@ -1013,7 +1014,7 @@ public class PlatinumSludgeOverHaul {
                             .contains(GT_OreDictUnificator.getAssociation(stack).mMaterial.mMaterial);
         }
 
-        if (LoaderReference.miscutils) {
+        if (GTPlusPlus.isModLoaded()) {
             try {
                 if (Class.forName("gtPlusPlus.core.item.base.BaseItemComponent")
                         .isAssignableFrom(stack.getItem().getClass())

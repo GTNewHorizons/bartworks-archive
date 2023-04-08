@@ -23,14 +23,14 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-import com.github.bartimaeusnek.bartworks.API.LoaderReference;
-
 import gregtech.api.enums.GT_Values;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Utility;
+
+import static gregtech.api.enums.Mods.Forestry;
 
 public class GTMetaItemEnhancer {
 
@@ -39,7 +39,7 @@ public class GTMetaItemEnhancer {
     private GTMetaItemEnhancer() {}
 
     public static void init() {
-        if (!LoaderReference.Forestry) {
+        if (!Forestry.isModLoaded()) {
             return;
         }
         NoMetaValue = Materials.getMaterialsMap().values().stream().filter(m -> m.mMetaItemSubID == -1)
@@ -101,7 +101,7 @@ public class GTMetaItemEnhancer {
     }
 
     public static void addAdditionalOreDictToForestry() {
-        if (!LoaderReference.Forestry) return;
+        if (!Forestry.isModLoaded()) return;
         OreDictionary.registerOre("capsuleWater", getForestryItem("waxCapsuleWater"));
         OreDictionary.registerOre("capsuleIce", getForestryItem("waxCapsuleIce"));
         OreDictionary.registerOre("capsuleHoney", getForestryItem("waxCapsuleHoney"));

@@ -26,11 +26,16 @@ import com.github.bartimaeusnek.crossmod.thaumcraft.util.ThaumcraftHandler;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TC_Aspects;
 
+import static gregtech.api.enums.Mods.Thaumcraft;
+
 public class AspectLoader implements IWerkstoffRunnable {
 
     @Override
     public void run(Werkstoff werkstoff) {
-        if (!LoaderReference.Thaumcraft) return;
+        if (!Thaumcraft.isModLoaded()) {
+            return;
+        }
+
         for (OrePrefixes enabledOrePrefixes : WerkstoffLoader.ENABLED_ORE_PREFIXES) {
             if (werkstoff.hasItemType(enabledOrePrefixes)) {
                 if (enabledOrePrefixes.mMaterialAmount >= 3628800L || enabledOrePrefixes == OrePrefixes.ore) {

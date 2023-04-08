@@ -14,6 +14,7 @@
 package com.github.bartimaeusnek.bartworks.common.loaders;
 
 import static com.github.bartimaeusnek.bartworks.common.configs.ConfigHandler.newStuff;
+import static gregtech.api.enums.Mods.TecTech;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -792,7 +793,7 @@ public class RecipeLoader {
                         BW_Util.getMachineVoltageFromTier(6));
             }
 
-            if (!LoaderReference.tectech) {
+            if (!TecTech.isModLoaded()) {
                 if (LoaderReference.galacticgreg) {
                     GT_Values.RA.addAssemblylineRecipe(
                             ItemRegistry.voidminer[0].copy(),

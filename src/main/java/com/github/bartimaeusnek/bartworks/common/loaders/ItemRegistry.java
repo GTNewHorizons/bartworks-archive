@@ -16,6 +16,7 @@ package com.github.bartimaeusnek.bartworks.common.loaders;
 import static com.github.bartimaeusnek.bartworks.MainMod.BWT;
 import static com.github.bartimaeusnek.bartworks.MainMod.GT2;
 import static com.github.bartimaeusnek.bartworks.common.configs.ConfigHandler.newStuff;
+import static gregtech.api.enums.Mods.TecTech;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -383,7 +384,7 @@ public class ItemRegistry {
                         "VoidMiner1",
                         "Void Miner I").getStackForm(1L);
             }
-            if (LoaderReference.tectech) {
+            if (TecTech.isModLoaded()) {
                 TecTechPipeEnergyLowPower = new TT_MetaTileEntity_Pipe_Energy_LowPower(
                         ConfigHandler.IDOffset + GT_Values.VN.length * 8 + 14,
                         "pipe.lowpowerlaser",

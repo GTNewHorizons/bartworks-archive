@@ -14,6 +14,7 @@
 package com.github.bartimaeusnek.bartworks.system.material.GT_Enhancement;
 
 import static com.github.bartimaeusnek.bartworks.MainMod.MOD_ID;
+import static gregtech.api.enums.Mods.NewHorizonsCoreMod;
 import static gregtech.api.enums.OrePrefixes.*;
 
 import java.lang.reflect.InvocationTargetException;
@@ -86,7 +87,7 @@ public class LuVTierEnhancer implements Runnable {
         Arrays.stream(ItemList.values()).filter(item -> item.toString().contains("LuV") && item.hasBeenSet())
                 .forEach(item -> LuVMachines.add(item.get(1)));
 
-        if (LoaderReference.dreamcraft) {
+        if (NewHorizonsCoreMod.isModLoaded()) {
             addDreamcraftItemListItems(LuVMachines);
         }
 

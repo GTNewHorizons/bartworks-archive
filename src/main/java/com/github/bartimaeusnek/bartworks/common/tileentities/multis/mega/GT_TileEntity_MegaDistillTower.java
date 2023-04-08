@@ -19,6 +19,7 @@ import static com.github.bartimaeusnek.bartworks.util.RecipeFinderForParallel.ha
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static gregtech.api.enums.GT_HatchElement.*;
 import static gregtech.api.enums.GT_Values.V;
+import static gregtech.api.enums.Mods.TecTech;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GT_StructureUtility.buildHatchAdder;
 
@@ -284,7 +285,7 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
 
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
-        if (LoaderReference.tectech) {
+        if (TecTech.isModLoaded()) {
             this.getTecTechEnergyMultis().clear();
             this.getTecTechEnergyTunnels().clear();
         }
@@ -410,7 +411,7 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
             }
         }
 
-        long nominalV = LoaderReference.tectech ? TecTechUtils.getnominalVoltageTT(this)
+        long nominalV = TecTech.isModLoaded() ? TecTechUtils.getnominalVoltageTT(this)
                 : BW_Util.getnominalVoltage(this);
         byte tTier = (byte) Math.max(0, Math.min(GT_Utility.getTier(nominalV), V.length - 1));
 

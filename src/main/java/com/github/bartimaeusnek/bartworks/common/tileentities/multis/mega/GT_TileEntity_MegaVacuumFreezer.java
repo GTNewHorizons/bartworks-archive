@@ -19,6 +19,7 @@ import static com.github.bartimaeusnek.bartworks.util.RecipeFinderForParallel.ha
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static gregtech.api.enums.GT_HatchElement.*;
 import static gregtech.api.enums.GT_Values.V;
+import static gregtech.api.enums.Mods.TecTech;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GT_StructureUtility.buildHatchAdder;
 
@@ -219,7 +220,7 @@ public class GT_TileEntity_MegaVacuumFreezer extends GT_TileEntity_MegaMultiBloc
         ArrayList<ItemStack> outputItems = new ArrayList<>();
         ArrayList<FluidStack> outputFluids = new ArrayList<>();
 
-        long nominalV = LoaderReference.tectech ? TecTechUtils.getnominalVoltageTT(this)
+        long nominalV = TecTech.isModLoaded() ? TecTechUtils.getnominalVoltageTT(this)
                 : BW_Util.getnominalVoltage(this);
 
         byte tTier = (byte) Math.max(1, Math.min(GT_Utility.getTier(nominalV), V.length - 1));
@@ -283,14 +284,14 @@ public class GT_TileEntity_MegaVacuumFreezer extends GT_TileEntity_MegaMultiBloc
 
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
-        if (LoaderReference.tectech) {
+        if (TecTech.isModLoaded()) {
             this.getTecTechEnergyMultis().clear();
             this.getTecTechEnergyTunnels().clear();
         }
         this.mCasing = 0;
         if (!checkPiece(STRUCTURE_PIECE_MAIN, 7, 7, 0)) return false;
         return this.mMaintenanceHatches.size() == 1
-                && (LoaderReference.tectech
+                && (TecTech.isModLoaded()
                         ? (!this.getTecTechEnergyMultis().isEmpty() || !this.getTecTechEnergyTunnels().isEmpty()
                                 || !this.mEnergyHatches.isEmpty())
                         : !this.mEnergyHatches.isEmpty())

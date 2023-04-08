@@ -13,6 +13,7 @@
 
 package com.github.bartimaeusnek.crossmod.galacticraft.planets.ross128b;
 
+import static gregtech.api.enums.Mods.Thaumcraft;
 import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ICE;
 import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.LAKE;
 
@@ -77,7 +78,7 @@ public class ChunkProviderRoss128b extends ChunkProviderGenerate {
             } else if (biomeGenBase.biomeID == BiomeGenBase.mushroomIslandShore.biomeID) {
                 this.biomesForGeneration[i] = BiomeGenBase.stoneBeach;
             }
-            if (LoaderReference.Thaumcraft) {
+            if (Thaumcraft.isModLoaded()) {
                 if (ThaumcraftHandler.isTaintBiome(biomeGenBase.biomeID))
                     this.biomesForGeneration[i] = BiomeGenBase.taiga;
                 else if (ConfigHandler.disableMagicalForest

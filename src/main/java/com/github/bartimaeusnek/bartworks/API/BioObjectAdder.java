@@ -29,6 +29,8 @@ import gregtech.api.enums.Materials;
 import gregtech.api.objects.GT_Fluid;
 import gregtech.api.util.GT_Utility;
 
+import static gregtech.api.enums.Mods.Gendustry;
+
 @SuppressWarnings("ALL")
 public final class BioObjectAdder {
 
@@ -164,7 +166,7 @@ public final class BioObjectAdder {
      * postinit Phase) execute this.
      */
     public static void regenerateBioFluids() {
-        FluidStack dnaFluid = LoaderReference.gendustry ? FluidRegistry.getFluidStack("liquiddna", 100)
+        FluidStack dnaFluid = Gendustry.isModLoaded() ? FluidRegistry.getFluidStack("liquiddna", 100)
                 : Materials.Biomass.getFluid(100L);
         for (BioCulture B : BioCulture.BIO_CULTURE_ARRAY_LIST) {
             if (B.getFluidNotSet()) {

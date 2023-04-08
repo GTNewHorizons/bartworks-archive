@@ -34,6 +34,11 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 
+import static gregtech.api.enums.Mods.GTPlusPlus;
+import static gregtech.api.enums.Mods.GalacticraftCore;
+import static gregtech.api.enums.Mods.TecTech;
+import static gregtech.api.enums.Mods.Thaumcraft;
+
 @Mod(
         modid = BartWorksCrossmod.MOD_ID,
         name = BartWorksCrossmod.NAME,
@@ -58,46 +63,41 @@ public class BartWorksCrossmod {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent preinit) {
-        // if (LoaderReference.appliedenergistics2)
-        // new ItemSingleItemStorageCell("singleItemStorageCell");
-        if (LoaderReference.GalacticraftCore) GalacticraftProxy.preInit(preinit);
-        if (LoaderReference.Thaumcraft) new CustomAspects();
+        if (GalacticraftCore.isModLoaded()) {
+            GalacticraftProxy.preInit(preinit);
+        }
+
+        if (Thaumcraft.isModLoaded()) {
+            new CustomAspects();
+        }
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent init) {
-        if (LoaderReference.GalacticraftCore) GalacticraftProxy.init(init);
+        if (GalacticraftCore.isModLoaded()) {
+            GalacticraftProxy.init(init);
+        }
     }
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent init) {
-        if (LoaderReference.GalacticraftCore) GalacticraftProxy.postInit(init);
-        if (LoaderReference.miscutils) RadioHatchCompat.run();
-        if (LoaderReference.tectech) TecTechResearchLoader.runResearches();
+        if (GalacticraftCore.isModLoaded()) {
+            GalacticraftProxy.postInit(init);
+        }
+        if (GTPlusPlus.isModLoaded()) {
+            RadioHatchCompat.run();
+        }
+        if (TecTech.isModLoaded()) {
+            TecTechResearchLoader.runResearches();
+        }
     }
-
-    // @Mod.EventHandler
-    // public void onFMLMissingMappingsEvent(FMLMissingMappingsEvent event){
-    // for (FMLMissingMappingsEvent.MissingMapping mapping : event.getAll()){
-    // if (mapping.name.equalsIgnoreCase())
-    // }
-    // }
-
-    // @Mod.EventHandler
-    // public void onServerStarted(FMLServerStartedEvent event) {
-    // if (LoaderReference.EMT){
-    // try {
-    // TCRecipeHandler.init();
-    // } catch (IllegalAccessException | InvocationTargetException e) {
-    // e.printStackTrace();
-    // }
-    // }
-    // }
 
     @Mod.EventHandler
     public void onFMLServerStart(FMLServerStartingEvent event) {
-        if (LoaderReference.miscutils) for (Object s : RadioHatchCompat.TranslateSet) {
-            StringTranslate.inject(new ReaderInputStream(new StringReader((String) s)));
+        if (GTPlusPlus.isModLoaded()) {
+            for (Object s : RadioHatchCompat.TranslateSet) {
+                StringTranslate.inject(new ReaderInputStream(new StringReader((String) s)));
+            }
         }
     }
 }

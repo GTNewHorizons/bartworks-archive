@@ -42,6 +42,8 @@ import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
 import gregtech.common.items.behaviors.Behaviour_DataOrb;
 
+import static gregtech.api.enums.Mods.Gendustry;
+
 public class GT_MetaTileEntity_BioLab extends GT_MetaTileEntity_BasicMachine {
 
     private static final String MGUINAME = "BW.GUI.BioLab.png";
@@ -151,7 +153,7 @@ public class GT_MetaTileEntity_BioLab extends GT_MetaTileEntity_BasicMachine {
     public int checkRecipe(boolean skipOC) {
 
         int rTier = 3;
-        FluidStack dnaFluid = LoaderReference.gendustry ? FluidRegistry.getFluidStack("liquiddna", 1000)
+        FluidStack dnaFluid = Gendustry.isModLoaded() ? FluidRegistry.getFluidStack("liquiddna", 1000)
                 : Materials.Biomass.getFluid(1000L);
 
         if (this.getSpecialSlot() != null && this.getSpecialSlot().getItem() instanceof LabModule) {

@@ -16,6 +16,8 @@ package com.github.bartimaeusnek.bartworks;
 import static com.github.bartimaeusnek.bartworks.common.loaders.BioRecipeLoader.runOnServerStarted;
 import static com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader.removeIC2Recipes;
 import static gregtech.api.enums.GT_Values.VN;
+import static gregtech.api.enums.Mods.GTPlusPlus;
+import static gregtech.api.enums.Mods.NewHorizonsCoreMod;
 
 import java.io.IOException;
 import java.util.Map;
@@ -100,11 +102,14 @@ public final class MainMod {
 
         LoaderReference.init(); // Check for ALL the mods.
 
-        if (LoaderReference.miscutils) {
+        if (GTPlusPlus.isModLoaded()) {
             MainMod.LOGGER.info("Found GT++, continuing");
         }
 
-        if (LoaderReference.dreamcraft) ConfigHandler.hardmode = true;
+        if (NewHorizonsCoreMod.isModLoaded()) {
+            // todo: yeet anything that is disabled on hardmode
+            ConfigHandler.hardmode = true;
+        }
 
         ConfigHandler.hardmode = ConfigHandler.ezmode != ConfigHandler.hardmode;
 

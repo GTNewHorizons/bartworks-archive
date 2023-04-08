@@ -15,6 +15,8 @@ import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
 
+import static gregtech.api.enums.Mods.NewHorizonsCoreMod;
+
 public class ArtificialMicaLine {
 
     public static void runArtificialMicaRecipe() {
@@ -184,11 +186,13 @@ public class ArtificialMicaLine {
                         120,
                         0));
         // Fluorophlogopite = 4Insulator Foil
-        if (LoaderReference.dreamcraft) GT_Values.RA.addBenderRecipe(
+        if (NewHorizonsCoreMod.isModLoaded()) {
+            GT_Values.RA.addBenderRecipe(
                 WerkstoffLoader.Fluorophlogopite.get(OrePrefixes.plate, 1),
                 GT_Utility.getIntegratedCircuit(1),
                 GT_ModHandler.getModItem("dreamcraft", "item.MicaInsulatorFoil", 4),
                 10,
                 600);
+        }
     }
 }

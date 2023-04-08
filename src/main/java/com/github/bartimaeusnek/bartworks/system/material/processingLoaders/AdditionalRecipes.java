@@ -14,6 +14,7 @@
 package com.github.bartimaeusnek.bartworks.system.material.processingLoaders;
 
 import static com.github.bartimaeusnek.bartworks.util.BW_Util.CLEANROOM;
+import static gregtech.api.enums.Mods.Gendustry;
 import static gregtech.api.enums.OrePrefixes.*;
 
 import java.lang.reflect.Field;
@@ -60,7 +61,7 @@ public class AdditionalRecipes {
     private static void runBWRecipes() {
 
         if (ConfigHandler.BioLab) {
-            FluidStack[] dnaFluid = { LoaderReference.gendustry ? FluidRegistry.getFluidStack("liquiddna", 1000)
+            FluidStack[] dnaFluid = { Gendustry.isModLoaded() ? FluidRegistry.getFluidStack("liquiddna", 1000)
                     : Materials.Biomass.getFluid(1000L) };
 
             for (ItemStack stack : BioItemList.getAllPetriDishes()) {

@@ -30,6 +30,8 @@ import com.github.bartimaeusnek.crossmod.galacticraft.UniversalTeleportType;
 import com.github.bartimaeusnek.crossmod.galacticraft.planets.ross128b.WorldProviderRoss128b;
 import com.github.bartimaeusnek.crossmod.galacticraft.planets.ross128ba.WorldProviderRoss128ba;
 
+import static gregtech.api.enums.Mods.GalaxySpace;
+
 public class Ross128SolarSystem {
 
     public static SolarSystem Ross128System;
@@ -69,7 +71,7 @@ public class Ross128SolarSystem {
                 new ResourceLocation(BartWorksCrossmod.MOD_ID + ":galacticraft/Ross128b/MapObjs/Ross128ba.png"));
         Ross128SolarSystem.Ross128ba.setDimensionInfo(ConfigHandler.ross128BAID, WorldProviderRoss128ba.class);
         Ross128SolarSystem.Ross128ba
-                .setTierRequired(LoaderReference.GalaxySpace ? Math.min(ConfigHandler.ross128btier + 2, 8) : 3);
+                .setTierRequired(GalaxySpace.isModLoaded() ? Math.min(ConfigHandler.ross128btier + 2, 8) : 3);
 
         GalaxyRegistry.registerSolarSystem(Ross128SolarSystem.Ross128System);
         GalaxyRegistry.registerPlanet(Ross128SolarSystem.Ross128b);

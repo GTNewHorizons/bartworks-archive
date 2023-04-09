@@ -127,14 +127,12 @@ public class CraftingMaterialLoader implements IWerkstoffRunnable {
                     werkstoff.get(gearGtSmall),
                     (int) werkstoff.getStats().getMass(),
                     8 * tVoltageMultiplier);
-            if (ConfigHandler.hardmode) GT_ModHandler.addCraftingRecipe(
-                    werkstoff.get(gearGtSmall),
-                    GT_Proxy.tBits,
-                    new Object[] { " S ", "hPx", " S ", 'S', werkstoff.get(stick), 'P', werkstoff.get(plate) });
-            else GT_ModHandler.addCraftingRecipe(
-                    werkstoff.get(gearGtSmall),
-                    GT_Proxy.tBits,
-                    new Object[] { "P  ", " h ", 'P', werkstoff.get(plate) });
+
+            GT_ModHandler.addCraftingRecipe(
+                werkstoff.get(gearGtSmall),
+                GT_Proxy.tBits,
+                new Object[] { " S ", "hPx", " S ", 'S', werkstoff.get(stick), 'P', werkstoff.get(plate) });
+
 
             // Rotor
             GT_ModHandler.addCraftingRecipe(

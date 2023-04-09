@@ -106,13 +106,6 @@ public final class MainMod {
             MainMod.LOGGER.info("Found GT++, continuing");
         }
 
-        if (NewHorizonsCoreMod.isModLoaded()) {
-            // todo: yeet anything that is disabled on hardmode
-            ConfigHandler.hardmode = true;
-        }
-
-        ConfigHandler.hardmode = ConfigHandler.ezmode != ConfigHandler.hardmode;
-
         if (API_ConfigValues.debugLog) {
             try {
                 DebugLog.initDebugLog(preinit);
@@ -124,8 +117,6 @@ public final class MainMod {
         if (ConfigHandler.newStuff) {
             WerkstoffLoader.setUp();
         }
-
-        if (ConfigHandler.hardmode) MainMod.LOGGER.info(". . . ACTIVATED HARDMODE.");
 
         if (ConfigHandler.BioLab) {
             BioCultureLoader.run();

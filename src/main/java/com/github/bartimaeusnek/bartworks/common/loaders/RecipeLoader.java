@@ -53,100 +53,49 @@ public class RecipeLoader {
     @SuppressWarnings("deprecation")
     public static void run() {
 
-        if (ConfigHandler.hardmode) {
-            /*
-             * GTNH "hardmode" Recipes
-             */
+        GT_Values.RA.addFluidSolidifierRecipe(
+                new ItemStack(Blocks.lapis_block),
+                Materials.Iron.getMolten(1296L),
+                new ItemStack(ItemRegistry.BW_BLOCKS[0], 1, 0),
+                100,
+                BW_Util.getMachineVoltageFromTier(3));
+        GT_Values.RA.addAssemblerRecipe(
+                new ItemStack[] { new ItemStack(ItemRegistry.BW_BLOCKS[0], 1, 0), Materials.Lapis.getPlates(9),
+                        GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Advanced, 2L),
+                        GT_Utility.getIntegratedCircuit(17) },
+                FluidRegistry.getFluidStack("ic2coolant", 1000),
+                new ItemStack(ItemRegistry.BW_BLOCKS[0], 1, 1),
+                100,
+                BW_Util.getMachineVoltageFromTier(3));
+        GT_Values.RA.addAssemblerRecipe(
+                new ItemStack[] { new ItemStack(ItemRegistry.BW_BLOCKS[0], 1, 1), Materials.Lapis.getBlocks(8),
+                        GT_Utility.getIntegratedCircuit(17) },
+                GT_Values.NF,
+                new ItemStack(ItemRegistry.BW_BLOCKS[1]),
+                100,
+                BW_Util.getMachineVoltageFromTier(3));
 
-            GT_Values.RA.addFluidSolidifierRecipe(
-                    new ItemStack(Blocks.lapis_block),
-                    Materials.Iron.getMolten(1296L),
-                    new ItemStack(ItemRegistry.BW_BLOCKS[0], 1, 0),
-                    100,
-                    BW_Util.getMachineVoltageFromTier(3));
-            GT_Values.RA.addAssemblerRecipe(
-                    new ItemStack[] { new ItemStack(ItemRegistry.BW_BLOCKS[0], 1, 0), Materials.Lapis.getPlates(9),
-                            GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Advanced, 2L),
-                            GT_Utility.getIntegratedCircuit(17) },
-                    FluidRegistry.getFluidStack("ic2coolant", 1000),
-                    new ItemStack(ItemRegistry.BW_BLOCKS[0], 1, 1),
-                    100,
-                    BW_Util.getMachineVoltageFromTier(3));
-            GT_Values.RA.addAssemblerRecipe(
-                    new ItemStack[] { new ItemStack(ItemRegistry.BW_BLOCKS[0], 1, 1), Materials.Lapis.getBlocks(8),
-                            GT_Utility.getIntegratedCircuit(17) },
-                    GT_Values.NF,
-                    new ItemStack(ItemRegistry.BW_BLOCKS[1]),
-                    100,
-                    BW_Util.getMachineVoltageFromTier(3));
-        } else {
-            /*
-             * Vanilla Recipes
-             */
 
-            GT_Values.RA.addAssemblerRecipe(
-                    new ItemStack[] { Materials.Lapis.getBlocks(8),
-                            GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Basic, 1L),
-                            GT_Utility.getIntegratedCircuit(17) },
-                    GT_Values.NF,
-                    new ItemStack(ItemRegistry.BW_BLOCKS[1]),
-                    100,
-                    BW_Util.getMachineVoltageFromTier(1));
-
-            GT_ModHandler.addCraftingRecipe(
-                    new ItemStack(ItemRegistry.BW_BLOCKS[1]),
-                    RecipeLoader.BITSD,
-                    new Object[] { "LLL", "LCL", "LLL", 'L', Materials.Lapis.getBlocks(1), 'C', "circuitBasic" });
-
-            GT_Values.RA.addCutterRecipe(
-                    new ItemStack(ItemRegistry.BW_BLOCKS[1]),
-                    new ItemStack(ItemRegistry.BW_BLOCKS[0], 9, 1),
-                    GT_Values.NI,
-                    100,
-                    BW_Util.getMachineVoltageFromTier(1));
-            GT_Values.RA.addCompressorRecipe(
-                    new ItemStack(ItemRegistry.BW_BLOCKS[0], 9, 1),
-                    new ItemStack(ItemRegistry.BW_BLOCKS[1]),
-                    100,
-                    BW_Util.getMachineVoltageFromTier(1));
-            GT_Values.RA.addCompressorRecipe(
-                    new ItemStack(ItemRegistry.BW_BLOCKS[0], 9, 0),
-                    new ItemStack(ItemRegistry.BW_BLOCKS[1]),
-                    100,
-                    BW_Util.getMachineVoltageFromTier(1));
-            GT_ModHandler.addShapelessCraftingRecipe(
-                    new ItemStack(ItemRegistry.BW_BLOCKS[0], 1, 0),
-                    RecipeLoader.BITSD,
-                    new Object[] { new ItemStack(ItemRegistry.BW_BLOCKS[0], 1, 1) });
-            GT_ModHandler.addShapelessCraftingRecipe(
-                    new ItemStack(ItemRegistry.BW_BLOCKS[0], 1, 1),
-                    RecipeLoader.BITSD,
-                    new Object[] { new ItemStack(ItemRegistry.BW_BLOCKS[0], 1, 0) });
-        }
-
-        /*
-         * Common Recipes
-         */
 
         GT_ModHandler.addCraftingRecipe(
                 new GT_TileEntity_LESU(ConfigHandler.IDOffset, "LESU", "L.E.S.U.").getStackForm(1L),
                 RecipeLoader.BITSD,
-                new Object[] { "CDC", "SBS", "CFC", 'C', ConfigHandler.hardmode ? "circuitAdvanced" : "circuitBasic",
+                new Object[] { "CDC", "SBS", "CFC", 'C', "circuitAdvanced",
                         'D', ItemList.Cover_Screen.get(1L), 'S',
                         GT_OreDictUnificator.get(
                                 OrePrefixes.cableGt12,
-                                ConfigHandler.hardmode ? Materials.Platinum : Materials.AnnealedCopper,
+                                Materials.Platinum,
                                 1L),
                         'B', new ItemStack(ItemRegistry.BW_BLOCKS[1]), 'F',
-                        ConfigHandler.hardmode ? ItemList.Field_Generator_HV.get(1L)
-                                : ItemList.Field_Generator_LV.get(1L) });
+                        ItemList.Field_Generator_HV.get(1L)
+                });
 
         GT_ModHandler.addCraftingRecipe(
                 new ItemStack(ItemRegistry.DESTRUCTOPACK),
                 GT_ModHandler.RecipeBits.NOT_REMOVABLE,
                 new Object[] { "CPC", "PLP", "CPC", 'C', "circuitAdvanced", 'P',
                         GT_OreDictUnificator.get(
-                                ConfigHandler.hardmode ? OrePrefixes.plateDouble : OrePrefixes.plate,
+                                OrePrefixes.plateDouble,
                                 Materials.Aluminium,
                                 1L),
                         'L', new ItemStack(Items.lava_bucket) });
@@ -156,8 +105,8 @@ public class RecipeLoader {
                 GT_ModHandler.RecipeBits.NOT_REMOVABLE,
                 new Object[] { "CPC", "PLP", "CPC", 'C', "circuitAdvanced", 'P',
                         GT_OreDictUnificator.get(
-                                ConfigHandler.hardmode ? OrePrefixes.plateDouble : OrePrefixes.plate,
-                                ConfigHandler.hardmode ? Materials.Steel : Materials.Iron,
+                                OrePrefixes.plateDouble,
+                                Materials.Steel,
                                 1L),
                         'L', new ItemStack(Items.lava_bucket) });
 
@@ -221,14 +170,6 @@ public class RecipeLoader {
                             GT_OreDictUnificator.get(OrePrefixes.pipeLarge, Materials.Wood, 1L), 'M',
                             new ItemStack(ItemRegistry.PUMPPARTS, 1, 1), 'S', Ic2Items.ironFurnace });
 
-            if (!ConfigHandler.hardmode) GT_ModHandler.addCraftingRecipe(
-                    ItemRegistry.dehp,
-                    RecipeLoader.BITSD,
-                    new Object[] { "GPG", "NCN", "GPG", 'G',
-                            GT_OreDictUnificator.get(OrePrefixes.gearGt, Materials.HSSE, 1L), 'P',
-                            ItemList.Pump_IV.get(1L), 'N',
-                            GT_OreDictUnificator.get(OrePrefixes.pipeLarge, Materials.Ultimate, 1L), 'C',
-                            ItemList.MACHINE_HULLS[5], });
             else GT_Values.RA.addAssemblylineRecipe(
                     ItemList.Pump_IV.get(1L),
                     72000,

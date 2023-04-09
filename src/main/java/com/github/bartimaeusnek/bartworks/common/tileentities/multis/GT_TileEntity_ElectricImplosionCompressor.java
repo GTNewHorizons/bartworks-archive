@@ -174,6 +174,7 @@ public class GT_TileEntity_ElectricImplosionCompressor
                 add(Pair.of(LudicrousBlocks.resource_block, 1));
                 add(Pair.of(GregTech_API.sBlockMetal9, 4));
                 add(Pair.of(GregTech_API.sBlockMetal9, 3));
+                add(Pair.of(GregTech_API.sBlockMetal9, 8));
             };
         };
     }
@@ -196,6 +197,8 @@ public class GT_TileEntity_ElectricImplosionCompressor
                     return 3;
                 case 3: // SpaceTime
                     return 4;
+                case 8: // Universium
+                    return 5;
             }
         }
 
@@ -227,7 +230,7 @@ public class GT_TileEntity_ElectricImplosionCompressor
                 .addInfo("Controller block for the Electric Implosion Compressor")
                 .addInfo("Uses electricity instead of Explosives").addInfo("Can parallel up to 4^(Tier - 1)")
                 .addInfo("Tier is determined by containment block")
-                .addInfo("Valid blocks: Neutronium, Infinity, Transcendent Metal, Space Time")
+                .addInfo("Valid blocks: Neutronium, Infinity, Transcendent Metal, Spacetime, Universium")
                 .addInfo("Requires UHV or better energy hatch to work").addInfo("Supports " + TT + " energy hatches")
                 .addSeparator().beginStructureBlock(3, 9, 3, false).addController("Front 3rd layer center")
                 .addCasingInfo("Solid Steel Machine Casing", 8)
@@ -236,7 +239,7 @@ public class GT_TileEntity_ElectricImplosionCompressor
                 .addOtherStructurePart("Nickel-Zinc-Ferrite Blocks", "Inner layer 2,3,7,8")
                 .addOtherStructurePart("Containment Blocks", "Layer 4,5,6").addMaintenanceHatch("Any bottom casing", 1)
                 .addInputBus("Any bottom casing", 1).addInputHatch("Any bottom casing", 1)
-                .addOutputBus("Any bottom casing", 1).addEnergyHatch("Bottom and/or top middle", 2)
+                .addOutputBus("Any bottom casing", 1).addEnergyHatch("Bottom middle and/or top middle", 2)
                 .toolTipFinisher(MULTIBLOCK_ADDED_BY_BARTWORKS);
         return tt;
     }

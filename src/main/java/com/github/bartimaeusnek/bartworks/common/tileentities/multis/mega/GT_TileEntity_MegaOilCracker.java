@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import gregtech.api.enums.Mods;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
@@ -60,7 +61,7 @@ import gregtech.api.util.GT_Utility;
 
 @Optional.Interface(
         iface = "com.github.bartimaeusnek.crossmod.tectech.TecTechEnabledMulti",
-        modid = "tectech",
+        modid = Mods.Names.TECTECH,
         striprefs = true)
 public class GT_TileEntity_MegaOilCracker extends GT_TileEntity_MegaMultiBlockBase<GT_TileEntity_MegaOilCracker>
         implements ISurvivalConstructable {
@@ -412,7 +413,7 @@ public class GT_TileEntity_MegaOilCracker extends GT_TileEntity_MegaMultiBlockBa
     }
 
     @SuppressWarnings("rawtypes")
-    @Optional.Method(modid = "tectech")
+    @Optional.Method(modid = Mods.Names.TECTECH)
     private boolean areThingsNotProperlyTiered(Collection collection) {
         if (!collection.isEmpty()) for (Object tecTechEnergyMulti : collection)
             if (((GT_MetaTileEntity_TieredMachineBlock) tecTechEnergyMulti).mTier > this.glasTier) return true;

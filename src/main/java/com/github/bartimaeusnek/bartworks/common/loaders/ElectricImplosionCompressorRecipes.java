@@ -2,6 +2,11 @@ package com.github.bartimaeusnek.bartworks.common.loaders;
 
 import static com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_TileEntity_ElectricImplosionCompressor.eicMap;
 import static gregtech.api.enums.GT_Values.M;
+import static gregtech.api.enums.Mods.EternalSingularity;
+import static gregtech.api.enums.Mods.GoodGenerator;
+import static gregtech.api.enums.Mods.OpenComputers;
+import static gregtech.api.enums.Mods.SuperSolarPanels;
+import static gregtech.api.enums.Mods.UniversalSingularities;
 import static gregtech.api.util.GT_ModHandler.getModItem;
 
 import net.minecraft.item.ItemStack;
@@ -36,25 +41,26 @@ public class ElectricImplosionCompressorRecipes implements Runnable {
     public void run() {
         // Custom electric implosion compressor recipes. Cannot be overclocked.
 
-        if (Loader.isModLoaded("eternalsingularity")) {
+        if (EternalSingularity.isModLoaded()) {
 
             addElectricImplosionRecipe(
                     // IN.
                     new ItemStack[] { GT_Values.NI },
                     new FluidStack[] { Materials.SpaceTime.getMolten(72L) },
                     // OUT.
-                    new ItemStack[] { getModItem("eternalsingularity", "eternal_singularity", 1L) },
+                    new ItemStack[] { getModItem(EternalSingularity.ID, "eternal_singularity", 1L) },
                     new FluidStack[] { GT_Values.NF },
                     // Recipe stats.
                     100 * 20,
                     (int) TierEU.RECIPE_UMV);
 
+            if (UniversalSingularities.isModLoaded())
             // Raw Exposed Optical Chip
             addElectricImplosionRecipe(
                     // IN.
                     new ItemStack[] { ItemList.Circuit_Silicon_Wafer7.get(1L),
                             // Fluxed Electrum Singularity.
-                            getModItem("universalsingularities", "universal.general.singularity", 1L, 20) },
+                            getModItem(UniversalSingularities.ID, "universal.general.singularity", 1L, 20) },
                     new FluidStack[] { GT_Values.NF },
                     // OUT.
                     new ItemStack[] { ItemList.Circuit_Chip_Optical.get(16L) },
@@ -66,10 +72,10 @@ public class ElectricImplosionCompressorRecipes implements Runnable {
 
         addElectricImplosionRecipe(
                 // IN.
-                new ItemStack[] { getModItem("GoodGenerator", "highDensityPlutoniumNugget", 5L) },
+                new ItemStack[] { getModItem(GoodGenerator.ID, "highDensityPlutoniumNugget", 5L) },
                 new FluidStack[] { Materials.Infinity.getMolten(9L) },
                 // OUT.
-                new ItemStack[] { getModItem("GoodGenerator", "highDensityPlutonium", 1L) },
+                new ItemStack[] { getModItem(GoodGenerator.ID, "highDensityPlutonium", 1L) },
                 new FluidStack[] { GT_Values.NF },
                 // Recipe stats.
                 1,
@@ -77,10 +83,10 @@ public class ElectricImplosionCompressorRecipes implements Runnable {
 
         addElectricImplosionRecipe(
                 // IN.
-                new ItemStack[] { getModItem("GoodGenerator", "highDensityUraniumNugget", 5L) },
+                new ItemStack[] { getModItem(GoodGenerator.ID, "highDensityUraniumNugget", 5L) },
                 new FluidStack[] { Materials.Infinity.getMolten(9L) },
                 // OUT.
-                new ItemStack[] { getModItem("GoodGenerator", "highDensityUranium", 1L) },
+                new ItemStack[] { getModItem(GoodGenerator.ID, "highDensityUranium", 1L) },
                 new FluidStack[] { GT_Values.NF },
                 // Recipe stats.
                 1,
@@ -88,10 +94,10 @@ public class ElectricImplosionCompressorRecipes implements Runnable {
 
         addElectricImplosionRecipe(
                 // IN.
-                new ItemStack[] { getModItem("GoodGenerator", "highDensityThoriumNugget", 5L) },
+                new ItemStack[] { getModItem(GoodGenerator.ID, "highDensityThoriumNugget", 5L) },
                 new FluidStack[] { Materials.Infinity.getMolten(9L) },
                 // OUT.
-                new ItemStack[] { getModItem("GoodGenerator", "highDensityThorium", 1L) },
+                new ItemStack[] { getModItem(GoodGenerator.ID, "highDensityThorium", 1L) },
                 new FluidStack[] { GT_Values.NF },
                 // Recipe stats.
                 1,
@@ -145,8 +151,8 @@ public class ElectricImplosionCompressorRecipes implements Runnable {
         for (ItemStack circuit : circuits) {
             addElectricImplosionRecipe(
                     new ItemStack[] { circuit.splitStack(circuitMultiplier),
-                            getModItem("supersolarpanel", "solarsplitter", 1, 0),
-                            getModItem("OpenComputers", "hologram2", circuitMultiplier, 0),
+                            getModItem(SuperSolarPanels.ID, "solarsplitter", 1, 0),
+                            getModItem(OpenComputers.ID, "hologram2", circuitMultiplier, 0),
                             GT_OreDictUnificator.get(part, Materials.Universium, multiplier), },
                     new FluidStack[] { Materials.MagnetohydrodynamicallyConstrainedStarMatter
                             .getMolten((long) partFraction * multiplier) },

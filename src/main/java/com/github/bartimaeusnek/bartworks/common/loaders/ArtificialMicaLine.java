@@ -190,7 +190,7 @@ public class ArtificialMicaLine {
             GT_Values.RA.addBenderRecipe(
                 WerkstoffLoader.Fluorophlogopite.get(OrePrefixes.plate, 1),
                 GT_Utility.getIntegratedCircuit(1),
-                GT_ModHandler.getModItem("dreamcraft", "item.MicaInsulatorFoil", 4),
+                GT_ModHandler.getModItem(NewHorizonsCoreMod.ID, "item.MicaInsulatorFoil", 4),
                 10,
                 600);
         }

@@ -232,11 +232,11 @@ public class MoltenCellLoader implements IWerkstoffRunnable {
         final FluidContainerRegistry.FluidContainerData emptyData = new FluidContainerRegistry.FluidContainerData(
                 new FluidStack(Objects.requireNonNull(WerkstoffLoader.molten.get(werkstoff)), 144),
                 werkstoff.get(capsuleMolten),
-                GT_ModHandler.getModItem("Forestry", "refractoryEmpty", 1));
+                GT_ModHandler.getModItem(Forestry.ID, "refractoryEmpty", 1));
         FluidContainerRegistry.registerFluidContainer(
                 werkstoff.getMolten(144),
                 werkstoff.get(capsuleMolten),
-                GT_ModHandler.getModItem("Forestry", "refractoryEmpty", 1));
+                GT_ModHandler.getModItem(Forestry.ID, "refractoryEmpty", 1));
         GT_Utility.addFluidContainerData(emptyData);
         GT_Values.RA.addFluidCannerRecipe(
                 werkstoff.get(capsuleMolten),

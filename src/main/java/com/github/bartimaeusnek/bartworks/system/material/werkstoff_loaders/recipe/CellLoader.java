@@ -189,7 +189,7 @@ public class CellLoader implements IWerkstoffRunnable {
             FluidContainerRegistry.FluidContainerData emptyData = new FluidContainerRegistry.FluidContainerData(
                     new FluidStack(Objects.requireNonNull(WerkstoffLoader.fluids.get(werkstoff)), 1000),
                     werkstoff.get(capsule),
-                    GT_ModHandler.getModItem("Forestry", "waxCapsule", 1),
+                    GT_ModHandler.getModItem(Forestry.ID, "waxCapsule", 1),
                     true);
             GT_Utility.addFluidContainerData(emptyData);
             FluidContainerRegistry.registerFluidContainer(emptyData);

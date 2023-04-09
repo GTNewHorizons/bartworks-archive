@@ -15,6 +15,7 @@ package com.github.bartimaeusnek.bartworks.system.material.GT_Enhancement;
 
 import static com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader.*;
 import static gregtech.api.enums.Mods.GTPlusPlus;
+import static gregtech.api.enums.Mods.NewHorizonsCoreMod;
 import static gregtech.api.enums.OrePrefixes.*;
 
 import java.lang.reflect.Field;
@@ -993,7 +994,7 @@ public class PlatinumSludgeOverHaul {
 
         if (GameRegistry.findUniqueIdentifierFor(stack.getItem()).modId.equals(BartWorksCrossmod.MOD_ID)) return true;
 
-        if (GameRegistry.findUniqueIdentifierFor(stack.getItem()).modId.equals("dreamcraft")
+        if (GameRegistry.findUniqueIdentifierFor(stack.getItem()).modId.equals(NewHorizonsCoreMod.ID)
                 && !stack.getUnlocalizedName().contains("dust")
                 && !stack.getUnlocalizedName().contains("Dust"))
             return true;

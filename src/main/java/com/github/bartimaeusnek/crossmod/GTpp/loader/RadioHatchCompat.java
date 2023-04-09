@@ -32,6 +32,8 @@ import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 
+import static gregtech.api.enums.Mods.GTPlusPlus;
+
 @SuppressWarnings({ "unchecked", "rawtypes", "unused" })
 public class RadioHatchCompat {
 
@@ -116,7 +118,7 @@ public class RadioHatchCompat {
             for (ModContainer container : Loader.instance().getModList()) {
                 if (gtpp != null && bartworks != null) break;
                 else if (container.getModId().equalsIgnoreCase(BartWorksCrossmod.MOD_ID)) bartworks = container;
-                else if (container.getModId().equalsIgnoreCase("miscutils")) gtpp = container;
+                else if (container.getModId().equalsIgnoreCase(GTPlusPlus.ID)) gtpp = container;
             }
 
             for (Object mats : (Set) RadioHatchCompat.materialClass.getField("mMaterialMap").get(null)) {

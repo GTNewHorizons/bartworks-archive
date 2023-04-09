@@ -23,7 +23,6 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-import com.github.bartimaeusnek.bartworks.API.LoaderReference;
 import com.github.bartimaeusnek.bartworks.common.configs.ConfigHandler;
 import com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_TileEntity_BioVat;
 import com.github.bartimaeusnek.bartworks.common.tileentities.tiered.GT_MetaTileEntity_BioLab;
@@ -41,6 +40,7 @@ import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
 
 import static gregtech.api.enums.Mods.CropsPlusPlus;
+import static gregtech.api.enums.Mods.CropsLoadCore;
 import static gregtech.api.enums.Mods.Gendustry;
 
 public class BioRecipeLoader {
@@ -98,7 +98,7 @@ public class BioRecipeLoader {
                         GT_OreDictUnificator.get(OrePrefixes.plate, Materials.Chrome, 1L), });
 
         List<ItemStack> oreCropVine = OreDictionary.getOres("cropVine", false);
-        if (LoaderReference.croploadcore && !oreCropVine.isEmpty()) for (ItemStack stack : oreCropVine) {
+        if (CropsLoadCore.isModLoaded() && !oreCropVine.isEmpty()) for (ItemStack stack : oreCropVine) {
             GT_Values.RA.addExtractorRecipe(
                     BW_Util.setStackSize(stack, 12),
                     BioItemList.getOther(1),

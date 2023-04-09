@@ -16,6 +16,7 @@ package com.github.bartimaeusnek.bartworks.common.loaders;
 import static com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_TileEntity_ElectricImplosionCompressor.eicMap;
 import static com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader.*;
 import static gregtech.api.enums.GT_Values.VN;
+import static gregtech.api.enums.Mods.TinkerConstruct;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -58,7 +59,7 @@ public class StaticRecipeChangeLoaders {
     private static TObjectDoubleHashMap<Materials> gtEbfGasRecipeConsumptionMultipliers = null;
 
     public static final List<ItemStack> whitelistForEBFNoGasRecipeDontCheckItemData = Arrays
-            .asList(GT_ModHandler.getModItem("TConstruct", "materials", 1L, 12) // Raw Aluminum -> Aluminium Ingot
+            .asList(GT_ModHandler.getModItem(TinkerConstruct.ID, "materials", 1L, 12) // Raw Aluminum -> Aluminium Ingot
                                                                                 // (coremod)
             );
 

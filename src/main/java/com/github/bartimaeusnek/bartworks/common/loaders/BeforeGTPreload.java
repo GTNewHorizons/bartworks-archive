@@ -33,6 +33,8 @@ import gregtech.api.enums.Materials;
 import gregtech.api.enums.SubTag;
 import ic2.core.Ic2Items;
 
+import static gregtech.api.enums.Mods.BartWorks;
+
 /**
  * This class gets injected into GT via ASM! DO NOT CALL IT YOURSELF!
  */
@@ -52,7 +54,7 @@ public class BeforeGTPreload implements Runnable {
         ModContainer gregtech = Loader.instance().activeModContainer();
         boolean switchback = false;
         LoadController modController = null;
-        if (!Loader.instance().activeModContainer().getModId().equals("bartworks")) {
+        if (!Loader.instance().activeModContainer().getModId().equals(BartWorks.ID)) {
             Field fieldModController = FieldUtils.getDeclaredField(Loader.class, "modController", true);
             try {
                 modController = (LoadController) fieldModController.get(Loader.instance());
@@ -63,7 +65,7 @@ public class BeforeGTPreload implements Runnable {
 
             assert modController != null;
             for (ModContainer mod : modController.getActiveModList()) {
-                if (mod.getModId().equals("bartworks")) {
+                if (mod.getModId().equals(BartWorks.ID)) {
                     bartworks = mod;
                 }
                 if (bartworks != null) break;

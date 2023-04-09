@@ -16,12 +16,14 @@ package com.github.bartimaeusnek.bartworks;
 import static com.github.bartimaeusnek.bartworks.common.loaders.BioRecipeLoader.runOnServerStarted;
 import static com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader.removeIC2Recipes;
 import static gregtech.api.enums.GT_Values.VN;
+import static gregtech.api.enums.Mods.BartWorks;
 import static gregtech.api.enums.Mods.GTPlusPlus;
 import static gregtech.api.enums.Mods.NewHorizonsCoreMod;
 
 import java.io.IOException;
 import java.util.Map;
 
+import gregtech.api.enums.Mods;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -76,12 +78,12 @@ public final class MainMod {
 
     public static final String NAME = "BartWorks";
     public static final String VERSION = "GRADLETOKEN_VERSION";
-    public static final String MOD_ID = "bartworks";
+    public static final String MOD_ID = Mods.Names.BART_WORKS;
     public static final String APIVERSION = "11";
     public static final Logger LOGGER = LogManager.getLogger(MainMod.NAME);
     public static final CreativeTabs GT2 = new GT2Tab("GT2C");
     public static final CreativeTabs BIO_TAB = new BioTab("BioTab");
-    public static final CreativeTabs BWT = new bartworksTab("bartworks");
+    public static final CreativeTabs BWT = new bartworksTab(BartWorks.ID);
     public static final IGuiHandler GH = new GuiHandler();
 
     @Mod.Instance(MainMod.MOD_ID)
@@ -99,8 +101,6 @@ public final class MainMod {
         if (!(API_REFERENCE.VERSION.equals(MainMod.APIVERSION))) {
             MainMod.LOGGER.error("Something has loaded an old API. Please contact the Mod authors to update!");
         }
-
-        LoaderReference.init(); // Check for ALL the mods.
 
         if (GTPlusPlus.isModLoaded()) {
             MainMod.LOGGER.info("Found GT++, continuing");

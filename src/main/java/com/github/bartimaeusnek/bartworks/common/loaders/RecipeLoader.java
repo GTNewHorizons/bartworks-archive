@@ -14,6 +14,9 @@
 package com.github.bartimaeusnek.bartworks.common.loaders;
 
 import static com.github.bartimaeusnek.bartworks.common.configs.ConfigHandler.newStuff;
+import static gregtech.api.enums.Mods.GalactiGreg;
+import static gregtech.api.enums.Mods.GregTech;
+import static gregtech.api.enums.Mods.IndustrialCraft2;
 import static gregtech.api.enums.Mods.TecTech;
 
 import net.minecraft.init.Blocks;
@@ -241,35 +244,35 @@ public class RecipeLoader {
                     BW_Util.getMachineVoltageFromTier(6));
 
             GT_Values.RA.addAssemblerRecipe(
-                    GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 1000),
+                    GT_ModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 1000),
                     GT_Utility.getIntegratedCircuit(17),
                     Materials.SolderingAlloy.getMolten(9216),
                     ItemRegistry.megaMachines[0],
                     72000,
                     BW_Util.getMachineVoltageFromTier(3));
             GT_Values.RA.addAssemblerRecipe(
-                    GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 1002),
+                    GT_ModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 1002),
                     GT_Utility.getIntegratedCircuit(17),
                     Materials.SolderingAlloy.getMolten(9216),
                     ItemRegistry.megaMachines[1],
                     72000,
                     BW_Util.getMachineVoltageFromTier(3));
             GT_Values.RA.addAssemblerRecipe(
-                    GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 1126),
+                    GT_ModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 1126),
                     GT_Utility.getIntegratedCircuit(17),
                     Materials.SolderingAlloy.getMolten(9216),
                     ItemRegistry.megaMachines[2],
                     72000,
                     BW_Util.getMachineVoltageFromTier(3));
             GT_Values.RA.addAssemblerRecipe(
-                    GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 1169),
+                    GT_ModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 1169),
                     GT_Utility.getIntegratedCircuit(17),
                     Materials.SolderingAlloy.getMolten(9216),
                     ItemRegistry.megaMachines[3],
                     72000,
                     BW_Util.getMachineVoltageFromTier(3));
             GT_Values.RA.addAssemblerRecipe(
-                    GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 1160),
+                    GT_ModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 1160),
                     GT_Utility.getIntegratedCircuit(17),
                     Materials.SolderingAlloy.getMolten(9216),
                     ItemRegistry.megaMachines[4],
@@ -620,11 +623,7 @@ public class RecipeLoader {
                     BW_Util.getMachineVoltageFromTier(3));
 
             GT_ModHandler.addCraftingRecipe(
-                    /*
-                     * Loader.isModLoaded("tectech") ? new TT_TileEntity_ManualTrafo(ConfigHandler.IDOffset +
-                     * GT_Values.VN.length * 6 + 1, "bw.manualtrafo",
-                     * StatCollector.translateToLocal("tile.manutrafo.name")).getStackForm(1L) :
-                     */ new GT_TileEntity_ManualTrafo(
+                     new GT_TileEntity_ManualTrafo(
                             ConfigHandler.IDOffset + GT_Values.VN.length * 6 + 1,
                             "bw.manualtrafo",
                             StatCollector.translateToLocal("tile.manutrafo.name")).getStackForm(1L),
@@ -769,15 +768,15 @@ public class RecipeLoader {
                     ItemRegistry.THTR,
                     RecipeLoader.BITSD,
                     new Object[] { "BZB", "BRB", "BZB", 'B', new ItemStack(GregTech_API.sBlockCasings3, 1, 12), 'R',
-                            GT_ModHandler.getModItem("IC2", "blockGenerator", 1, 5), 'Z', "circuitUltimate" });
+                            GT_ModHandler.getModItem(IndustrialCraft2.ID, "blockGenerator", 1, 5), 'Z', "circuitUltimate" });
             GT_TileEntity_HTGR.HTGRMaterials.registerTHR_Recipes();
             GT_ModHandler.addCraftingRecipe(
                     ItemRegistry.HTGR,
                     RecipeLoader.BITSD,
                     new Object[] { "BZB", "BRB", "BZB", 'B', new ItemStack(GregTech_API.sBlockCasings8, 1, 5), 'R',
-                            GT_ModHandler.getModItem("IC2", "blockGenerator", 1, 5), 'Z', "circuitSuperconductor" });
+                            GT_ModHandler.getModItem(IndustrialCraft2.ID, "blockGenerator", 1, 5), 'Z', "circuitSuperconductor" });
 
-            if (LoaderReference.galacticgreg) {
+            if (GalactiGreg.isModLoaded()) {
                 GT_Values.RA.addAssemblylineRecipe(
                         ItemList.OreDrill4.get(1L),
                         BW_Util.getMachineVoltageFromTier(6),
@@ -794,7 +793,7 @@ public class RecipeLoader {
             }
 
             if (!TecTech.isModLoaded()) {
-                if (LoaderReference.galacticgreg) {
+                if (GalactiGreg.isModLoaded()) {
                     GT_Values.RA.addAssemblylineRecipe(
                             ItemRegistry.voidminer[0].copy(),
                             BW_Util.getMachineVoltageFromTier(7),

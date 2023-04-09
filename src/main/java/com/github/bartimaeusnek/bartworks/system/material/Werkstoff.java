@@ -13,6 +13,7 @@
 
 package com.github.bartimaeusnek.bartworks.system.material;
 
+import static gregtech.api.enums.Mods.GalaxySpace;
 import static net.minecraft.util.EnumChatFormatting.DARK_PURPLE;
 import static net.minecraft.util.EnumChatFormatting.GREEN;
 
@@ -49,7 +50,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
     public static final Map<String, String> modNameOverrides = new HashMap() {
 
         {
-            put("GalaxySpace", DARK_PURPLE + "GalaxySpace");
+            put(GalaxySpace.ID, DARK_PURPLE + "GalaxySpace");
         }
     };
 

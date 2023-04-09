@@ -16,6 +16,7 @@ package com.github.bartimaeusnek.bartworks.common.loaders;
 import static com.github.bartimaeusnek.bartworks.MainMod.BWT;
 import static com.github.bartimaeusnek.bartworks.MainMod.GT2;
 import static com.github.bartimaeusnek.bartworks.common.configs.ConfigHandler.newStuff;
+import static gregtech.api.enums.Mods.GalactiGreg;
 import static gregtech.api.enums.Mods.TecTech;
 
 import net.minecraft.block.Block;
@@ -370,7 +371,7 @@ public class ItemRegistry {
                     "MegaOilCracker",
                     "Mega Oil Cracker").getStackForm(1L);
 
-            if (LoaderReference.galacticgreg) {
+            if (GalactiGreg.isModLoaded()) {
                 ItemRegistry.voidminer[2] = new GT_TileEntity_VoidMiners.VMUV(
                         ConfigHandler.IDOffset + GT_Values.VN.length * 8 + 11,
                         "VoidMiner3",

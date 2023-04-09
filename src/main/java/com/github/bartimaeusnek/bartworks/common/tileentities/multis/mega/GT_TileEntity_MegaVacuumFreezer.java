@@ -25,6 +25,7 @@ import static gregtech.api.util.GT_StructureUtility.buildHatchAdder;
 
 import java.util.ArrayList;
 
+import gregtech.api.enums.Mods;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -55,7 +56,7 @@ import gregtech.api.util.GT_Utility;
 
 @Optional.Interface(
         iface = "com.github.bartimaeusnek.crossmod.tectech.TecTechEnabledMulti",
-        modid = "tectech",
+        modid = Mods.Names.TECTECH,
         striprefs = true)
 public class GT_TileEntity_MegaVacuumFreezer extends GT_TileEntity_MegaMultiBlockBase<GT_TileEntity_MegaVacuumFreezer>
         implements ISurvivalConstructable {

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import gregtech.api.enums.Mods;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -38,7 +39,7 @@ import gregtech.api.util.IGT_HatchAdder;
 
 @Optional.Interface(
         iface = "com.github.bartimaeusnek.crossmod.tectech.TecTechEnabledMulti",
-        modid = "tectech",
+        modid = Mods.Names.TECTECH,
         striprefs = true)
 public abstract class GT_TileEntity_MegaMultiBlockBase<T extends GT_TileEntity_MegaMultiBlockBase<T>>
         extends GT_MetaTileEntity_EnhancedMultiBlockBase<T> implements TecTechEnabledMulti {
@@ -76,7 +77,7 @@ public abstract class GT_TileEntity_MegaMultiBlockBase<T extends GT_TileEntity_M
     }
 
     @SuppressWarnings("rawtypes")
-    @Optional.Method(modid = "tectech")
+    @Optional.Method(modid = Mods.Names.TECTECH)
     boolean areLazorsLowPowa() {
         Collection collection = this.getTecTechEnergyTunnels();
         if (!collection.isEmpty()) for (Object tecTechEnergyMulti : collection)
@@ -85,21 +86,21 @@ public abstract class GT_TileEntity_MegaMultiBlockBase<T extends GT_TileEntity_M
     }
 
     @Override
-    @Optional.Method(modid = "tectech")
+    @Optional.Method(modid = Mods.Names.TECTECH)
     public List<GT_MetaTileEntity_Hatch_Energy> getVanillaEnergyHatches() {
         return this.mEnergyHatches;
     }
 
     @Override
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    @Optional.Method(modid = "tectech")
+    @Optional.Method(modid = Mods.Names.TECTECH)
     public List getTecTechEnergyTunnels() {
         return TTTunnels;
     }
 
     @Override
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    @Optional.Method(modid = "tectech")
+    @Optional.Method(modid = Mods.Names.TECTECH)
     public List getTecTechEnergyMultis() {
         return TTMultiAmp;
     }

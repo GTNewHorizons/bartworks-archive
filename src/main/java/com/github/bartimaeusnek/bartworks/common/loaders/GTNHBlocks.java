@@ -97,7 +97,7 @@ public class GTNHBlocks {
         if (GalaxySpace.isModLoaded()){
             BioVatLogicAdder.BioVatGlass.addCustomGlass(GalaxySpace.ID, "futureglass", 0, 3);
             for (int i=0;i<16;i++){
-                BioVatLogicAdder.BioVatGlass.addCustomGlass("GalaxySpace", "futureglasses", i, 3);
+                BioVatLogicAdder.BioVatGlass.addCustomGlass(GalaxySpace.ID, "futureglasses", i, 3);
             }
         }
 

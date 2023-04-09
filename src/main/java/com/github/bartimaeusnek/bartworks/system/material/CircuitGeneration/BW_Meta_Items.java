@@ -126,8 +126,8 @@ public class BW_Meta_Items {
                 tooltip = Materials.Ultimate.getToolTip();
                 break;
             case 8:
-                additionalOreDictData = Materials.Superconductor.toString();
-                tooltip = Materials.Superconductor.getToolTip();
+                additionalOreDictData = Materials.SuperconductorUHV.toString();
+                tooltip = Materials.SuperconductorUHV.getToolTip();
                 break;
             case 9:
                 additionalOreDictData = "Infinite";

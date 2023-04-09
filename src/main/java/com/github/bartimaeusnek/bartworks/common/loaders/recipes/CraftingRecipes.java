@@ -120,7 +120,7 @@ public class CraftingRecipes implements Runnable {
                     new ItemStack(ItemRegistry.TESLASTAFF),
                     RecipeLoader.BITSD,
                     new Object[] { "BO ", "OP ", "  P", 'O',
-                            GT_OreDictUnificator.get(OrePrefixes.wireGt16, Materials.Superconductor, 1L), 'B',
+                            GT_OreDictUnificator.get(OrePrefixes.wireGt16, Materials.SuperconductorUHV, 1L), 'B',
                             ItemList.Energy_LapotronicOrb.get(1L), 'P', "plateAlloyIridium", });
         }
 
@@ -472,13 +472,13 @@ public class CraftingRecipes implements Runnable {
         ItemStack[] BioLab2 = new ItemStack[GT_Values.VN.length - 3];
         ItemStack[] RadioHatch2 = new ItemStack[GT_Values.VN.length - 3];
         Materials[] cables2 = { Materials.Gold, Materials.Aluminium, Materials.Tungsten, Materials.VanadiumGallium,
-                Materials.Naquadah, Materials.NaquadahAlloy, Materials.Superconductor };
+                Materials.Naquadah, Materials.NaquadahAlloy, Materials.SuperconductorUHV };
         Materials[] hulls2 = { Materials.StainlessSteel, Materials.Titanium, Materials.TungstenSteel, Materials.Chrome,
                 Materials.Iridium, Materials.Osmium, Materials.Naquadah };
         Materials[] wireMat2 = { Materials.Kanthal, Materials.Nichrome, Materials.TungstenSteel, Materials.Naquadah,
-                Materials.NaquadahAlloy, Materials.Superconductor };
+                Materials.NaquadahAlloy, Materials.SuperconductorUHV };
         Materials[] circuits2 = { Materials.Advanced, Materials.Data, Materials.Elite, Materials.Master,
-                Materials.Ultimate, Materials.Superconductor };
+                Materials.Ultimate, Materials.SuperconductorUHV };
 
         for (int i = 3; i < GT_Values.VN.length - 1; i++) {
             // 12625

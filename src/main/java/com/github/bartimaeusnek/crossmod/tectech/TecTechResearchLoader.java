@@ -82,7 +82,7 @@ public class TecTechResearchLoader {
                 new Object[] { ItemList.Machine_Multi_ImplosionCompressor.get(1L), Materials.Neutronium.getBlocks(5),
                         GT_OreDictUnificator.get(OrePrefixes.stickLong, Materials.Osmium, 64),
                         GT_OreDictUnificator.get(OrePrefixes.ring, Materials.Osmium, 64),
-                        GT_OreDictUnificator.get(OrePrefixes.wireGt01, Materials.Superconductor, 64),
+                        GT_OreDictUnificator.get(OrePrefixes.wireGt01, Materials.SuperconductorUHV, 64),
                         ItemList.Electric_Piston_UV.get(64), },
                 new FluidStack[] { new FluidStack(solderIndalloy, 1440), Materials.Osmium.getMolten(1440),
                         Materials.Neutronium.getMolten(1440) },

@@ -382,12 +382,6 @@ public class BWCoreTransformer implements IClassTransformer {
                     }
                 }
 
-                // case 6: {
-                // BWCore.BWCORE_LOG.info("Could find: " +
-                // BWCoreTransformer.CLASSESBEEINGTRANSFORMED[id]);
-                // ((IntInsnNode) methods.get(11).instructions.get(10)).operand = 10000;
-                // break scase;
-                // }
                 default: {
                     BWCore.BWCORE_LOG.info("Could not find: " + BWCoreTransformer.CLASSESBEEINGTRANSFORMED[id]);
                     return basicClass;

@@ -101,9 +101,6 @@ public class MoltenCellLoader implements IWerkstoffRunnable {
                     werkstoff.get(ingot),
                     (int) werkstoff.getStats().getMass(),
                     werkstoff.getStats().getMass() > 128 ? 64 : 30);
-            // GT_Values.RA.addFluidSolidifierRecipe(ItemList.Shape_Mold_Block.get(0), werkstoff.getMolten(144),
-            // werkstoff.get(block), (int) werkstoff.getStats().getMass(), werkstoff.getStats().getMass() > 128 ? 64 :
-            // 30);
             GT_Values.RA.addFluidSolidifierRecipe(
                     ItemList.Shape_Mold_Nugget.get(0),
                     werkstoff.getMolten(16),

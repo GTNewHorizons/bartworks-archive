@@ -30,7 +30,6 @@ import com.github.bartimaeusnek.bartworks.MainMod;
 import com.github.bartimaeusnek.crossmod.GTpp.loader.RadioHatchCompat;
 import com.github.bartimaeusnek.crossmod.galacticraft.GalacticraftProxy;
 import com.github.bartimaeusnek.crossmod.tectech.TecTechResearchLoader;
-import com.github.bartimaeusnek.crossmod.thaumcraft.CustomAspects;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -64,10 +63,6 @@ public class BartWorksCrossmod {
     public void preInit(FMLPreInitializationEvent preinit) {
         if (GalacticraftCore.isModLoaded()) {
             GalacticraftProxy.preInit(preinit);
-        }
-
-        if (Thaumcraft.isModLoaded()) {
-            new CustomAspects();
         }
     }
 

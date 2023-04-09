@@ -384,8 +384,6 @@ public class DustLoader implements IWerkstoffRunnable {
                                         null,
                                         (int) Math.max(werkstoff.getStats().getMass() / 40L, 1L)
                                                 * werkstoff.getStats().getMeltingPoint());
-                                // GT_ModHandler.addRCBlastFurnaceRecipe(werkstoff.get(ingot), werkstoff.get(dust),
-                                // werkstoff.getStats().getMeltingPoint());
                             }
                         }
                     }

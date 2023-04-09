@@ -120,17 +120,10 @@ public class BridgeMaterialsLoader implements IWerkstoffRunnable {
                                 break;
                             }
                         }
-                        if (!ElementSet) continue;
-                        // try {
-                        // Field f = Materials.class.getDeclaredField("MATERIALS_MAP");
-                        // f.setAccessible(true);
-                        // Map<String, Materials> MATERIALS_MAP = (Map<String,
-                        // Materials>) f.get(null);
-                        // MATERIALS_MAP.remove(werkstoffBridgeMaterial.mName);
-                        // } catch (NoSuchFieldException | IllegalAccessException |
-                        // ClassCastException e) {
-                        // e.printStackTrace();
-                        // }
+                        if (!ElementSet) {
+                            continue;
+                        }
+
                         if (werkstoff.hasItemType(dust)) {
                             ItemStack scannerOutput = ItemList.Tool_DataOrb.get(1L);
                             Behaviour_DataOrb.setDataTitle(scannerOutput, "Elemental-Scan");
@@ -148,11 +141,6 @@ public class BridgeMaterialsLoader implements IWerkstoffRunnable {
                                             (int) (werkstoffBridgeMaterial.getMass() * 8192L),
                                             30,
                                             0));
-                            // GT_Recipe.GT_Recipe_Map.sReplicatorFakeRecipes.addFakeRecipe(false, new
-                            // BWRecipes.DynamicGTRecipe(false, null, new ItemStack[]{werkstoff.get(prefixes)},
-                            // scannerOutput, null, new
-                            // FluidStack[]{Materials.UUMatter.getFluid(werkstoffBridgeMaterial.getMass())}, null, (int)
-                            // (werkstoffBridgeMaterial.getMass() * 512L), 30, 0));
                         }
                     }
                 }

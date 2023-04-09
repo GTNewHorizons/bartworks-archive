@@ -398,8 +398,6 @@ public class AdditionalRecipes {
                 BW_Util.getMachineVoltageFromTier(5));
 
         // Milk
-        // GT_Values.RA.addFusionReactorRecipe(WerkstoffLoader.Californium.getMolten(16),
-        // Materials.Milk.getFluid(12000), WerkstoffLoader.Oganesson.getFluidOrGas(16), 500, 49152, 600000000);
         GT_Values.RA.addCentrifugeRecipe(
                 GT_Utility.getIntegratedCircuit(1),
                 GT_Values.NI,

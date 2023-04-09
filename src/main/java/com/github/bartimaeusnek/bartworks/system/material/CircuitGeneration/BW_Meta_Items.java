@@ -219,8 +219,6 @@ public class BW_Meta_Items {
                             2,
                             aIconRegister.registerIcon(MainMod.MOD_ID + ":WrapOverlay"),
                             this.mIconList);
-                    // aIconRegister.registerIcon("gregtech:" + (GT_Config.troll ? "troll" : this.getUnlocalizedName() +
-                    // "/" + i));
                 }
             }
         }

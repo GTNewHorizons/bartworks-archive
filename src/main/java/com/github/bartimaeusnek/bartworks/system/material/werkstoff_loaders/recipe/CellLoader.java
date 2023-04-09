@@ -246,14 +246,7 @@ public class CellLoader implements IWerkstoffRunnable {
             if (!ElementSet) return;
 
             GT_OreDictUnificator.addAssociation(cell, werkstoffBridgeMaterial, werkstoff.get(cell), false);
-            // try {
-            // Field f = Materials.class.getDeclaredField("MATERIALS_MAP");
-            // f.setAccessible(true);
-            // Map<String, Materials> MATERIALS_MAP = (Map<String, Materials>) f.get(null);
-            // MATERIALS_MAP.remove(werkstoffBridgeMaterial.mName);
-            // } catch (NoSuchFieldException | IllegalAccessException | ClassCastException e) {
-            // e.printStackTrace();
-            // }
+
             ItemStack scannerOutput = ItemList.Tool_DataOrb.get(1L);
             Behaviour_DataOrb.setDataTitle(scannerOutput, "Elemental-Scan");
             Behaviour_DataOrb.setDataName(scannerOutput, werkstoff.getToolTip());
@@ -270,10 +263,6 @@ public class CellLoader implements IWerkstoffRunnable {
                             (int) (werkstoffBridgeMaterial.getMass() * 8192L),
                             30,
                             0));
-            // GT_Recipe.GT_Recipe_Map.sReplicatorFakeRecipes.addFakeRecipe(false, new BWRecipes.DynamicGTRecipe(false,
-            // new ItemStack[]{Materials.Empty.getCells(1)}, new ItemStack[]{werkstoff.get(cell)}, scannerOutput, null,
-            // new FluidStack[]{Materials.UUMatter.getFluid(werkstoffBridgeMaterial.getMass())}, null, (int)
-            // (werkstoffBridgeMaterial.getMass() * 512L), 30, 0));
         }
     }
 }

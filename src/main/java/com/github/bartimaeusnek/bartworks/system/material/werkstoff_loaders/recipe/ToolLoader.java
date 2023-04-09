@@ -574,10 +574,5 @@ public class ToolLoader implements IWerkstoffRunnable {
                         ItemList.Electric_Motor_HV.get(1L), 'S', screw.get(Materials.StainlessSteel), 'P',
                         plate.get(Materials.StainlessSteel), 'G', gearGtSmall.get(Materials.StainlessSteel), 'B',
                         ItemList.Battery_RE_HV_Sodium.get(1L) });
-
-        // GT_ModHandler.addCraftingRecipe(GT_MetaGenerated_Tool_01.INSTANCE.getToolWithStats(16,1,
-        // werkstoff.getBridgeMaterial(),werkstoff.getBridgeMaterial(),null),
-        // GT_ModHandler.RecipeBits.DO_NOT_CHECK_FOR_COLLISIONS | GT_ModHandler.RecipeBits.BUFFERED, new Object[]{"IhI",
-        // "III", " I ", 'I', werkstoff.get(ingot)});
     }
 }

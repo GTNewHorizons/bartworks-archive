@@ -30,7 +30,6 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 
-
 import com.github.bartimaeusnek.bartworks.MainMod;
 import com.github.bartimaeusnek.bartworks.system.material.BW_MetaGenerated_Items;
 import com.github.bartimaeusnek.bartworks.system.material.Werkstoff;

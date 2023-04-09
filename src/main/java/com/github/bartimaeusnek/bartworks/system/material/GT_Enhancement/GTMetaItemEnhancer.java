@@ -13,6 +13,8 @@
 
 package com.github.bartimaeusnek.bartworks.system.material.GT_Enhancement;
 
+import static gregtech.api.enums.Mods.Forestry;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,8 +31,6 @@ import gregtech.api.enums.OrePrefixes;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Utility;
-
-import static gregtech.api.enums.Mods.Forestry;
 
 public class GTMetaItemEnhancer {
 

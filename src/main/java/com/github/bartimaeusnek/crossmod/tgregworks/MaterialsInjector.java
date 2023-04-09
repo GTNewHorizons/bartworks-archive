@@ -1,5 +1,7 @@
 package com.github.bartimaeusnek.crossmod.tgregworks;
 
+import static gregtech.api.enums.Mods.TinkersGregworks;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -14,7 +16,6 @@ import vexatos.tgregworks.integration.TGregRegistry;
 import vexatos.tgregworks.item.ItemTGregPart;
 import vexatos.tgregworks.reference.Config;
 
-
 import com.github.bartimaeusnek.bartworks.MainMod;
 import com.github.bartimaeusnek.bartworks.system.material.Werkstoff;
 
@@ -23,8 +24,6 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
-
-import static gregtech.api.enums.Mods.TinkersGregworks;
 
 @Mod(
         modid = MaterialsInjector.MOD_ID,

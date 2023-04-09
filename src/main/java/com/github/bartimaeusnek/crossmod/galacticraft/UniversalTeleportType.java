@@ -13,6 +13,8 @@
 
 package com.github.bartimaeusnek.crossmod.galacticraft;
 
+import static gregtech.api.enums.Mods.GalacticraftMars;
+
 import java.util.Random;
 
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
@@ -25,10 +27,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-
-
-
-import static gregtech.api.enums.Mods.GalacticraftMars;
 
 public class UniversalTeleportType implements ITeleportType {
 

@@ -13,12 +13,13 @@
 
 package com.github.bartimaeusnek.bartworks.common.tileentities.tiered;
 
+import static gregtech.api.enums.Mods.Gendustry;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-
 
 import com.github.bartimaeusnek.bartworks.common.items.LabModule;
 import com.github.bartimaeusnek.bartworks.common.items.LabParts;
@@ -41,8 +42,6 @@ import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
 import gregtech.common.items.behaviors.Behaviour_DataOrb;
-
-import static gregtech.api.enums.Mods.Gendustry;
 
 public class GT_MetaTileEntity_BioLab extends GT_MetaTileEntity_BasicMachine {
 

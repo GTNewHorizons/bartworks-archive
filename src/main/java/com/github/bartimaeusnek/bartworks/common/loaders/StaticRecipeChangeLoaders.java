@@ -60,7 +60,7 @@ public class StaticRecipeChangeLoaders {
 
     public static final List<ItemStack> whitelistForEBFNoGasRecipeDontCheckItemData = Arrays
             .asList(GT_ModHandler.getModItem(TinkerConstruct.ID, "materials", 1L, 12) // Raw Aluminum -> Aluminium Ingot
-                                                                                // (coremod)
+            // (coremod)
             );
 
     private StaticRecipeChangeLoaders() {}

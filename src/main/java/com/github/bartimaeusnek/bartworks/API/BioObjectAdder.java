@@ -13,6 +13,8 @@
 
 package com.github.bartimaeusnek.bartworks.API;
 
+import static gregtech.api.enums.Mods.Gendustry;
+
 import java.awt.*;
 
 import net.minecraft.item.EnumRarity;
@@ -28,8 +30,6 @@ import gregtech.api.enums.GT_Values;
 import gregtech.api.enums.Materials;
 import gregtech.api.objects.GT_Fluid;
 import gregtech.api.util.GT_Utility;
-
-import static gregtech.api.enums.Mods.Gendustry;
 
 @SuppressWarnings("ALL")
 public final class BioObjectAdder {

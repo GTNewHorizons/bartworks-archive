@@ -13,6 +13,8 @@
 
 package com.github.bartimaeusnek.crossmod.GTpp.loader;
 
+import static gregtech.api.enums.Mods.GTPlusPlus;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -31,8 +33,6 @@ import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
-
-import static gregtech.api.enums.Mods.GTPlusPlus;
 
 @SuppressWarnings({ "unchecked", "rawtypes", "unused" })
 public class RadioHatchCompat {

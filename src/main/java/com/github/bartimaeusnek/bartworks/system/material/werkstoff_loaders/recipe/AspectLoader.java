@@ -13,8 +13,9 @@
 
 package com.github.bartimaeusnek.bartworks.system.material.werkstoff_loaders.recipe;
 
-import java.util.Objects;
+import static gregtech.api.enums.Mods.Thaumcraft;
 
+import java.util.Objects;
 
 import com.github.bartimaeusnek.bartworks.system.material.Werkstoff;
 import com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader;
@@ -25,8 +26,6 @@ import com.github.bartimaeusnek.crossmod.thaumcraft.util.ThaumcraftHandler;
 
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TC_Aspects;
-
-import static gregtech.api.enums.Mods.Thaumcraft;
 
 public class AspectLoader implements IWerkstoffRunnable {
 

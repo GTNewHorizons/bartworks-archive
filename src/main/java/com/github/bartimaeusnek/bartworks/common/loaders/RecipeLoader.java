@@ -74,40 +74,26 @@ public class RecipeLoader {
                 100,
                 BW_Util.getMachineVoltageFromTier(3));
 
-
-
         GT_ModHandler.addCraftingRecipe(
                 new GT_TileEntity_LESU(ConfigHandler.IDOffset, "LESU", "L.E.S.U.").getStackForm(1L),
                 RecipeLoader.BITSD,
-                new Object[] { "CDC", "SBS", "CFC", 'C', "circuitAdvanced",
-                        'D', ItemList.Cover_Screen.get(1L), 'S',
-                        GT_OreDictUnificator.get(
-                                OrePrefixes.cableGt12,
-                                Materials.Platinum,
-                                1L),
-                        'B', new ItemStack(ItemRegistry.BW_BLOCKS[1]), 'F',
-                        ItemList.Field_Generator_HV.get(1L)
-                });
+                new Object[] { "CDC", "SBS", "CFC", 'C', "circuitAdvanced", 'D', ItemList.Cover_Screen.get(1L), 'S',
+                        GT_OreDictUnificator.get(OrePrefixes.cableGt12, Materials.Platinum, 1L), 'B',
+                        new ItemStack(ItemRegistry.BW_BLOCKS[1]), 'F', ItemList.Field_Generator_HV.get(1L) });
 
         GT_ModHandler.addCraftingRecipe(
                 new ItemStack(ItemRegistry.DESTRUCTOPACK),
                 GT_ModHandler.RecipeBits.NOT_REMOVABLE,
                 new Object[] { "CPC", "PLP", "CPC", 'C', "circuitAdvanced", 'P',
-                        GT_OreDictUnificator.get(
-                                OrePrefixes.plateDouble,
-                                Materials.Aluminium,
-                                1L),
-                        'L', new ItemStack(Items.lava_bucket) });
+                        GT_OreDictUnificator.get(OrePrefixes.plateDouble, Materials.Aluminium, 1L), 'L',
+                        new ItemStack(Items.lava_bucket) });
 
         GT_ModHandler.addCraftingRecipe(
                 new ItemStack(ItemRegistry.DESTRUCTOPACK),
                 GT_ModHandler.RecipeBits.NOT_REMOVABLE,
                 new Object[] { "CPC", "PLP", "CPC", 'C', "circuitAdvanced", 'P',
-                        GT_OreDictUnificator.get(
-                                OrePrefixes.plateDouble,
-                                Materials.Steel,
-                                1L),
-                        'L', new ItemStack(Items.lava_bucket) });
+                        GT_OreDictUnificator.get(OrePrefixes.plateDouble, Materials.Steel, 1L), 'L',
+                        new ItemStack(Items.lava_bucket) });
 
         GT_ModHandler.addCraftingRecipe(
                 new ItemStack(ItemRegistry.ROCKCUTTER_MV),
@@ -563,7 +549,7 @@ public class RecipeLoader {
                     BW_Util.getMachineVoltageFromTier(3));
 
             GT_ModHandler.addCraftingRecipe(
-                     new GT_TileEntity_ManualTrafo(
+                    new GT_TileEntity_ManualTrafo(
                             ConfigHandler.IDOffset + GT_Values.VN.length * 6 + 1,
                             "bw.manualtrafo",
                             StatCollector.translateToLocal("tile.manutrafo.name")).getStackForm(1L),
@@ -708,13 +694,15 @@ public class RecipeLoader {
                     ItemRegistry.THTR,
                     RecipeLoader.BITSD,
                     new Object[] { "BZB", "BRB", "BZB", 'B', new ItemStack(GregTech_API.sBlockCasings3, 1, 12), 'R',
-                            GT_ModHandler.getModItem(IndustrialCraft2.ID, "blockGenerator", 1, 5), 'Z', "circuitUltimate" });
+                            GT_ModHandler.getModItem(IndustrialCraft2.ID, "blockGenerator", 1, 5), 'Z',
+                            "circuitUltimate" });
             GT_TileEntity_HTGR.HTGRMaterials.registerTHR_Recipes();
             GT_ModHandler.addCraftingRecipe(
                     ItemRegistry.HTGR,
                     RecipeLoader.BITSD,
                     new Object[] { "BZB", "BRB", "BZB", 'B', new ItemStack(GregTech_API.sBlockCasings8, 1, 5), 'R',
-                            GT_ModHandler.getModItem(IndustrialCraft2.ID, "blockGenerator", 1, 5), 'Z', "circuitSuperconductor" });
+                            GT_ModHandler.getModItem(IndustrialCraft2.ID, "blockGenerator", 1, 5), 'Z',
+                            "circuitSuperconductor" });
 
             if (GalactiGreg.isModLoaded()) {
                 GT_Values.RA.addAssemblylineRecipe(

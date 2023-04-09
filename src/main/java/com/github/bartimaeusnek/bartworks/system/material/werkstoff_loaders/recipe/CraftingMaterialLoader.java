@@ -17,7 +17,6 @@ import static gregtech.api.enums.OrePrefixes.*;
 
 import net.minecraft.item.ItemStack;
 
-import com.github.bartimaeusnek.bartworks.common.configs.ConfigHandler;
 import com.github.bartimaeusnek.bartworks.system.material.Werkstoff;
 import com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader;
 import com.github.bartimaeusnek.bartworks.system.material.werkstoff_loaders.IWerkstoffRunnable;
@@ -129,10 +128,9 @@ public class CraftingMaterialLoader implements IWerkstoffRunnable {
                     8 * tVoltageMultiplier);
 
             GT_ModHandler.addCraftingRecipe(
-                werkstoff.get(gearGtSmall),
-                GT_Proxy.tBits,
-                new Object[] { " S ", "hPx", " S ", 'S', werkstoff.get(stick), 'P', werkstoff.get(plate) });
-
+                    werkstoff.get(gearGtSmall),
+                    GT_Proxy.tBits,
+                    new Object[] { " S ", "hPx", " S ", 'S', werkstoff.get(stick), 'P', werkstoff.get(plate) });
 
             // Rotor
             GT_ModHandler.addCraftingRecipe(

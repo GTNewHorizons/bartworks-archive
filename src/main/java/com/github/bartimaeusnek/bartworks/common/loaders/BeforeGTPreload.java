@@ -13,6 +13,8 @@
 
 package com.github.bartimaeusnek.bartworks.common.loaders;
 
+import static gregtech.api.enums.Mods.BartWorks;
+
 import java.lang.reflect.Field;
 
 import net.minecraft.block.Block;
@@ -32,8 +34,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.SubTag;
 import ic2.core.Ic2Items;
-
-import static gregtech.api.enums.Mods.BartWorks;
 
 /**
  * This class gets injected into GT via ASM! DO NOT CALL IT YOURSELF!

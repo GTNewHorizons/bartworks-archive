@@ -1,5 +1,7 @@
 package com.github.bartimaeusnek.bartworks.common.loaders;
 
+import static gregtech.api.enums.Mods.IndustrialCraft2;
+
 import com.github.bartimaeusnek.bartworks.system.material.BW_NonMeta_MaterialItems;
 import com.github.bartimaeusnek.bartworks.system.material.Werkstoff;
 import com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader;
@@ -10,8 +12,6 @@ import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_OreDictUnificator;
-
-import static gregtech.api.enums.Mods.IndustrialCraft2;
 
 public class RadioHatchMaterialLoader {
 

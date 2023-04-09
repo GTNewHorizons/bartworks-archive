@@ -13,6 +13,11 @@
 
 package com.github.bartimaeusnek.crossmod;
 
+import static gregtech.api.enums.Mods.GTPlusPlus;
+import static gregtech.api.enums.Mods.GalacticraftCore;
+import static gregtech.api.enums.Mods.TecTech;
+import static gregtech.api.enums.Mods.Thaumcraft;
+
 import java.io.StringReader;
 
 import net.minecraft.util.StringTranslate;
@@ -20,7 +25,6 @@ import net.minecraft.util.StringTranslate;
 import org.apache.commons.io.input.ReaderInputStream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 
 import com.github.bartimaeusnek.bartworks.MainMod;
 import com.github.bartimaeusnek.crossmod.GTpp.loader.RadioHatchCompat;
@@ -33,11 +37,6 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-
-import static gregtech.api.enums.Mods.GTPlusPlus;
-import static gregtech.api.enums.Mods.GalacticraftCore;
-import static gregtech.api.enums.Mods.TecTech;
-import static gregtech.api.enums.Mods.Thaumcraft;
 
 @Mod(
         modid = BartWorksCrossmod.MOD_ID,

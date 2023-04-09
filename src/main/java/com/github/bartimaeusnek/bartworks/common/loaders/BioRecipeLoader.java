@@ -13,6 +13,10 @@
 
 package com.github.bartimaeusnek.bartworks.common.loaders;
 
+import static gregtech.api.enums.Mods.CropLoadCore;
+import static gregtech.api.enums.Mods.CropsPlusPlus;
+import static gregtech.api.enums.Mods.Gendustry;
+
 import java.util.List;
 
 import net.minecraft.init.Blocks;
@@ -38,10 +42,6 @@ import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
-
-import static gregtech.api.enums.Mods.CropsPlusPlus;
-import static gregtech.api.enums.Mods.CropLoadCore;
-import static gregtech.api.enums.Mods.Gendustry;
 
 public class BioRecipeLoader {
 

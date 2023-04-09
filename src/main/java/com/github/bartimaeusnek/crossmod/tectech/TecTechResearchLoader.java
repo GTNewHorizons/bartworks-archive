@@ -13,10 +13,11 @@
 
 package com.github.bartimaeusnek.crossmod.tectech;
 
+import static gregtech.api.enums.Mods.GalactiGreg;
+
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-
 
 import com.github.bartimaeusnek.bartworks.common.loaders.ItemRegistry;
 import com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader;
@@ -27,8 +28,6 @@ import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.util.GT_OreDictUnificator;
-
-import static gregtech.api.enums.Mods.GalactiGreg;
 
 public class TecTechResearchLoader {
 

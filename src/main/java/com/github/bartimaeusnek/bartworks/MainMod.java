@@ -18,12 +18,10 @@ import static com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader
 import static gregtech.api.enums.GT_Values.VN;
 import static gregtech.api.enums.Mods.BartWorks;
 import static gregtech.api.enums.Mods.GTPlusPlus;
-import static gregtech.api.enums.Mods.NewHorizonsCoreMod;
 
 import java.io.IOException;
 import java.util.Map;
 
-import gregtech.api.enums.Mods;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -57,6 +55,7 @@ import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import gregtech.api.GregTech_API;
+import gregtech.api.enums.Mods;
 import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Recipe;
 

@@ -13,6 +13,8 @@
 
 package com.github.bartimaeusnek.bartworks.common.loaders;
 
+import static gregtech.api.enums.Mods.Gendustry;
+
 import java.awt.*;
 import java.util.Arrays;
 
@@ -22,7 +24,6 @@ import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-
 
 import com.github.bartimaeusnek.bartworks.API.SideReference;
 import com.github.bartimaeusnek.bartworks.client.renderer.RendererGlasBlock;
@@ -39,8 +40,6 @@ import gregtech.api.objects.GT_Fluid;
 import gregtech.api.util.GT_LanguageManager;
 import gregtech.api.util.GT_Utility;
 import gregtech.common.items.GT_MetaGenerated_Item_98;
-
-import static gregtech.api.enums.Mods.Gendustry;
 
 public class FluidLoader {
 

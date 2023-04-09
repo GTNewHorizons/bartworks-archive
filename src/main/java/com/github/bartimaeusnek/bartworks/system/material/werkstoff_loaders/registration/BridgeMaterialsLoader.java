@@ -20,7 +20,6 @@ import java.util.ArrayList;
 
 import net.minecraft.item.ItemStack;
 
-
 import com.github.bartimaeusnek.bartworks.system.material.Werkstoff;
 import com.github.bartimaeusnek.bartworks.system.material.werkstoff_loaders.IWerkstoffRunnable;
 import com.github.bartimaeusnek.bartworks.util.BWRecipes;

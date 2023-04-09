@@ -40,7 +40,7 @@ import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
 
 import static gregtech.api.enums.Mods.CropsPlusPlus;
-import static gregtech.api.enums.Mods.CropsLoadCore;
+import static gregtech.api.enums.Mods.CropLoadCore;
 import static gregtech.api.enums.Mods.Gendustry;
 
 public class BioRecipeLoader {
@@ -98,7 +98,7 @@ public class BioRecipeLoader {
                         GT_OreDictUnificator.get(OrePrefixes.plate, Materials.Chrome, 1L), });
 
         List<ItemStack> oreCropVine = OreDictionary.getOres("cropVine", false);
-        if (CropsLoadCore.isModLoaded() && !oreCropVine.isEmpty()) for (ItemStack stack : oreCropVine) {
+        if (CropLoadCore.isModLoaded() && !oreCropVine.isEmpty()) for (ItemStack stack : oreCropVine) {
             GT_Values.RA.addExtractorRecipe(
                     BW_Util.setStackSize(stack, 12),
                     BioItemList.getOther(1),

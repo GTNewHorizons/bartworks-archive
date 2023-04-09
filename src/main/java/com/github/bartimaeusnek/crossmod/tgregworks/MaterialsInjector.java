@@ -14,7 +14,7 @@ import vexatos.tgregworks.integration.TGregRegistry;
 import vexatos.tgregworks.item.ItemTGregPart;
 import vexatos.tgregworks.reference.Config;
 
-import com.github.bartimaeusnek.bartworks.API.LoaderReference;
+
 import com.github.bartimaeusnek.bartworks.MainMod;
 import com.github.bartimaeusnek.bartworks.system.material.Werkstoff;
 

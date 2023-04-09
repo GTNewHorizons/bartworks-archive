@@ -23,7 +23,7 @@ import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 
 import net.minecraft.util.ResourceLocation;
 
-import com.github.bartimaeusnek.bartworks.API.LoaderReference;
+
 import com.github.bartimaeusnek.bartworks.common.configs.ConfigHandler;
 import com.github.bartimaeusnek.crossmod.BartWorksCrossmod;
 import com.github.bartimaeusnek.crossmod.galacticraft.UniversalTeleportType;

@@ -26,7 +26,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 
-import com.github.bartimaeusnek.bartworks.API.LoaderReference;
+
 
 import static gregtech.api.enums.Mods.GalacticraftMars;
 

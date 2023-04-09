@@ -14,7 +14,7 @@
 package com.github.bartimaeusnek.bartworks.common.loaders;
 
 import com.github.bartimaeusnek.bartworks.API.BioVatLogicAdder;
-import com.github.bartimaeusnek.bartworks.API.LoaderReference;
+
 
 import java.util.Random;
 

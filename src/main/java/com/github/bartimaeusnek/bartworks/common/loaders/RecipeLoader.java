@@ -28,7 +28,6 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-import com.github.bartimaeusnek.bartworks.API.LoaderReference;
 import com.github.bartimaeusnek.bartworks.common.configs.ConfigHandler;
 import com.github.bartimaeusnek.bartworks.common.tileentities.multis.*;
 import com.github.bartimaeusnek.bartworks.system.material.Werkstoff;
@@ -170,7 +169,7 @@ public class RecipeLoader {
                             GT_OreDictUnificator.get(OrePrefixes.pipeLarge, Materials.Wood, 1L), 'M',
                             new ItemStack(ItemRegistry.PUMPPARTS, 1, 1), 'S', Ic2Items.ironFurnace });
 
-            else GT_Values.RA.addAssemblylineRecipe(
+            GT_Values.RA.addAssemblylineRecipe(
                     ItemList.Pump_IV.get(1L),
                     72000,
                     new ItemStack[] { ItemList.Pump_IV.get(16),

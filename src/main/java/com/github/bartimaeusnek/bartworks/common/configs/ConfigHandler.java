@@ -134,11 +134,6 @@ public class ConfigHandler {
                 "Enable Teslastaff",
                 false,
                 "Enables the Teslastaff, an Item used to destroy Electric Armors").getBoolean(false);
-        ConfigHandler.newStuff = !ConfigHandler.c.get(
-                "System",
-                "Disable non-original-GT-stuff",
-                false,
-                "This switch disables my new content, that is not part of the GT2 compat").getBoolean(false);
         ConfigHandler.BioLab = !ConfigHandler.c.get(
                 "System",
                 "Disable BioLab",

@@ -13,44 +13,8 @@
 
 package com.github.bartimaeusnek.bartworks.common.loaders;
 
-import static com.github.bartimaeusnek.bartworks.common.configs.ConfigHandler.newStuff;
-import static gregtech.api.enums.Mods.GalactiGreg;
-import static gregtech.api.enums.Mods.GregTech;
-import static gregtech.api.enums.Mods.IndustrialCraft2;
-import static gregtech.api.enums.Mods.TecTech;
-
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.oredict.OreDictionary;
-
-import com.github.bartimaeusnek.bartworks.common.configs.ConfigHandler;
 import com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_TileEntity_HTGR;
-import com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_TileEntity_LESU;
-import com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_TileEntity_ManualTrafo;
-import com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_TileEntity_THTR;
-import com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_TileEntity_Windmill;
-import com.github.bartimaeusnek.bartworks.system.material.Werkstoff;
-import com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader;
-import com.github.bartimaeusnek.bartworks.util.BWRecipes;
-import com.github.bartimaeusnek.bartworks.util.BW_Util;
-
-import gregtech.api.GregTech_API;
-import gregtech.api.enums.Dyes;
-import gregtech.api.enums.GT_Values;
-import gregtech.api.enums.ItemList;
-import gregtech.api.enums.Materials;
-import gregtech.api.enums.OrePrefixes;
-import gregtech.api.interfaces.ISubTagContainer;
 import gregtech.api.util.GT_ModHandler;
-import gregtech.api.util.GT_OreDictUnificator;
-import gregtech.api.util.GT_Recipe;
-import gregtech.api.util.GT_Utility;
-import ic2.core.Ic2Items;
 
 public class RecipeLoader {
 
@@ -59,8 +23,8 @@ public class RecipeLoader {
 
     @SuppressWarnings("deprecation")
     public static void run() {
-        if (newStuff) {
-            GT_TileEntity_HTGR.HTGRMaterials.registerTHR_Recipes();
-        }
+
+        GT_TileEntity_HTGR.HTGRMaterials.registerTHR_Recipes();
+
     }
 }

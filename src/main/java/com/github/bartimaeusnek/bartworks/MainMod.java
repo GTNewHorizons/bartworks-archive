@@ -132,19 +132,18 @@ public final class MainMod {
             }
         }
 
-        if (ConfigHandler.newStuff) {
-            WerkstoffLoader.setUp();
-        }
+        WerkstoffLoader.setUp();
 
         if (ConfigHandler.BioLab) {
             BioCultureLoader.run();
         }
 
-        if (ConfigHandler.newStuff) {
-            Werkstoff.init();
-            GregTech_API.sAfterGTPostload.add(new CircuitPartLoader());
-            if (SideReference.Side.Client) GregTech_API.sBeforeGTLoad.add(new PrefixTextureLinker());
+        Werkstoff.init();
+        GregTech_API.sAfterGTPostload.add(new CircuitPartLoader());
+        if (SideReference.Side.Client) {
+            GregTech_API.sBeforeGTLoad.add(new PrefixTextureLinker());
         }
+
     }
 
     @Mod.EventHandler
@@ -156,10 +155,12 @@ public final class MainMod {
             MinecraftForge.EVENT_BUS.register(serverEventHandler);
         }
         FMLCommonHandler.instance().bus().register(serverEventHandler);
-        if (ConfigHandler.BioLab) BioLabLoader.run();
-        if (ConfigHandler.newStuff) {
-            WerkstoffLoader.runInit();
+        if (ConfigHandler.BioLab) {
+            BioLabLoader.run();
         }
+
+        WerkstoffLoader.runInit();
+
         ItemRegistry.run();
         RecipeLoader.run();
         IMCForNEI.IMCSender();
@@ -179,10 +180,10 @@ public final class MainMod {
         }
         ArtificialMicaLine.runArtificialMicaRecipe();
         BioObjectAdder.regenerateBioFluids();
-        if (ConfigHandler.newStuff) {
-            WerkstoffLoader.run();
-            LocalisationLoader.localiseAll();
-        }
+
+        WerkstoffLoader.run();
+        LocalisationLoader.localiseAll();
+
         RadioHatchMaterialLoader.run();
     }
 

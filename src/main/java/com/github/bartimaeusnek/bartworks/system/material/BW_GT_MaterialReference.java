@@ -12,7 +12,11 @@
  */
 package com.github.bartimaeusnek.bartworks.system.material;
 
-import static com.github.bartimaeusnek.bartworks.system.material.Werkstoff.Types.*;
+import static com.github.bartimaeusnek.bartworks.system.material.Werkstoff.Types.BIOLOGICAL;
+import static com.github.bartimaeusnek.bartworks.system.material.Werkstoff.Types.COMPOUND;
+import static com.github.bartimaeusnek.bartworks.system.material.Werkstoff.Types.ELEMENT;
+import static com.github.bartimaeusnek.bartworks.system.material.Werkstoff.Types.ISOTOPE;
+import static com.github.bartimaeusnek.bartworks.system.material.Werkstoff.Types.MIXTURE;
 
 import com.github.bartimaeusnek.bartworks.MainMod;
 import gregtech.api.enums.Materials;

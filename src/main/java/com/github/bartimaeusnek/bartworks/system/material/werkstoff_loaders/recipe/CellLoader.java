@@ -14,7 +14,9 @@
 package com.github.bartimaeusnek.bartworks.system.material.werkstoff_loaders.recipe;
 
 import static gregtech.api.enums.Mods.Forestry;
-import static gregtech.api.enums.OrePrefixes.*;
+import static gregtech.api.enums.OrePrefixes.capsule;
+import static gregtech.api.enums.OrePrefixes.cell;
+import static gregtech.api.enums.OrePrefixes.dust;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +33,11 @@ import com.github.bartimaeusnek.bartworks.system.material.werkstoff_loaders.IWer
 import com.github.bartimaeusnek.bartworks.util.BWRecipes;
 import com.github.bartimaeusnek.bartworks.util.Pair;
 
-import gregtech.api.enums.*;
+import gregtech.api.enums.Element;
+import gregtech.api.enums.GT_Values;
+import gregtech.api.enums.ItemList;
+import gregtech.api.enums.Materials;
+import gregtech.api.enums.TextureSet;
 import gregtech.api.interfaces.ISubTagContainer;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_OreDictUnificator;

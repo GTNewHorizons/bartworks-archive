@@ -14,7 +14,10 @@
 package com.github.bartimaeusnek.bartworks.system.material.werkstoff_loaders.registration;
 
 import static gregtech.api.enums.Mods.Thaumcraft;
-import static gregtech.api.enums.OrePrefixes.*;
+import static gregtech.api.enums.OrePrefixes.cell;
+import static gregtech.api.enums.OrePrefixes.cellMolten;
+import static gregtech.api.enums.OrePrefixes.dust;
+import static gregtech.api.enums.OrePrefixes.values;
 
 import java.util.ArrayList;
 
@@ -25,7 +28,11 @@ import com.github.bartimaeusnek.bartworks.system.material.werkstoff_loaders.IWer
 import com.github.bartimaeusnek.bartworks.util.BWRecipes;
 
 import gregtech.api.enchants.Enchantment_Radioactivity;
-import gregtech.api.enums.*;
+import gregtech.api.enums.Element;
+import gregtech.api.enums.ItemList;
+import gregtech.api.enums.Materials;
+import gregtech.api.enums.OrePrefixes;
+import gregtech.api.enums.SubTag;
 import gregtech.api.util.GT_LanguageManager;
 import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Recipe;

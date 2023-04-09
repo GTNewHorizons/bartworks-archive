@@ -26,7 +26,13 @@ import com.github.bartimaeusnek.bartworks.common.items.LabParts;
 import com.github.bartimaeusnek.bartworks.common.loaders.BioCultureLoader;
 import com.github.bartimaeusnek.bartworks.common.loaders.BioItemList;
 import com.github.bartimaeusnek.bartworks.common.loaders.FluidLoader;
-import com.github.bartimaeusnek.bartworks.util.*;
+import com.github.bartimaeusnek.bartworks.util.BWRecipes;
+import com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference;
+import com.github.bartimaeusnek.bartworks.util.BW_Util;
+import com.github.bartimaeusnek.bartworks.util.BioCulture;
+import com.github.bartimaeusnek.bartworks.util.BioDNA;
+import com.github.bartimaeusnek.bartworks.util.BioData;
+import com.github.bartimaeusnek.bartworks.util.BioPlasmid;
 
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;

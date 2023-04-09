@@ -15,7 +15,18 @@ package com.github.bartimaeusnek.bartworks.system.material.processingLoaders;
 
 import static com.github.bartimaeusnek.bartworks.util.BW_Util.CLEANROOM;
 import static gregtech.api.enums.Mods.Gendustry;
-import static gregtech.api.enums.OrePrefixes.*;
+import static gregtech.api.enums.OrePrefixes.bolt;
+import static gregtech.api.enums.OrePrefixes.cell;
+import static gregtech.api.enums.OrePrefixes.crushed;
+import static gregtech.api.enums.OrePrefixes.crushedPurified;
+import static gregtech.api.enums.OrePrefixes.dust;
+import static gregtech.api.enums.OrePrefixes.dustSmall;
+import static gregtech.api.enums.OrePrefixes.gem;
+import static gregtech.api.enums.OrePrefixes.gemChipped;
+import static gregtech.api.enums.OrePrefixes.gemExquisite;
+import static gregtech.api.enums.OrePrefixes.gemFlawed;
+import static gregtech.api.enums.OrePrefixes.stick;
+import static gregtech.api.enums.OrePrefixes.stickLong;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -39,10 +50,19 @@ import com.github.bartimaeusnek.bartworks.system.material.CircuitGeneration.BW_M
 import com.github.bartimaeusnek.bartworks.system.material.GT_Enhancement.LuVTierEnhancer;
 import com.github.bartimaeusnek.bartworks.system.material.Werkstoff;
 import com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader;
-import com.github.bartimaeusnek.bartworks.util.*;
+import com.github.bartimaeusnek.bartworks.util.BWRecipes;
+import com.github.bartimaeusnek.bartworks.util.BW_Util;
+import com.github.bartimaeusnek.bartworks.util.BioCulture;
+import com.github.bartimaeusnek.bartworks.util.BioDNA;
+import com.github.bartimaeusnek.bartworks.util.BioData;
+import com.github.bartimaeusnek.bartworks.util.BioPlasmid;
 
 import gregtech.api.GregTech_API;
-import gregtech.api.enums.*;
+import gregtech.api.enums.Element;
+import gregtech.api.enums.GT_Values;
+import gregtech.api.enums.ItemList;
+import gregtech.api.enums.Materials;
+import gregtech.api.enums.OrePrefixes;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Recipe;

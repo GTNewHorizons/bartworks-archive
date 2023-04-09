@@ -16,7 +16,6 @@ package com.github.bartimaeusnek.crossmod;
 import static gregtech.api.enums.Mods.GTPlusPlus;
 import static gregtech.api.enums.Mods.GalacticraftCore;
 import static gregtech.api.enums.Mods.TecTech;
-import static gregtech.api.enums.Mods.Thaumcraft;
 
 import java.io.StringReader;
 

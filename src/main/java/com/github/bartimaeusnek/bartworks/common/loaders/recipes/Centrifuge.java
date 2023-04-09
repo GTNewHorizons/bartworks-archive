@@ -1,9 +1,13 @@
 package com.github.bartimaeusnek.bartworks.common.loaders.recipes;
 
+import static com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_TileEntity_HTGR.HTGRMaterials.MATERIALS_PER_FUEL;
+import static com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_TileEntity_HTGR.HTGRMaterials.sHTGR_Fuel;
+
 import java.util.Arrays;
 
 import net.minecraft.item.ItemStack;
 
+import com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_TileEntity_HTGR;
 import com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_TileEntity_THTR;
 import com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader;
 import com.github.bartimaeusnek.bartworks.util.BW_Util;
@@ -75,6 +79,52 @@ public class Centrifuge implements Runnable {
                 new int[] { 300 },
                 1200,
                 30);
+        int i = 0;
+        for (GT_TileEntity_HTGR.HTGRMaterials.Fuel_ fuel : sHTGR_Fuel) {
 
+            GT_Recipe.GT_Recipe_Map.sCentrifugeRecipes.addRecipe(
+                    false,
+                    new ItemStack[] { new ItemStack(GT_TileEntity_HTGR.HTGRMaterials.aHTGR_Materials, 1, i + 3),
+                            GT_Utility.getIntegratedCircuit(17) },
+                    new ItemStack[] { new ItemStack(GT_TileEntity_HTGR.HTGRMaterials.aHTGR_Materials, 64, i + 4),
+                            new ItemStack(GT_TileEntity_HTGR.HTGRMaterials.aHTGR_Materials, 64, i + 4),
+                            new ItemStack(GT_TileEntity_HTGR.HTGRMaterials.aHTGR_Materials, 64, i + 4),
+                            new ItemStack(GT_TileEntity_HTGR.HTGRMaterials.aHTGR_Materials, 64, i + 4) },
+                    null,
+                    null,
+                    null,
+                    null,
+                    12000,
+                    30,
+                    0);
+            GT_Recipe.GT_Recipe_Map.sCentrifugeRecipes.addRecipe(
+                    false,
+                    new ItemStack[] { new ItemStack(GT_TileEntity_HTGR.HTGRMaterials.aHTGR_Materials, 1, i + 5),
+                            GT_Utility.getIntegratedCircuit(17) },
+                    new ItemStack[] { new ItemStack(GT_TileEntity_HTGR.HTGRMaterials.aHTGR_Materials, 64, i + 6) },
+                    null,
+                    null,
+                    null,
+                    null,
+                    3000,
+                    30,
+                    0);
+
+            GT_Values.RA.addCentrifugeRecipe(
+                    new ItemStack(GT_TileEntity_HTGR.HTGRMaterials.aHTGR_Materials, 1, i + 6),
+                    GT_Values.NI,
+                    GT_Values.NF,
+                    fuel.recycledFluid,
+                    fuel.recycledItems[0],
+                    fuel.recycledItems[1],
+                    fuel.recycledItems[2],
+                    fuel.recycledItems[3],
+                    fuel.recycledItems[4],
+                    fuel.recycledItems[5],
+                    fuel.recycleChances,
+                    1200,
+                    30);
+            i += MATERIALS_PER_FUEL;
+        }
     }
 }

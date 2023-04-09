@@ -1,7 +1,11 @@
 package com.github.bartimaeusnek.bartworks.common.loaders.recipes;
 
+import static com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_TileEntity_HTGR.HTGRMaterials.MATERIALS_PER_FUEL;
+import static com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_TileEntity_HTGR.HTGRMaterials.sHTGR_Fuel;
+
 import net.minecraft.item.ItemStack;
 
+import com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_TileEntity_HTGR;
 import com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_TileEntity_THTR;
 import com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader;
 
@@ -24,5 +28,17 @@ public class Mixer implements Runnable {
                 new ItemStack(GT_TileEntity_THTR.THTRMaterials.aTHTR_Materials),
                 400,
                 30);
+
+        int i = 0;
+        for (GT_TileEntity_HTGR.HTGRMaterials.Fuel_ fuel : sHTGR_Fuel) {
+            GT_Values.RA.addMixerRecipe(
+                    new ItemStack[] { fuel.mainItem, fuel.secondaryItem, GT_Utility.getIntegratedCircuit(1) },
+                    null,
+                    new ItemStack[] { new ItemStack(GT_TileEntity_HTGR.HTGRMaterials.aHTGR_Materials, 1, i) },
+                    null,
+                    400,
+                    30);
+            i += MATERIALS_PER_FUEL;
+        }
     }
 }

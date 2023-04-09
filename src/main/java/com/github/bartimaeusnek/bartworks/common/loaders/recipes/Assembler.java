@@ -211,5 +211,14 @@ public class Assembler implements Runnable {
                 new ItemStack(GregTech_API.sBlockCasings3, 1, 12),
                 40,
                 BW_Util.getMachineVoltageFromTier(5));
+
+        GT_Values.RA.addAssemblerRecipe(
+                new ItemStack[] { new ItemStack(GregTech_API.sBlockCasings3, 1, 12),
+                        GT_OreDictUnificator.get(OrePrefixes.foil, Materials.Europium, 6),
+                        GT_OreDictUnificator.get(OrePrefixes.screw, Materials.Europium, 24) },
+                Materials.Lead.getMolten(864),
+                new ItemStack(GregTech_API.sBlockCasings8, 1, 5),
+                200,
+                BW_Util.getMachineVoltageFromTier(6));
     }
 }

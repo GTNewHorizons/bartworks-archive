@@ -13,7 +13,17 @@
 
 package com.github.bartimaeusnek.bartworks.common.loaders;
 
-import com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_TileEntity_HTGR;
+import com.github.bartimaeusnek.bartworks.common.loaders.recipes.Assembler;
+import com.github.bartimaeusnek.bartworks.common.loaders.recipes.AssemblyLine;
+import com.github.bartimaeusnek.bartworks.common.loaders.recipes.Centrifuge;
+import com.github.bartimaeusnek.bartworks.common.loaders.recipes.ChemicalBath;
+import com.github.bartimaeusnek.bartworks.common.loaders.recipes.CraftingRecipes;
+import com.github.bartimaeusnek.bartworks.common.loaders.recipes.Electrolyzer;
+import com.github.bartimaeusnek.bartworks.common.loaders.recipes.FakeRecipes;
+import com.github.bartimaeusnek.bartworks.common.loaders.recipes.FluidSolidifier;
+import com.github.bartimaeusnek.bartworks.common.loaders.recipes.FormingPress;
+import com.github.bartimaeusnek.bartworks.common.loaders.recipes.Mixer;
+import com.github.bartimaeusnek.bartworks.common.loaders.recipes.Pulverizer;
 import gregtech.api.util.GT_ModHandler;
 
 public class RecipeLoader {
@@ -23,8 +33,16 @@ public class RecipeLoader {
 
     @SuppressWarnings("deprecation")
     public static void run() {
-
-        GT_TileEntity_HTGR.HTGRMaterials.registerTHR_Recipes();
-
+        new Assembler().run();
+        new AssemblyLine().run();
+        new Centrifuge().run();
+        new ChemicalBath().run();
+        new CraftingRecipes().run();
+        new Electrolyzer().run();
+        new FakeRecipes().run();
+        new FluidSolidifier().run();
+        new FormingPress().run();
+        new Mixer().run();
+        new Pulverizer().run();
     }
 }

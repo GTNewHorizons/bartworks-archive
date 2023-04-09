@@ -6,7 +6,11 @@ import static com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_T
 import java.util.Arrays;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 
+import com.github.bartimaeusnek.bartworks.common.loaders.BioCultureLoader;
+import com.github.bartimaeusnek.bartworks.common.loaders.BioItemList;
+import com.github.bartimaeusnek.bartworks.common.loaders.FluidLoader;
 import com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_TileEntity_HTGR;
 import com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_TileEntity_THTR;
 import com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader;
@@ -126,5 +130,48 @@ public class Centrifuge implements Runnable {
                     30);
             i += MATERIALS_PER_FUEL;
         }
+
+        GT_Values.RA.addCentrifugeRecipe(
+                GT_Utility.getIntegratedCircuit(17),
+                null,
+                new FluidStack(BioCultureLoader.eColi.getFluid(), 1000),
+                new FluidStack(FluidLoader.BioLabFluidMaterials[1], 10),
+                BioItemList.getOther(4),
+                null,
+                null,
+                null,
+                null,
+                null,
+                new int[] { 1000 },
+                60 * 20,
+                BW_Util.getMachineVoltageFromTier(3));
+        GT_Values.RA.addCentrifugeRecipe(
+                GT_Utility.getIntegratedCircuit(17),
+                null,
+                new FluidStack(FluidLoader.BioLabFluidMaterials[1], 1000),
+                new FluidStack(FluidLoader.BioLabFluidMaterials[3], 250),
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                60 * 20,
+                BW_Util.getMachineVoltageFromTier(3));
+        GT_Values.RA.addCentrifugeRecipe(
+                GT_Utility.getIntegratedCircuit(17),
+                null,
+                new FluidStack(BioCultureLoader.CommonYeast.getFluid(), 1000),
+                new FluidStack(FluidLoader.BioLabFluidMaterials[2], 10),
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                60 * 20,
+                BW_Util.getMachineVoltageFromTier(3));
     }
 }

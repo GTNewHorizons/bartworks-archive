@@ -175,7 +175,9 @@ public class GT_TileEntity_ElectricImplosionCompressor
                 add(Pair.of(GregTech_API.sBlockMetal9, 4));
                 add(Pair.of(GregTech_API.sBlockMetal9, 3));
                 add(Pair.of(GregTech_API.sBlockMetal9, 8));
-            };
+            }
+
+            ;
         };
     }
 

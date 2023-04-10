@@ -10,7 +10,7 @@ dependencies {
     }
     api("com.github.GTNewHorizons:ModularUI:1.0.66:dev")
 
-    api("com.github.GTNewHorizons:Avaritia:1.34:dev")
+    api("com.github.GTNewHorizons:Avaritia:1.35:dev")
 
     compileOnly("com.github.GTNewHorizons:AppleCore:3.2.8:dev") {
         transitive = false

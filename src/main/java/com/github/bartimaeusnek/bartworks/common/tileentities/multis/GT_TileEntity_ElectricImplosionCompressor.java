@@ -58,6 +58,7 @@ import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_ExtendedPowerMultiBlockBase;
+import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.*;
 
@@ -233,9 +234,9 @@ public class GT_TileEntity_ElectricImplosionCompressor
                 .addInfo("Uses electricity instead of Explosives").addInfo("Can parallel up to 4^(Tier - 1)")
                 .addInfo("Tier is determined by containment block")
                 .addInfo("Valid blocks: Neutronium, Infinity, Transcendent Metal, Spacetime, Universium")
-                .addInfo("Requires UHV or better energy hatch to work").addInfo("Supports " + TT + " energy hatches")
-                .addSeparator().beginStructureBlock(3, 9, 3, false).addController("Front 3rd layer center")
-                .addCasingInfo("Solid Steel Machine Casing", 8)
+                .addInfo("Minimum allowed energy hatch tier is one below recipe tier")
+                .addInfo("Supports " + TT + " energy hatches").addSeparator().beginStructureBlock(3, 9, 3, false)
+                .addController("Front 3rd layer center").addCasingInfo("Solid Steel Machine Casing", 8)
                 .addStructureInfo("Casings can be replaced with Explosion Warning Signs")
                 .addOtherStructurePart("Transformer-Winding Blocks", "Outer layer 2,3,7,8")
                 .addOtherStructurePart("Nickel-Zinc-Ferrite Blocks", "Inner layer 2,3,7,8")
@@ -253,13 +254,7 @@ public class GT_TileEntity_ElectricImplosionCompressor
         mOutputFluids = null;
         long tTotalEU = getMaxInputEu();
 
-        long tVoltage = getMaxInputVoltage();
-        byte tTier = (byte) Math.max(1, GT_Utility.getTier(tVoltage));
-
-        // Disallow energy hatches below UHV
-        if (tTier < 9) {
-            return false;
-        }
+        byte tTier = (byte) Math.max(1, Math.min(GT_Utility.getTier(tTotalEU), V.length - 1));
 
         ItemStack[] tItemInputs = getStoredInputs().toArray(new ItemStack[0]);
         FluidStack[] tFluidInputs = getStoredFluids().toArray(new FluidStack[0]);
@@ -267,6 +262,16 @@ public class GT_TileEntity_ElectricImplosionCompressor
         if ((tItemInputs.length > 0) || (tFluidInputs.length > 0)) {
             GT_Recipe tRecipe = eicMap.findRecipe(getBaseMetaTileEntity(), false, V[tTier], tFluidInputs, tItemInputs);
             if (tRecipe == null) {
+                return false;
+            }
+
+            // Disallow energy hatches more than a tier below recipe tier
+            int tMaxHatchTier = 0;
+            byte tRecipeTier = (byte) Math.max(1, GT_Utility.getTier(tRecipe.mEUt));
+            for (GT_MetaTileEntity_Hatch hatch : getExoticAndNormalEnergyHatchList()) {
+                tMaxHatchTier = Math.max(tMaxHatchTier, hatch.mTier);
+            }
+            if (tMaxHatchTier < tRecipeTier - 1) {
                 return false;
             }
 
@@ -289,8 +294,8 @@ public class GT_TileEntity_ElectricImplosionCompressor
                 return false;
             }
 
-            GT_OverclockCalculator calculator = new GT_OverclockCalculator().setRecipeEUt(tRecipe.mEUt)
-                    .setEUt(getAverageInputVoltage()).setAmperage(getMaxInputAmps()).setDuration(tRecipe.mDuration)
+            GT_OverclockCalculator calculator = new GT_OverclockCalculator().setRecipeEUt(tRecipe.mEUt).setEUt(tTotalEU)
+                    .setDuration(tRecipe.mDuration)
                     .setParallel((int) Math.floor(helper.getCurrentParallel() / helper.getDurationMultiplier()))
                     .calculate();
 

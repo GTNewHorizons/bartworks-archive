@@ -83,6 +83,7 @@ public class GT_TileEntity_ElectricImplosionCompressor
     private final ArrayList<ChunkCoordinates> chunkCoordinates = new ArrayList<>(5);
     private int mBlockTier = 0;
     private int mCasing;
+    private int mMaxHatchTier = 0;
 
     public GT_TileEntity_ElectricImplosionCompressor(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -264,7 +265,8 @@ public class GT_TileEntity_ElectricImplosionCompressor
         mOutputFluids = null;
         long tTotalEU = getMaxInputEu();
 
-        byte tTier = (byte) Math.max(1, Math.min(GT_Utility.getTier(tTotalEU), V.length - 1));
+        // Only allow up to one tier skip
+        byte tTier = (byte) (mMaxHatchTier + 1);
 
         ItemStack[] tItemInputs = getStoredInputs().toArray(new ItemStack[0]);
         FluidStack[] tFluidInputs = getStoredFluids().toArray(new FluidStack[0]);
@@ -272,16 +274,6 @@ public class GT_TileEntity_ElectricImplosionCompressor
         if ((tItemInputs.length > 0) || (tFluidInputs.length > 0)) {
             GT_Recipe tRecipe = eicMap.findRecipe(getBaseMetaTileEntity(), false, V[tTier], tFluidInputs, tItemInputs);
             if (tRecipe == null) {
-                return false;
-            }
-
-            // Disallow energy hatches more than a tier below recipe tier
-            int tMaxHatchTier = 0;
-            byte tRecipeTier = (byte) Math.max(1, GT_Utility.getTier(tRecipe.mEUt));
-            for (GT_MetaTileEntity_Hatch hatch : getExoticAndNormalEnergyHatchList()) {
-                tMaxHatchTier = Math.max(tMaxHatchTier, hatch.mTier);
-            }
-            if (tMaxHatchTier < tRecipeTier - 1) {
                 return false;
             }
 
@@ -462,7 +454,13 @@ public class GT_TileEntity_ElectricImplosionCompressor
         this.mCasing = 0;
         setBlockTier(0);
         boolean isOK = checkPiece(STRUCTURE_PIECE_MAIN, 1, 6, 0);
-        isOK = isOK && this.mMaintenanceHatches.size() == 1 && getExoticAndNormalEnergyHatchList().size() >= 1;
+
+        List<GT_MetaTileEntity_Hatch> energyHatches = getExoticAndNormalEnergyHatchList();
+        for (GT_MetaTileEntity_Hatch hatch : energyHatches) {
+            mMaxHatchTier = Math.max(mMaxHatchTier, hatch.mTier);
+        }
+
+        isOK = isOK && this.mMaintenanceHatches.size() == 1 && energyHatches.size() >= 1;
         if (isOK) {
             activatePiston();
             return true;

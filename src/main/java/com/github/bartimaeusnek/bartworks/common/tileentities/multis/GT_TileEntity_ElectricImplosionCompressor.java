@@ -288,6 +288,10 @@ public class GT_TileEntity_ElectricImplosionCompressor
                 helper.enableBatchMode(128);
             }
 
+            if (!voidExcess) {
+                helper.enableVoidProtection(this);
+            }
+
             helper.build();
 
             if (helper.getCurrentParallel() == 0) {
@@ -527,6 +531,11 @@ public class GT_TileEntity_ElectricImplosionCompressor
 
     @Override
     protected boolean isBatchModeButtonEnabled() {
+        return true;
+    }
+
+    @Override
+    protected boolean isVoidExcessButtonEnabled() {
         return true;
     }
 }

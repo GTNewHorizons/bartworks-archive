@@ -452,6 +452,7 @@ public class GT_TileEntity_ElectricImplosionCompressor
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack itemStack) {
         this.mCasing = 0;
+        this.mMaxHatchTier = 0;
         setBlockTier(0);
         boolean isOK = checkPiece(STRUCTURE_PIECE_MAIN, 1, 6, 0);
 

@@ -213,13 +213,6 @@ public class CraftingRecipes implements Runnable {
                                 'D', OrePrefixes.componentCircuit.get(Materials.Diode), 'W',
                                 GT_OreDictUnificator.get(OrePrefixes.wireGt16, cable, 1L), 'P', hull, 'C',
                                 machinehull });
-                GT_ModHandler.addCraftingRecipe(
-                        ItemRegistry.diode16A[i],
-                        RecipeLoader.BITSD,
-                        new Object[] { "WHW", "DCD", "PDP", 'H', ItemList.Circuit_Parts_Coil.get(1L), 'D',
-                                ItemList.Circuit_Parts_DiodeSMD.get(1L, ItemList.Circuit_Parts_Diode.get(1L)), 'W',
-                                GT_OreDictUnificator.get(OrePrefixes.wireGt16, cable, 1L), 'P', hull, 'C',
-                                machinehull });
 
             } catch (ArrayIndexOutOfBoundsException ignored) {
 

@@ -17,7 +17,6 @@ import static gregtech.api.enums.GT_Values.ticksBetweenSounds;
 
 import java.util.Collections;
 
-import gregtech.api.objects.ItemData;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -59,6 +58,7 @@ import gregtech.api.interfaces.modularui.IAddGregtechLogo;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.BaseMetaTileEntity;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch;
+import gregtech.api.objects.ItemData;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Recipe;
@@ -194,7 +194,7 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
                     ItemData itemData = GT_OreDictUnificator.getAssociation(lStack);
                     if (itemData != null) {
                         Materials mat = itemData.mMaterial.mMaterial;
-                        this.colorForGUI = new short[]{mat.getRGBA()[0], mat.getRGBA()[1], mat.getRGBA()[2]};
+                        this.colorForGUI = new short[] { mat.getRGBA()[0], mat.getRGBA()[1], mat.getRGBA()[2] };
                     } else {
                         this.colorForGUI = new short[] { 0x37, 0x37, 0x37 };
                     }

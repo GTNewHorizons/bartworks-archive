@@ -14,6 +14,7 @@
 package com.github.bartimaeusnek.crossmod.tectech;
 
 import static gregtech.api.enums.Mods.GalactiGreg;
+import static gregtech.api.util.GT_RecipeBuilder.MINUTES;
 
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -27,6 +28,7 @@ import com.github.technus.tectech.recipe.TT_recipeAdder;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
+import gregtech.api.enums.TierEU;
 import gregtech.api.util.GT_OreDictUnificator;
 
 public class TecTechResearchLoader {
@@ -77,7 +79,7 @@ public class TecTechResearchLoader {
                 ItemList.Machine_Multi_ImplosionCompressor.get(1L),
                 64000,
                 48,
-                BW_Util.getMachineVoltageFromTier(8),
+                (int) TierEU.UV,
                 8,
                 new Object[] { ItemList.Machine_Multi_ImplosionCompressor.get(1L), Materials.Neutronium.getBlocks(5),
                         GT_OreDictUnificator.get(OrePrefixes.stickLong, Materials.Osmium, 64),
@@ -87,8 +89,8 @@ public class TecTechResearchLoader {
                 new FluidStack[] { new FluidStack(solderIndalloy, 1440), Materials.Osmium.getMolten(1440),
                         Materials.Neutronium.getMolten(1440) },
                 ItemRegistry.eic.copy(),
-                240000,
-                BW_Util.getMachineVoltageFromTier(8));
+                5 * MINUTES,
+                (int) TierEU.UV);
 
     }
 }

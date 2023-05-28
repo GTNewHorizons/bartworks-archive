@@ -22,7 +22,6 @@ import net.minecraftforge.fluids.FluidStack;
 
 import com.github.bartimaeusnek.bartworks.common.loaders.ItemRegistry;
 import com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader;
-import com.github.bartimaeusnek.bartworks.util.BW_Util;
 import com.github.technus.tectech.recipe.TT_recipeAdder;
 
 import gregtech.api.enums.ItemList;
@@ -44,7 +43,7 @@ public class TecTechResearchLoader {
                     ItemRegistry.voidminer[0].copy(),
                     1024000,
                     256,
-                    BW_Util.getMachineVoltageFromTier(7),
+                    (int) TierEU.RECIPE_ZPM,
                     24,
                     new Object[] { ItemRegistry.voidminer[0].copy(),
                             GT_OreDictUnificator.get(OrePrefixes.frameGt, Materials.BlackPlutonium, 9L),
@@ -54,14 +53,14 @@ public class TecTechResearchLoader {
                     new FluidStack[] { new FluidStack(solderIndalloy, 1440),
                             WerkstoffLoader.Krypton.getFluidOrGas(20000) },
                     ItemRegistry.voidminer[1].copy(),
-                    216000,
-                    BW_Util.getMachineVoltageFromTier(7));
+                    5 * MINUTES,
+                    (int) TierEU.RECIPE_ZPM);
 
             TT_recipeAdder.addResearchableAssemblylineRecipe(
                     ItemRegistry.voidminer[1].copy(),
                     8192000,
                     512,
-                    BW_Util.getMachineVoltageFromTier(8),
+                    (int) TierEU.RECIPE_UV,
                     64,
                     new Object[] { ItemRegistry.voidminer[1].copy(),
                             GT_OreDictUnificator.get(OrePrefixes.frameGt, Materials.Neutronium, 9L),
@@ -71,8 +70,8 @@ public class TecTechResearchLoader {
                     new FluidStack[] { new FluidStack(solderIndalloy, 1440),
                             WerkstoffLoader.Oganesson.getFluidOrGas(20000) },
                     ItemRegistry.voidminer[2].copy(),
-                    432000,
-                    BW_Util.getMachineVoltageFromTier(8));
+                    5 * MINUTES,
+                    (int) TierEU.RECIPE_UV);
         }
 
         TT_recipeAdder.addResearchableAssemblylineRecipe(

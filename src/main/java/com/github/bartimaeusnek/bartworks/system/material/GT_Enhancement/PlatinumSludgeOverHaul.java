@@ -63,6 +63,7 @@ public class PlatinumSludgeOverHaul {
             Materials.HSSS,
             Materials.EnderiumBase,
             Materials.Osmiridium,
+            Materials.TPV,
             Materials.get("Uraniumtriplatinid"),
             Materials.get("Tetranaquadahdiindiumhexaplatiumosminid"),
             Materials.get("Longasssuperconductornameforuvwire"),
@@ -234,7 +235,7 @@ public class PlatinumSludgeOverHaul {
         //gt machines
         maploop:
         for (GT_Recipe.GT_Recipe_Map map : GT_Recipe.GT_Recipe_Map.sMappings) {
-            if (map == GT_Recipe.GT_Recipe_Map.sFusionRecipes || map == GT_Recipe.GT_Recipe_Map.sUnboxinatorRecipes || map == GT_Recipe.GT_Recipe_Map.sBoxinatorRecipes)
+            if (map == GT_Recipe.GT_Recipe_Map.sFusionRecipes || map == GT_Recipe.GT_Recipe_Map.sUnboxinatorRecipes || map == GT_Recipe.GT_Recipe_Map.sBoxinatorRecipes || map.mUnlocalizedName.equals("gtpp.recipe.quantumforcesmelter"))
                 continue;
             HashSet<GT_Recipe> toDel = new HashSet<>();
             recipeloop:

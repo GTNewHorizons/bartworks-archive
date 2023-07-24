@@ -18,7 +18,6 @@ import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.transpose;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
 import static gregtech.api.enums.GT_HatchElement.*;
-import static gregtech.api.enums.GT_HatchElement.ExoticEnergy;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_OIL_CRACKER;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_OIL_CRACKER_ACTIVE;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_OIL_CRACKER_ACTIVE_GLOW;
@@ -195,7 +194,7 @@ public class GT_TileEntity_MegaOilCracker extends GT_TileEntity_MegaMultiBlockBa
             protected GT_OverclockCalculator createOverclockCalculator(@Nonnull GT_Recipe recipe,
                     @Nonnull GT_ParallelHelper helper) {
                 return super.createOverclockCalculator(recipe, helper)
-                        .setEUtDiscount(Math.max((0.1F * (heatLevel.getTier() + 1.0F)), 0.5F));
+                        .setEUtDiscount(1.0F - Math.min(0.1F * heatLevel.getTier(), 0.5F));
             }
         }.setMaxParallel(ConfigHandler.megaMachinesMax);
     }

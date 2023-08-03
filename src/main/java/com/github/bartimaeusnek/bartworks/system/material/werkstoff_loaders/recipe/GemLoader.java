@@ -13,6 +13,7 @@
 
 package com.github.bartimaeusnek.bartworks.system.material.werkstoff_loaders.recipe;
 
+import static gregtech.api.enums.Mods.GalaxySpace;
 import static gregtech.api.enums.OrePrefixes.block;
 import static gregtech.api.enums.OrePrefixes.crushedPurified;
 import static gregtech.api.enums.OrePrefixes.dust;
@@ -26,7 +27,12 @@ import static gregtech.api.enums.OrePrefixes.gemFlawless;
 import static gregtech.api.enums.OrePrefixes.lens;
 import static gregtech.api.enums.OrePrefixes.ore;
 import static gregtech.api.enums.OrePrefixes.plate;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sImplosionRecipes;
+import static gregtech.api.util.GT_RecipeBuilder.TICKS;
+import static gregtech.api.util.GT_RecipeConstants.ADDITIVE_AMOUNT;
 
+import gregtech.api.enums.OrePrefixes;
+import gregtech.api.enums.TierEU;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -92,32 +98,60 @@ public class GemLoader implements IWerkstoffRunnable {
             GT_Values.RA.addForgeHammerRecipe(werkstoff.get(gemChipped), werkstoff.get(dustTiny), 64, 16);
 
             if (!werkstoff.contains(WerkstoffLoader.NO_BLAST)) {
-                GT_Values.RA.addImplosionRecipe(
-                        werkstoff.get(gemFlawless, 3),
-                        8,
-                        werkstoff.get(gemExquisite),
-                        GT_OreDictUnificator.get(dustTiny, Materials.DarkAsh, 2));
-                GT_Values.RA.addImplosionRecipe(
-                        werkstoff.get(gem, 3),
-                        8,
-                        werkstoff.get(gemFlawless),
-                        GT_OreDictUnificator.get(dustTiny, Materials.DarkAsh, 2));
-                GT_Values.RA.addImplosionRecipe(
-                        werkstoff.get(gemFlawed, 3),
-                        8,
-                        werkstoff.get(gem),
-                        GT_OreDictUnificator.get(dustTiny, Materials.DarkAsh, 2));
-                GT_Values.RA.addImplosionRecipe(
-                        werkstoff.get(gemChipped, 3),
-                        8,
-                        werkstoff.get(gemFlawed),
-                        GT_OreDictUnificator.get(dustTiny, Materials.DarkAsh, 2));
+                GT_Values.RA.stdBuilder()
+                    .itemInputs(werkstoff.get(gemFlawless, 3))
+                    .itemOutputs(werkstoff.get(gemExquisite),
+                        GT_OreDictUnificator.get(dustTiny, Materials.DarkAsh, 2))
+                    .noFluidInputs()
+                    .noFluidOutputs()
+                    .duration(20 * TICKS)
+                    .eut(TierEU.RECIPE_LV)
+                    .metadata(ADDITIVE_AMOUNT, 8)
+                    .addTo(sImplosionRecipes);
 
-                GT_Values.RA.addImplosionRecipe(
-                        werkstoff.get(dust, 4),
-                        24,
-                        werkstoff.get(gem, 3),
-                        GT_OreDictUnificator.get(dustTiny, Materials.DarkAsh, 8));
+                GT_Values.RA.stdBuilder()
+                    .itemInputs( werkstoff.get(gem, 3))
+                    .itemOutputs(werkstoff.get(gemFlawless),
+                        GT_OreDictUnificator.get(dustTiny, Materials.DarkAsh, 2))
+                    .noFluidInputs()
+                    .noFluidOutputs()
+                    .duration(20 * TICKS)
+                    .eut(TierEU.RECIPE_LV)
+                    .metadata(ADDITIVE_AMOUNT, 8)
+                    .addTo(sImplosionRecipes);
+
+                GT_Values.RA.stdBuilder()
+                    .itemInputs(werkstoff.get(gemFlawed, 3))
+                    .itemOutputs(werkstoff.get(gem),
+                        GT_OreDictUnificator.get(dustTiny, Materials.DarkAsh, 2))
+                    .noFluidInputs()
+                    .noFluidOutputs()
+                    .duration(20 * TICKS)
+                    .eut(TierEU.RECIPE_LV)
+                    .metadata(ADDITIVE_AMOUNT, 8)
+                    .addTo(sImplosionRecipes);
+
+                GT_Values.RA.stdBuilder()
+                    .itemInputs(werkstoff.get(gemChipped, 3))
+                    .itemOutputs(werkstoff.get(gemFlawed),
+                        GT_OreDictUnificator.get(dustTiny, Materials.DarkAsh, 2))
+                    .noFluidInputs()
+                    .noFluidOutputs()
+                    .duration(20 * TICKS)
+                    .eut(TierEU.RECIPE_LV)
+                    .metadata(ADDITIVE_AMOUNT, 8)
+                    .addTo(sImplosionRecipes);
+
+                GT_Values.RA.stdBuilder()
+                    .itemInputs(werkstoff.get(dust, 4))
+                    .itemOutputs(werkstoff.get(gem, 3),
+                        GT_OreDictUnificator.get(dustTiny, Materials.DarkAsh, 8))
+                    .noFluidInputs()
+                    .noFluidOutputs()
+                    .duration(20 * TICKS)
+                    .eut(TierEU.RECIPE_LV)
+                    .metadata(ADDITIVE_AMOUNT, 24)
+                    .addTo(sImplosionRecipes);
             }
 
             if (werkstoff.hasItemType(plate)) {

@@ -91,12 +91,15 @@ import static gregtech.api.enums.ItemList.Optical_Cpu_Containment_Housing;
 import static gregtech.api.enums.ItemList.Optically_Compatible_Memory;
 import static gregtech.api.enums.ItemList.Optically_Perfected_CPU;
 import static gregtech.api.enums.ItemList.values;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sAssemblerRecipes;
+import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import gregtech.api.enums.TierEU;
 import net.minecraft.item.ItemStack;
 
 import com.github.bartimaeusnek.bartworks.client.renderer.BW_GT_ItemRenderer;
@@ -150,20 +153,14 @@ public class CircuitPartLoader implements Runnable {
             String localised = GT_LanguageManager
                     .getTranslation(GT_LanguageManager.getTranslateableItemStackName(itemStack));
             BW_Meta_Items.getNEWCIRCUITS().addItem(CircuitImprintLoader.reverseIDs, "Wrap of " + localised + "s", tt);
-            GT_Values.RA.addAssemblerRecipe(
-                    new ItemStack[] { single.get(16).copy(), GT_Utility.getIntegratedCircuit(16) },
-                    Materials.Plastic.getMolten(72),
-                    BW_Meta_Items.getNEWCIRCUITS().getStack(CircuitImprintLoader.reverseIDs),
-                    600,
-                    30);
 
             GT_Values.RA.stdBuilder()
-                .itemInputs()
-                .itemOutputs()
-                .fluidInputs()
+                .itemInputs(single.get(16).copy(), GT_Utility.getIntegratedCircuit(16))
+                .itemOutputs(BW_Meta_Items.getNEWCIRCUITS().getStack(CircuitImprintLoader.reverseIDs))
+                .fluidInputs(Materials.Plastic.getMolten(72))
                 .noFluidOutputs()
-                .duration()
-                .eut()
+                .duration(30*SECONDS)
+                .eut(TierEU.RECIPE_LV)
                 .addTo(sAssemblerRecipes);
 
             CircuitImprintLoader.circuitIIconRefs.put(CircuitImprintLoader.reverseIDs, single);

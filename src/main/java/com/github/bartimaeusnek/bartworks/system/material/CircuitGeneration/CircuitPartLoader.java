@@ -156,6 +156,16 @@ public class CircuitPartLoader implements Runnable {
                     BW_Meta_Items.getNEWCIRCUITS().getStack(CircuitImprintLoader.reverseIDs),
                     600,
                     30);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs()
+                .itemOutputs()
+                .fluidInputs()
+                .noFluidOutputs()
+                .duration()
+                .eut()
+                .addTo(sAssemblerRecipes);
+
             CircuitImprintLoader.circuitIIconRefs.put(CircuitImprintLoader.reverseIDs, single);
             CircuitImprintLoader.reverseIDs--;
         }

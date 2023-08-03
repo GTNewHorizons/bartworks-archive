@@ -21,7 +21,10 @@ import static gregtech.api.enums.OrePrefixes.plank;
 import static gregtech.api.enums.OrePrefixes.plate;
 import static gregtech.api.enums.OrePrefixes.plateDouble;
 import static gregtech.api.enums.OrePrefixes.screw;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sAssemblerRecipes;
+import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 
+import gregtech.api.enums.TierEU;
 import net.minecraft.item.ItemStack;
 
 import com.github.bartimaeusnek.bartworks.system.material.BW_GT_MaterialReference;
@@ -55,23 +58,29 @@ public class CasingLoader implements IWerkstoffRunnable {
                 werkstoff.get(blockCasing),
                 new Object[] { "PSP", "PGP", "PSP", 'P', werkstoff.get(plate), 'S', werkstoff.get(screw), 'G',
                         werkstoff.get(gearGtSmall) });
-        GT_Values.RA.addAssemblerRecipe(
-                new ItemStack[] { werkstoff.get(plate, 6), werkstoff.get(screw, 2), werkstoff.get(gearGtSmall) },
-                GT_Values.NF,
-                werkstoff.get(blockCasing),
-                200,
-                30);
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(werkstoff.get(plate, 6), werkstoff.get(screw, 2), werkstoff.get(gearGtSmall))
+            .itemOutputs(werkstoff.get(blockCasing))
+            .noFluidInputs()
+            .noFluidOutputs()
+            .duration(10*SECONDS)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(sAssemblerRecipes);
 
         GT_ModHandler.addCraftingRecipe(
                 werkstoff.get(blockCasingAdvanced),
                 new Object[] { "PSP", "PGP", "PSP", 'P', werkstoff.get(reboltedCasingsOuterStuff), 'S',
                         werkstoff.get(screw), 'G', werkstoff.get(gearGt) });
-        GT_Values.RA.addAssemblerRecipe(
-                new ItemStack[] { werkstoff.get(reboltedCasingsOuterStuff, 6), werkstoff.get(screw, 2),
-                        werkstoff.get(gearGt) },
-                GT_Values.NF,
-                werkstoff.get(blockCasingAdvanced),
-                200,
-                30);
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(werkstoff.get(reboltedCasingsOuterStuff, 6), werkstoff.get(screw, 2),
+                werkstoff.get(gearGt))
+            .itemOutputs( werkstoff.get(blockCasingAdvanced))
+            .noFluidInputs()
+            .noFluidOutputs()
+            .duration(10*SECONDS)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(sAssemblerRecipes);
     }
 }

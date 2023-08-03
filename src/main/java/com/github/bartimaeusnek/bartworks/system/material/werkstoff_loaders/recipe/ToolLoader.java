@@ -28,6 +28,9 @@ import static gregtech.api.enums.OrePrefixes.toolHeadHammer;
 import static gregtech.api.enums.OrePrefixes.toolHeadSaw;
 import static gregtech.api.enums.OrePrefixes.toolHeadWrench;
 import static gregtech.api.enums.OrePrefixes.turbineBlade;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sAssemblerRecipes;
+import static gregtech.api.util.GT_RecipeBuilder.MINUTES;
+import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -442,50 +445,70 @@ public class ToolLoader implements IWerkstoffRunnable {
                     werkstoff.get(turbineBlade, 1),
                     (int) werkstoff.getStats().getMass() / 4 * 20,
                     30);
-            GT_Values.RA.addAssemblerRecipe(
-                    werkstoff.get(turbineBlade, 4),
-                    GT_OreDictUnificator.get(stickLong, Materials.Magnalium, 1),
-                    GT_MetaGenerated_Tool_01.INSTANCE.getToolWithStats(
-                            GT_MetaGenerated_Tool_01.TURBINE_SMALL,
-                            1,
-                            werkstoff.getBridgeMaterial(),
-                            Materials.Magnalium,
-                            null),
-                    160,
-                    100);
-            GT_Values.RA.addAssemblerRecipe(
-                    werkstoff.get(turbineBlade, 8),
-                    GT_OreDictUnificator.get(stickLong, Materials.Titanium, 1),
-                    GT_MetaGenerated_Tool_01.INSTANCE.getToolWithStats(
-                            GT_MetaGenerated_Tool_01.TURBINE,
-                            1,
-                            werkstoff.getBridgeMaterial(),
-                            Materials.Titanium,
-                            null),
-                    320,
-                    400);
-            GT_Values.RA.addAssemblerRecipe(
-                    werkstoff.get(turbineBlade, 12),
-                    GT_OreDictUnificator.get(stickLong, Materials.TungstenSteel, 1),
-                    GT_MetaGenerated_Tool_01.INSTANCE.getToolWithStats(
-                            GT_MetaGenerated_Tool_01.TURBINE_LARGE,
-                            1,
-                            werkstoff.getBridgeMaterial(),
-                            Materials.TungstenSteel,
-                            null),
-                    640,
-                    1600);
-            GT_Values.RA.addAssemblerRecipe(
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(werkstoff.get(turbineBlade, 4),
+                    GT_OreDictUnificator.get(stickLong, Materials.Magnalium, 1))
+                .itemOutputs(GT_MetaGenerated_Tool_01.INSTANCE.getToolWithStats(
+                    GT_MetaGenerated_Tool_01.TURBINE_SMALL,
+                    1,
+                    werkstoff.getBridgeMaterial(),
+                    Materials.Magnalium,
+                    null))
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(8*SECONDS)
+                .eut(100)
+                .addTo(sAssemblerRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(werkstoff.get(turbineBlade, 8),
+                    GT_OreDictUnificator.get(stickLong, Materials.Titanium, 1))
+                .itemOutputs(GT_MetaGenerated_Tool_01.INSTANCE.getToolWithStats(
+                    GT_MetaGenerated_Tool_01.TURBINE,
+                    1,
+                    werkstoff.getBridgeMaterial(),
+                    Materials.Titanium,
+                    null))
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(16*SECONDS)
+                .eut(400)
+                .addTo(sAssemblerRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(werkstoff.get(turbineBlade, 12),
+                    GT_OreDictUnificator.get(stickLong, Materials.TungstenSteel, 1))
+                .itemOutputs(GT_MetaGenerated_Tool_01.INSTANCE.getToolWithStats(
+                    GT_MetaGenerated_Tool_01.TURBINE_LARGE,
+                    1,
+                    werkstoff.getBridgeMaterial(),
+                    Materials.TungstenSteel,
+                    null))
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(32*SECONDS)
+                .eut(1600)
+                .addTo(sAssemblerRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
                     werkstoff.get(turbineBlade, 16),
-                    GT_OreDictUnificator.get(stickLong, Materials.Americium, 1),
+                    GT_OreDictUnificator.get(stickLong, Materials.Americium, 1)
+                )
+                .itemOutputs(
                     GT_MetaGenerated_Tool_01.INSTANCE.getToolWithStats(
-                            GT_MetaGenerated_Tool_01.TURBINE_HUGE,
-                            1,
-                            werkstoff.getBridgeMaterial(),
-                            Materials.Americium,
-                            null),
-                    1280,
-                    6400);
+                        GT_MetaGenerated_Tool_01.TURBINE_HUGE,
+                        1,
+                        werkstoff.getBridgeMaterial(),
+                        Materials.Americium,
+                        null)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(1*MINUTES+4*SECONDS)
+                .eut(6400)
+                .addTo(sAssemblerRecipes);
         }
 
         if (!werkstoff.hasItemType(gem)) {

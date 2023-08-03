@@ -28,6 +28,8 @@ import static gregtech.api.enums.OrePrefixes.rotor;
 import static gregtech.api.enums.OrePrefixes.screw;
 import static gregtech.api.enums.OrePrefixes.stick;
 import static gregtech.api.enums.OrePrefixes.wireFine;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sAssemblerRecipes;
+import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 
 import net.minecraft.item.ItemStack;
 
@@ -152,34 +154,45 @@ public class CraftingMaterialLoader implements IWerkstoffRunnable {
                     GT_Proxy.tBits,
                     new Object[] { "PhP", "SRf", "PdP", 'P', werkstoff.get(plate), 'R', werkstoff.get(ring), 'S',
                             werkstoff.get(screw) });
-            GT_Values.RA.addAssemblerRecipe(
-                    werkstoff.get(plate, 4),
-                    werkstoff.get(ring),
-                    Materials.Tin.getMolten(32),
-                    werkstoff.get(rotor),
-                    240,
-                    24);
-            GT_Values.RA.addAssemblerRecipe(
-                    werkstoff.get(plate, 4),
-                    werkstoff.get(ring),
-                    Materials.Lead.getMolten(48),
-                    werkstoff.get(rotor),
-                    240,
-                    24);
-            GT_Values.RA.addAssemblerRecipe(
-                    werkstoff.get(plate, 4),
-                    werkstoff.get(ring),
-                    Materials.SolderingAlloy.getMolten(16),
-                    werkstoff.get(rotor),
-                    240,
-                    24);
 
-            if (WerkstoffLoader.rotorShape != null) GT_Values.RA.addExtruderRecipe(
+            GT_Values.RA.stdBuilder()
+                .itemInputs( werkstoff.get(plate, 4),
+                    werkstoff.get(ring))
+                .itemOutputs( werkstoff.get(rotor))
+                .fluidInputs(Materials.Tin.getMolten(32))
+                .noFluidOutputs()
+                .duration(12*SECONDS)
+                .eut(24)
+                .addTo(sAssemblerRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(werkstoff.get(plate, 4),
+                    werkstoff.get(ring))
+                .itemOutputs(werkstoff.get(rotor))
+                .fluidInputs(Materials.Lead.getMolten(48))
+                .noFluidOutputs()
+                .duration(12*SECONDS)
+                .eut(24)
+                .addTo(sAssemblerRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(werkstoff.get(plate, 4),
+                    werkstoff.get(ring))
+                .itemOutputs(werkstoff.get(rotor))
+                .fluidInputs(Materials.SolderingAlloy.getMolten(16))
+                .noFluidOutputs()
+                .duration(12*SECONDS)
+                .eut(24)
+                .addTo(sAssemblerRecipes);
+
+            if (WerkstoffLoader.rotorShape != null) {
+                GT_Values.RA.addExtruderRecipe(
                     werkstoff.get(ingot, 5),
                     WerkstoffLoader.rotorShape.get(0L),
                     werkstoff.get(rotor),
                     200,
                     60);
+            }
 
             // molten -> metal
             if (werkstoff.hasItemType(cellMolten)) {

@@ -72,9 +72,11 @@ import static gregtech.api.enums.OrePrefixes.dustSmall;
 import static gregtech.api.enums.OrePrefixes.dustTiny;
 import static gregtech.api.enums.OrePrefixes.ingot;
 import static gregtech.api.enums.OrePrefixes.nugget;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBlastRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sMixerRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 import static gregtech.api.util.GT_RecipeBuilder.TICKS;
+import static gregtech.api.util.GT_RecipeConstants.COIL_HEAT;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -321,16 +323,16 @@ public class PlatinumSludgeOverHaul {
                                     2250);
                         }
         // Pt
-        GT_Values.RA.addBlastRecipe(
-                PTMetallicPowder.get(dust, 3),
-                GT_Utility.getIntegratedCircuit(1),
-                null,
-                null,
-                Materials.Platinum.getNuggets(2),
-                null,
-                600,
-                120,
-                Materials.Platinum.mMeltingPoint);
+        GT_Values.RA.stdBuilder()
+            .itemInputs(PTMetallicPowder.get(dust, 3),
+                GT_Utility.getIntegratedCircuit(1))
+            .itemOutputs(Materials.Platinum.getNuggets(2))
+            .noFluidInputs()
+            .noFluidOutputs()
+            .duration(30*SECONDS)
+            .eut(TierEU.RECIPE_MV)
+            .metadata(COIL_HEAT,  Materials.Platinum.mMeltingPoint)
+            .addTo(sBlastRecipes);
 
         GT_Values.RA.addChemicalRecipe(
                 PTMetallicPowder.get(dust),
@@ -384,16 +386,18 @@ public class PlatinumSludgeOverHaul {
                 new int[] { 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1500, },
                 600,
                 30);
-        GT_Values.RA.addBlastRecipe(
-                PTSaltRefined.get(dust),
-                GT_Utility.getIntegratedCircuit(1),
-                null,
-                Materials.Chlorine.getGas(87),
-                PTMetallicPowder.get(dust),
-                null,
-                200,
-                120,
-                900);
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(PTSaltRefined.get(dust),
+                GT_Utility.getIntegratedCircuit(1))
+            .itemOutputs(PTMetallicPowder.get(dust))
+            .noFluidInputs()
+            .fluidOutputs(Materials.Chlorine.getGas(87))
+            .duration(10*SECONDS)
+            .eut(TierEU.RECIPE_MV)
+            .metadata(COIL_HEAT, 900)
+            .addTo(sBlastRecipes);
+
         // 2PtCl + Ca = 2Pt + CaCl2
         GT_Values.RA.addChemicalRecipe(
                 PTRawPowder.get(dust, 4),
@@ -472,28 +476,31 @@ public class PlatinumSludgeOverHaul {
         // GT_Values.RA.addChemicalRecipe(Sodiumsulfate.get(dust), Materials.Potassium.getDust(2),
         // Materials.Oxygen.getGas(3000), null, PotassiumDisulfate.get(dust,6), null, 30);
         // Rh/Os/Ir/Ru
-        GT_Values.RA.addBlastRecipe(
-                PTResidue.get(dust),
-                GT_Utility.getIntegratedCircuit(11),
-                PotassiumDisulfate.getMolten(360),
-                RHSulfate.getFluidOrGas(360),
-                LeachResidue.get(dust),
-                null,
-                200,
-                120,
-                775);
+        GT_Values.RA.stdBuilder()
+            .itemInputs(PTResidue.get(dust),
+                GT_Utility.getIntegratedCircuit(11))
+            .itemOutputs(LeachResidue.get(dust))
+            .fluidInputs(PotassiumDisulfate.getMolten(360))
+            .fluidOutputs(RHSulfate.getFluidOrGas(360))
+            .duration(10*SECONDS)
+            .eut(TierEU.RECIPE_MV)
+            .metadata(COIL_HEAT, 775)
+            .addTo(sBlastRecipes);
 
         // Ru
-        GT_Values.RA.addBlastRecipe(
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
                 LeachResidue.get(dust, 10),
-                Materials.Saltpeter.getDust(10),
-                Materials.SaltWater.getFluid(1000),
-                GT_ModHandler.getSteam(1000),
-                SodiumRuthenate.get(dust, 3),
-                IrOsLeachResidue.get(dust, 6),
-                200,
-                120,
-                775);
+                Materials.Saltpeter.getDust(10)
+            )
+            .itemOutputs(SodiumRuthenate.get(dust, 3), IrOsLeachResidue.get(dust, 6))
+            .fluidInputs(Materials.SaltWater.getFluid(1000))
+            .fluidOutputs(GT_ModHandler.getSteam(1000))
+            .duration(10*SECONDS)
+            .eut(TierEU.RECIPE_MV)
+            .metadata(COIL_HEAT, 775)
+            .addTo(sBlastRecipes);
+
         GT_Values.RA.addChemicalRecipe(
                 SodiumRuthenate.get(dust, 6),
                 Materials.Chlorine.getCells(3),
@@ -530,16 +537,17 @@ public class PlatinumSludgeOverHaul {
                 300);
 
         // Os
-        GT_Values.RA.addBlastRecipe(
-                IrOsLeachResidue.get(dust, 4),
-                GT_Utility.getIntegratedCircuit(11),
-                Materials.HydrochloricAcid.getFluid(1000),
-                AcidicOsmiumSolution.getFluidOrGas(2000),
-                IrLeachResidue.get(dust, 2),
-                null,
-                200,
-                120,
-                775);
+        GT_Values.RA.stdBuilder()
+            .itemInputs(IrOsLeachResidue.get(dust, 4),
+                GT_Utility.getIntegratedCircuit(11))
+            .itemOutputs(IrLeachResidue.get(dust, 2))
+            .fluidInputs(Materials.HydrochloricAcid.getFluid(1000))
+            .fluidOutputs(AcidicOsmiumSolution.getFluidOrGas(2000))
+            .duration(10*SECONDS)
+            .eut(TierEU.RECIPE_MV)
+            .metadata(COIL_HEAT, 775)
+            .addTo(sBlastRecipes);
+
         GT_Values.RA.addDistillationTowerRecipe(
                 AcidicOsmiumSolution.getFluidOrGas(1000),
                 new FluidStack[] { OsmiumSolution.getFluidOrGas(100), Materials.Water.getFluid(900) },
@@ -556,16 +564,22 @@ public class PlatinumSludgeOverHaul {
                 300);
 
         // Ir
-        GT_Values.RA.addBlastRecipe(
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
                 IrLeachResidue.get(dust),
-                GT_Utility.getIntegratedCircuit(1),
-                null,
-                null,
+                GT_Utility.getIntegratedCircuit(1)
+            )
+            .itemOutputs(
                 PGSDResidue.get(dust),
-                IridiumDioxide.get(dust),
-                200,
-                120,
-                775);
+                IridiumDioxide.get(dust)
+            )
+            .noFluidInputs()
+            .noFluidOutputs()
+            .duration(10*SECONDS)
+            .eut(TierEU.RECIPE_MV)
+            .metadata(COIL_HEAT, 775)
+            .addTo(sBlastRecipes);
+
         GT_Values.RA.addChemicalRecipe(
                 IridiumDioxide.get(dust),
                 Materials.HydrochloricAcid.getCells(1),
@@ -618,16 +632,21 @@ public class PlatinumSludgeOverHaul {
                 ZincSulfate.get(dust, 6),
                 CrudeRhMetall.get(dust),
                 300);
-        GT_Values.RA.addBlastRecipe(
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
                 CrudeRhMetall.get(dust),
-                Materials.Salt.getDust(1),
-                Materials.Chlorine.getGas(1000),
-                null,
-                RHSalt.get(dust, 3),
-                null,
-                300,
-                120,
-                600);
+                Materials.Salt.getDust(1)
+            )
+            .itemOutputs(RHSalt.get(dust, 3))
+            .fluidInputs(
+                Materials.Chlorine.getGas(1000)
+            )
+            .noFluidOutputs()
+            .duration(15*SECONDS)
+            .eut(TierEU.RECIPE_MV)
+            .metadata(COIL_HEAT, 600)
+            .addTo(sBlastRecipes);
 
         GT_Values.RA.stdBuilder()
             .itemInputs(RHSalt.get(dust, 10))

@@ -1,8 +1,10 @@
 package com.github.bartimaeusnek.bartworks.common.loaders;
 
 import static gregtech.api.enums.Mods.NewHorizonsCoreMod;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBlastRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sMixerRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
+import static gregtech.api.util.GT_RecipeConstants.COIL_HEAT;
 
 import gregtech.api.enums.TierEU;
 import net.minecraft.item.ItemStack;
@@ -165,16 +167,16 @@ public class ArtificialMicaLine {
                 20,
                 120);
         // 27Raw Fluorophlogopite Dust + 720MgO(l) = 4608Fluorophlogopite(l)
-        GT_Values.RA.addBlastRecipe(
-                WerkstoffLoader.RawFluorophlogopite.get(OrePrefixes.dust, 27),
-                null,
-                BW_GT_MaterialReference.Magnesia.getMolten(720),
-                WerkstoffLoader.HotFluorophlogopite.getFluidOrGas(4608),
-                Materials.Glass.getDust(1),
-                null,
-                600,
-                480,
-                1700);
+        GT_Values.RA.stdBuilder()
+            .itemInputs(WerkstoffLoader.RawFluorophlogopite.get(OrePrefixes.dust, 27))
+            .itemOutputs(Materials.Glass.getDust(1))
+            .fluidInputs(BW_GT_MaterialReference.Magnesia.getMolten(720))
+            .fluidOutputs(WerkstoffLoader.HotFluorophlogopite.getFluidOrGas(4608))
+            .duration(30*SECONDS)
+            .eut(TierEU.RECIPE_HV)
+            .metadata(COIL_HEAT, 1700)
+            .addTo(sBlastRecipes);
+
         // 144Fluorophlogopite(l) = Fluorophlogopite
         GT_Recipe.GT_Recipe_Map.sVacuumRecipes.addRecipe(
                 new GT_Recipe(

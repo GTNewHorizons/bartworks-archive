@@ -2,6 +2,7 @@ package com.github.bartimaeusnek.bartworks.common.loaders;
 
 import static gregtech.api.enums.Mods.NewHorizonsCoreMod;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBlastRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sFluidExtractionRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sMixerRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 import static gregtech.api.util.GT_RecipeBuilder.TICKS;
@@ -202,13 +203,20 @@ public class ArtificialMicaLine {
             .addTo(sMixerRecipes);
 
         // MgO(s) = MgO(l)
-        GT_Values.RA.addFluidExtractionRecipe(
-                Materials.Magnesia.getDust(1),
-                null,
-                Materials.Magnesia.getMolten(144),
-                0,
-                20,
-                120);
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
+                Materials.Magnesia.getDust(1)
+            )
+            .noItemOutputs()
+            .noFluidInputs()
+            .fluidOutputs(
+                Materials.Magnesia.getMolten(144)
+            )
+            .duration(20 * TICKS)
+            .eut(TierEU.RECIPE_MV)
+            .addTo(sFluidExtractionRecipes);
+
         // 27Raw Fluorophlogopite Dust + 720MgO(l) = 4608Fluorophlogopite(l)
         GT_Values.RA.stdBuilder()
             .itemInputs(WerkstoffLoader.RawFluorophlogopite.get(OrePrefixes.dust, 27))

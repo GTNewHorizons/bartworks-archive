@@ -17,6 +17,9 @@ import static gregtech.api.enums.OrePrefixes.block;
 import static gregtech.api.enums.OrePrefixes.cellMolten;
 import static gregtech.api.enums.OrePrefixes.ingot;
 import static gregtech.api.enums.OrePrefixes.plate;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sFluidExtractionRecipes;
+import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
+import static gregtech.api.util.GT_RecipeBuilder.TICKS;
 
 import net.minecraft.item.ItemStack;
 
@@ -40,7 +43,20 @@ public class BlockLoader implements IWerkstoffRunnable {
                     false);
         }
         if (werkstoff.hasItemType(cellMolten)) {
-            GT_Values.RA.addFluidExtractionRecipe(werkstoff.get(block), null, werkstoff.getMolten(1296), 0, 288, 8);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(block)
+                )
+                .noItemOutputs()
+                .noFluidInputs()
+                .fluidOutputs(
+                    werkstoff.getMolten(1296)
+                )
+                .duration(14 * SECONDS + 8 * TICKS)
+                .eut(8)
+                .addTo(sFluidExtractionRecipes);
+
         }
         if (werkstoff.hasItemType(plate)) {
             GT_Values.RA.addCutterRecipe(

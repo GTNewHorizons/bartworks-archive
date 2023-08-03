@@ -17,6 +17,7 @@ import static gregtech.api.enums.Mods.Forestry;
 import static gregtech.api.enums.OrePrefixes.capsule;
 import static gregtech.api.enums.OrePrefixes.cell;
 import static gregtech.api.enums.OrePrefixes.dust;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sFluidExtractionRecipes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -206,13 +207,20 @@ public class CellLoader implements IWerkstoffRunnable {
         }
 
         if (werkstoff.hasItemType(dust)) {
-            GT_Values.RA.addFluidExtractionRecipe(
-                    werkstoff.get(dust),
-                    null,
-                    werkstoff.getFluidOrGas(1000),
-                    0,
-                    (int) werkstoff.getStats().getMass(),
-                    werkstoff.getStats().getMass() > 128 ? 64 : 30);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(dust)
+                )
+                .noItemOutputs()
+                .noFluidInputs()
+                .fluidOutputs(
+                    werkstoff.getFluidOrGas(1000)
+                )
+                .duration(werkstoff.getStats().getMass())
+                .eut(werkstoff.getStats().getMass() > 128 ? 64 : 30)
+            .addTo(sFluidExtractionRecipes);
+
             GT_Values.RA.addFluidSolidifierRecipe(
                     GT_Utility.getIntegratedCircuit(1),
                     werkstoff.getFluidOrGas(1000),

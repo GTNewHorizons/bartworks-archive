@@ -4,7 +4,9 @@ import static gregtech.api.enums.Mods.NewHorizonsCoreMod;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBlastRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sMixerRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
+import static gregtech.api.util.GT_RecipeBuilder.TICKS;
 import static gregtech.api.util.GT_RecipeConstants.COIL_HEAT;
+import static gregtech.api.util.GT_RecipeConstants.UniversalChemical;
 
 import gregtech.api.enums.TierEU;
 import net.minecraft.item.ItemStack;
@@ -25,32 +27,58 @@ public class ArtificialMicaLine {
 
     public static void runArtificialMicaRecipe() {
         // Mg + O = MgO
-        GT_Values.RA.addChemicalRecipe(
-                Materials.Magnesium.getDust(1),
-                null,
-                Materials.Oxygen.getGas(1000),
-                null,
-                Materials.Magnesia.getDust(2),
-                40,
-                8);
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
+                Materials.Magnesium.getDust(1)
+            )
+            .itemOutputs(
+                Materials.Magnesia.getDust(2)
+            )
+            .fluidInputs(
+                Materials.Oxygen.getGas(1000)
+            )
+            .noFluidOutputs()
+            .duration(2 * SECONDS)
+            .eut(8)
+            .addTo(UniversalChemical);
         // Si + 6HF = H2SiF6 + 4H
-        GT_Values.RA.addChemicalRecipe(
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
                 Materials.Silicon.getDust(1),
-                Materials.Empty.getCells(4),
-                Materials.HydrofluoricAcid.getFluid(6000),
-                WerkstoffLoader.HexafluorosilicicAcid.getFluidOrGas(1000),
-                Materials.Hydrogen.getCells(4),
-                400,
-                120);
+                Materials.Empty.getCells(4)
+            )
+            .itemOutputs(
+                Materials.Hydrogen.getCells(4)
+            )
+            .fluidInputs(
+                Materials.HydrofluoricAcid.getFluid(6000)
+            )
+            .fluidOutputs(
+                WerkstoffLoader.HexafluorosilicicAcid.getFluidOrGas(1000)
+            )
+            .duration(20 * SECONDS)
+            .eut(TierEU.RECIPE_MV)
+            .addTo(UniversalChemical);
         // K + Cl = KCl
-        GT_Values.RA.addChemicalRecipe(
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
                 Materials.Potassium.getDust(1),
-                GT_Utility.getIntegratedCircuit(2),
-                Materials.Chlorine.getGas(1000),
-                null,
-                Materials.RockSalt.getDust(2),
-                20,
-                8);
+                GT_Utility.getIntegratedCircuit(2)
+            )
+            .itemOutputs(
+                Materials.RockSalt.getDust(2)
+            )
+            .fluidInputs(
+                Materials.Chlorine.getGas(1000)
+            )
+            .noFluidOutputs()
+            .duration(20 * TICKS)
+            .eut(8)
+            .addTo(UniversalChemical);
+
         // 2KCl + H2SiF6 = 2HCl + K2SiF6
         GT_Values.RA.stdBuilder()
             .itemInputs(Materials.RockSalt.getDust(4))
@@ -62,25 +90,40 @@ public class ArtificialMicaLine {
             .addTo(sMixerRecipes);
 
         // 2K + CO2 + O = K2CO3
-        GT_Values.RA.addChemicalRecipe(
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
                 Materials.Potassium.getDust(2),
-                Materials.CarbonDioxide.getCells(1),
-                Materials.Oxygen.getGas(1000),
-                null,
+                Materials.CarbonDioxide.getCells(1)
+            )
+            .itemOutputs(
                 WerkstoffLoader.PotassiumCarbonate.get(OrePrefixes.dust, 6),
-                Materials.Empty.getCells(1),
-                40,
-                8);
+                Materials.Empty.getCells(1)
+            )
+            .fluidInputs(
+                Materials.Oxygen.getGas(1000)
+            )
+            .noFluidOutputs()
+            .duration(2 * SECONDS)
+            .eut(8)
+            .addTo(UniversalChemical);
         // K2O + CO2 = K2CO3
-        GT_Values.RA.addChemicalRecipe(
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
                 Materials.Potash.getDust(3),
-                Materials.CarbonDioxide.getCells(1),
-                null,
-                null,
+                Materials.CarbonDioxide.getCells(1)
+            )
+            .itemOutputs(
                 WerkstoffLoader.PotassiumCarbonate.get(OrePrefixes.dust, 6),
-                Materials.Empty.getCells(1),
-                40,
-                8);
+                Materials.Empty.getCells(1)
+            )
+            .noFluidInputs()
+            .noFluidOutputs()
+            .duration(2 * SECONDS)
+            .eut(8)
+            .addTo(UniversalChemical);
+
         // 55Quartz Dust + 20K2SiF6 + 12Al2O3 + 4K2CO3 = 91Raw Fluorophlogopite Dust
         GT_Values.RA.stdBuilder()
             .itemInputs(

@@ -22,6 +22,7 @@ import static gregtech.api.enums.OrePrefixes.ingot;
 import static gregtech.api.enums.OrePrefixes.plate;
 import static gregtech.api.enums.OrePrefixes.stick;
 import static gregtech.api.enums.OrePrefixes.stickLong;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBenderRecipes;
 
 import net.minecraft.item.ItemStack;
 
@@ -100,7 +101,7 @@ public class SimpleMetalLoader implements IWerkstoffRunnable {
                     GT_Proxy.tBits,
                     new Object[] { "hX", 'X', werkstoff.get(plate) });
 
-            GT_Recipe.GT_Recipe_Map.sBenderRecipes.add(
+            sBenderRecipes.add(
                     new BWRecipes.DynamicGTRecipe(
                             true,
                             new ItemStack[] { werkstoff.get(ingot), GT_Utility.getIntegratedCircuit(1) },
@@ -129,19 +130,35 @@ public class SimpleMetalLoader implements IWerkstoffRunnable {
                     (int) Math.max(werkstoff.getStats().getMass() * 5L, 1L),
                     16);
 
-            GT_Values.RA.addBenderRecipe(
-                    werkstoff.get(plate),
-                    GT_Utility.getIntegratedCircuit(1),
-                    werkstoff.get(foil, 4),
-                    (int) Math.max(werkstoff.getStats().getMass() * 1L, 1L),
-                    24);
 
-            GT_Values.RA.addBenderRecipe(
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(plate),
+                    GT_Utility.getIntegratedCircuit(1)
+                )
+                .itemOutputs(
+                    werkstoff.get(foil, 4)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration((int) Math.max(werkstoff.getStats().getMass() * 1L, 1L))
+                .eut(24)
+                .addTo(sBenderRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
                     werkstoff.get(ingot),
-                    GT_Utility.getIntegratedCircuit(10),
-                    werkstoff.get(foil, 4),
-                    (int) Math.max(werkstoff.getStats().getMass() * 2L, 1L),
-                    24);
+                    GT_Utility.getIntegratedCircuit(10)
+                )
+                .itemOutputs(
+                    werkstoff.get(foil, 4)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration((int) Math.max(werkstoff.getStats().getMass() * 2L, 1L))
+                .eut(24)
+                .addTo(sBenderRecipes);
+
 
             GT_Values.RA.addForgeHammerRecipe(
                     werkstoff.get(stick, 2),

@@ -1,6 +1,7 @@
 package com.github.bartimaeusnek.bartworks.common.loaders;
 
 import static gregtech.api.enums.Mods.NewHorizonsCoreMod;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBenderRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBlastRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sFluidExtractionRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sMixerRecipes;
@@ -243,12 +244,21 @@ public class ArtificialMicaLine {
                         0));
         // Fluorophlogopite = 4Insulator Foil
         if (NewHorizonsCoreMod.isModLoaded()) {
-            GT_Values.RA.addBenderRecipe(
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
                     WerkstoffLoader.Fluorophlogopite.get(OrePrefixes.plate, 1),
-                    GT_Utility.getIntegratedCircuit(1),
-                    GT_ModHandler.getModItem(NewHorizonsCoreMod.ID, "item.MicaInsulatorFoil", 4),
-                    10,
-                    600);
+                    GT_Utility.getIntegratedCircuit(1)
+                )
+                .itemOutputs(
+                    GT_ModHandler.getModItem(NewHorizonsCoreMod.ID, "item.MicaInsulatorFoil", 4)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(10 * TICKS)
+                .eut(600)
+                .addTo(sBenderRecipes);
+
         }
     }
 }

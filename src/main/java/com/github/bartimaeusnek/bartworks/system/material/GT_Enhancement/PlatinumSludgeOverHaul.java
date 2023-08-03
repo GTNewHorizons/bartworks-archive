@@ -72,6 +72,9 @@ import static gregtech.api.enums.OrePrefixes.dustSmall;
 import static gregtech.api.enums.OrePrefixes.dustTiny;
 import static gregtech.api.enums.OrePrefixes.ingot;
 import static gregtech.api.enums.OrePrefixes.nugget;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sMixerRecipes;
+import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
+import static gregtech.api.util.GT_RecipeBuilder.TICKS;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -81,6 +84,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import gregtech.api.enums.TierEU;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -131,36 +135,40 @@ public class PlatinumSludgeOverHaul {
     private static void runHelperrecipes() {
         // DilutedSulfuricAcid
         // 2H2SO4 + H2O = 3H2SO4(d)
-        GT_Values.RA.addMixerRecipe(
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
                 Materials.SulfuricAcid.getCells(2),
                 Materials.Water.getCells(1),
-                GT_Utility.getIntegratedCircuit(1),
-                null,
-                null,
-                null,
-                Materials.DilutedSulfuricAcid.getCells(3),
-                30,
-                30);
-        GT_Values.RA.addMixerRecipe(
+                GT_Utility.getIntegratedCircuit(1)
+            )
+            .itemOutputs(Materials.DilutedSulfuricAcid.getCells(3))
+            .noFluidInputs()
+            .noFluidOutputs()
+            .duration(1*SECONDS+10*TICKS)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(sMixerRecipes);
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
                 Materials.Water.getCells(1),
-                GT_Utility.getIntegratedCircuit(1),
-                null,
-                null,
-                Materials.SulfuricAcid.getFluid(2000),
-                Materials.DilutedSulfuricAcid.getFluid(3000),
-                Materials.Empty.getCells(1),
-                30,
-                30);
-        GT_Values.RA.addMixerRecipe(
-                Materials.SulfuricAcid.getCells(2),
-                GT_Utility.getIntegratedCircuit(1),
-                null,
-                null,
-                Materials.Water.getFluid(1000),
-                Materials.DilutedSulfuricAcid.getFluid(3000),
-                Materials.Empty.getCells(2),
-                30,
-                30);
+                GT_Utility.getIntegratedCircuit(1)
+            )
+            .itemOutputs(Materials.Empty.getCells(1))
+            .fluidInputs(Materials.SulfuricAcid.getFluid(2000))
+            .fluidOutputs(Materials.DilutedSulfuricAcid.getFluid(3000))
+            .duration(1*SECONDS+10*TICKS)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(sMixerRecipes);
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(Materials.SulfuricAcid.getCells(2),
+                GT_Utility.getIntegratedCircuit(1))
+            .itemOutputs(Materials.Empty.getCells(2))
+            .fluidInputs(Materials.Water.getFluid(1000))
+            .fluidOutputs(Materials.DilutedSulfuricAcid.getFluid(3000))
+            .duration(1*SECONDS+10*TICKS)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(sMixerRecipes);
         // FormicAcid
         // CO + NaOH = CHO2Na
         GT_Values.RA.addChemicalRecipe(
@@ -189,46 +197,53 @@ public class PlatinumSludgeOverHaul {
                 Sodiumsulfate.get(dust, 7),
                 15);
         // AquaRegia
-        GT_Values.RA.addMixerRecipe(
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
                 Materials.DilutedSulfuricAcid.getCells(1),
                 Materials.NitricAcid.getCells(1),
-                GT_Utility.getIntegratedCircuit(1),
-                null,
-                null,
-                null,
-                AquaRegia.get(cell, 2),
-                30,
-                30);
-        GT_Values.RA.addMixerRecipe(
-                Materials.DilutedSulfuricAcid.getCells(1),
+                GT_Utility.getIntegratedCircuit(1)
+            )
+            .itemOutputs(AquaRegia.get(cell, 2))
+            .noFluidInputs()
+            .noFluidOutputs()
+            .duration(1*SECONDS+10*TICKS)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(sMixerRecipes);
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(Materials.DilutedSulfuricAcid.getCells(1),
                 Materials.NitricAcid.getCells(1),
-                GT_Utility.getIntegratedCircuit(2),
-                null,
-                null,
-                AquaRegia.getFluidOrGas(2000),
-                Materials.Empty.getCells(2),
-                30,
-                30);
-        GT_Values.RA.addMixerRecipe(
+                GT_Utility.getIntegratedCircuit(2))
+            .itemOutputs(Materials.Empty.getCells(2))
+            .noFluidInputs()
+            .fluidOutputs(AquaRegia.getFluidOrGas(2000))
+            .duration(1*SECONDS+10*TICKS)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(sMixerRecipes);
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
                 Materials.NitricAcid.getCells(1),
-                GT_Utility.getIntegratedCircuit(3),
-                null,
-                null,
-                Materials.DilutedSulfuricAcid.getFluid(1000),
-                AquaRegia.getFluidOrGas(2000),
-                Materials.Empty.getCells(1),
-                30,
-                30);
-        GT_Values.RA.addMixerRecipe(
+                GT_Utility.getIntegratedCircuit(3)
+            )
+            .itemOutputs(Materials.Empty.getCells(1))
+            .fluidInputs(Materials.DilutedSulfuricAcid.getFluid(1000))
+            .fluidOutputs(AquaRegia.getFluidOrGas(2000))
+            .duration(1*SECONDS+10*TICKS)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(sMixerRecipes);
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
                 Materials.DilutedSulfuricAcid.getCells(1),
-                GT_Utility.getIntegratedCircuit(4),
-                null,
-                null,
-                Materials.NitricAcid.getFluid(1000),
-                AquaRegia.getFluidOrGas(2000),
-                Materials.Empty.getCells(1),
-                30,
-                30);
+                GT_Utility.getIntegratedCircuit(4)
+            )
+            .itemOutputs(Materials.Empty.getCells(1))
+            .fluidInputs(Materials.NitricAcid.getFluid(1000))
+            .fluidOutputs(AquaRegia.getFluidOrGas(2000))
+            .duration(1*SECONDS+10*TICKS)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(sMixerRecipes);
 
         // AmmoniumCloride
         // NH3 + HCl = NH4Cl
@@ -613,16 +628,16 @@ public class PlatinumSludgeOverHaul {
                 300,
                 120,
                 600);
-        GT_Values.RA.addMixerRecipe(
-                RHSalt.get(dust, 10),
-                null,
-                null,
-                null,
-                Materials.Water.getFluid(2000),
-                RHSaltSolution.getFluidOrGas(2000),
-                null,
-                300,
-                30);
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(RHSalt.get(dust, 10))
+            .noItemOutputs()
+            .fluidInputs(Materials.Water.getFluid(2000))
+            .fluidOutputs(RHSaltSolution.getFluidOrGas(2000))
+            .duration(15*SECONDS)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(sMixerRecipes);
+
         GT_Values.RA.addChemicalRecipe(
                 SodiumNitrate.get(dust, 5),
                 GT_Utility.getIntegratedCircuit(1),
@@ -648,16 +663,16 @@ public class PlatinumSludgeOverHaul {
                 new int[] { 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1500, },
                 600,
                 30);
-        GT_Values.RA.addMixerRecipe(
-                RhFilterCake.get(dust),
-                null,
-                null,
-                null,
-                Materials.Water.getFluid(1000),
-                RHFilterCakeSolution.getFluidOrGas(1000),
-                null,
-                300,
-                30);
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(RhFilterCake.get(dust))
+            .noItemOutputs()
+            .fluidInputs(Materials.Water.getFluid(1000))
+            .fluidOutputs(RHFilterCakeSolution.getFluidOrGas(1000))
+            .duration(15*SECONDS)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(sMixerRecipes);
+
         GT_Values.RA.addChemicalRecipe(
                 GT_Utility.getIntegratedCircuit(2),
                 null,

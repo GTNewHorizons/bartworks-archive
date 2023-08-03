@@ -1,7 +1,10 @@
 package com.github.bartimaeusnek.bartworks.common.loaders;
 
 import static gregtech.api.enums.Mods.NewHorizonsCoreMod;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sMixerRecipes;
+import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 
+import gregtech.api.enums.TierEU;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -47,16 +50,15 @@ public class ArtificialMicaLine {
                 20,
                 8);
         // 2KCl + H2SiF6 = 2HCl + K2SiF6
-        GT_Values.RA.addMixerRecipe(
-                Materials.RockSalt.getDust(4),
-                null,
-                null,
-                null,
-                WerkstoffLoader.HexafluorosilicicAcid.getFluidOrGas(1000),
-                Materials.HydrochloricAcid.getGas(2000),
-                WerkstoffLoader.Potassiumfluorosilicate.get(OrePrefixes.dust, 9),
-                20,
-                8);
+        GT_Values.RA.stdBuilder()
+            .itemInputs(Materials.RockSalt.getDust(4))
+            .itemOutputs(WerkstoffLoader.Potassiumfluorosilicate.get(OrePrefixes.dust, 9))
+            .fluidInputs(WerkstoffLoader.HexafluorosilicicAcid.getFluidOrGas(1000))
+            .fluidOutputs(Materials.HydrochloricAcid.getGas(2000))
+            .duration(1*SECONDS)
+            .eut(8)
+            .addTo(sMixerRecipes);
+
         // 2K + CO2 + O = K2CO3
         GT_Values.RA.addChemicalRecipe(
                 Materials.Potassium.getDust(2),
@@ -78,80 +80,82 @@ public class ArtificialMicaLine {
                 40,
                 8);
         // 55Quartz Dust + 20K2SiF6 + 12Al2O3 + 4K2CO3 = 91Raw Fluorophlogopite Dust
-        GT_Values.RA.addMixerRecipe(
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
                 Materials.QuartzSand.getDust(55),
                 WerkstoffLoader.Potassiumfluorosilicate.get(OrePrefixes.dust, 20),
                 WerkstoffLoader.Alumina.get(OrePrefixes.dust, 12),
                 WerkstoffLoader.PotassiumCarbonate.get(OrePrefixes.dust, 4),
-                null,
-                GT_Utility.getIntegratedCircuit(4),
-                null,
-                null,
-                null,
-                null,
-                null,
+                GT_Utility.getIntegratedCircuit(4)
+            )
+            .itemOutputs(
                 WerkstoffLoader.RawFluorophlogopite.get(OrePrefixes.dust, 64),
-                WerkstoffLoader.RawFluorophlogopite.get(OrePrefixes.dust, 27),
-                null,
-                null,
-                400,
-                120);
+                WerkstoffLoader.RawFluorophlogopite.get(OrePrefixes.dust, 27)
+            )
+            .noFluidInputs()
+            .noFluidOutputs()
+            .duration(20*SECONDS)
+            .eut(TierEU.RECIPE_MV)
+            .addTo(sMixerRecipes);
+
         // 55Quartzite/Nether Quartz Dust + 20K2SiF6 + 57Al2O3 + 4K2CO3 = 136Raw Fluorophlogopite Dust
-        GT_Values.RA.addMixerRecipe(
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
                 Materials.Quartzite.getDust(55),
                 WerkstoffLoader.Potassiumfluorosilicate.get(OrePrefixes.dust, 20),
                 WerkstoffLoader.Alumina.get(OrePrefixes.dust, 57),
                 WerkstoffLoader.PotassiumCarbonate.get(OrePrefixes.dust, 4),
-                null,
-                GT_Utility.getIntegratedCircuit(4),
-                null,
-                null,
-                null,
-                null,
-                null,
+                GT_Utility.getIntegratedCircuit(4)
+            )
+            .itemOutputs(
                 WerkstoffLoader.RawFluorophlogopite.get(OrePrefixes.dust, 64),
                 WerkstoffLoader.RawFluorophlogopite.get(OrePrefixes.dust, 64),
-                WerkstoffLoader.RawFluorophlogopite.get(OrePrefixes.dust, 8),
-                null,
-                600,
-                120);
-        GT_Values.RA.addMixerRecipe(
+                WerkstoffLoader.RawFluorophlogopite.get(OrePrefixes.dust, 8)
+            )
+            .fluidInputs()
+            .fluidOutputs()
+            .duration(30*SECONDS)
+            .eut(TierEU.RECIPE_MV)
+            .addTo(sMixerRecipes);
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
                 Materials.NetherQuartz.getDust(55),
                 WerkstoffLoader.Potassiumfluorosilicate.get(OrePrefixes.dust, 20),
                 WerkstoffLoader.Alumina.get(OrePrefixes.dust, 57),
                 WerkstoffLoader.PotassiumCarbonate.get(OrePrefixes.dust, 4),
-                null,
-                GT_Utility.getIntegratedCircuit(4),
-                null,
-                null,
-                null,
-                null,
-                null,
+                GT_Utility.getIntegratedCircuit(4)
+            )
+            .itemOutputs(
                 WerkstoffLoader.RawFluorophlogopite.get(OrePrefixes.dust, 64),
                 WerkstoffLoader.RawFluorophlogopite.get(OrePrefixes.dust, 64),
-                WerkstoffLoader.RawFluorophlogopite.get(OrePrefixes.dust, 8),
-                null,
-                600,
-                120);
+                WerkstoffLoader.RawFluorophlogopite.get(OrePrefixes.dust, 8)
+            )
+            .noFluidInputs()
+            .noFluidOutputs()
+            .duration(30*SECONDS)
+            .eut(TierEU.RECIPE_MV)
+            .addTo(sMixerRecipes);
+
         // 62Certus Quartz Dust + 10K2SiF6 + 12Al2O3 + 7K2CO3 = 91Raw Fluorophlogopite Dust
-        GT_Values.RA.addMixerRecipe(
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
                 Materials.CertusQuartz.getDust(62),
                 WerkstoffLoader.Potassiumfluorosilicate.get(OrePrefixes.dust, 10),
                 WerkstoffLoader.Alumina.get(OrePrefixes.dust, 12),
                 WerkstoffLoader.PotassiumCarbonate.get(OrePrefixes.dust, 7),
-                null,
-                GT_Utility.getIntegratedCircuit(4),
-                null,
-                null,
-                null,
-                null,
-                null,
+                GT_Utility.getIntegratedCircuit(4)
+            )
+            .itemOutputs(
                 WerkstoffLoader.RawFluorophlogopite.get(OrePrefixes.dust, 64),
-                WerkstoffLoader.RawFluorophlogopite.get(OrePrefixes.dust, 27),
-                null,
-                null,
-                600,
-                120);
+                WerkstoffLoader.RawFluorophlogopite.get(OrePrefixes.dust, 27)
+            )
+            .noFluidInputs()
+            .noFluidOutputs()
+            .duration(30*SECONDS)
+            .eut(TierEU.RECIPE_MV)
+            .addTo(sMixerRecipes);
+
         // MgO(s) = MgO(l)
         GT_Values.RA.addFluidExtractionRecipe(
                 Materials.Magnesia.getDust(1),

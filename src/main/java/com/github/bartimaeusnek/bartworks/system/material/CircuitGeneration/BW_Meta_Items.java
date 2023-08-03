@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
+import gregtech.api.enums.TierEU;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -53,6 +54,9 @@ import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
 
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sPressRecipes;
+import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
+
 public class BW_Meta_Items {
 
     public static BW_Meta_Items.BW_GT_MetaGenCircuits getNEWCIRCUITS() {
@@ -66,12 +70,21 @@ public class BW_Meta_Items {
         BW_Meta_Items.NEWCIRCUITS.addItem(1, "Sliced Circuit", "", SubTag.NO_UNIFICATION, SubTag.NO_RECYCLING);
         BW_Meta_Items.NEWCIRCUITS.addItem(2, "Raw Imprint supporting Board", "A Raw Board needed for Circuit Imprints");
         BW_Meta_Items.NEWCIRCUITS.addItem(3, "Imprint supporting Board", "A Board needed for Circuit Imprints");
-        GT_Values.RA.addFormingPressRecipe(
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
                 WerkstoffLoader.MagnetoResonaticDust.get(OrePrefixes.dust, 1),
-                WerkstoffLoader.ArInGaPhoBiBoTe.get(OrePrefixes.dust, 4),
-                BW_Meta_Items.NEWCIRCUITS.getStack(2),
-                300,
-                480);
+                WerkstoffLoader.ArInGaPhoBiBoTe.get(OrePrefixes.dust, 4)
+            )
+            .itemOutputs(
+                BW_Meta_Items.NEWCIRCUITS.getStack(2)
+            )
+            .noFluidInputs()
+            .noFluidOutputs()
+            .duration(15*SECONDS)
+            .eut(TierEU.RECIPE_HV)
+            .addTo(sPressRecipes);
+
         GT_Recipe.GT_Recipe_Map.sAutoclaveRecipes.add(
                 new BWRecipes.DynamicGTRecipe(
                         false,

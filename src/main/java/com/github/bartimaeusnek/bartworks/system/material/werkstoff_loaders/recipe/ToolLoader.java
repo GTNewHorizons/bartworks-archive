@@ -29,9 +29,11 @@ import static gregtech.api.enums.OrePrefixes.toolHeadSaw;
 import static gregtech.api.enums.OrePrefixes.toolHeadWrench;
 import static gregtech.api.enums.OrePrefixes.turbineBlade;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sAssemblerRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sPressRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.MINUTES;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 
+import gregtech.api.enums.TierEU;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
@@ -439,12 +441,18 @@ public class ToolLoader implements IWerkstoffRunnable {
                     werkstoff.get(turbineBlade, 1),
                     (int) werkstoff.getStats().getMass() * 20,
                     120);
-            GT_Values.RA.addFormingPressRecipe(
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
                     werkstoff.get(plateDouble, 3),
-                    werkstoff.get(screw, 2),
-                    werkstoff.get(turbineBlade, 1),
-                    (int) werkstoff.getStats().getMass() / 4 * 20,
-                    30);
+                    werkstoff.get(screw, 2)
+                )
+                .itemOutputs(werkstoff.get(turbineBlade, 1))
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration((werkstoff.getStats().getMass() / 4) * SECONDS)
+                .eut(TierEU.RECIPE_LV)
+                .addTo(sPressRecipes);
 
             GT_Values.RA.stdBuilder()
                 .itemInputs(werkstoff.get(turbineBlade, 4),

@@ -18,6 +18,7 @@ import static gregtech.api.enums.OrePrefixes.capsule;
 import static gregtech.api.enums.OrePrefixes.cell;
 import static gregtech.api.enums.OrePrefixes.dust;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sFluidExtractionRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sFluidSolidficationRecipes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -221,12 +222,22 @@ public class CellLoader implements IWerkstoffRunnable {
                 .eut(werkstoff.getStats().getMass() > 128 ? 64 : 30)
             .addTo(sFluidExtractionRecipes);
 
-            GT_Values.RA.addFluidSolidifierRecipe(
-                    GT_Utility.getIntegratedCircuit(1),
-                    werkstoff.getFluidOrGas(1000),
-                    werkstoff.get(dust),
-                    (int) werkstoff.getStats().getMass(),
-                    werkstoff.getStats().getMass() > 128 ? 64 : 30);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    GT_Utility.getIntegratedCircuit(1)
+                )
+                .itemOutputs(
+                    werkstoff.get(dust)
+                )
+                .fluidInputs(
+                    werkstoff.getFluidOrGas(1000)
+                )
+                .noFluidOutputs()
+                .duration((int) werkstoff.getStats().getMass())
+                .eut(werkstoff.getStats().getMass() > 128 ? 64 : 30)
+                .addTo(sFluidSolidficationRecipes);
+
         }
 
         if (werkstoff.getType().equals(Werkstoff.Types.ELEMENT)) {

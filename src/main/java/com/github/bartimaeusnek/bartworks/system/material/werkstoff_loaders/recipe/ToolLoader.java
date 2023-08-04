@@ -29,6 +29,7 @@ import static gregtech.api.enums.OrePrefixes.toolHeadSaw;
 import static gregtech.api.enums.OrePrefixes.toolHeadWrench;
 import static gregtech.api.enums.OrePrefixes.turbineBlade;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sAssemblerRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sFluidSolidficationRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sPressRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.MINUTES;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
@@ -435,12 +436,22 @@ public class ToolLoader implements IWerkstoffRunnable {
                     werkstoff.get(turbineBlade, 1),
                     (int) werkstoff.getStats().getMass() / 2 * 20,
                     120);
-            GT_Values.RA.addFluidSolidifierRecipe(
-                    ItemList.Shape_Mold_Turbine_Blade.get(0),
-                    werkstoff.getMolten(864),
-                    werkstoff.get(turbineBlade, 1),
-                    (int) werkstoff.getStats().getMass() * 20,
-                    120);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    ItemList.Shape_Mold_Turbine_Blade.get(0)
+                )
+                .itemOutputs(
+                    werkstoff.get(turbineBlade, 1)
+                )
+                .fluidInputs(
+                    werkstoff.getMolten(864)
+                )
+                .noFluidOutputs()
+                .duration((int) werkstoff.getStats().getMass() * 20)
+                .eut(TierEU.RECIPE_MV)
+                .addTo(sFluidSolidficationRecipes);
+
 
             GT_Values.RA.stdBuilder()
                 .itemInputs(

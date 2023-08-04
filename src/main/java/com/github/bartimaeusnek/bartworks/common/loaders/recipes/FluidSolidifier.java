@@ -65,7 +65,7 @@ public class FluidSolidifier implements Runnable {
                 Materials.CosmicNeutronium.getMolten(1152),
                 new ItemStack(ItemRegistry.bw_glasses[0], 1, 14),
                 800,
-                BW_Util.getMachineVoltageFromTier(9));
+                (int) TierEU.RECIPE_UHV);
         GT_Values.RA.addFluidSolidifierRecipe(
                 new ItemStack(ItemRegistry.bw_glasses[0], 1, 0),
                 Materials.Infinity.getMolten(1152),

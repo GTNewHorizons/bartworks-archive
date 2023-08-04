@@ -24,6 +24,9 @@ import static gregtech.api.enums.OrePrefixes.gem;
 import static gregtech.api.enums.OrePrefixes.ingot;
 import static gregtech.api.enums.OrePrefixes.nugget;
 import static gregtech.api.enums.OrePrefixes.ore;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sAutoclaveRecipes;
+import static gregtech.api.util.GT_RecipeBuilder.MINUTES;
+import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 
 import com.github.bartimaeusnek.bartworks.system.material.Werkstoff;
 import com.github.bartimaeusnek.bartworks.system.material.werkstoff_loaders.IWerkstoffRunnable;
@@ -140,34 +143,71 @@ public class CrushedLoader implements IWerkstoffRunnable {
                 5);
 
         if (werkstoff.contains(SubTag.CRYSTALLISABLE)) {
-            GT_Values.RA.addAutoclaveRecipe(
-                    werkstoff.get(dustPure),
-                    Materials.Water.getFluid(200L),
-                    werkstoff.get(gem),
-                    9000,
-                    2000,
-                    24);
-            GT_Values.RA.addAutoclaveRecipe(
-                    werkstoff.get(dustImpure),
-                    Materials.Water.getFluid(200L),
-                    werkstoff.get(gem),
-                    9000,
-                    2000,
-                    24);
-            GT_Values.RA.addAutoclaveRecipe(
-                    werkstoff.get(dustPure),
-                    gregtech.api.util.GT_ModHandler.getDistilledWater(200L),
-                    werkstoff.get(gem),
-                    9500,
-                    1500,
-                    24);
-            GT_Values.RA.addAutoclaveRecipe(
-                    werkstoff.get(dustImpure),
-                    gregtech.api.util.GT_ModHandler.getDistilledWater(200L),
-                    werkstoff.get(gem),
-                    9500,
-                    1500,
-                    24);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(dustPure)
+                )
+                .itemOutputs(
+                    werkstoff.get(gem)
+                )
+                .outputChances(9000)
+                .fluidInputs(
+                    Materials.Water.getFluid(200L)
+                )
+                .noFluidOutputs()
+                .duration(1 * MINUTES + 40 * SECONDS)
+                .eut(24)
+                .addTo(sAutoclaveRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(dustImpure)
+                )
+                .itemOutputs(
+                    werkstoff.get(gem)
+                )
+                .outputChances(9000)
+                .fluidInputs(
+                    Materials.Water.getFluid(200L)
+                )
+                .noFluidOutputs()
+                .duration(1 * MINUTES + 40 * SECONDS)
+                .eut(24)
+                .addTo(sAutoclaveRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(dustPure)
+                )
+                .itemOutputs(
+                    werkstoff.get(gem)
+                )
+                .outputChances(9500)
+                .fluidInputs(
+                    gregtech.api.util.GT_ModHandler.getDistilledWater(200L)
+                )
+                .noFluidOutputs()
+                .duration(1 * MINUTES + 15 * SECONDS)
+                .eut(24)
+                .addTo(sAutoclaveRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(dustImpure)
+                )
+                .itemOutputs(
+                    werkstoff.get(gem)
+                )
+                .outputChances(9500)
+                .fluidInputs(
+                    gregtech.api.util.GT_ModHandler.getDistilledWater(200L)
+                )
+                .noFluidOutputs()
+                .duration(1 * MINUTES + 15 * SECONDS)
+                .eut(24)
+                .addTo(sAutoclaveRecipes);
+
         }
         if (werkstoff.contains(SubTag.WASHING_MERCURY)) GT_Values.RA.addChemicalBathRecipe(
                 werkstoff.get(crushed),

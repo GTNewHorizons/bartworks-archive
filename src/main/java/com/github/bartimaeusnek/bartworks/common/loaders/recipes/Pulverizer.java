@@ -71,7 +71,7 @@ public class Pulverizer implements Runnable {
                         MaterialsUEVplus.TranscendentMetal.getDust(8) },
                 null,
                 800,
-                BW_Util.getMachineVoltageFromTier(12));
+                (int) TierEU.RECIPE_UMV);
 
         for (int i = 6; i < 11; i++) {
             GT_Values.RA.addPulveriserRecipe(

@@ -138,7 +138,7 @@ public class BioRecipeLoader {
                     BioCultureLoader.WhineYeast,
                     new FluidStack[] { FluidRegistry.getFluidStack("potion.wine", 12) },
                     200,
-                    BW_Util.getMachineVoltageFromTier(2));
+                    (int) TierEU.RECIPE_MV);
 
             BWRecipes.instance.addBacterialVatRecipe(
                     new ItemStack[] { new ItemStack(Items.sugar, 4), ItemList.IC2_Hops.get(16L),

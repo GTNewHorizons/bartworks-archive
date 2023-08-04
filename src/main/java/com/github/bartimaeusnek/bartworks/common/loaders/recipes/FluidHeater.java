@@ -1,5 +1,6 @@
 package com.github.bartimaeusnek.bartworks.common.loaders.recipes;
 
+import gregtech.api.enums.TierEU;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.github.bartimaeusnek.bartworks.common.loaders.FluidLoader;
@@ -17,6 +18,6 @@ public class FluidHeater implements Runnable {
                 new FluidStack(FluidLoader.fulvicAcid, 1000),
                 new FluidStack(FluidLoader.heatedfulvicAcid, 1000),
                 90,
-                BW_Util.getMachineVoltageFromTier(2));
+                (int) TierEU.RECIPE_MV);
     }
 }

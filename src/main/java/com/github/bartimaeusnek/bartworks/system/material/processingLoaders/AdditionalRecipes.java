@@ -316,7 +316,7 @@ public class AdditionalRecipes {
                 WerkstoffLoader.Prasiolite.get(OrePrefixes.gemFlawed, 20),
                 GT_Values.NI,
                 800,
-                BW_Util.getMachineVoltageFromTier(2),
+                (int) TierEU.RECIPE_MV,
                 500);
         GT_Values.RA.addPrimitiveBlastRecipe(
                 GT_OreDictUnificator.get(dust, Materials.Quartzite, 40L),
@@ -356,7 +356,7 @@ public class AdditionalRecipes {
                 Materials.Lead.getIngots(10),
                 Materials.Tellurium.getNuggets(20),
                 800,
-                BW_Util.getMachineVoltageFromTier(2),
+                (int) TierEU.RECIPE_MV,
                 722);
         GT_Values.RA.addFusionReactorRecipe(
                 Materials.Plutonium.getMolten(48),

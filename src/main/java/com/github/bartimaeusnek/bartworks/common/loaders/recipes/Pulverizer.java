@@ -1,5 +1,6 @@
 package com.github.bartimaeusnek.bartworks.common.loaders.recipes;
 
+import gregtech.api.enums.TierEU;
 import net.minecraft.item.ItemStack;
 
 import com.github.bartimaeusnek.bartworks.common.loaders.ItemRegistry;
@@ -78,7 +79,7 @@ public class Pulverizer implements Runnable {
                     new ItemStack[] { Materials.BorosilicateGlass.getDust(9) },
                     null,
                     400,
-                    BW_Util.getMachineVoltageFromTier(1));
+                    (int) TierEU.RECIPE_LV);
         }
     }
 }

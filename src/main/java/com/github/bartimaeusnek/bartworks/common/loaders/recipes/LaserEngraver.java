@@ -1,5 +1,6 @@
 package com.github.bartimaeusnek.bartworks.common.loaders.recipes;
 
+import gregtech.api.enums.TierEU;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
@@ -18,7 +19,7 @@ public class LaserEngraver implements Runnable {
                 GT_Utility.getIntegratedCircuit(17),
                 BioItemList.getPlasmidCell(null),
                 100,
-                BW_Util.getMachineVoltageFromTier(1));
+                (int) TierEU.RECIPE_LV);
 
     }
 }

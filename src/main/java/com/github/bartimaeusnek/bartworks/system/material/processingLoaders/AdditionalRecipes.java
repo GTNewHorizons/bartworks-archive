@@ -334,7 +334,7 @@ public class AdditionalRecipes {
                 GT_Values.NF,
                 WerkstoffLoader.YttriumOxide.get(dust, 5),
                 4096,
-                BW_Util.getMachineVoltageFromTier(1));
+                (int) TierEU.RECIPE_LV);
         // Zr + 2O =Y22O3= ZrO2
         GT_Recipe.GT_Recipe_Map.sBlastRecipes.addRecipe(
                 false,
@@ -436,7 +436,7 @@ public class AdditionalRecipes {
                         new FluidStack[] { Materials.SolderingAlloy.getMolten(36) },
                         null,
                         750,
-                        BW_Util.getMachineVoltageFromTier(1),
+                        (int) TierEU.RECIPE_LV,
                         CLEANROOM));
         // LV-EV
         for (int i = 1; i <= 4; i++) {

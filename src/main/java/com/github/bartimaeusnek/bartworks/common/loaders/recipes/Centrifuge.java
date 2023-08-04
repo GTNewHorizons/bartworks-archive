@@ -41,7 +41,7 @@ public class Centrifuge implements Runnable {
                 GT_Values.NI,
                 new int[] { 800, 375, 22, 22, 5 },
                 10000,
-                BW_Util.getMachineVoltageFromTier(4));
+                (int) TierEU.RECIPE_EV);
 
         ItemStack[] pellets = new ItemStack[6];
         Arrays.fill(pellets, new ItemStack(GT_TileEntity_THTR.THTRMaterials.aTHTR_Materials, 64, 4));

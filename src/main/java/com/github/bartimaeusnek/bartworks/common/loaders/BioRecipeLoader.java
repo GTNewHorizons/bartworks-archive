@@ -113,7 +113,7 @@ public class BioRecipeLoader {
                     new int[] { 100 },
                     new FluidStack[] { fluidStack },
                     1500,
-                    BW_Util.getMachineVoltageFromTier(4),
+                    (int) TierEU.RECIPE_EV,
                     BW_Util.STANDART);
         }
     }
@@ -129,7 +129,7 @@ public class BioRecipeLoader {
                         BioCultureLoader.CommonYeast,
                         new FluidStack[] { FluidRegistry.getFluidStack("potion.ghp", 1) },
                         350,
-                        BW_Util.getMachineVoltageFromTier(4));
+                        (int) TierEU.RECIPE_EV);
             }
 
             BWRecipes.instance.addBacterialVatRecipe(

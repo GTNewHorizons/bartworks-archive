@@ -95,7 +95,7 @@ public class BW_Meta_Items {
                         new FluidStack[] { Materials.SolderingAlloy.getMolten(576) },
                         null,
                         300,
-                        BW_Util.getMachineVoltageFromTier(4),
+                        (int) TierEU.RECIPE_EV,
                         BW_Util.CLEANROOM));
     }
 

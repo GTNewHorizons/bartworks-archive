@@ -381,7 +381,7 @@ public class AdditionalRecipes {
                         Materials.Hydrogen.getGas(55), WerkstoffLoader.Xenon.getFluidOrGas(9) },
                 null,
                 7500,
-                BW_Util.getMachineVoltageFromTier(4));
+                (int) TierEU.RECIPE_EV);
         GT_Values.RA.addAutoclaveRecipe(
                 WerkstoffLoader.MagnetoResonaticDust.get(dust),
                 WerkstoffLoader.Neon.getFluidOrGas(1000),

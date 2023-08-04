@@ -34,7 +34,7 @@ public class FluidSolidifier implements Runnable {
                 Materials.TungstenSteel.getMolten(1152),
                 new ItemStack(ItemRegistry.bw_glasses[0], 1, 2),
                 800,
-                BW_Util.getMachineVoltageFromTier(4));
+                (int) TierEU.RECIPE_EV);
 
         GT_Values.RA.addFluidSolidifierRecipe(
                 new ItemStack(ItemRegistry.bw_glasses[0], 1, 0),

@@ -20,6 +20,7 @@ import static com.gtnewhorizon.structurelib.structure.StructureUtility.onElement
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.transpose;
 import static gregtech.api.util.GT_StructureUtility.ofHatchAdder;
 
+import gregtech.api.enums.TierEU;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -112,7 +113,7 @@ public class GT_TileEntity_THTR extends GT_MetaTileEntity_EnhancedMultiBlockBase
             .build();
 
     private static final int HELIUM_NEEDED = 730000;
-    private static final int powerUsage = BW_Util.getMachineVoltageFromTier(5) / 2;
+    private static final int powerUsage = (int) TierEU.RECIPE_IV / 2;
     private static final int maxcapacity = 675000;
     private static final int mincapacity = 100000;
     private int HeliumSupply;

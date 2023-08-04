@@ -269,7 +269,7 @@ public class AdditionalRecipes {
                 new ItemStack(ItemRegistry.bw_glasses[0], 1, 12),
                 null,
                 800,
-                BW_Util.getMachineVoltageFromTier(5),
+                (int) TierEU.RECIPE_IV,
                 3663);
         // Thorianit recipes
         GT_Values.RA.addSifterRecipe(
@@ -279,7 +279,7 @@ public class AdditionalRecipes {
                         WerkstoffLoader.Thorium232.get(dust), },
                 new int[] { 7000, 1300, 700, 600, 300, 100 },
                 400,
-                BW_Util.getMachineVoltageFromTier(5));
+                (int) TierEU.RECIPE_IV);
         // 3ThO2 + 4Al = 3Th + 2Al2O3
         GT_Values.RA.addChemicalRecipe(
                 WerkstoffLoader.Thorianit.get(dust, 9),
@@ -388,14 +388,14 @@ public class AdditionalRecipes {
                 WerkstoffLoader.MagnetoResonaticDust.get(gemChipped, 9),
                 9000,
                 4500,
-                BW_Util.getMachineVoltageFromTier(5));
+                (int) TierEU.RECIPE_IV);
         GT_Values.RA.addAutoclaveRecipe(
                 WerkstoffLoader.MagnetoResonaticDust.get(dust),
                 WerkstoffLoader.Krypton.getFluidOrGas(1000),
                 WerkstoffLoader.MagnetoResonaticDust.get(gem),
                 10000,
                 4500,
-                BW_Util.getMachineVoltageFromTier(5));
+                (int) TierEU.RECIPE_IV);
 
         // Milk
         GT_Values.RA.addCentrifugeRecipe(

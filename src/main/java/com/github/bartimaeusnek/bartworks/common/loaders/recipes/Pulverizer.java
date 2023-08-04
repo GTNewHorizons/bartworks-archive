@@ -27,7 +27,7 @@ public class Pulverizer implements Runnable {
                 new ItemStack[] { Materials.BorosilicateGlass.getDust(9), Materials.TungstenSteel.getDust(8) },
                 null,
                 800,
-                BW_Util.getMachineVoltageFromTier(5));
+                (int) TierEU.RECIPE_IV);
         GT_Values.RA.addPulveriserRecipe(
                 new ItemStack(ItemRegistry.bw_glasses[0], 1, 3),
                 new ItemStack[] { Materials.BorosilicateGlass.getDust(9),

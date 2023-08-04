@@ -756,7 +756,7 @@ public class PlatinumSludgeOverHaul {
                 new FluidStack[] { OsmiumSolution.getFluidOrGas(100), Materials.Water.getFluid(900) },
                 null,
                 150,
-                BW_Util.getMachineVoltageFromTier(5));
+                (int) TierEU.RECIPE_IV);
 
         GT_Values.RA.stdBuilder()
             .itemInputs(

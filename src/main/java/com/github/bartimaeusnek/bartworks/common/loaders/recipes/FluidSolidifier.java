@@ -41,7 +41,7 @@ public class FluidSolidifier implements Runnable {
                 WerkstoffLoader.LuVTierMaterial.getMolten(1152),
                 new ItemStack(ItemRegistry.bw_glasses[0], 1, 3),
                 800,
-                BW_Util.getMachineVoltageFromTier(5));
+                (int) TierEU.RECIPE_IV);
         GT_Values.RA.addFluidSolidifierRecipe(
                 new ItemStack(ItemRegistry.bw_glasses[0], 1, 0),
                 Materials.Iridium.getMolten(1152),

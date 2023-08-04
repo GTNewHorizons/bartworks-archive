@@ -25,6 +25,7 @@ import static gregtech.api.enums.OrePrefixes.ingot;
 import static gregtech.api.enums.OrePrefixes.nugget;
 import static gregtech.api.enums.OrePrefixes.ore;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sAutoclaveRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sChemicalBathRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.MINUTES;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 
@@ -209,25 +210,50 @@ public class CrushedLoader implements IWerkstoffRunnable {
                 .addTo(sAutoclaveRecipes);
 
         }
-        if (werkstoff.contains(SubTag.WASHING_MERCURY)) GT_Values.RA.addChemicalBathRecipe(
-                werkstoff.get(crushed),
-                Materials.Mercury.getFluid(1000L),
-                werkstoff.get(crushedPurified),
-                werkstoff.getOreByProduct(1, dust),
-                GT_OreDictUnificator.get(dust, Materials.Stone, 1L),
-                new int[] { 10000, 7000, 4000 },
-                800,
-                8);
-        if (werkstoff.contains(SubTag.WASHING_SODIUMPERSULFATE)) GT_Values.RA.addChemicalBathRecipe(
-                werkstoff.get(crushed),
-                Materials.SodiumPersulfate.getFluid(GT_Mod.gregtechproxy.mDisableOldChemicalRecipes ? 1000L : 100L),
-                werkstoff.get(crushedPurified),
-                werkstoff.getOreByProduct(1, dust),
-                GT_OreDictUnificator.get(dust, Materials.Stone, 1L),
-                new int[] { 10000, 7000, 4000 },
-                800,
-                8);
-        if (werkstoff.contains(SubTag.ELECTROMAGNETIC_SEPERATION_GOLD)) GT_Values.RA.addElectromagneticSeparatorRecipe(
+        if (werkstoff.contains(SubTag.WASHING_MERCURY)) {
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(crushed)
+                )
+                .itemOutputs(
+                    werkstoff.get(crushedPurified),
+                    werkstoff.getOreByProduct(1, dust),
+                    GT_OreDictUnificator.get(dust, Materials.Stone, 1L)
+                )
+                .outputChances(10000, 7000, 4000)
+                .fluidInputs(
+                    Materials.Mercury.getFluid(1000L)
+                )
+                .noFluidOutputs()
+                .duration(40 * SECONDS)
+                .eut(8)
+                .addTo(sChemicalBathRecipes);
+
+        }
+        if (werkstoff.contains(SubTag.WASHING_SODIUMPERSULFATE)) {
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(crushed)
+                )
+                .itemOutputs(
+                    werkstoff.get(crushedPurified),
+                    werkstoff.getOreByProduct(1, dust),
+                    GT_OreDictUnificator.get(dust, Materials.Stone, 1L)
+                )
+                .outputChances(10000, 7000, 4000)
+                .fluidInputs(
+                    Materials.SodiumPersulfate.getFluid(GT_Mod.gregtechproxy.mDisableOldChemicalRecipes ? 1000L : 100L)
+                )
+                .noFluidOutputs()
+                .duration(40 * SECONDS)
+                .eut(8)
+                .addTo(sChemicalBathRecipes);
+
+        }
+        if (werkstoff.contains(SubTag.ELECTROMAGNETIC_SEPERATION_GOLD)) {
+            GT_Values.RA.addElectromagneticSeparatorRecipe(
                 werkstoff.get(dustPure),
                 werkstoff.get(dust),
                 GT_OreDictUnificator.get(dustSmall, Materials.Gold, 1L),
@@ -235,23 +261,28 @@ public class CrushedLoader implements IWerkstoffRunnable {
                 new int[] { 10000, 4000, 2000 },
                 400,
                 24);
+        }
         else if (werkstoff.contains(SubTag.ELECTROMAGNETIC_SEPERATION_IRON))
+        {
             GT_Values.RA.addElectromagneticSeparatorRecipe(
-                    werkstoff.get(dustPure),
-                    werkstoff.get(dust),
-                    GT_OreDictUnificator.get(dustSmall, Materials.Iron, 1L),
-                    GT_OreDictUnificator.get(nugget, Materials.Iron, 1L),
-                    new int[] { 10000, 4000, 2000 },
-                    400,
-                    24);
+                werkstoff.get(dustPure),
+                werkstoff.get(dust),
+                GT_OreDictUnificator.get(dustSmall, Materials.Iron, 1L),
+                GT_OreDictUnificator.get(nugget, Materials.Iron, 1L),
+                new int[] { 10000, 4000, 2000 },
+                400,
+                24);
+        }
         else if (werkstoff.contains(SubTag.ELECTROMAGNETIC_SEPERATION_NEODYMIUM))
+        {
             GT_Values.RA.addElectromagneticSeparatorRecipe(
-                    werkstoff.get(dustPure),
-                    werkstoff.get(dust),
-                    GT_OreDictUnificator.get(dustSmall, Materials.Neodymium, 1L),
-                    GT_OreDictUnificator.get(nugget, Materials.Neodymium, 1L),
-                    new int[] { 10000, 4000, 2000 },
-                    400,
-                    24);
+                werkstoff.get(dustPure),
+                werkstoff.get(dust),
+                GT_OreDictUnificator.get(dustSmall, Materials.Neodymium, 1L),
+                GT_OreDictUnificator.get(nugget, Materials.Neodymium, 1L),
+                new int[] { 10000, 4000, 2000 },
+                400,
+                24);
+        }
     }
 }

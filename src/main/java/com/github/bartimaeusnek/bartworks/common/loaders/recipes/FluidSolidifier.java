@@ -53,7 +53,7 @@ public class FluidSolidifier implements Runnable {
                 Materials.Osmium.getMolten(1152),
                 new ItemStack(ItemRegistry.bw_glasses[0], 1, 5),
                 800,
-                BW_Util.getMachineVoltageFromTier(7));
+                (int) TierEU.RECIPE_ZPM);
         GT_Values.RA.addFluidSolidifierRecipe(
                 new ItemStack(ItemRegistry.bw_glasses[0], 1, 0),
                 Materials.Neutronium.getMolten(1152),

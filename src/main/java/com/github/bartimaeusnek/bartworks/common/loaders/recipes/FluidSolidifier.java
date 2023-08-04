@@ -1,5 +1,6 @@
 package com.github.bartimaeusnek.bartworks.common.loaders.recipes;
 
+import gregtech.api.enums.TierEU;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
@@ -20,14 +21,14 @@ public class FluidSolidifier implements Runnable {
                 Materials.Iron.getMolten(1296L),
                 new ItemStack(ItemRegistry.BW_BLOCKS[0], 1, 0),
                 100,
-                BW_Util.getMachineVoltageFromTier(3));
+                (int) TierEU.RECIPE_HV);
 
         GT_Values.RA.addFluidSolidifierRecipe(
                 new ItemStack(ItemRegistry.bw_glasses[0], 1, 0),
                 Materials.Titanium.getMolten(1152),
                 new ItemStack(ItemRegistry.bw_glasses[0], 1, 1),
                 800,
-                BW_Util.getMachineVoltageFromTier(3));
+                (int) TierEU.RECIPE_HV);
         GT_Values.RA.addFluidSolidifierRecipe(
                 new ItemStack(ItemRegistry.bw_glasses[0], 1, 0),
                 Materials.TungstenSteel.getMolten(1152),

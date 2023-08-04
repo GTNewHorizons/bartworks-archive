@@ -15,6 +15,7 @@ package com.github.bartimaeusnek.bartworks.common.loaders;
 
 import static gregtech.api.enums.Mods.CropsPlusPlus;
 
+import gregtech.api.enums.TierEU;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -49,7 +50,7 @@ public class BioRecipeLoader {
                     new int[] { 3300 },
                     new FluidStack[] { fluidStack },
                     500,
-                    BW_Util.getMachineVoltageFromTier(3),
+                    (int) TierEU.RECIPE_HV,
                     BW_Util.STANDART);
 
             BWRecipes.instance.addBioLabRecipeIncubation(
@@ -58,7 +59,7 @@ public class BioRecipeLoader {
                     new int[] { 4500 },
                     new FluidStack[] { fluidStack },
                     500,
-                    BW_Util.getMachineVoltageFromTier(3),
+                    (int) TierEU.RECIPE_HV,
                     BW_Util.STANDART);
 
             BWRecipes.instance.addBioLabRecipeIncubation(
@@ -67,7 +68,7 @@ public class BioRecipeLoader {
                     new int[] { 7500 },
                     new FluidStack[] { fluidStack },
                     500,
-                    BW_Util.getMachineVoltageFromTier(3),
+                    (int) TierEU.RECIPE_HV,
                     BW_Util.STANDART);
 
             BWRecipes.instance.addBioLabRecipeIncubation(
@@ -76,7 +77,7 @@ public class BioRecipeLoader {
                     new int[] { 2500 },
                     new FluidStack[] { fluidStack },
                     500,
-                    BW_Util.getMachineVoltageFromTier(3),
+                    (int) TierEU.RECIPE_HV,
                     BW_Util.STANDART);
 
             BWRecipes.instance.addBioLabRecipeIncubation(
@@ -85,7 +86,7 @@ public class BioRecipeLoader {
                     new int[] { 3300 },
                     new FluidStack[] { fluidStack },
                     500,
-                    BW_Util.getMachineVoltageFromTier(3),
+                    (int) TierEU.RECIPE_HV,
                     BW_Util.STANDART);
 
             BWRecipes.instance.addBioLabRecipeIncubation(
@@ -94,7 +95,7 @@ public class BioRecipeLoader {
                     new int[] { 2500 },
                     new FluidStack[] { fluidStack },
                     500,
-                    BW_Util.getMachineVoltageFromTier(3),
+                    (int) TierEU.RECIPE_HV,
                     BW_Util.STANDART);
 
             BWRecipes.instance.addBioLabRecipeIncubation(
@@ -103,7 +104,7 @@ public class BioRecipeLoader {
                     new int[] { 3300 },
                     new FluidStack[] { fluidStack },
                     500,
-                    BW_Util.getMachineVoltageFromTier(3),
+                    (int) TierEU.RECIPE_HV,
                     BW_Util.STANDART);
 
             BWRecipes.instance.addBioLabRecipeIncubation(
@@ -175,7 +176,7 @@ public class BioRecipeLoader {
                 BioCultureLoader.anaerobicOil,
                 new FluidStack[] { new FluidStack(FluidLoader.fulvicAcid, 1000) },
                 2748,
-                BW_Util.getMachineVoltageFromTier(3));
+                (int) TierEU.RECIPE_HV);
     }
 
     public static void runOnServerStarted() {

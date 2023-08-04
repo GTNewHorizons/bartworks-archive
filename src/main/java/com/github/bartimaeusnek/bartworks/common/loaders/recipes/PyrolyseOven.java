@@ -1,5 +1,6 @@
 package com.github.bartimaeusnek.bartworks.common.loaders.recipes;
 
+import gregtech.api.enums.TierEU;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.github.bartimaeusnek.bartworks.common.loaders.FluidLoader;
@@ -19,6 +20,6 @@ public class PyrolyseOven implements Runnable {
                 null,
                 Materials.Oil.getFluid(1000),
                 105,
-                BW_Util.getMachineVoltageFromTier(3));
+                (int) TierEU.RECIPE_HV);
     }
 }

@@ -32,6 +32,7 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Objects;
 
+import gregtech.api.enums.TierEU;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
@@ -209,7 +210,7 @@ public class AdditionalRecipes {
                                         new FluidStack[] { fluidStack },
                                         new FluidStack[] { new FluidStack(bioCulture.getFluid(), 10) },
                                         1000,
-                                        BW_Util.getMachineVoltageFromTier(3),
+                                        (int) TierEU.RECIPE_HV,
                                         BW_Util.STANDART),
                                 true);
                         // aOptimize, aInputs, aOutputs, aSpecialItems, aChances, aFluidInputs, aFluidOutputs,
@@ -229,7 +230,7 @@ public class AdditionalRecipes {
                                         new FluidStack[] { new FluidStack(bioCulture.getFluid(), 1000) },
                                         null,
                                         500,
-                                        BW_Util.getMachineVoltageFromTier(3),
+                                        (int) TierEU.RECIPE_HV,
                                         BW_Util.STANDART));
                     }
                 }
@@ -344,7 +345,7 @@ public class AdditionalRecipes {
                 new FluidStack[] { Materials.Oxygen.getGas(20000) },
                 null,
                 57600,
-                BW_Util.getMachineVoltageFromTier(3),
+                (int) TierEU.RECIPE_HV,
                 2953);
         // Tellurium
         GT_Values.RA.addBlastRecipe(

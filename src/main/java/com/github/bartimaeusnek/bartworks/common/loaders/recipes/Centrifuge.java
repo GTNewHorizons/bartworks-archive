@@ -5,6 +5,7 @@ import static com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_T
 
 import java.util.Arrays;
 
+import gregtech.api.enums.TierEU;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -144,7 +145,7 @@ public class Centrifuge implements Runnable {
                 null,
                 new int[] { 1000 },
                 60 * 20,
-                BW_Util.getMachineVoltageFromTier(3));
+                (int) TierEU.RECIPE_HV);
         GT_Values.RA.addCentrifugeRecipe(
                 GT_Utility.getIntegratedCircuit(17),
                 null,
@@ -158,7 +159,7 @@ public class Centrifuge implements Runnable {
                 null,
                 null,
                 60 * 20,
-                BW_Util.getMachineVoltageFromTier(3));
+                (int) TierEU.RECIPE_HV);
         GT_Values.RA.addCentrifugeRecipe(
                 GT_Utility.getIntegratedCircuit(17),
                 null,
@@ -172,6 +173,6 @@ public class Centrifuge implements Runnable {
                 null,
                 null,
                 60 * 20,
-                BW_Util.getMachineVoltageFromTier(3));
+                (int) TierEU.RECIPE_HV);
     }
 }

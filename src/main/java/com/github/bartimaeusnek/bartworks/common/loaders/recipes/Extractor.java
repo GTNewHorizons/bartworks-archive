@@ -4,6 +4,7 @@ import static gregtech.api.enums.Mods.CropLoadCore;
 
 import java.util.List;
 
+import gregtech.api.enums.TierEU;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -24,7 +25,7 @@ public class Extractor implements Runnable {
                         BW_Util.setStackSize(stack, 12),
                         BioItemList.getOther(1),
                         500,
-                        BW_Util.getMachineVoltageFromTier(3));
+                        (int) TierEU.RECIPE_HV);
             }
         }
 

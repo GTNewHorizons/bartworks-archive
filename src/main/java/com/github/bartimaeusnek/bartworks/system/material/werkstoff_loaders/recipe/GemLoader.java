@@ -27,7 +27,9 @@ import static gregtech.api.enums.OrePrefixes.gemFlawless;
 import static gregtech.api.enums.OrePrefixes.lens;
 import static gregtech.api.enums.OrePrefixes.ore;
 import static gregtech.api.enums.OrePrefixes.plate;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sHammerRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sImplosionRecipes;
+import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 import static gregtech.api.util.GT_RecipeBuilder.TICKS;
 import static gregtech.api.util.GT_RecipeConstants.ADDITIVE_AMOUNT;
 
@@ -58,7 +60,21 @@ public class GemLoader implements IWerkstoffRunnable {
                     || (werkstoff.hasItemType(ore) && werkstoff.hasItemType(dust))) {
 
                 GT_ModHandler.addCompressionRecipe(werkstoff.get(gem, 9), werkstoff.get(block));
-                GT_Values.RA.addForgeHammerRecipe(werkstoff.get(block), werkstoff.get(gem, 9), 100, 24);
+
+
+                GT_Values.RA.stdBuilder()
+                    .itemInputs(
+                        werkstoff.get(block)
+                    )
+                    .itemOutputs(
+                        werkstoff.get(gem, 9)
+                    )
+                    .noFluidInputs()
+                    .noFluidOutputs()
+                    .duration(5 * SECONDS)
+                    .eut(24)
+                    .addTo(sHammerRecipes);
+
                 GT_Values.RA.addSifterRecipe(
                         werkstoff.get(crushedPurified),
                         new ItemStack[] { werkstoff.get(gemExquisite), werkstoff.get(gemFlawless), werkstoff.get(gem),
@@ -91,11 +107,72 @@ public class GemLoader implements IWerkstoffRunnable {
                     0,
                     new Object[] { "h  ", "W  ", 'W', werkstoff.get(gemFlawed) });
 
-            GT_Values.RA.addForgeHammerRecipe(werkstoff.get(gemExquisite), werkstoff.get(gemFlawless, 2), 64, 16);
-            GT_Values.RA.addForgeHammerRecipe(werkstoff.get(gemFlawless), werkstoff.get(gem, 2), 64, 16);
-            GT_Values.RA.addForgeHammerRecipe(werkstoff.get(gem), werkstoff.get(gemFlawed, 2), 64, 16);
-            GT_Values.RA.addForgeHammerRecipe(werkstoff.get(gemFlawed), werkstoff.get(gemChipped, 2), 64, 16);
-            GT_Values.RA.addForgeHammerRecipe(werkstoff.get(gemChipped), werkstoff.get(dustTiny), 64, 16);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(gemExquisite)
+                )
+                .itemOutputs(
+                    werkstoff.get(gemFlawless, 2)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(3 * SECONDS + 4 * TICKS)
+                .eut(16)
+                .addTo(sHammerRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(gemFlawless)
+                )
+                .itemOutputs(
+                    werkstoff.get(gem, 2)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(3 * SECONDS + 4 * TICKS)
+                .eut(16)
+                .addTo(sHammerRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(gem)
+                )
+                .itemOutputs(
+                    werkstoff.get(gemFlawed, 2)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(3 * SECONDS + 4 * TICKS)
+                .eut(16)
+                .addTo(sHammerRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(gemFlawed)
+                )
+                .itemOutputs(
+                    werkstoff.get(gemChipped, 2)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(3 * SECONDS + 4 * TICKS)
+                .eut(16)
+                .addTo(sHammerRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(gemChipped)
+                )
+                .itemOutputs(
+                    werkstoff.get(dustTiny)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(3 * SECONDS + 4 * TICKS)
+                .eut(16)
+                .addTo(sHammerRecipes);
+
 
             if (!werkstoff.contains(WerkstoffLoader.NO_BLAST)) {
                 GT_Values.RA.stdBuilder()

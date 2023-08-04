@@ -26,8 +26,10 @@ import static gregtech.api.enums.OrePrefixes.nugget;
 import static gregtech.api.enums.OrePrefixes.ore;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sAutoclaveRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sChemicalBathRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sHammerRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.MINUTES;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
+import static gregtech.api.util.GT_RecipeBuilder.TICKS;
 
 import com.github.bartimaeusnek.bartworks.system.material.Werkstoff;
 import com.github.bartimaeusnek.bartworks.system.material.werkstoff_loaders.IWerkstoffRunnable;
@@ -70,7 +72,20 @@ public class CrushedLoader implements IWerkstoffRunnable {
                 werkstoff.get(dust),
                 new Object[] { "h  ", "W  ", 'W', werkstoff.get(crushedCentrifuged) });
 
-        GT_Values.RA.addForgeHammerRecipe(werkstoff.get(crushed), werkstoff.get(dustImpure), 10, 16);
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
+                werkstoff.get(crushed)
+            )
+            .itemOutputs(
+                werkstoff.get(dustImpure)
+            )
+            .noFluidInputs()
+            .noFluidOutputs()
+            .duration(10 * TICKS)
+            .eut(16)
+            .addTo(sHammerRecipes);
+
+
         GT_ModHandler.addPulverisationRecipe(
                 werkstoff.get(crushed),
                 werkstoff.get(dustImpure),
@@ -92,7 +107,20 @@ public class CrushedLoader implements IWerkstoffRunnable {
                 werkstoff.getOreByProduct(1, dust),
                 GT_OreDictUnificator.get(dust, Materials.Stone, 1L));
 
-        GT_Values.RA.addForgeHammerRecipe(werkstoff.get(crushedPurified), werkstoff.get(dustPure), 10, 16);
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
+                werkstoff.get(crushedPurified)
+            )
+            .itemOutputs(
+                werkstoff.get(dustPure)
+            )
+            .noFluidInputs()
+            .noFluidOutputs()
+            .duration(10 * TICKS)
+            .eut(16)
+            .addTo(sHammerRecipes);
+
         GT_ModHandler.addPulverisationRecipe(
                 werkstoff.get(crushedPurified),
                 werkstoff.get(dustPure),
@@ -106,7 +134,21 @@ public class CrushedLoader implements IWerkstoffRunnable {
                 werkstoff.get(crushedCentrifuged),
                 werkstoff.getOreByProduct(1, dust));
 
-        GT_Values.RA.addForgeHammerRecipe(werkstoff.get(crushedCentrifuged), werkstoff.get(dust), 10, 16);
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
+                werkstoff.get(crushedCentrifuged)
+            )
+            .itemOutputs(
+                werkstoff.get(dust)
+            )
+            .noFluidInputs()
+            .noFluidOutputs()
+            .duration(10 * TICKS)
+            .eut(16)
+            .addTo(sHammerRecipes);
+
+
         GT_ModHandler.addPulverisationRecipe(
                 werkstoff.get(crushedCentrifuged),
                 werkstoff.get(dust),

@@ -23,6 +23,7 @@ import static gregtech.api.enums.OrePrefixes.plate;
 import static gregtech.api.enums.OrePrefixes.stick;
 import static gregtech.api.enums.OrePrefixes.stickLong;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBenderRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sHammerRecipes;
 
 import net.minecraft.item.ItemStack;
 
@@ -63,11 +64,20 @@ public class SimpleMetalLoader implements IWerkstoffRunnable {
                         werkstoff.get(stick),
                         GT_Proxy.tBits,
                         new Object[] { "f ", " X", 'X', werkstoff.get(gem) });
-                GT_Values.RA.addForgeHammerRecipe(
-                        werkstoff.get(stick, 2),
-                        werkstoff.get(stickLong),
-                        (int) Math.max(werkstoff.getStats().getMass(), 1L),
-                        16);
+
+                GT_Values.RA.stdBuilder()
+                    .itemInputs(
+                        werkstoff.get(stick, 2)
+                    )
+                    .itemOutputs(
+                        werkstoff.get(stickLong)
+                    )
+                    .noFluidInputs()
+                    .noFluidOutputs()
+                    .duration((int) Math.max(werkstoff.getStats().getMass(), 1L))
+                    .eut(16)
+                    .addTo(sHammerRecipes);
+
 
                 TextureSet texSet = werkstoff.getTexSet();
                 ITexture texture = SideReference.Side.Client
@@ -113,11 +123,20 @@ public class SimpleMetalLoader implements IWerkstoffRunnable {
                             (int) Math.max(werkstoff.getStats().getMass(), 1L),
                             24,
                             0));
-            GT_Values.RA.addForgeHammerRecipe(
-                    werkstoff.get(ingot, 3),
-                    werkstoff.get(plate, 2),
-                    (int) Math.max(werkstoff.getStats().getMass(), 1L),
-                    16);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(ingot, 3)
+                )
+                .itemOutputs(
+                    werkstoff.get(plate, 2)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration((int) Math.max(werkstoff.getStats().getMass(), 1L))
+                .eut(16)
+                .addTo(sHammerRecipes);
+
             GregTech_API.registerCover(
                     werkstoff.get(plate),
                     TextureFactory.of(werkstoff.getTexSet().mTextures[71], werkstoff.getRGBA(), false),
@@ -159,12 +178,18 @@ public class SimpleMetalLoader implements IWerkstoffRunnable {
                 .eut(24)
                 .addTo(sBenderRecipes);
 
-
-            GT_Values.RA.addForgeHammerRecipe(
-                    werkstoff.get(stick, 2),
-                    werkstoff.get(stickLong),
-                    (int) Math.max(werkstoff.getStats().getMass(), 1L),
-                    16);
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(stick, 2)
+                )
+                .itemOutputs(
+                    werkstoff.get(stickLong)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration((int) Math.max(werkstoff.getStats().getMass(), 1L))
+                .eut(16)
+                .addTo(sHammerRecipes);
 
             GT_Values.RA.addExtruderRecipe(
                     werkstoff.get(ingot),

@@ -71,7 +71,7 @@ public class FluidSolidifier implements Runnable {
                 Materials.Infinity.getMolten(1152),
                 new ItemStack(ItemRegistry.bw_glasses[0], 1, 15),
                 800,
-                BW_Util.getMachineVoltageFromTier(10));
+                (int) TierEU.RECIPE_UEV);
         GT_Values.RA.addFluidSolidifierRecipe(
                 new ItemStack(ItemRegistry.bw_glasses[0], 1, 0),
                 MaterialsUEVplus.TranscendentMetal.getMolten(1152),

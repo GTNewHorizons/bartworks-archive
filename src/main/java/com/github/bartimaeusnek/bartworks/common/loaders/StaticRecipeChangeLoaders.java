@@ -33,6 +33,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import gregtech.api.enums.TierEU;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -648,7 +649,7 @@ public class StaticRecipeChangeLoaders {
                             null,
                             null,
                             1,
-                            BW_Util.getMachineVoltageFromTier(10),
+                            (int) TierEU.RECIPE_UEV,
                             0));
 
             // Custom EIC recipes.

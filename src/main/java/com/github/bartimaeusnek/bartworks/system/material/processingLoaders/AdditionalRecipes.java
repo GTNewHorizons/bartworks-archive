@@ -168,7 +168,7 @@ public class AdditionalRecipes {
                             new FluidStack[] { FluidRegistry.getFluidStack("ic2distilledwater", 1000) },
                             null,
                             500,
-                            BW_Util.getMachineVoltageFromTier(6),
+                            (int) TierEU.RECIPE_LuV,
                             BW_Util.STANDART);
                 }
             }
@@ -188,7 +188,7 @@ public class AdditionalRecipes {
                     new FluidStack[] { new FluidStack(dnaFluid[0].getFluid(), 8000) },
                     null,
                     500,
-                    BW_Util.getMachineVoltageFromTier(6),
+                    (int) TierEU.RECIPE_LuV,
                     BW_Util.STANDART);
 
             FluidStack[] easyFluids = { Materials.Water.getFluid(1000L),
@@ -632,7 +632,7 @@ public class AdditionalRecipes {
                 null,
                 BW_NonMeta_MaterialItems.TheCoreCell.get(1L),
                 100,
-                BW_Util.getMachineVoltageFromTier(6));
+                (int) TierEU.RECIPE_LuV);
 
         GregTech_API.sAfterGTPostload.add(new AddSomeRecipes());
         AdditionalRecipes.oldGThelperMethod();

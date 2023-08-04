@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
+import gregtech.api.enums.TierEU;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -137,7 +138,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
             false,
             true).useModularUI(true);
     private static final int HELIUM_NEEDED = 730000;
-    public static final int powerUsage = BW_Util.getMachineVoltageFromTier(6);
+    public static final int powerUsage = (int) TierEU.RECIPE_LuV;
     private static final int maxcapacity = 720000;
     private static final int mincapacity = maxcapacity / 10;
     private int HeliumSupply;

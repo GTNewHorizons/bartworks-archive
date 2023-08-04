@@ -33,6 +33,6 @@ public class Extractor implements Runnable {
                 ItemList.Circuit_Chip_Stemcell.get(1L),
                 BioItemList.getOther(4),
                 500,
-                BW_Util.getMachineVoltageFromTier(6));
+                (int) TierEU.RECIPE_LuV);
     }
 }

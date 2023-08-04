@@ -29,7 +29,9 @@ import static gregtech.api.enums.OrePrefixes.screw;
 import static gregtech.api.enums.OrePrefixes.stick;
 import static gregtech.api.enums.OrePrefixes.wireFine;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sAssemblerRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sMaceratorRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
+import static gregtech.api.util.GT_RecipeBuilder.TICKS;
 
 import net.minecraft.item.ItemStack;
 
@@ -64,12 +66,19 @@ public class CraftingMaterialLoader implements IWerkstoffRunnable {
                     null,
                     (int) Math.max(werkstoff.getStats().getMass() * 2L, 1L),
                     4);
-            GT_Values.RA.addPulveriserRecipe(
-                    werkstoff.get(bolt),
-                    new ItemStack[] { werkstoff.get(dustTiny, 1) },
-                    null,
-                    2,
-                    8);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(bolt)
+                )
+                .itemOutputs(
+                    werkstoff.get(dustTiny, 1))
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(2 * TICKS)
+                .eut(8)
+                .addTo(sMaceratorRecipes);
+
 
             // screw
             GT_Values.RA.addLatheRecipe(
@@ -82,12 +91,19 @@ public class CraftingMaterialLoader implements IWerkstoffRunnable {
                     werkstoff.get(screw),
                     GT_Proxy.tBits,
                     new Object[] { "fX", "X ", 'X', werkstoff.get(bolt) });
-            GT_Values.RA.addPulveriserRecipe(
-                    werkstoff.get(screw),
-                    new ItemStack[] { werkstoff.get(dustTiny, 1) },
-                    null,
-                    2,
-                    8);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(screw)
+                )
+                .itemOutputs(
+                    werkstoff.get(dustTiny, 1))
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(2 * TICKS)
+                .eut(8)
+                .addTo(sMaceratorRecipes);
+
 
             if (werkstoff.hasItemType(gem)) return;
 
@@ -211,26 +227,55 @@ public class CraftingMaterialLoader implements IWerkstoffRunnable {
                  */
             }
 
-            GT_Values.RA
-                    .addPulveriserRecipe(werkstoff.get(gearGt), new ItemStack[] { werkstoff.get(dust, 4) }, null, 2, 8);
-            GT_Values.RA.addPulveriserRecipe(
-                    werkstoff.get(gearGtSmall),
-                    new ItemStack[] { werkstoff.get(dust, 1) },
-                    null,
-                    2,
-                    8);
-            GT_Values.RA.addPulveriserRecipe(
-                    werkstoff.get(rotor),
-                    new ItemStack[] { werkstoff.get(dust, 4), werkstoff.get(dustSmall) },
-                    null,
-                    2,
-                    8);
-            GT_Values.RA.addPulveriserRecipe(
-                    werkstoff.get(ring),
-                    new ItemStack[] { werkstoff.get(dustSmall, 1) },
-                    null,
-                    2,
-                    8);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(gearGt)
+                )
+                .itemOutputs(
+                    werkstoff.get(dust, 4))
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(2 * TICKS)
+                .eut(8)
+                .addTo(sMaceratorRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(gearGtSmall)
+                )
+                .itemOutputs(
+                    werkstoff.get(dust, 1))
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(2 * TICKS)
+                .eut(8)
+                .addTo(sMaceratorRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(rotor)
+                )
+                .itemOutputs(
+                    werkstoff.get(dust, 4), werkstoff.get(dustSmall))
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(2 * TICKS)
+                .eut(8)
+                .addTo(sMaceratorRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(ring)
+                )
+                .itemOutputs(
+                    werkstoff.get(dustSmall, 1))
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(2 * TICKS)
+                .eut(8)
+                .addTo(sMaceratorRecipes);
+
         }
     }
 }

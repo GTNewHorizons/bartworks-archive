@@ -24,6 +24,8 @@ import static gregtech.api.enums.OrePrefixes.stick;
 import static gregtech.api.enums.OrePrefixes.stickLong;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBenderRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sHammerRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sMaceratorRecipes;
+import static gregtech.api.util.GT_RecipeBuilder.TICKS;
 
 import net.minecraft.item.ItemStack;
 
@@ -89,8 +91,19 @@ public class SimpleMetalLoader implements IWerkstoffRunnable {
                         : TextureFactory.of(texSet.mTextures[block.mTextureIndex], werkstoff.getRGBA(), false);
                 GregTech_API.registerCover(werkstoff.get(plate), texture, null);
 
-                GT_Values.RA
-                        .addPulveriserRecipe(werkstoff.get(plate), new ItemStack[] { werkstoff.get(dust) }, null, 2, 8);
+
+                GT_Values.RA.stdBuilder()
+                    .itemInputs(
+                        werkstoff.get(plate)
+                    )
+                    .itemOutputs(
+                        werkstoff.get(dust))
+                    .noFluidInputs()
+                    .noFluidOutputs()
+                    .duration(2 * TICKS)
+                    .eut(8)
+                    .addTo(sMaceratorRecipes);
+
                 return;
             }
 
@@ -204,16 +217,55 @@ public class SimpleMetalLoader implements IWerkstoffRunnable {
                     (int) Math.max(werkstoff.getStats().getMass() * 2L, 1L),
                     45);
 
-            GT_Values.RA.addPulveriserRecipe(werkstoff.get(ingot), new ItemStack[] { werkstoff.get(dust) }, null, 2, 8);
-            GT_Values.RA.addPulveriserRecipe(werkstoff.get(plate), new ItemStack[] { werkstoff.get(dust) }, null, 2, 8);
-            GT_Values.RA
-                    .addPulveriserRecipe(werkstoff.get(stickLong), new ItemStack[] { werkstoff.get(dust) }, null, 2, 8);
-            GT_Values.RA.addPulveriserRecipe(
-                    werkstoff.get(stick),
-                    new ItemStack[] { werkstoff.get(dustSmall, 2) },
-                    null,
-                    2,
-                    8);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(ingot)
+                )
+                .itemOutputs(
+                    werkstoff.get(dust))
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(2 * TICKS)
+                .eut(8)
+                .addTo(sMaceratorRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(plate)
+                )
+                .itemOutputs(
+                    werkstoff.get(dust))
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(2 * TICKS)
+                .eut(8)
+                .addTo(sMaceratorRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(stickLong)
+                )
+                .itemOutputs(
+                    werkstoff.get(dust))
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(2 * TICKS)
+                .eut(8)
+                .addTo(sMaceratorRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(stick)
+                )
+                .itemOutputs(
+                    werkstoff.get(dustSmall, 2))
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(2 * TICKS)
+                .eut(8)
+                .addTo(sMaceratorRecipes);
+
         }
     }
 }

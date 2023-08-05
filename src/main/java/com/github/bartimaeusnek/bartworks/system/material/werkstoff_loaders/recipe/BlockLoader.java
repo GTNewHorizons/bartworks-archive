@@ -17,10 +17,12 @@ import static gregtech.api.enums.OrePrefixes.block;
 import static gregtech.api.enums.OrePrefixes.cellMolten;
 import static gregtech.api.enums.OrePrefixes.ingot;
 import static gregtech.api.enums.OrePrefixes.plate;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sCutterRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sFluidExtractionRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 import static gregtech.api.util.GT_RecipeBuilder.TICKS;
 
+import gregtech.api.enums.TierEU;
 import net.minecraft.item.ItemStack;
 
 import com.github.bartimaeusnek.bartworks.system.material.Werkstoff;
@@ -59,12 +61,20 @@ public class BlockLoader implements IWerkstoffRunnable {
 
         }
         if (werkstoff.hasItemType(plate)) {
-            GT_Values.RA.addCutterRecipe(
-                    werkstoff.get(block),
-                    werkstoff.get(plate, 9),
-                    null,
-                    (int) Math.max(werkstoff.getStats().getMass() * 10L, 1L),
-                    30);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(block)
+                )
+                .itemOutputs(
+                    werkstoff.get(plate, 9)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration((int) Math.max(werkstoff.getStats().getMass() * 10L, 1L))
+                .eut(TierEU.RECIPE_LV)
+                .addTo(sCutterRecipes);
+
         }
     }
 }

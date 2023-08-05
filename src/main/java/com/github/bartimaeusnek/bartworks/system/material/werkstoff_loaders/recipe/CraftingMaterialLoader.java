@@ -29,6 +29,7 @@ import static gregtech.api.enums.OrePrefixes.screw;
 import static gregtech.api.enums.OrePrefixes.stick;
 import static gregtech.api.enums.OrePrefixes.wireFine;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sAssemblerRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sCutterRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sExtruderRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sMaceratorRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sWiremillRecipes;
@@ -71,12 +72,20 @@ public class CraftingMaterialLoader implements IWerkstoffRunnable {
                 .eut(8 * tVoltageMultiplier)
                 .addTo(sExtruderRecipes);
 
-            GT_Values.RA.addCutterRecipe(
-                    werkstoff.get(stick),
-                    werkstoff.get(bolt, 4),
-                    null,
-                    (int) Math.max(werkstoff.getStats().getMass() * 2L, 1L),
-                    4);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(stick)
+                )
+                .itemOutputs(
+                    werkstoff.get(bolt, 4)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration((int) Math.max(werkstoff.getStats().getMass() * 2L, 1L))
+                .eut(4)
+                .addTo(sCutterRecipes);
+
 
             GT_Values.RA.stdBuilder()
                 .itemInputs(

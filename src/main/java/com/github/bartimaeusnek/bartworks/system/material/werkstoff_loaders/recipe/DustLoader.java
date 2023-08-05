@@ -25,6 +25,7 @@ import static gregtech.api.enums.OrePrefixes.nugget;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBlastRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBoxinatorRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sPrimitiveBlastRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sVacuumRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 import static gregtech.api.util.GT_RecipeConstants.ADDITIVE_AMOUNT;
 import static gregtech.api.util.GT_RecipeConstants.COIL_HEAT;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import gregtech.api.enums.TierEU;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -433,10 +435,14 @@ public class DustLoader implements IWerkstoffRunnable {
                     }
 
             if (werkstoff.getStats().isBlastFurnace() && werkstoff.getStats().getMeltingPoint() > 1750) {
-                GT_Values.RA.addVacuumFreezerRecipe(
-                        werkstoff.get(ingotHot),
-                        werkstoff.get(ingot),
-                        (int) Math.max(werkstoff.getStats().getMass() * 3L, 1L));
+                GT_Values.RA.stdBuilder()
+                    .itemInputs(werkstoff.get(ingotHot))
+                    .itemOutputs(werkstoff.get(ingot))
+                    .noFluidInputs()
+                    .noFluidOutputs()
+                    .duration((int) Math.max(werkstoff.getStats().getMass() * 3L, 1L))
+                    .eut(TierEU.RECIPE_MV)
+                    .addTo(sVacuumRecipes);
             }
 
             if (werkstoff.hasItemType(ingot)) {

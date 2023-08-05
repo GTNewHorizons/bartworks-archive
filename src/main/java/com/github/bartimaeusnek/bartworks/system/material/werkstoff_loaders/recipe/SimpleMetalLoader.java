@@ -25,6 +25,7 @@ import static gregtech.api.enums.OrePrefixes.stickLong;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBenderRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sExtruderRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sHammerRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sLatheRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sMaceratorRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.TICKS;
 
@@ -53,12 +54,22 @@ public class SimpleMetalLoader implements IWerkstoffRunnable {
     public void run(Werkstoff werkstoff) {
         if (werkstoff.hasItemType(plate)) {
             if (werkstoff.hasItemType(gem)) {
-                GT_Values.RA.addLatheRecipe(
-                        werkstoff.get(gem),
+
+
+                GT_Values.RA.stdBuilder()
+                    .itemInputs(
+                        werkstoff.get(gem)
+                    )
+                    .itemOutputs(
                         werkstoff.get(stick),
-                        werkstoff.get(dustSmall, 2),
-                        (int) Math.max(werkstoff.getStats().getMass() * 5L, 1L),
-                        16);
+                        werkstoff.get(dustSmall, 2)
+                    )
+                    .noFluidInputs()
+                    .noFluidOutputs()
+                    .duration((int) Math.max(werkstoff.getStats().getMass() * 5L, 1L))
+                    .eut(16)
+                    .addTo(sLatheRecipes);
+
                 GT_ModHandler.addCraftingRecipe(
                         werkstoff.get(stick, 2),
                         GT_Proxy.tBits,
@@ -156,13 +167,19 @@ public class SimpleMetalLoader implements IWerkstoffRunnable {
                     TextureFactory.of(werkstoff.getTexSet().mTextures[71], werkstoff.getRGBA(), false),
                     null);
 
-            GT_Values.RA.addLatheRecipe(
-                    werkstoff.get(ingot),
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(ingot)
+                )
+                .itemOutputs(
                     werkstoff.get(stick),
-                    werkstoff.get(dustSmall, 2),
-                    (int) Math.max(werkstoff.getStats().getMass() * 5L, 1L),
-                    16);
-
+                    werkstoff.get(dustSmall, 2)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration((int) Math.max(werkstoff.getStats().getMass() * 5L, 1L))
+                .eut(16)
+                .addTo(sLatheRecipes);
 
             GT_Values.RA.stdBuilder()
                 .itemInputs(

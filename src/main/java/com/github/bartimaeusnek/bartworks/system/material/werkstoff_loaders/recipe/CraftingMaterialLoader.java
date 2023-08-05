@@ -31,6 +31,7 @@ import static gregtech.api.enums.OrePrefixes.wireFine;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sAssemblerRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sCutterRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sExtruderRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sLatheRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sMaceratorRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sWiremillRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
@@ -101,12 +102,20 @@ public class CraftingMaterialLoader implements IWerkstoffRunnable {
 
 
             // screw
-            GT_Values.RA.addLatheRecipe(
-                    werkstoff.get(bolt),
-                    werkstoff.get(screw),
-                    null,
-                    (int) Math.max(werkstoff.getStats().getMass() / 8L, 1L),
-                    4);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(bolt)
+                )
+                .itemOutputs(
+                    werkstoff.get(screw)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration((int) Math.max(werkstoff.getStats().getMass() / 8L, 1L))
+                .eut(4)
+                .addTo(sLatheRecipes);
+
             GT_ModHandler.addCraftingRecipe(
                     werkstoff.get(screw),
                     GT_Proxy.tBits,

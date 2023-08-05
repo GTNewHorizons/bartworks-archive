@@ -29,6 +29,8 @@ import static gregtech.api.enums.OrePrefixes.ore;
 import static gregtech.api.enums.OrePrefixes.plate;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sHammerRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sImplosionRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sLatheRecipes;
+import static gregtech.api.util.GT_RecipeBuilder.MINUTES;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 import static gregtech.api.util.GT_RecipeBuilder.TICKS;
 import static gregtech.api.util.GT_RecipeConstants.ADDITIVE_AMOUNT;
@@ -232,12 +234,37 @@ public class GemLoader implements IWerkstoffRunnable {
             }
 
             if (werkstoff.hasItemType(plate)) {
-                GT_Values.RA
-                        .addLatheRecipe(werkstoff.get(plate), werkstoff.get(lens), werkstoff.get(dustSmall), 1200, 120);
+
+                GT_Values.RA.stdBuilder()
+                    .itemInputs(
+                        werkstoff.get(plate)
+                    )
+                    .itemOutputs(
+                        werkstoff.get(lens),
+                        werkstoff.get(dustSmall)
+                    )
+                    .noFluidInputs()
+                    .noFluidOutputs()
+                    .duration(60 * SECONDS)
+                    .eut(TierEU.RECIPE_MV)
+                    .addTo(sLatheRecipes);
+
             }
 
-            GT_Values.RA
-                    .addLatheRecipe(werkstoff.get(gemExquisite), werkstoff.get(lens), werkstoff.get(dust, 2), 2400, 30);
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(gemExquisite)
+                )
+                .itemOutputs(
+                    werkstoff.get(lens),
+                    werkstoff.get(dust, 2)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(2 * MINUTES)
+                .eut(TierEU.RECIPE_LV)
+                .addTo(sLatheRecipes);
+
             GregTech_API.registerCover(
                     werkstoff.get(lens),
                     TextureFactory.of(

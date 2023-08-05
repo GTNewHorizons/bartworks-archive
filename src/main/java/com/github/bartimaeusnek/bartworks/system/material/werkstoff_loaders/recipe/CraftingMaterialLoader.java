@@ -31,6 +31,7 @@ import static gregtech.api.enums.OrePrefixes.wireFine;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sAssemblerRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sExtruderRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sMaceratorRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sWiremillRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 import static gregtech.api.util.GT_RecipeBuilder.TICKS;
 
@@ -173,18 +174,35 @@ public class CraftingMaterialLoader implements IWerkstoffRunnable {
                 .eut(8 * tVoltageMultiplier)
                 .addTo(sExtruderRecipes);
 
-            GT_Values.RA.addWiremillRecipe(
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
                     werkstoff.get(ingot),
-                    GT_Utility.getIntegratedCircuit(3),
-                    werkstoff.get(wireFine, 8),
-                    (int) Math.max(werkstoff.getStats().getMass(), 1),
-                    8 * tVoltageMultiplier);
-            GT_Values.RA.addWiremillRecipe(
+                    GT_Utility.getIntegratedCircuit(3)
+                )
+                .itemOutputs(
+                    werkstoff.get(wireFine, 8)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration((int) Math.max(werkstoff.getStats().getMass(), 1))
+                .eut(8 * tVoltageMultiplier)
+                .addTo(sWiremillRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
                     werkstoff.get(stick),
-                    GT_Utility.getIntegratedCircuit(3),
-                    werkstoff.get(wireFine, 4),
-                    (int) Math.max(werkstoff.getStats().getMass() * 0.5F, 1F),
-                    8 * tVoltageMultiplier);
+                    GT_Utility.getIntegratedCircuit(3)
+                )
+                .itemOutputs(
+                    werkstoff.get(wireFine, 4)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration((int) Math.max(werkstoff.getStats().getMass() * 0.5F, 1F))
+                .eut(8 * tVoltageMultiplier)
+                .addTo(sWiremillRecipes);
+
 
             // smallGear
             if (WerkstoffLoader.smallGearShape != null) {

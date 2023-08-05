@@ -14,6 +14,8 @@
 package com.github.bartimaeusnek.bartworks.common.loaders;
 
 import static gregtech.api.enums.Mods.Gendustry;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sCentrifugeRecipes;
+import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 
 import java.awt.*;
 import java.util.Arrays;
@@ -93,20 +95,22 @@ public class FluidLoader {
                 FluidRegistry.registerFluid(B.getFluid());
                 GT_LanguageManager
                         .addStringLocalization(B.getFluid().getUnlocalizedName(), B.getLocalisedName() + " Fluid");
-                GT_Values.RA.addCentrifugeRecipe(
-                        GT_Utility.getIntegratedCircuit(10),
-                        GT_Values.NI,
-                        new FluidStack(B.getFluid(), 1000),
-                        dnaFluid,
-                        GT_Values.NI,
-                        GT_Values.NI,
-                        GT_Values.NI,
-                        GT_Values.NI,
-                        GT_Values.NI,
-                        GT_Values.NI,
-                        null,
-                        500,
-                        120);
+
+                GT_Values.RA.stdBuilder()
+                    .itemInputs(
+                        GT_Utility.getIntegratedCircuit(10)
+                    )
+                    .noItemOutputs()
+                    .fluidInputs(
+                        new FluidStack(B.getFluid(), 1000)
+                    )
+                    .fluidOutputs(
+                        dnaFluid
+                    )
+                    .duration(15 * SECONDS)
+                    .eut(2)
+                    .addTo(sCentrifugeRecipes);
+
             }
         }
 

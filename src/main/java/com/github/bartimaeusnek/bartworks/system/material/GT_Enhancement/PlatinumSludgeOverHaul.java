@@ -73,6 +73,7 @@ import static gregtech.api.enums.OrePrefixes.dustTiny;
 import static gregtech.api.enums.OrePrefixes.ingot;
 import static gregtech.api.enums.OrePrefixes.nugget;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBlastRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sCentrifugeRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sMixerRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sSifterRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.MINUTES;
@@ -479,20 +480,27 @@ public class PlatinumSludgeOverHaul {
             .eut(TierEU.RECIPE_LV)
             .addTo(UniversalChemical);
 
-        GT_Values.RA.addCentrifugeRecipe(
-                PTConcentrate.get(cell, 2),
-                null,
-                AmmoniumChloride.getFluidOrGas(400),
-                PDAmmonia.getFluidOrGas(400),
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
+                PTConcentrate.get(cell, 2)
+            )
+            .itemOutputs(
                 PTSaltCrude.get(dustTiny, 16),
                 PTRawPowder.get(dustTiny, 4),
                 Materials.NitrogenDioxide.getCells(1),
-                Materials.DilutedSulfuricAcid.getCells(1),
-                null,
-                null,
-                null,
-                1200,
-                30);
+                Materials.DilutedSulfuricAcid.getCells(1)
+            )
+            .fluidInputs(
+                AmmoniumChloride.getFluidOrGas(400)
+            )
+            .fluidOutputs(
+                PDAmmonia.getFluidOrGas(400)
+            )
+            .duration(15 * SECONDS)
+            .eut(2)
+            .addTo(sCentrifugeRecipes);
+
         GT_Values.RA.addMultiblockChemicalRecipe(
                 new ItemStack[] { GT_Utility.getIntegratedCircuit(1) },
                 new FluidStack[] { PTConcentrate.getFluidOrGas(2000), AmmoniumChloride.getFluidOrGas(400) },

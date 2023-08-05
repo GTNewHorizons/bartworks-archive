@@ -25,6 +25,7 @@ import static gregtech.api.enums.OrePrefixes.ingot;
 import static gregtech.api.enums.OrePrefixes.nugget;
 import static gregtech.api.enums.OrePrefixes.ore;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sAutoclaveRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sCentrifugeRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sChemicalBathRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sElectroMagneticSeparatorRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sHammerRecipes;
@@ -157,34 +158,37 @@ public class CrushedLoader implements IWerkstoffRunnable {
                 10,
                 false);
 
-        GT_Values.RA.addCentrifugeRecipe(
-                werkstoff.get(dustImpure),
-                null,
-                null,
-                null,
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
+                werkstoff.get(dustImpure)
+            )
+            .itemOutputs(
                 werkstoff.get(dust),
-                werkstoff.getOreByProduct(0, dust),
-                null,
-                null,
-                null,
-                null,
-                new int[] { 10000, 1111 },
-                (int) Math.max(1L, werkstoff.getStats().getMass() * 8L),
-                5);
-        GT_Values.RA.addCentrifugeRecipe(
-                werkstoff.get(dustPure),
-                null,
-                null,
-                null,
+                werkstoff.getOreByProduct(0, dust)
+            )
+            .outputChances(100_00, 11_11)
+            .noFluidInputs()
+            .noFluidOutputs()
+            .duration(15 * SECONDS)
+            .eut(2)
+            .addTo(sCentrifugeRecipes);
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
+                werkstoff.get(dustPure)
+            )
+            .itemOutputs(
                 werkstoff.get(dust),
-                werkstoff.getOreByProduct(1, dust),
-                null,
-                null,
-                null,
-                null,
-                new int[] { 10000, 1111 },
-                (int) Math.max(1L, werkstoff.getStats().getMass() * 8L),
-                5);
+                werkstoff.getOreByProduct(1, dust)
+            )
+            .outputChances(100_00, 11_11)
+            .noFluidInputs()
+            .noFluidOutputs()
+            .duration(15 * SECONDS)
+            .eut(2)
+            .addTo(sCentrifugeRecipes);
+
 
         if (werkstoff.contains(SubTag.CRYSTALLISABLE)) {
 

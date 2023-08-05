@@ -27,6 +27,7 @@ import static gregtech.api.enums.OrePrefixes.gemExquisite;
 import static gregtech.api.enums.OrePrefixes.gemFlawed;
 import static gregtech.api.enums.OrePrefixes.stick;
 import static gregtech.api.enums.OrePrefixes.stickLong;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sCentrifugeRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sPrimitiveBlastRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sSifterRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
@@ -395,6 +396,7 @@ public class AdditionalRecipes {
                 null,
                 7500,
                 (int) TierEU.RECIPE_EV);
+
         GT_Values.RA.addAutoclaveRecipe(
                 WerkstoffLoader.MagnetoResonaticDust.get(dust),
                 WerkstoffLoader.Neon.getFluidOrGas(1000),
@@ -402,6 +404,7 @@ public class AdditionalRecipes {
                 9000,
                 4500,
                 (int) TierEU.RECIPE_IV);
+
         GT_Values.RA.addAutoclaveRecipe(
                 WerkstoffLoader.MagnetoResonaticDust.get(dust),
                 WerkstoffLoader.Krypton.getFluidOrGas(1000),
@@ -411,20 +414,30 @@ public class AdditionalRecipes {
                 (int) TierEU.RECIPE_IV);
 
         // Milk
-        GT_Values.RA.addCentrifugeRecipe(
-                GT_Utility.getIntegratedCircuit(1),
-                GT_Values.NI,
-                Materials.Milk.getFluid(10000),
-                Materials.Water.getFluid(8832),
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
+                GT_Utility.getIntegratedCircuit(1)
+            )
+            .itemOutputs(
                 Materials.Sugar.getDustSmall(21),
                 Materials.Calcium.getDustTiny(1),
                 Materials.Magnesium.getDustTiny(1),
                 Materials.Potassium.getDustTiny(1),
                 Materials.Sodium.getDustTiny(4),
-                Materials.Phosphor.getDustTiny(1),
-                new int[] { 10000, 10000, 1000, 10000, 1000, 1000 },
-                50,
-                120);
+                Materials.Phosphor.getDustTiny(1)
+            )
+            .outputChances(100_00, 100_00, 10_00, 100_00, 10_00, 10_00)
+            .fluidInputs(
+                Materials.Milk.getFluid(10000)
+            )
+            .fluidOutputs(
+                Materials.Water.getFluid(8832)
+            )
+            .duration(15 * SECONDS)
+            .eut(2)
+            .addTo(sCentrifugeRecipes);
+
 
         // Magneto Resonatic Circuits
 

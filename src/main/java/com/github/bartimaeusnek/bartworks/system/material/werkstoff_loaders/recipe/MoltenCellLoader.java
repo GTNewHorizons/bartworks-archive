@@ -32,7 +32,9 @@ import static gregtech.api.enums.OrePrefixes.rotor;
 import static gregtech.api.enums.OrePrefixes.screw;
 import static gregtech.api.enums.OrePrefixes.stick;
 import static gregtech.api.enums.OrePrefixes.stickLong;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sFluidCannerRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sFluidSolidficationRecipes;
+import static gregtech.api.util.GT_RecipeBuilder.TICKS;
 
 import java.util.Objects;
 
@@ -344,16 +346,37 @@ public class MoltenCellLoader implements IWerkstoffRunnable {
                 werkstoff.get(cellMolten),
                 Materials.Empty.getCells(1));
         GT_Utility.addFluidContainerData(data);
-        GT_Values.RA.addFluidCannerRecipe(
-                Materials.Empty.getCells(1),
-                werkstoff.get(cellMolten),
-                new FluidStack(Objects.requireNonNull(WerkstoffLoader.molten.get(werkstoff)), 144),
-                GT_Values.NF);
-        GT_Values.RA.addFluidCannerRecipe(
-                werkstoff.get(cellMolten),
-                Materials.Empty.getCells(1),
-                GT_Values.NF,
-                new FluidStack(Objects.requireNonNull(WerkstoffLoader.molten.get(werkstoff)), 144));
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
+                Materials.Empty.getCells(1)
+            )
+            .itemOutputs(
+                werkstoff.get(cellMolten)
+            )
+            .fluidInputs(
+                new FluidStack(Objects.requireNonNull(WerkstoffLoader.molten.get(werkstoff)), 144)
+            )
+            .noFluidOutputs()
+            .duration(2*TICKS)
+            .eut(2)
+            .addTo(sFluidCannerRecipes);
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
+                werkstoff.get(cellMolten)
+            )
+            .itemOutputs(
+                Materials.Empty.getCells(1)
+            )
+            .noFluidInputs()
+            .fluidOutputs(
+                new FluidStack(Objects.requireNonNull(WerkstoffLoader.molten.get(werkstoff)), 144)
+            )
+            .duration(2*TICKS)
+            .eut(2)
+            .addTo(sFluidCannerRecipes);
+
 
         if (!Forestry.isModLoaded()) return;
 
@@ -366,10 +389,19 @@ public class MoltenCellLoader implements IWerkstoffRunnable {
                 werkstoff.get(capsuleMolten),
                 GT_ModHandler.getModItem(Forestry.ID, "refractoryEmpty", 1));
         GT_Utility.addFluidContainerData(emptyData);
-        GT_Values.RA.addFluidCannerRecipe(
-                werkstoff.get(capsuleMolten),
-                GT_Values.NI,
-                GT_Values.NF,
-                new FluidStack(Objects.requireNonNull(WerkstoffLoader.molten.get(werkstoff)), 144));
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
+                werkstoff.get(capsuleMolten)
+            )
+            .noItemOutputs()
+            .noFluidInputs()
+            .fluidOutputs(
+                new FluidStack(Objects.requireNonNull(WerkstoffLoader.molten.get(werkstoff)), 144)
+            )
+            .duration(2*TICKS)
+            .eut(2)
+            .addTo(sFluidCannerRecipes);
+
     }
 }

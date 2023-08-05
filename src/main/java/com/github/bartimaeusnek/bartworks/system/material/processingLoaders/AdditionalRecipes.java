@@ -27,9 +27,11 @@ import static gregtech.api.enums.OrePrefixes.gemExquisite;
 import static gregtech.api.enums.OrePrefixes.gemFlawed;
 import static gregtech.api.enums.OrePrefixes.stick;
 import static gregtech.api.enums.OrePrefixes.stickLong;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sAutoclaveRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sCentrifugeRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sPrimitiveBlastRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sSifterRecipes;
+import static gregtech.api.util.GT_RecipeBuilder.MINUTES;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 import static gregtech.api.util.GT_RecipeConstants.ADDITIVE_AMOUNT;
 
@@ -397,21 +399,24 @@ public class AdditionalRecipes {
                 7500,
                 (int) TierEU.RECIPE_EV);
 
-        GT_Values.RA.addAutoclaveRecipe(
-                WerkstoffLoader.MagnetoResonaticDust.get(dust),
-                WerkstoffLoader.Neon.getFluidOrGas(1000),
-                WerkstoffLoader.MagnetoResonaticDust.get(gemChipped, 9),
-                9000,
-                4500,
-                (int) TierEU.RECIPE_IV);
+        GT_Values.RA.stdBuilder()
+            .itemInputs(WerkstoffLoader.MagnetoResonaticDust.get(dust))
+            .itemOutputs(WerkstoffLoader.MagnetoResonaticDust.get(gemChipped, 9))
+            .outputChances(90_00)
+            .fluidInputs(WerkstoffLoader.Neon.getFluidOrGas(1000))
+            .noFluidOutputs()
+            .duration(3*MINUTES+45*SECONDS)
+            .eut(TierEU.RECIPE_IV)
+            .addTo(sAutoclaveRecipes);
 
-        GT_Values.RA.addAutoclaveRecipe(
-                WerkstoffLoader.MagnetoResonaticDust.get(dust),
-                WerkstoffLoader.Krypton.getFluidOrGas(1000),
-                WerkstoffLoader.MagnetoResonaticDust.get(gem),
-                10000,
-                4500,
-                (int) TierEU.RECIPE_IV);
+        GT_Values.RA.stdBuilder()
+            .itemInputs(WerkstoffLoader.MagnetoResonaticDust.get(dust))
+            .itemOutputs(WerkstoffLoader.MagnetoResonaticDust.get(gem))
+            .fluidInputs(WerkstoffLoader.Krypton.getFluidOrGas(1000))
+            .noFluidOutputs()
+            .duration(3*MINUTES+45*SECONDS)
+            .eut(TierEU.RECIPE_IV)
+            .addTo(sAutoclaveRecipes);
 
         // Milk
 

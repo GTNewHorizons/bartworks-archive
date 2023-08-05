@@ -23,6 +23,8 @@ import static gregtech.api.enums.OrePrefixes.ingot;
 import static gregtech.api.enums.OrePrefixes.ingotHot;
 import static gregtech.api.enums.OrePrefixes.nugget;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBlastRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBoxinatorRecipes;
+import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 import static gregtech.api.util.GT_RecipeConstants.COIL_HEAT;
 
 import java.util.ArrayList;
@@ -308,30 +310,63 @@ public class DustLoader implements IWerkstoffRunnable {
                     WerkstoffLoader.getCorrespondingItemStack(dustTiny, werkstoff, 9),
                     new Object[] { "T  ", 'T', werkstoff.get(dust) });
 
-            GT_Values.RA.addBoxingRecipe(
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
                     werkstoff.get(dustTiny, 9),
-                    ItemList.Schematic_Dust.get(0L),
-                    werkstoff.get(dust),
-                    100,
-                    4);
-            GT_Values.RA.addBoxingRecipe(
+                    ItemList.Schematic_Dust.get(0L)
+                )
+                .itemOutputs(
+                    werkstoff.get(dust)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(5 * SECONDS)
+                .eut(4)
+                .addTo(sBoxinatorRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
                     werkstoff.get(dustSmall, 4),
-                    ItemList.Schematic_Dust.get(0L),
-                    werkstoff.get(dust),
-                    100,
-                    4);
-            GT_Values.RA.addBoxingRecipe(
+                    ItemList.Schematic_Dust.get(0L)
+                )
+                .itemOutputs(
+                    werkstoff.get(dust)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(5 * SECONDS)
+                .eut(4)
+                .addTo(sBoxinatorRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
                     werkstoff.get(dustTiny, 9),
-                    ItemList.Schematic_3by3.get(0L),
-                    werkstoff.get(dust),
-                    100,
-                    4);
-            GT_Values.RA.addBoxingRecipe(
+                    ItemList.Schematic_3by3.get(0L)
+                )
+                .itemOutputs(
+                    werkstoff.get(dust)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(5 * SECONDS)
+                .eut(4)
+                .addTo(sBoxinatorRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
                     werkstoff.get(dustSmall, 4),
-                    ItemList.Schematic_2by2.get(0L),
-                    werkstoff.get(dust),
-                    100,
-                    4);
+                    ItemList.Schematic_2by2.get(0L)
+                )
+                .itemOutputs(
+                    werkstoff.get(dust)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(5 * SECONDS)
+                .eut(4)
+                .addTo(sBoxinatorRecipes);
+
 
             if (werkstoff.hasItemType(ingot) && !werkstoff.getStats().isBlastFurnace()) {
                 GT_ModHandler.addSmeltingRecipe(werkstoff.get(dust), werkstoff.get(ingot));

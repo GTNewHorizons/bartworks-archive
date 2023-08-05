@@ -21,6 +21,7 @@ import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sCutterRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sFluidExtractionRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 import static gregtech.api.util.GT_RecipeBuilder.TICKS;
+import static gregtech.api.util.GT_RecipeConstants.UniversalArcFurnace;
 
 import gregtech.api.enums.TierEU;
 import net.minecraft.item.ItemStack;
@@ -36,13 +37,14 @@ public class BlockLoader implements IWerkstoffRunnable {
     public void run(Werkstoff werkstoff) {
         if (!werkstoff.hasItemType(block)) return;
         if (werkstoff.hasItemType(ingot)) {
-            GT_Values.RA.addArcFurnaceRecipe(
-                    werkstoff.get(block),
-                    new ItemStack[] { werkstoff.get(ingot, 9) },
-                    null,
-                    16,
-                    90,
-                    false);
+            GT_Values.RA.stdBuilder()
+                .itemInputs(werkstoff.get(block))
+                .itemOutputs(werkstoff.get(ingot, 9))
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(16*TICKS)
+                .eut(90)
+                .addTo(UniversalArcFurnace);
         }
         if (werkstoff.hasItemType(cellMolten)) {
 

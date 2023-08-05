@@ -23,6 +23,7 @@ import static gregtech.api.enums.OrePrefixes.plate;
 import static gregtech.api.enums.OrePrefixes.stick;
 import static gregtech.api.enums.OrePrefixes.stickLong;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBenderRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sExtruderRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sHammerRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sMaceratorRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.TICKS;
@@ -204,18 +205,35 @@ public class SimpleMetalLoader implements IWerkstoffRunnable {
                 .eut(16)
                 .addTo(sHammerRecipes);
 
-            GT_Values.RA.addExtruderRecipe(
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
                     werkstoff.get(ingot),
-                    ItemList.Shape_Extruder_Plate.get(0),
-                    werkstoff.get(plate),
-                    (int) Math.max(werkstoff.getStats().getMass() * 2L, 1L),
-                    45);
-            GT_Values.RA.addExtruderRecipe(
+                    ItemList.Shape_Extruder_Plate.get(0)
+                )
+                .itemOutputs(
+                    werkstoff.get(plate)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration((int) Math.max(werkstoff.getStats().getMass() * 2L, 1L))
+                .eut(45)
+                .addTo(sExtruderRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
                     werkstoff.get(ingot),
-                    ItemList.Shape_Extruder_Rod.get(0),
-                    werkstoff.get(stick, 2),
-                    (int) Math.max(werkstoff.getStats().getMass() * 2L, 1L),
-                    45);
+                    ItemList.Shape_Extruder_Rod.get(0)
+                )
+                .itemOutputs(
+                    werkstoff.get(stick, 2)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration((int) Math.max(werkstoff.getStats().getMass() * 2L, 1L))
+                .eut(45)
+                .addTo(sExtruderRecipes);
+
 
 
             GT_Values.RA.stdBuilder()

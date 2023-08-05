@@ -29,6 +29,7 @@ import static gregtech.api.enums.OrePrefixes.toolHeadSaw;
 import static gregtech.api.enums.OrePrefixes.toolHeadWrench;
 import static gregtech.api.enums.OrePrefixes.turbineBlade;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sAssemblerRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sExtruderRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sFluidSolidficationRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sPressRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.MINUTES;
@@ -430,12 +431,21 @@ public class ToolLoader implements IWerkstoffRunnable {
                     GT_Proxy.tBits,
                     new Object[] { "fPd", "SPS", " P ", 'P', plateDouble.get(werkstoff.getBridgeMaterial()), 'S',
                             screw.get(werkstoff.getBridgeMaterial()) });
-            GT_Values.RA.addExtruderRecipe(
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
                     werkstoff.get(ingot, 6),
-                    ItemList.Shape_Extruder_Turbine_Blade.get(0),
-                    werkstoff.get(turbineBlade, 1),
-                    (int) werkstoff.getStats().getMass() / 2 * 20,
-                    120);
+                    ItemList.Shape_Extruder_Turbine_Blade.get(0)
+                )
+                .itemOutputs(
+                    werkstoff.get(turbineBlade, 1)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration((int) werkstoff.getStats().getMass() / 2 * 20)
+                .eut(TierEU.RECIPE_MV)
+                .addTo(sExtruderRecipes);
+
 
             GT_Values.RA.stdBuilder()
                 .itemInputs(

@@ -26,6 +26,7 @@ import static gregtech.api.enums.OrePrefixes.gemFlawless;
 import static gregtech.api.enums.OrePrefixes.lens;
 import static gregtech.api.enums.OrePrefixes.ore;
 import static gregtech.api.enums.OrePrefixes.plate;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sCompressorRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sHammerRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sImplosionRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sLaserEngraverRecipes;
@@ -62,8 +63,18 @@ public class GemLoader implements IWerkstoffRunnable {
             if (werkstoff.getGenerationFeatures().hasSifterRecipes()
                     || (werkstoff.hasItemType(ore) && werkstoff.hasItemType(dust))) {
 
-                GT_ModHandler.addCompressionRecipe(werkstoff.get(gem, 9), werkstoff.get(block));
-
+                GT_Values.RA.stdBuilder()
+                    .itemInputs(
+                        werkstoff.get(gem, 9)
+                    )
+                    .itemOutputs(
+                        werkstoff.get(block)
+                    )
+                    .noFluidInputs()
+                    .noFluidOutputs()
+                    .duration(15 * SECONDS)
+                    .eut(2)
+                    .addTo(sCompressorRecipes);
 
                 GT_Values.RA.stdBuilder()
                     .itemInputs(

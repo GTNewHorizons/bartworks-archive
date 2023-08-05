@@ -13,7 +13,6 @@
 
 package com.github.bartimaeusnek.bartworks.system.material.werkstoff_loaders.recipe;
 
-import static gregtech.api.enums.Mods.GalaxySpace;
 import static gregtech.api.enums.OrePrefixes.block;
 import static gregtech.api.enums.OrePrefixes.crushedPurified;
 import static gregtech.api.enums.OrePrefixes.dust;
@@ -32,12 +31,12 @@ import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sImplosionRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sLaserEngraverRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sLatheRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sMaceratorRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sSifterRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.MINUTES;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 import static gregtech.api.util.GT_RecipeBuilder.TICKS;
 import static gregtech.api.util.GT_RecipeConstants.ADDITIVE_AMOUNT;
 
-import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -79,13 +78,20 @@ public class GemLoader implements IWerkstoffRunnable {
                     .eut(24)
                     .addTo(sHammerRecipes);
 
-                GT_Values.RA.addSifterRecipe(
-                        werkstoff.get(crushedPurified),
-                        new ItemStack[] { werkstoff.get(gemExquisite), werkstoff.get(gemFlawless), werkstoff.get(gem),
-                                werkstoff.get(gemFlawed), werkstoff.get(gemChipped), werkstoff.get(dust) },
-                        new int[] { 200, 1000, 2500, 2000, 4000, 5000 },
-                        800,
-                        16);
+
+                GT_Values.RA.stdBuilder()
+                    .itemInputs(
+                        werkstoff.get(crushedPurified)
+                    )
+                    .itemOutputs(
+                        werkstoff.get(gemExquisite), werkstoff.get(gemFlawless), werkstoff.get(gem), werkstoff.get(gemFlawed), werkstoff.get(gemChipped), werkstoff.get(dust))
+                    .outputChances(200, 1000, 2500, 2000, 4000, 5000)
+                    .noFluidInputs()
+                    .noFluidOutputs()
+                    .duration(40 * SECONDS)
+                    .eut(16)
+                    .addTo(sSifterRecipes);
+
             }
 
 

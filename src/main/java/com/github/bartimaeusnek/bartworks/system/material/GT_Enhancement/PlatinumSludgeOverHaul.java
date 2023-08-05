@@ -74,6 +74,7 @@ import static gregtech.api.enums.OrePrefixes.ingot;
 import static gregtech.api.enums.OrePrefixes.nugget;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBlastRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sMixerRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sSifterRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.MINUTES;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 import static gregtech.api.util.GT_RecipeBuilder.TICKS;
@@ -508,14 +509,20 @@ public class PlatinumSludgeOverHaul {
                 new ItemStack[] { PTSaltCrude.get(dust, 16), PTRawPowder.get(dust, 4) },
                 1400,
                 240);
-        GT_Values.RA.addSifterRecipe(
-                PTSaltCrude.get(dust),
-                new ItemStack[] { PTSaltRefined.get(dust), PTSaltRefined.get(dust), PTSaltRefined.get(dust),
-                        PTSaltRefined.get(dust), PTSaltRefined.get(dust), PTSaltRefined.get(dust),
-                        PTSaltRefined.get(dust), PTSaltRefined.get(dust), PTSaltRefined.get(dust), },
-                new int[] { 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1500, },
-                600,
-                30);
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
+                PTSaltCrude.get(dust)
+            )
+            .itemOutputs(
+                PTSaltRefined.get(dust), PTSaltRefined.get(dust), PTSaltRefined.get(dust),PTSaltRefined.get(dust), PTSaltRefined.get(dust), PTSaltRefined.get(dust),PTSaltRefined.get(dust), PTSaltRefined.get(dust), PTSaltRefined.get(dust))
+            .outputChances(1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1500)
+            .noFluidInputs()
+            .noFluidOutputs()
+            .duration(30 * SECONDS)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(sSifterRecipes);
+
 
         GT_Values.RA.stdBuilder()
             .itemInputs(PTSaltRefined.get(dust),
@@ -611,14 +618,20 @@ public class PlatinumSludgeOverHaul {
             .eut(TierEU.RECIPE_LV)
             .addTo(UniversalChemical);
 
-        GT_Values.RA.addSifterRecipe(
-                PDSalt.get(dust),
-                new ItemStack[] { PDMetallicPowder.get(dust), PDMetallicPowder.get(dust), PDMetallicPowder.get(dust),
-                        PDMetallicPowder.get(dust), PDMetallicPowder.get(dust), PDMetallicPowder.get(dust),
-                        PDMetallicPowder.get(dust), PDMetallicPowder.get(dust), PDMetallicPowder.get(dust), },
-                new int[] { 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1500, },
-                600,
-                30);
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
+                PDSalt.get(dust)
+            )
+            .itemOutputs(
+                PDMetallicPowder.get(dust), PDMetallicPowder.get(dust), PDMetallicPowder.get(dust), PDMetallicPowder.get(dust), PDMetallicPowder.get(dust), PDMetallicPowder.get(dust), PDMetallicPowder.get(dust), PDMetallicPowder.get(dust), PDMetallicPowder.get(dust))
+            .outputChances(1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1500)
+            .noFluidInputs()
+            .noFluidOutputs()
+            .duration(30 * SECONDS)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(sSifterRecipes);
+
         GT_Values.RA.addChemicalRecipeForBasicMachineOnly(
                 PDRawPowder.get(dust, 4),
                 Materials.Empty.getCells(1),
@@ -950,14 +963,20 @@ public class PlatinumSludgeOverHaul {
             .eut(60)
             .addTo(UniversalChemical);
 
-        GT_Values.RA.addSifterRecipe(
-                RHNitrate.get(dust),
-                new ItemStack[] { RhFilterCake.get(dust), RhFilterCake.get(dust), RhFilterCake.get(dust),
-                        RhFilterCake.get(dust), RhFilterCake.get(dust), RhFilterCake.get(dust), RhFilterCake.get(dust),
-                        RhFilterCake.get(dust), RhFilterCake.get(dust), },
-                new int[] { 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1500, },
-                600,
-                30);
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
+                RHNitrate.get(dust)
+            )
+            .itemOutputs(
+                RhFilterCake.get(dust), RhFilterCake.get(dust), RhFilterCake.get(dust), RhFilterCake.get(dust), RhFilterCake.get(dust), RhFilterCake.get(dust), RhFilterCake.get(dust), RhFilterCake.get(dust), RhFilterCake.get(dust))
+            .outputChances(1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1500)
+            .noFluidInputs()
+            .noFluidOutputs()
+            .duration(30 * SECONDS)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(sSifterRecipes);
+
 
         GT_Values.RA.stdBuilder()
             .itemInputs(RhFilterCake.get(dust))

@@ -28,6 +28,7 @@ import static gregtech.api.enums.OrePrefixes.gemFlawed;
 import static gregtech.api.enums.OrePrefixes.stick;
 import static gregtech.api.enums.OrePrefixes.stickLong;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sPrimitiveBlastRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sSifterRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 import static gregtech.api.util.GT_RecipeConstants.ADDITIVE_AMOUNT;
 
@@ -274,15 +275,20 @@ public class AdditionalRecipes {
                 800,
                 (int) TierEU.RECIPE_IV,
                 3663);
-        // Thorianit recipes
-        GT_Values.RA.addSifterRecipe(
-                WerkstoffLoader.Thorianit.get(crushedPurified),
-                new ItemStack[] { WerkstoffLoader.Thorianit.get(dust), WerkstoffLoader.Thorianit.get(dust),
-                        WerkstoffLoader.Thorianit.get(dust), Materials.Thorium.getDust(1), Materials.Thorium.getDust(1),
-                        WerkstoffLoader.Thorium232.get(dust), },
-                new int[] { 7000, 1300, 700, 600, 300, 100 },
-                400,
-                (int) TierEU.RECIPE_IV);
+        // Thorianite recipes
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
+                WerkstoffLoader.Thorianit.get(crushedPurified)
+            )
+            .itemOutputs(
+                WerkstoffLoader.Thorianit.get(dust), WerkstoffLoader.Thorianit.get(dust), WerkstoffLoader.Thorianit.get(dust), Materials.Thorium.getDust(1), Materials.Thorium.getDust(1), WerkstoffLoader.Thorium232.get(dust))
+            .outputChances(7000, 1300, 700, 600, 300, 100)
+            .noFluidInputs()
+            .noFluidOutputs()
+            .duration(20 * SECONDS)
+            .eut((int) TierEU.RECIPE_IV)
+            .addTo(sSifterRecipes);
+
         // 3ThO2 + 4Al = 3Th + 2Al2O3
         GT_Values.RA.addChemicalRecipe(
                 WerkstoffLoader.Thorianit.get(dust, 9),

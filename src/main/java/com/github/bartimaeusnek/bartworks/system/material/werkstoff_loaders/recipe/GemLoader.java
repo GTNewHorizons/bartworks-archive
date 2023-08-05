@@ -29,6 +29,7 @@ import static gregtech.api.enums.OrePrefixes.ore;
 import static gregtech.api.enums.OrePrefixes.plate;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sHammerRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sImplosionRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sLaserEngraverRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sLatheRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.MINUTES;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
@@ -276,17 +277,63 @@ public class GemLoader implements IWerkstoffRunnable {
             for (ItemStack is : OreDictionary.getOres(
                     "craftingLens" + BW_ColorUtil.getDyeFromColor(werkstoff.getRGBA()).mName.replace(" ", ""))) {
                 is.stackSize = 0;
-                GT_Values.RA
-                        .addLaserEngraverRecipe(werkstoff.get(gemChipped, 3), is, werkstoff.get(gemFlawed, 1), 600, 30);
-                GT_Values.RA.addLaserEngraverRecipe(werkstoff.get(gemFlawed, 3), is, werkstoff.get(gem, 1), 600, 120);
-                GT_Values.RA
-                        .addLaserEngraverRecipe(werkstoff.get(gem, 3), is, werkstoff.get(gemFlawless, 1), 1200, 480);
-                GT_Values.RA.addLaserEngraverRecipe(
+
+                GT_Values.RA.stdBuilder()
+                    .itemInputs(
+                        werkstoff.get(gemChipped, 3),
+                        is
+                    )
+                    .itemOutputs(
+                        werkstoff.get(gemFlawed, 1)
+                    )
+                    .noFluidInputs()
+                    .noFluidOutputs()
+                    .duration(30 * SECONDS)
+                    .eut(TierEU.RECIPE_LV)
+                    .addTo(sLaserEngraverRecipes);
+
+                GT_Values.RA.stdBuilder()
+                    .itemInputs(
+                        werkstoff.get(gemFlawed, 3),
+                        is
+                    )
+                    .itemOutputs(
+                        werkstoff.get(gem, 1)
+                    )
+                    .noFluidInputs()
+                    .noFluidOutputs()
+                    .duration(30 * SECONDS)
+                    .eut(TierEU.RECIPE_MV)
+                    .addTo(sLaserEngraverRecipes);
+
+                GT_Values.RA.stdBuilder()
+                    .itemInputs(
+                        werkstoff.get(gem, 3),
+                        is
+                    )
+                    .itemOutputs(
+                        werkstoff.get(gemFlawless, 1)
+                    )
+                    .noFluidInputs()
+                    .noFluidOutputs()
+                    .duration(60 * SECONDS)
+                    .eut(TierEU.RECIPE_HV)
+                    .addTo(sLaserEngraverRecipes);
+
+                GT_Values.RA.stdBuilder()
+                    .itemInputs(
                         werkstoff.get(gemFlawless, 3),
-                        is,
-                        werkstoff.get(gemExquisite, 1),
-                        2400,
-                        2000);
+                        is
+                    )
+                    .itemOutputs(
+                        werkstoff.get(gemExquisite, 1)
+                    )
+                    .noFluidInputs()
+                    .noFluidOutputs()
+                    .duration(2 * MINUTES)
+                    .eut(2000)
+                    .addTo(sLaserEngraverRecipes);
+
             }
         }
     }

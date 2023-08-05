@@ -184,36 +184,14 @@ public class CellLoader implements IWerkstoffRunnable {
                 werkstoff.get(cell),
                 Materials.Empty.getCells(1));
 
-        GT_Values.RA.stdBuilder()
-            .itemInputs(
-                Materials.Empty.getCells(1)
-            )
-            .itemOutputs(
-                werkstoff.get(cell)
-            )
-            .fluidInputs(
-                new FluidStack(Objects.requireNonNull(WerkstoffLoader.fluids.get(werkstoff)), 1000)
-            )
-            .noFluidOutputs()
-            .duration(16*TICKS)
-            .eut(2)
-            .addTo(sFluidCannerRecipes);
+        GT_Values.RA.stdBuilder().itemInputs(Materials.Empty.getCells(1)).itemOutputs(werkstoff.get(cell))
+                .fluidInputs(new FluidStack(Objects.requireNonNull(WerkstoffLoader.fluids.get(werkstoff)), 1000))
+                .noFluidOutputs().duration(16 * TICKS).eut(2).addTo(sFluidCannerRecipes);
 
-        GT_Values.RA.stdBuilder()
-            .itemInputs(
-                werkstoff.get(cell)
-            )
-            .itemOutputs(
-                Materials.Empty.getCells(1)
-            )
-            .noFluidInputs()
-            .fluidOutputs(
-                new FluidStack(Objects.requireNonNull(WerkstoffLoader.fluids.get(werkstoff)), 1000)
-            )
-            .duration(16*TICKS)
-            .eut(2)
-            .addTo(sFluidCannerRecipes);
-
+        GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(cell)).itemOutputs(Materials.Empty.getCells(1))
+                .noFluidInputs()
+                .fluidOutputs(new FluidStack(Objects.requireNonNull(WerkstoffLoader.fluids.get(werkstoff)), 1000))
+                .duration(16 * TICKS).eut(2).addTo(sFluidCannerRecipes);
 
         if (Forestry.isModLoaded()) {
             FluidContainerRegistry.FluidContainerData emptyData = new FluidContainerRegistry.FluidContainerData(
@@ -224,50 +202,21 @@ public class CellLoader implements IWerkstoffRunnable {
             GT_Utility.addFluidContainerData(emptyData);
             FluidContainerRegistry.registerFluidContainer(emptyData);
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(capsule)
-                )
-                .noItemOutputs()
-                .noFluidInputs()
-                .fluidOutputs(
-                    new FluidStack(Objects.requireNonNull(WerkstoffLoader.fluids.get(werkstoff)), 1000)
-                )
-                .duration(16*TICKS)
-                .eut(2)
-                .addTo(sFluidCannerRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(capsule)).noItemOutputs().noFluidInputs()
+                    .fluidOutputs(new FluidStack(Objects.requireNonNull(WerkstoffLoader.fluids.get(werkstoff)), 1000))
+                    .duration(16 * TICKS).eut(2).addTo(sFluidCannerRecipes);
         }
 
         if (werkstoff.hasItemType(dust)) {
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(dust)
-                )
-                .noItemOutputs()
-                .noFluidInputs()
-                .fluidOutputs(
-                    werkstoff.getFluidOrGas(1000)
-                )
-                .duration(werkstoff.getStats().getMass())
-                .eut(werkstoff.getStats().getMass() > 128 ? 64 : 30)
-            .addTo(sFluidExtractionRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dust)).noItemOutputs().noFluidInputs()
+                    .fluidOutputs(werkstoff.getFluidOrGas(1000)).duration(werkstoff.getStats().getMass())
+                    .eut(werkstoff.getStats().getMass() > 128 ? 64 : 30).addTo(sFluidExtractionRecipes);
 
-
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    GT_Utility.getIntegratedCircuit(1)
-                )
-                .itemOutputs(
-                    werkstoff.get(dust)
-                )
-                .fluidInputs(
-                    werkstoff.getFluidOrGas(1000)
-                )
-                .noFluidOutputs()
-                .duration((int) werkstoff.getStats().getMass())
-                .eut(werkstoff.getStats().getMass() > 128 ? 64 : 30)
-                .addTo(sFluidSolidficationRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(GT_Utility.getIntegratedCircuit(1)).itemOutputs(werkstoff.get(dust))
+                    .fluidInputs(werkstoff.getFluidOrGas(1000)).noFluidOutputs()
+                    .duration((int) werkstoff.getStats().getMass()).eut(werkstoff.getStats().getMass() > 128 ? 64 : 30)
+                    .addTo(sFluidSolidficationRecipes);
 
         }
 

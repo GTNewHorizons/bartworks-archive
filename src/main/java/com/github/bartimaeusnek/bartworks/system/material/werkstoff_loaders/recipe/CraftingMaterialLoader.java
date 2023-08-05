@@ -37,8 +37,6 @@ import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sWiremillRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 import static gregtech.api.util.GT_RecipeBuilder.TICKS;
 
-import net.minecraft.item.ItemStack;
-
 import com.github.bartimaeusnek.bartworks.system.material.Werkstoff;
 import com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader;
 import com.github.bartimaeusnek.bartworks.system.material.werkstoff_loaders.IWerkstoffRunnable;
@@ -60,97 +58,42 @@ public class CraftingMaterialLoader implements IWerkstoffRunnable {
             // bolt
 
             GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.hasItemType(gem) ? werkstoff.get(gem) : werkstoff.get(ingot),
-                    ItemList.Shape_Extruder_Bolt.get(0L)
-                )
-                .itemOutputs(
-                    werkstoff.get(bolt, 8)
-                )
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration((int) Math.max(werkstoff.getStats().getMass() * 2L, 1))
-                .eut(8 * tVoltageMultiplier)
-                .addTo(sExtruderRecipes);
+                    .itemInputs(
+                            werkstoff.hasItemType(gem) ? werkstoff.get(gem) : werkstoff.get(ingot),
+                            ItemList.Shape_Extruder_Bolt.get(0L))
+                    .itemOutputs(werkstoff.get(bolt, 8)).noFluidInputs().noFluidOutputs()
+                    .duration((int) Math.max(werkstoff.getStats().getMass() * 2L, 1)).eut(8 * tVoltageMultiplier)
+                    .addTo(sExtruderRecipes);
 
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(stick)).itemOutputs(werkstoff.get(bolt, 4))
+                    .noFluidInputs().noFluidOutputs().duration((int) Math.max(werkstoff.getStats().getMass() * 2L, 1L))
+                    .eut(4).addTo(sCutterRecipes);
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(stick)
-                )
-                .itemOutputs(
-                    werkstoff.get(bolt, 4)
-                )
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration((int) Math.max(werkstoff.getStats().getMass() * 2L, 1L))
-                .eut(4)
-                .addTo(sCutterRecipes);
-
-
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(bolt)
-                )
-                .itemOutputs(
-                    werkstoff.get(dustTiny, 1))
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration(2 * TICKS)
-                .eut(8)
-                .addTo(sMaceratorRecipes);
-
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(bolt)).itemOutputs(werkstoff.get(dustTiny, 1))
+                    .noFluidInputs().noFluidOutputs().duration(2 * TICKS).eut(8).addTo(sMaceratorRecipes);
 
             // screw
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(bolt)
-                )
-                .itemOutputs(
-                    werkstoff.get(screw)
-                )
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration((int) Math.max(werkstoff.getStats().getMass() / 8L, 1L))
-                .eut(4)
-                .addTo(sLatheRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(bolt)).itemOutputs(werkstoff.get(screw)).noFluidInputs()
+                    .noFluidOutputs().duration((int) Math.max(werkstoff.getStats().getMass() / 8L, 1L)).eut(4)
+                    .addTo(sLatheRecipes);
 
             GT_ModHandler.addCraftingRecipe(
                     werkstoff.get(screw),
                     GT_Proxy.tBits,
                     new Object[] { "fX", "X ", 'X', werkstoff.get(bolt) });
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(screw)
-                )
-                .itemOutputs(
-                    werkstoff.get(dustTiny, 1))
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration(2 * TICKS)
-                .eut(8)
-                .addTo(sMaceratorRecipes);
-
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(screw)).itemOutputs(werkstoff.get(dustTiny, 1))
+                    .noFluidInputs().noFluidOutputs().duration(2 * TICKS).eut(8).addTo(sMaceratorRecipes);
 
             if (werkstoff.hasItemType(gem)) return;
 
             // ring
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(ingot),
-                    ItemList.Shape_Extruder_Ring.get(0L)
-                )
-                .itemOutputs(
-                    werkstoff.get(ring, 4)
-                )
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration((int) Math.max(werkstoff.getStats().getMass() * 2L, 1))
-                .eut(6 * tVoltageMultiplier)
-                .addTo(sExtruderRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ingot), ItemList.Shape_Extruder_Ring.get(0L))
+                    .itemOutputs(werkstoff.get(ring, 4)).noFluidInputs().noFluidOutputs()
+                    .duration((int) Math.max(werkstoff.getStats().getMass() * 2L, 1)).eut(6 * tVoltageMultiplier)
+                    .addTo(sExtruderRecipes);
 
             GT_ModHandler.addCraftingRecipe(
                     werkstoff.get(ring),
@@ -163,81 +106,34 @@ public class CraftingMaterialLoader implements IWerkstoffRunnable {
                     GT_Proxy.tBits,
                     new Object[] { "SPS", "PwP", "SPS", 'P', werkstoff.get(plate), 'S', werkstoff.get(stick) });
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(ingot, 4),
-                    ItemList.Shape_Extruder_Gear.get(0L)
-                )
-                .itemOutputs(
-                    werkstoff.get(gearGt)
-                )
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration((int) Math.max(werkstoff.getStats().getMass() * 5L, 1))
-                .eut(8 * tVoltageMultiplier)
-                .addTo(sExtruderRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ingot, 4), ItemList.Shape_Extruder_Gear.get(0L))
+                    .itemOutputs(werkstoff.get(gearGt)).noFluidInputs().noFluidOutputs()
+                    .duration((int) Math.max(werkstoff.getStats().getMass() * 5L, 1)).eut(8 * tVoltageMultiplier)
+                    .addTo(sExtruderRecipes);
             // wireFine
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(ingot),
-                    ItemList.Shape_Extruder_Wire.get(0L)
-                )
-                .itemOutputs(
-                    werkstoff.get(wireFine, 8)
-                )
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration((int) Math.max(werkstoff.getStats().getMass() * 1.5F, 1F))
-                .eut(8 * tVoltageMultiplier)
-                .addTo(sExtruderRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ingot), ItemList.Shape_Extruder_Wire.get(0L))
+                    .itemOutputs(werkstoff.get(wireFine, 8)).noFluidInputs().noFluidOutputs()
+                    .duration((int) Math.max(werkstoff.getStats().getMass() * 1.5F, 1F)).eut(8 * tVoltageMultiplier)
+                    .addTo(sExtruderRecipes);
 
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ingot), GT_Utility.getIntegratedCircuit(3))
+                    .itemOutputs(werkstoff.get(wireFine, 8)).noFluidInputs().noFluidOutputs()
+                    .duration((int) Math.max(werkstoff.getStats().getMass(), 1)).eut(8 * tVoltageMultiplier)
+                    .addTo(sWiremillRecipes);
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(ingot),
-                    GT_Utility.getIntegratedCircuit(3)
-                )
-                .itemOutputs(
-                    werkstoff.get(wireFine, 8)
-                )
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration((int) Math.max(werkstoff.getStats().getMass(), 1))
-                .eut(8 * tVoltageMultiplier)
-                .addTo(sWiremillRecipes);
-
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(stick),
-                    GT_Utility.getIntegratedCircuit(3)
-                )
-                .itemOutputs(
-                    werkstoff.get(wireFine, 4)
-                )
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration((int) Math.max(werkstoff.getStats().getMass() * 0.5F, 1F))
-                .eut(8 * tVoltageMultiplier)
-                .addTo(sWiremillRecipes);
-
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(stick), GT_Utility.getIntegratedCircuit(3))
+                    .itemOutputs(werkstoff.get(wireFine, 4)).noFluidInputs().noFluidOutputs()
+                    .duration((int) Math.max(werkstoff.getStats().getMass() * 0.5F, 1F)).eut(8 * tVoltageMultiplier)
+                    .addTo(sWiremillRecipes);
 
             // smallGear
             if (WerkstoffLoader.smallGearShape != null) {
 
-                GT_Values.RA.stdBuilder()
-                    .itemInputs(
-                        werkstoff.get(ingot),
-                        WerkstoffLoader.smallGearShape.get(0L)
-                    )
-                    .itemOutputs(
-                        werkstoff.get(gearGtSmall)
-                    )
-                    .noFluidInputs()
-                    .noFluidOutputs()
-                    .duration((int) werkstoff.getStats().getMass())
-                    .eut(8 * tVoltageMultiplier)
-                    .addTo(sExtruderRecipes);
+                GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ingot), WerkstoffLoader.smallGearShape.get(0L))
+                        .itemOutputs(werkstoff.get(gearGtSmall)).noFluidInputs().noFluidOutputs()
+                        .duration((int) werkstoff.getStats().getMass()).eut(8 * tVoltageMultiplier)
+                        .addTo(sExtruderRecipes);
 
             }
 
@@ -253,51 +149,23 @@ public class CraftingMaterialLoader implements IWerkstoffRunnable {
                     new Object[] { "PhP", "SRf", "PdP", 'P', werkstoff.get(plate), 'R', werkstoff.get(ring), 'S',
                             werkstoff.get(screw) });
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs( werkstoff.get(plate, 4),
-                    werkstoff.get(ring))
-                .itemOutputs( werkstoff.get(rotor))
-                .fluidInputs(Materials.Tin.getMolten(32))
-                .noFluidOutputs()
-                .duration(12*SECONDS)
-                .eut(24)
-                .addTo(sAssemblerRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(plate, 4), werkstoff.get(ring))
+                    .itemOutputs(werkstoff.get(rotor)).fluidInputs(Materials.Tin.getMolten(32)).noFluidOutputs()
+                    .duration(12 * SECONDS).eut(24).addTo(sAssemblerRecipes);
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(werkstoff.get(plate, 4),
-                    werkstoff.get(ring))
-                .itemOutputs(werkstoff.get(rotor))
-                .fluidInputs(Materials.Lead.getMolten(48))
-                .noFluidOutputs()
-                .duration(12*SECONDS)
-                .eut(24)
-                .addTo(sAssemblerRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(plate, 4), werkstoff.get(ring))
+                    .itemOutputs(werkstoff.get(rotor)).fluidInputs(Materials.Lead.getMolten(48)).noFluidOutputs()
+                    .duration(12 * SECONDS).eut(24).addTo(sAssemblerRecipes);
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(werkstoff.get(plate, 4),
-                    werkstoff.get(ring))
-                .itemOutputs(werkstoff.get(rotor))
-                .fluidInputs(Materials.SolderingAlloy.getMolten(16))
-                .noFluidOutputs()
-                .duration(12*SECONDS)
-                .eut(24)
-                .addTo(sAssemblerRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(plate, 4), werkstoff.get(ring))
+                    .itemOutputs(werkstoff.get(rotor)).fluidInputs(Materials.SolderingAlloy.getMolten(16))
+                    .noFluidOutputs().duration(12 * SECONDS).eut(24).addTo(sAssemblerRecipes);
 
             if (WerkstoffLoader.rotorShape != null) {
 
-                GT_Values.RA.stdBuilder()
-                    .itemInputs(
-                        werkstoff.get(ingot, 5),
-                        WerkstoffLoader.rotorShape.get(0L)
-                    )
-                    .itemOutputs(
-                        werkstoff.get(rotor)
-                    )
-                    .noFluidInputs()
-                    .noFluidOutputs()
-                    .duration(10 * SECONDS)
-                    .eut(60)
-                    .addTo(sExtruderRecipes);
+                GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ingot, 5), WerkstoffLoader.rotorShape.get(0L))
+                        .itemOutputs(werkstoff.get(rotor)).noFluidInputs().noFluidOutputs().duration(10 * SECONDS)
+                        .eut(60).addTo(sExtruderRecipes);
 
             }
 
@@ -318,54 +186,18 @@ public class CraftingMaterialLoader implements IWerkstoffRunnable {
                  */
             }
 
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(gearGt)).itemOutputs(werkstoff.get(dust, 4))
+                    .noFluidInputs().noFluidOutputs().duration(2 * TICKS).eut(8).addTo(sMaceratorRecipes);
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(gearGt)
-                )
-                .itemOutputs(
-                    werkstoff.get(dust, 4))
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration(2 * TICKS)
-                .eut(8)
-                .addTo(sMaceratorRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(gearGtSmall)).itemOutputs(werkstoff.get(dust, 1))
+                    .noFluidInputs().noFluidOutputs().duration(2 * TICKS).eut(8).addTo(sMaceratorRecipes);
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(gearGtSmall)
-                )
-                .itemOutputs(
-                    werkstoff.get(dust, 1))
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration(2 * TICKS)
-                .eut(8)
-                .addTo(sMaceratorRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(rotor))
+                    .itemOutputs(werkstoff.get(dust, 4), werkstoff.get(dustSmall)).noFluidInputs().noFluidOutputs()
+                    .duration(2 * TICKS).eut(8).addTo(sMaceratorRecipes);
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(rotor)
-                )
-                .itemOutputs(
-                    werkstoff.get(dust, 4), werkstoff.get(dustSmall))
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration(2 * TICKS)
-                .eut(8)
-                .addTo(sMaceratorRecipes);
-
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(ring)
-                )
-                .itemOutputs(
-                    werkstoff.get(dustSmall, 1))
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration(2 * TICKS)
-                .eut(8)
-                .addTo(sMaceratorRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ring)).itemOutputs(werkstoff.get(dustSmall, 1))
+                    .noFluidInputs().noFluidOutputs().duration(2 * TICKS).eut(8).addTo(sMaceratorRecipes);
 
         }
     }

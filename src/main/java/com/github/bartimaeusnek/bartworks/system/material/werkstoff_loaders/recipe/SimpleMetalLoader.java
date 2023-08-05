@@ -44,7 +44,6 @@ import gregtech.api.enums.TextureSet;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GT_ModHandler;
-import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
 import gregtech.common.GT_Proxy;
 
@@ -55,20 +54,9 @@ public class SimpleMetalLoader implements IWerkstoffRunnable {
         if (werkstoff.hasItemType(plate)) {
             if (werkstoff.hasItemType(gem)) {
 
-
-                GT_Values.RA.stdBuilder()
-                    .itemInputs(
-                        werkstoff.get(gem)
-                    )
-                    .itemOutputs(
-                        werkstoff.get(stick),
-                        werkstoff.get(dustSmall, 2)
-                    )
-                    .noFluidInputs()
-                    .noFluidOutputs()
-                    .duration((int) Math.max(werkstoff.getStats().getMass() * 5L, 1L))
-                    .eut(16)
-                    .addTo(sLatheRecipes);
+                GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(gem))
+                        .itemOutputs(werkstoff.get(stick), werkstoff.get(dustSmall, 2)).noFluidInputs().noFluidOutputs()
+                        .duration((int) Math.max(werkstoff.getStats().getMass() * 5L, 1L)).eut(16).addTo(sLatheRecipes);
 
                 GT_ModHandler.addCraftingRecipe(
                         werkstoff.get(stick, 2),
@@ -79,19 +67,9 @@ public class SimpleMetalLoader implements IWerkstoffRunnable {
                         GT_Proxy.tBits,
                         new Object[] { "f ", " X", 'X', werkstoff.get(gem) });
 
-                GT_Values.RA.stdBuilder()
-                    .itemInputs(
-                        werkstoff.get(stick, 2)
-                    )
-                    .itemOutputs(
-                        werkstoff.get(stickLong)
-                    )
-                    .noFluidInputs()
-                    .noFluidOutputs()
-                    .duration((int) Math.max(werkstoff.getStats().getMass(), 1L))
-                    .eut(16)
-                    .addTo(sHammerRecipes);
-
+                GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(stick, 2)).itemOutputs(werkstoff.get(stickLong))
+                        .noFluidInputs().noFluidOutputs().duration((int) Math.max(werkstoff.getStats().getMass(), 1L))
+                        .eut(16).addTo(sHammerRecipes);
 
                 TextureSet texSet = werkstoff.getTexSet();
                 ITexture texture = SideReference.Side.Client
@@ -103,18 +81,8 @@ public class SimpleMetalLoader implements IWerkstoffRunnable {
                         : TextureFactory.of(texSet.mTextures[block.mTextureIndex], werkstoff.getRGBA(), false);
                 GregTech_API.registerCover(werkstoff.get(plate), texture, null);
 
-
-                GT_Values.RA.stdBuilder()
-                    .itemInputs(
-                        werkstoff.get(plate)
-                    )
-                    .itemOutputs(
-                        werkstoff.get(dust))
-                    .noFluidInputs()
-                    .noFluidOutputs()
-                    .duration(2 * TICKS)
-                    .eut(8)
-                    .addTo(sMaceratorRecipes);
+                GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(plate)).itemOutputs(werkstoff.get(dust))
+                        .noFluidInputs().noFluidOutputs().duration(2 * TICKS).eut(8).addTo(sMaceratorRecipes);
 
                 return;
             }
@@ -149,157 +117,50 @@ public class SimpleMetalLoader implements IWerkstoffRunnable {
                             24,
                             0));
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(ingot, 3)
-                )
-                .itemOutputs(
-                    werkstoff.get(plate, 2)
-                )
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration((int) Math.max(werkstoff.getStats().getMass(), 1L))
-                .eut(16)
-                .addTo(sHammerRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ingot, 3)).itemOutputs(werkstoff.get(plate, 2))
+                    .noFluidInputs().noFluidOutputs().duration((int) Math.max(werkstoff.getStats().getMass(), 1L))
+                    .eut(16).addTo(sHammerRecipes);
 
             GregTech_API.registerCover(
                     werkstoff.get(plate),
                     TextureFactory.of(werkstoff.getTexSet().mTextures[71], werkstoff.getRGBA(), false),
                     null);
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(ingot)
-                )
-                .itemOutputs(
-                    werkstoff.get(stick),
-                    werkstoff.get(dustSmall, 2)
-                )
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration((int) Math.max(werkstoff.getStats().getMass() * 5L, 1L))
-                .eut(16)
-                .addTo(sLatheRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ingot))
+                    .itemOutputs(werkstoff.get(stick), werkstoff.get(dustSmall, 2)).noFluidInputs().noFluidOutputs()
+                    .duration((int) Math.max(werkstoff.getStats().getMass() * 5L, 1L)).eut(16).addTo(sLatheRecipes);
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(plate),
-                    GT_Utility.getIntegratedCircuit(1)
-                )
-                .itemOutputs(
-                    werkstoff.get(foil, 4)
-                )
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration((int) Math.max(werkstoff.getStats().getMass() * 1L, 1L))
-                .eut(24)
-                .addTo(sBenderRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(plate), GT_Utility.getIntegratedCircuit(1))
+                    .itemOutputs(werkstoff.get(foil, 4)).noFluidInputs().noFluidOutputs()
+                    .duration((int) Math.max(werkstoff.getStats().getMass() * 1L, 1L)).eut(24).addTo(sBenderRecipes);
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(ingot),
-                    GT_Utility.getIntegratedCircuit(10)
-                )
-                .itemOutputs(
-                    werkstoff.get(foil, 4)
-                )
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration((int) Math.max(werkstoff.getStats().getMass() * 2L, 1L))
-                .eut(24)
-                .addTo(sBenderRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ingot), GT_Utility.getIntegratedCircuit(10))
+                    .itemOutputs(werkstoff.get(foil, 4)).noFluidInputs().noFluidOutputs()
+                    .duration((int) Math.max(werkstoff.getStats().getMass() * 2L, 1L)).eut(24).addTo(sBenderRecipes);
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(stick, 2)
-                )
-                .itemOutputs(
-                    werkstoff.get(stickLong)
-                )
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration((int) Math.max(werkstoff.getStats().getMass(), 1L))
-                .eut(16)
-                .addTo(sHammerRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(stick, 2)).itemOutputs(werkstoff.get(stickLong))
+                    .noFluidInputs().noFluidOutputs().duration((int) Math.max(werkstoff.getStats().getMass(), 1L))
+                    .eut(16).addTo(sHammerRecipes);
 
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ingot), ItemList.Shape_Extruder_Plate.get(0))
+                    .itemOutputs(werkstoff.get(plate)).noFluidInputs().noFluidOutputs()
+                    .duration((int) Math.max(werkstoff.getStats().getMass() * 2L, 1L)).eut(45).addTo(sExtruderRecipes);
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(ingot),
-                    ItemList.Shape_Extruder_Plate.get(0)
-                )
-                .itemOutputs(
-                    werkstoff.get(plate)
-                )
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration((int) Math.max(werkstoff.getStats().getMass() * 2L, 1L))
-                .eut(45)
-                .addTo(sExtruderRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ingot), ItemList.Shape_Extruder_Rod.get(0))
+                    .itemOutputs(werkstoff.get(stick, 2)).noFluidInputs().noFluidOutputs()
+                    .duration((int) Math.max(werkstoff.getStats().getMass() * 2L, 1L)).eut(45).addTo(sExtruderRecipes);
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(ingot),
-                    ItemList.Shape_Extruder_Rod.get(0)
-                )
-                .itemOutputs(
-                    werkstoff.get(stick, 2)
-                )
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration((int) Math.max(werkstoff.getStats().getMass() * 2L, 1L))
-                .eut(45)
-                .addTo(sExtruderRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ingot)).itemOutputs(werkstoff.get(dust)).noFluidInputs()
+                    .noFluidOutputs().duration(2 * TICKS).eut(8).addTo(sMaceratorRecipes);
 
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(plate)).itemOutputs(werkstoff.get(dust)).noFluidInputs()
+                    .noFluidOutputs().duration(2 * TICKS).eut(8).addTo(sMaceratorRecipes);
 
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(stickLong)).itemOutputs(werkstoff.get(dust))
+                    .noFluidInputs().noFluidOutputs().duration(2 * TICKS).eut(8).addTo(sMaceratorRecipes);
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(ingot)
-                )
-                .itemOutputs(
-                    werkstoff.get(dust))
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration(2 * TICKS)
-                .eut(8)
-                .addTo(sMaceratorRecipes);
-
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(plate)
-                )
-                .itemOutputs(
-                    werkstoff.get(dust))
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration(2 * TICKS)
-                .eut(8)
-                .addTo(sMaceratorRecipes);
-
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(stickLong)
-                )
-                .itemOutputs(
-                    werkstoff.get(dust))
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration(2 * TICKS)
-                .eut(8)
-                .addTo(sMaceratorRecipes);
-
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(stick)
-                )
-                .itemOutputs(
-                    werkstoff.get(dustSmall, 2))
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration(2 * TICKS)
-                .eut(8)
-                .addTo(sMaceratorRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(stick)).itemOutputs(werkstoff.get(dustSmall, 2))
+                    .noFluidInputs().noFluidOutputs().duration(2 * TICKS).eut(8).addTo(sMaceratorRecipes);
 
         }
     }

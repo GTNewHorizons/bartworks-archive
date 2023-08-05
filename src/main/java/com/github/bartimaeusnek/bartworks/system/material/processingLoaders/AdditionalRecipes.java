@@ -39,7 +39,6 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Objects;
 
-import gregtech.api.enums.TierEU;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
@@ -70,6 +69,7 @@ import gregtech.api.enums.GT_Values;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
+import gregtech.api.enums.TierEU;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Recipe;
@@ -279,18 +279,16 @@ public class AdditionalRecipes {
                 (int) TierEU.RECIPE_IV,
                 3663);
         // Thorianite recipes
-        GT_Values.RA.stdBuilder()
-            .itemInputs(
-                WerkstoffLoader.Thorianit.get(crushedPurified)
-            )
-            .itemOutputs(
-                WerkstoffLoader.Thorianit.get(dust), WerkstoffLoader.Thorianit.get(dust), WerkstoffLoader.Thorianit.get(dust), Materials.Thorium.getDust(1), Materials.Thorium.getDust(1), WerkstoffLoader.Thorium232.get(dust))
-            .outputChances(7000, 1300, 700, 600, 300, 100)
-            .noFluidInputs()
-            .noFluidOutputs()
-            .duration(20 * SECONDS)
-            .eut((int) TierEU.RECIPE_IV)
-            .addTo(sSifterRecipes);
+        GT_Values.RA.stdBuilder().itemInputs(WerkstoffLoader.Thorianit.get(crushedPurified))
+                .itemOutputs(
+                        WerkstoffLoader.Thorianit.get(dust),
+                        WerkstoffLoader.Thorianit.get(dust),
+                        WerkstoffLoader.Thorianit.get(dust),
+                        Materials.Thorium.getDust(1),
+                        Materials.Thorium.getDust(1),
+                        WerkstoffLoader.Thorium232.get(dust))
+                .outputChances(7000, 1300, 700, 600, 300, 100).noFluidInputs().noFluidOutputs().duration(20 * SECONDS)
+                .eut((int) TierEU.RECIPE_IV).addTo(sSifterRecipes);
 
         // 3ThO2 + 4Al = 3Th + 2Al2O3
         GT_Values.RA.addChemicalRecipe(
@@ -331,15 +329,9 @@ public class AdditionalRecipes {
                 (int) TierEU.RECIPE_MV,
                 500);
 
-        GT_Values.RA.stdBuilder()
-            .itemInputs(GT_OreDictUnificator.get(dust, Materials.Quartzite, 40L))
-            .itemOutputs(Materials.Amethyst.getDust(10))
-            .noFluidInputs()
-            .noFluidOutputs()
-            .duration(40*SECONDS)
-            .eut(0)
-            .metadata(ADDITIVE_AMOUNT, 6)
-            .addTo(sPrimitiveBlastRecipes);
+        GT_Values.RA.stdBuilder().itemInputs(GT_OreDictUnificator.get(dust, Materials.Quartzite, 40L))
+                .itemOutputs(Materials.Amethyst.getDust(10)).noFluidInputs().noFluidOutputs().duration(40 * SECONDS)
+                .eut(0).metadata(ADDITIVE_AMOUNT, 6).addTo(sPrimitiveBlastRecipes);
 
         // Cubic Circonia
         // 2Y + 3O = Y2O3
@@ -399,50 +391,28 @@ public class AdditionalRecipes {
                 7500,
                 (int) TierEU.RECIPE_EV);
 
-        GT_Values.RA.stdBuilder()
-            .itemInputs(WerkstoffLoader.MagnetoResonaticDust.get(dust))
-            .itemOutputs(WerkstoffLoader.MagnetoResonaticDust.get(gemChipped, 9))
-            .outputChances(90_00)
-            .fluidInputs(WerkstoffLoader.Neon.getFluidOrGas(1000))
-            .noFluidOutputs()
-            .duration(3*MINUTES+45*SECONDS)
-            .eut(TierEU.RECIPE_IV)
-            .addTo(sAutoclaveRecipes);
+        GT_Values.RA.stdBuilder().itemInputs(WerkstoffLoader.MagnetoResonaticDust.get(dust))
+                .itemOutputs(WerkstoffLoader.MagnetoResonaticDust.get(gemChipped, 9)).outputChances(90_00)
+                .fluidInputs(WerkstoffLoader.Neon.getFluidOrGas(1000)).noFluidOutputs()
+                .duration(3 * MINUTES + 45 * SECONDS).eut(TierEU.RECIPE_IV).addTo(sAutoclaveRecipes);
 
-        GT_Values.RA.stdBuilder()
-            .itemInputs(WerkstoffLoader.MagnetoResonaticDust.get(dust))
-            .itemOutputs(WerkstoffLoader.MagnetoResonaticDust.get(gem))
-            .fluidInputs(WerkstoffLoader.Krypton.getFluidOrGas(1000))
-            .noFluidOutputs()
-            .duration(3*MINUTES+45*SECONDS)
-            .eut(TierEU.RECIPE_IV)
-            .addTo(sAutoclaveRecipes);
+        GT_Values.RA.stdBuilder().itemInputs(WerkstoffLoader.MagnetoResonaticDust.get(dust))
+                .itemOutputs(WerkstoffLoader.MagnetoResonaticDust.get(gem))
+                .fluidInputs(WerkstoffLoader.Krypton.getFluidOrGas(1000)).noFluidOutputs()
+                .duration(3 * MINUTES + 45 * SECONDS).eut(TierEU.RECIPE_IV).addTo(sAutoclaveRecipes);
 
         // Milk
 
-        GT_Values.RA.stdBuilder()
-            .itemInputs(
-                GT_Utility.getIntegratedCircuit(1)
-            )
-            .itemOutputs(
-                Materials.Sugar.getDustSmall(21),
-                Materials.Calcium.getDustTiny(1),
-                Materials.Magnesium.getDustTiny(1),
-                Materials.Potassium.getDustTiny(1),
-                Materials.Sodium.getDustTiny(4),
-                Materials.Phosphor.getDustTiny(1)
-            )
-            .outputChances(100_00, 100_00, 10_00, 100_00, 10_00, 10_00)
-            .fluidInputs(
-                Materials.Milk.getFluid(10000)
-            )
-            .fluidOutputs(
-                Materials.Water.getFluid(8832)
-            )
-            .duration(15 * SECONDS)
-            .eut(2)
-            .addTo(sCentrifugeRecipes);
-
+        GT_Values.RA.stdBuilder().itemInputs(GT_Utility.getIntegratedCircuit(1))
+                .itemOutputs(
+                        Materials.Sugar.getDustSmall(21),
+                        Materials.Calcium.getDustTiny(1),
+                        Materials.Magnesium.getDustTiny(1),
+                        Materials.Potassium.getDustTiny(1),
+                        Materials.Sodium.getDustTiny(4),
+                        Materials.Phosphor.getDustTiny(1))
+                .outputChances(100_00, 100_00, 10_00, 100_00, 10_00, 10_00).fluidInputs(Materials.Milk.getFluid(10000))
+                .fluidOutputs(Materials.Water.getFluid(8832)).duration(15 * SECONDS).eut(2).addTo(sCentrifugeRecipes);
 
         // Magneto Resonatic Circuits
 

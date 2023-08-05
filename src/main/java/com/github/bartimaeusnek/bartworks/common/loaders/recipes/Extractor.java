@@ -6,7 +6,6 @@ import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 
 import java.util.List;
 
-import gregtech.api.enums.TierEU;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -15,6 +14,7 @@ import com.github.bartimaeusnek.bartworks.util.BW_Util;
 
 import gregtech.api.enums.GT_Values;
 import gregtech.api.enums.ItemList;
+import gregtech.api.enums.TierEU;
 
 public class Extractor implements Runnable {
 
@@ -24,37 +24,16 @@ public class Extractor implements Runnable {
         if (CropLoadCore.isModLoaded() && !oreCropVine.isEmpty()) {
             for (ItemStack stack : oreCropVine) {
 
-                GT_Values.RA.stdBuilder()
-                    .itemInputs(
-                        BW_Util.setStackSize(stack, 12)
-                    )
-                    .itemOutputs(
-                        BioItemList.getOther(1)
-                    )
-                    .noFluidInputs()
-                    .noFluidOutputs()
-                    .duration(25 * SECONDS)
-                    .eut((int) TierEU.RECIPE_HV)
-                    .addTo(sExtractorRecipes);
-
-
+                GT_Values.RA.stdBuilder().itemInputs(BW_Util.setStackSize(stack, 12))
+                        .itemOutputs(BioItemList.getOther(1)).noFluidInputs().noFluidOutputs().duration(25 * SECONDS)
+                        .eut((int) TierEU.RECIPE_HV).addTo(sExtractorRecipes);
 
             }
         }
 
-
-        GT_Values.RA.stdBuilder()
-            .itemInputs(
-                ItemList.Circuit_Chip_Stemcell.get(1L)
-            )
-            .itemOutputs(
-                BioItemList.getOther(4)
-            )
-            .noFluidInputs()
-            .noFluidOutputs()
-            .duration(25 * SECONDS)
-            .eut((int) TierEU.RECIPE_LuV)
-            .addTo(sExtractorRecipes);
+        GT_Values.RA.stdBuilder().itemInputs(ItemList.Circuit_Chip_Stemcell.get(1L))
+                .itemOutputs(BioItemList.getOther(4)).noFluidInputs().noFluidOutputs().duration(25 * SECONDS)
+                .eut((int) TierEU.RECIPE_LuV).addTo(sExtractorRecipes);
 
     }
 }

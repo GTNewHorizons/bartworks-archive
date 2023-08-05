@@ -96,20 +96,9 @@ public class FluidLoader {
                 GT_LanguageManager
                         .addStringLocalization(B.getFluid().getUnlocalizedName(), B.getLocalisedName() + " Fluid");
 
-                GT_Values.RA.stdBuilder()
-                    .itemInputs(
-                        GT_Utility.getIntegratedCircuit(10)
-                    )
-                    .noItemOutputs()
-                    .fluidInputs(
-                        new FluidStack(B.getFluid(), 1000)
-                    )
-                    .fluidOutputs(
-                        dnaFluid
-                    )
-                    .duration(15 * SECONDS)
-                    .eut(2)
-                    .addTo(sCentrifugeRecipes);
+                GT_Values.RA.stdBuilder().itemInputs(GT_Utility.getIntegratedCircuit(10)).noItemOutputs()
+                        .fluidInputs(new FluidStack(B.getFluid(), 1000)).fluidOutputs(dnaFluid).duration(15 * SECONDS)
+                        .eut(2).addTo(sCentrifugeRecipes);
 
             }
         }

@@ -99,7 +99,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import gregtech.api.enums.TierEU;
 import net.minecraft.item.ItemStack;
 
 import com.github.bartimaeusnek.bartworks.client.renderer.BW_GT_ItemRenderer;
@@ -108,6 +107,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import gregtech.api.enums.GT_Values;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.TierEU;
 import gregtech.api.util.GT_LanguageManager;
 import gregtech.api.util.GT_Utility;
 
@@ -154,14 +154,10 @@ public class CircuitPartLoader implements Runnable {
                     .getTranslation(GT_LanguageManager.getTranslateableItemStackName(itemStack));
             BW_Meta_Items.getNEWCIRCUITS().addItem(CircuitImprintLoader.reverseIDs, "Wrap of " + localised + "s", tt);
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(single.get(16).copy(), GT_Utility.getIntegratedCircuit(16))
-                .itemOutputs(BW_Meta_Items.getNEWCIRCUITS().getStack(CircuitImprintLoader.reverseIDs))
-                .fluidInputs(Materials.Plastic.getMolten(72))
-                .noFluidOutputs()
-                .duration(30*SECONDS)
-                .eut(TierEU.RECIPE_LV)
-                .addTo(sAssemblerRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(single.get(16).copy(), GT_Utility.getIntegratedCircuit(16))
+                    .itemOutputs(BW_Meta_Items.getNEWCIRCUITS().getStack(CircuitImprintLoader.reverseIDs))
+                    .fluidInputs(Materials.Plastic.getMolten(72)).noFluidOutputs().duration(30 * SECONDS)
+                    .eut(TierEU.RECIPE_LV).addTo(sAssemblerRecipes);
 
             CircuitImprintLoader.circuitIIconRefs.put(CircuitImprintLoader.reverseIDs, single);
             CircuitImprintLoader.reverseIDs--;

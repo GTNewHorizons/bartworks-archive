@@ -179,24 +179,13 @@ public final class BioObjectAdder {
                                 new short[] { (short) B.getColor().getRed(), (short) B.getColor().getBlue(),
                                         (short) B.getColor().getGreen() }));
 
-                if (!FluidRegistry.registerFluid(B.getFluid())){
+                if (!FluidRegistry.registerFluid(B.getFluid())) {
                     new Exception("FAILED TO REGISTER FLUID FOR: " + B.getName()).printStackTrace();
                 }
 
-                GT_Values.RA.stdBuilder()
-                    .itemInputs(
-                        GT_Utility.getIntegratedCircuit(10)
-                    )
-                    .noItemOutputs()
-                    .fluidInputs(
-                        new FluidStack(B.getFluid(), 1000)
-                    )
-                    .fluidOutputs(
-                        dnaFluid
-                    )
-                    .duration(15 * SECONDS)
-                    .eut(2)
-                    .addTo(sCentrifugeRecipes);
+                GT_Values.RA.stdBuilder().itemInputs(GT_Utility.getIntegratedCircuit(10)).noItemOutputs()
+                        .fluidInputs(new FluidStack(B.getFluid(), 1000)).fluidOutputs(dnaFluid).duration(15 * SECONDS)
+                        .eut(2).addTo(sCentrifugeRecipes);
             }
         }
     }

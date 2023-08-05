@@ -74,19 +74,8 @@ public class CrushedLoader implements IWerkstoffRunnable {
                 werkstoff.get(dust),
                 new Object[] { "h  ", "W  ", 'W', werkstoff.get(crushedCentrifuged) });
 
-        GT_Values.RA.stdBuilder()
-            .itemInputs(
-                werkstoff.get(crushed)
-            )
-            .itemOutputs(
-                werkstoff.get(dustImpure)
-            )
-            .noFluidInputs()
-            .noFluidOutputs()
-            .duration(10 * TICKS)
-            .eut(16)
-            .addTo(sHammerRecipes);
-
+        GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(crushed)).itemOutputs(werkstoff.get(dustImpure))
+                .noFluidInputs().noFluidOutputs().duration(10 * TICKS).eut(16).addTo(sHammerRecipes);
 
         GT_ModHandler.addPulverisationRecipe(
                 werkstoff.get(crushed),
@@ -109,19 +98,8 @@ public class CrushedLoader implements IWerkstoffRunnable {
                 werkstoff.getOreByProduct(1, dust),
                 GT_OreDictUnificator.get(dust, Materials.Stone, 1L));
 
-
-        GT_Values.RA.stdBuilder()
-            .itemInputs(
-                werkstoff.get(crushedPurified)
-            )
-            .itemOutputs(
-                werkstoff.get(dustPure)
-            )
-            .noFluidInputs()
-            .noFluidOutputs()
-            .duration(10 * TICKS)
-            .eut(16)
-            .addTo(sHammerRecipes);
+        GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(crushedPurified)).itemOutputs(werkstoff.get(dustPure))
+                .noFluidInputs().noFluidOutputs().duration(10 * TICKS).eut(16).addTo(sHammerRecipes);
 
         GT_ModHandler.addPulverisationRecipe(
                 werkstoff.get(crushedPurified),
@@ -136,20 +114,8 @@ public class CrushedLoader implements IWerkstoffRunnable {
                 werkstoff.get(crushedCentrifuged),
                 werkstoff.getOreByProduct(1, dust));
 
-
-        GT_Values.RA.stdBuilder()
-            .itemInputs(
-                werkstoff.get(crushedCentrifuged)
-            )
-            .itemOutputs(
-                werkstoff.get(dust)
-            )
-            .noFluidInputs()
-            .noFluidOutputs()
-            .duration(10 * TICKS)
-            .eut(16)
-            .addTo(sHammerRecipes);
-
+        GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(crushedCentrifuged)).itemOutputs(werkstoff.get(dust))
+                .noFluidInputs().noFluidOutputs().duration(10 * TICKS).eut(16).addTo(sHammerRecipes);
 
         GT_ModHandler.addPulverisationRecipe(
                 werkstoff.get(crushedCentrifuged),
@@ -158,204 +124,87 @@ public class CrushedLoader implements IWerkstoffRunnable {
                 10,
                 false);
 
+        GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dustImpure))
+                .itemOutputs(werkstoff.get(dust), werkstoff.getOreByProduct(0, dust)).outputChances(100_00, 11_11)
+                .noFluidInputs().noFluidOutputs().duration(15 * SECONDS).eut(2).addTo(sCentrifugeRecipes);
 
-        GT_Values.RA.stdBuilder()
-            .itemInputs(
-                werkstoff.get(dustImpure)
-            )
-            .itemOutputs(
-                werkstoff.get(dust),
-                werkstoff.getOreByProduct(0, dust)
-            )
-            .outputChances(100_00, 11_11)
-            .noFluidInputs()
-            .noFluidOutputs()
-            .duration(15 * SECONDS)
-            .eut(2)
-            .addTo(sCentrifugeRecipes);
-
-        GT_Values.RA.stdBuilder()
-            .itemInputs(
-                werkstoff.get(dustPure)
-            )
-            .itemOutputs(
-                werkstoff.get(dust),
-                werkstoff.getOreByProduct(1, dust)
-            )
-            .outputChances(100_00, 11_11)
-            .noFluidInputs()
-            .noFluidOutputs()
-            .duration(15 * SECONDS)
-            .eut(2)
-            .addTo(sCentrifugeRecipes);
-
+        GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dustPure))
+                .itemOutputs(werkstoff.get(dust), werkstoff.getOreByProduct(1, dust)).outputChances(100_00, 11_11)
+                .noFluidInputs().noFluidOutputs().duration(15 * SECONDS).eut(2).addTo(sCentrifugeRecipes);
 
         if (werkstoff.contains(SubTag.CRYSTALLISABLE)) {
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(dustPure)
-                )
-                .itemOutputs(
-                    werkstoff.get(gem)
-                )
-                .outputChances(9000)
-                .fluidInputs(
-                    Materials.Water.getFluid(200L)
-                )
-                .noFluidOutputs()
-                .duration(1 * MINUTES + 40 * SECONDS)
-                .eut(24)
-                .addTo(sAutoclaveRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dustPure)).itemOutputs(werkstoff.get(gem))
+                    .outputChances(9000).fluidInputs(Materials.Water.getFluid(200L)).noFluidOutputs()
+                    .duration(1 * MINUTES + 40 * SECONDS).eut(24).addTo(sAutoclaveRecipes);
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(dustImpure)
-                )
-                .itemOutputs(
-                    werkstoff.get(gem)
-                )
-                .outputChances(9000)
-                .fluidInputs(
-                    Materials.Water.getFluid(200L)
-                )
-                .noFluidOutputs()
-                .duration(1 * MINUTES + 40 * SECONDS)
-                .eut(24)
-                .addTo(sAutoclaveRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dustImpure)).itemOutputs(werkstoff.get(gem))
+                    .outputChances(9000).fluidInputs(Materials.Water.getFluid(200L)).noFluidOutputs()
+                    .duration(1 * MINUTES + 40 * SECONDS).eut(24).addTo(sAutoclaveRecipes);
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(dustPure)
-                )
-                .itemOutputs(
-                    werkstoff.get(gem)
-                )
-                .outputChances(9500)
-                .fluidInputs(
-                    gregtech.api.util.GT_ModHandler.getDistilledWater(200L)
-                )
-                .noFluidOutputs()
-                .duration(1 * MINUTES + 15 * SECONDS)
-                .eut(24)
-                .addTo(sAutoclaveRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dustPure)).itemOutputs(werkstoff.get(gem))
+                    .outputChances(9500).fluidInputs(gregtech.api.util.GT_ModHandler.getDistilledWater(200L))
+                    .noFluidOutputs().duration(1 * MINUTES + 15 * SECONDS).eut(24).addTo(sAutoclaveRecipes);
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(dustImpure)
-                )
-                .itemOutputs(
-                    werkstoff.get(gem)
-                )
-                .outputChances(9500)
-                .fluidInputs(
-                    gregtech.api.util.GT_ModHandler.getDistilledWater(200L)
-                )
-                .noFluidOutputs()
-                .duration(1 * MINUTES + 15 * SECONDS)
-                .eut(24)
-                .addTo(sAutoclaveRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dustImpure)).itemOutputs(werkstoff.get(gem))
+                    .outputChances(9500).fluidInputs(gregtech.api.util.GT_ModHandler.getDistilledWater(200L))
+                    .noFluidOutputs().duration(1 * MINUTES + 15 * SECONDS).eut(24).addTo(sAutoclaveRecipes);
 
         }
         if (werkstoff.contains(SubTag.WASHING_MERCURY)) {
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(crushed)
-                )
-                .itemOutputs(
-                    werkstoff.get(crushedPurified),
-                    werkstoff.getOreByProduct(1, dust),
-                    GT_OreDictUnificator.get(dust, Materials.Stone, 1L)
-                )
-                .outputChances(10000, 7000, 4000)
-                .fluidInputs(
-                    Materials.Mercury.getFluid(1000L)
-                )
-                .noFluidOutputs()
-                .duration(40 * SECONDS)
-                .eut(8)
-                .addTo(sChemicalBathRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(crushed))
+                    .itemOutputs(
+                            werkstoff.get(crushedPurified),
+                            werkstoff.getOreByProduct(1, dust),
+                            GT_OreDictUnificator.get(dust, Materials.Stone, 1L))
+                    .outputChances(10000, 7000, 4000).fluidInputs(Materials.Mercury.getFluid(1000L)).noFluidOutputs()
+                    .duration(40 * SECONDS).eut(8).addTo(sChemicalBathRecipes);
 
         }
         if (werkstoff.contains(SubTag.WASHING_SODIUMPERSULFATE)) {
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(crushed)
-                )
-                .itemOutputs(
-                    werkstoff.get(crushedPurified),
-                    werkstoff.getOreByProduct(1, dust),
-                    GT_OreDictUnificator.get(dust, Materials.Stone, 1L)
-                )
-                .outputChances(10000, 7000, 4000)
-                .fluidInputs(
-                    Materials.SodiumPersulfate.getFluid(GT_Mod.gregtechproxy.mDisableOldChemicalRecipes ? 1000L : 100L)
-                )
-                .noFluidOutputs()
-                .duration(40 * SECONDS)
-                .eut(8)
-                .addTo(sChemicalBathRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(crushed))
+                    .itemOutputs(
+                            werkstoff.get(crushedPurified),
+                            werkstoff.getOreByProduct(1, dust),
+                            GT_OreDictUnificator.get(dust, Materials.Stone, 1L))
+                    .outputChances(10000, 7000, 4000)
+                    .fluidInputs(
+                            Materials.SodiumPersulfate
+                                    .getFluid(GT_Mod.gregtechproxy.mDisableOldChemicalRecipes ? 1000L : 100L))
+                    .noFluidOutputs().duration(40 * SECONDS).eut(8).addTo(sChemicalBathRecipes);
 
         }
         if (werkstoff.contains(SubTag.ELECTROMAGNETIC_SEPERATION_GOLD)) {
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(dustPure)
-                )
-                .itemOutputs(
-                    werkstoff.get(dust),
-                    GT_OreDictUnificator.get(dustSmall, Materials.Gold, 1L),
-                    GT_OreDictUnificator.get(nugget, Materials.Gold, 1L)
-                )
-                .outputChances(10000, 4000, 2000)
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration(20 * SECONDS)
-                .eut(24)
-                .addTo(sElectroMagneticSeparatorRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dustPure))
+                    .itemOutputs(
+                            werkstoff.get(dust),
+                            GT_OreDictUnificator.get(dustSmall, Materials.Gold, 1L),
+                            GT_OreDictUnificator.get(nugget, Materials.Gold, 1L))
+                    .outputChances(10000, 4000, 2000).noFluidInputs().noFluidOutputs().duration(20 * SECONDS).eut(24)
+                    .addTo(sElectroMagneticSeparatorRecipes);
 
-        }
-        else if (werkstoff.contains(SubTag.ELECTROMAGNETIC_SEPERATION_IRON))
-        {
+        } else if (werkstoff.contains(SubTag.ELECTROMAGNETIC_SEPERATION_IRON)) {
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(dustPure)
-                )
-                .itemOutputs(
-                    werkstoff.get(dust),
-                    GT_OreDictUnificator.get(dustSmall, Materials.Iron, 1L),
-                    GT_OreDictUnificator.get(nugget, Materials.Iron, 1L)
-                )
-                .outputChances(10000, 4000, 2000)
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration(20 * SECONDS)
-                .eut(24)
-                .addTo(sElectroMagneticSeparatorRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dustPure))
+                    .itemOutputs(
+                            werkstoff.get(dust),
+                            GT_OreDictUnificator.get(dustSmall, Materials.Iron, 1L),
+                            GT_OreDictUnificator.get(nugget, Materials.Iron, 1L))
+                    .outputChances(10000, 4000, 2000).noFluidInputs().noFluidOutputs().duration(20 * SECONDS).eut(24)
+                    .addTo(sElectroMagneticSeparatorRecipes);
 
-        }
-        else if (werkstoff.contains(SubTag.ELECTROMAGNETIC_SEPERATION_NEODYMIUM))
-        {
+        } else if (werkstoff.contains(SubTag.ELECTROMAGNETIC_SEPERATION_NEODYMIUM)) {
 
-            GT_Values.RA.stdBuilder()
-                .itemInputs(
-                    werkstoff.get(dustPure)
-                )
-                .itemOutputs(
-                    werkstoff.get(dust),
-                    GT_OreDictUnificator.get(dustSmall, Materials.Neodymium, 1L),
-                    GT_OreDictUnificator.get(nugget, Materials.Neodymium, 1L)
-                )
-                .outputChances(10000, 4000, 2000)
-                .noFluidInputs()
-                .noFluidOutputs()
-                .duration(20 * SECONDS)
-                .eut(24)
-                .addTo(sElectroMagneticSeparatorRecipes);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dustPure))
+                    .itemOutputs(
+                            werkstoff.get(dust),
+                            GT_OreDictUnificator.get(dustSmall, Materials.Neodymium, 1L),
+                            GT_OreDictUnificator.get(nugget, Materials.Neodymium, 1L))
+                    .outputChances(10000, 4000, 2000).noFluidInputs().noFluidOutputs().duration(20 * SECONDS).eut(24)
+                    .addTo(sElectroMagneticSeparatorRecipes);
 
         }
     }

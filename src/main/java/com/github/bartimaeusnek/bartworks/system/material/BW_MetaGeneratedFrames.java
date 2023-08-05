@@ -49,14 +49,11 @@ public class BW_MetaGeneratedFrames extends MetaPipeEntity {
                 new Object[] { "SSS", "SwS", "SSS", 'S', mMaterial.get(OrePrefixes.stick) });
 
         RA.stdBuilder()
-            .itemInputs(GT_OreDictUnificator.get(OrePrefixes.stick, aMaterial.getVarName(), 4),
-                ItemList.Circuit_Integrated.getWithDamage(0, 4))
-            .itemOutputs(getStackForm(1))
-            .noFluidInputs()
-            .noFluidOutputs()
-            .duration(3*SECONDS+4*TICKS)
-            .eut(8)
-            .addTo(sAssemblerRecipes);
+                .itemInputs(
+                        GT_OreDictUnificator.get(OrePrefixes.stick, aMaterial.getVarName(), 4),
+                        ItemList.Circuit_Integrated.getWithDamage(0, 4))
+                .itemOutputs(getStackForm(1)).noFluidInputs().noFluidOutputs().duration(3 * SECONDS + 4 * TICKS).eut(8)
+                .addTo(sAssemblerRecipes);
     }
 
     private BW_MetaGeneratedFrames(String aName, Werkstoff aMaterial) {

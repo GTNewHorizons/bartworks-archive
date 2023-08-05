@@ -13,13 +13,15 @@
 
 package com.github.bartimaeusnek.bartworks.system.material.CircuitGeneration;
 
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sPressRecipes;
+import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
+
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
-import gregtech.api.enums.TierEU;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -44,6 +46,7 @@ import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.SubTag;
 import gregtech.api.enums.TC_Aspects;
+import gregtech.api.enums.TierEU;
 import gregtech.api.interfaces.IItemBehaviour;
 import gregtech.api.interfaces.IItemContainer;
 import gregtech.api.items.GT_MetaBase_Item;
@@ -53,9 +56,6 @@ import gregtech.api.util.GT_LanguageManager;
 import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
-
-import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sPressRecipes;
-import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 
 public class BW_Meta_Items {
 
@@ -72,18 +72,11 @@ public class BW_Meta_Items {
         BW_Meta_Items.NEWCIRCUITS.addItem(3, "Imprint supporting Board", "A Board needed for Circuit Imprints");
 
         GT_Values.RA.stdBuilder()
-            .itemInputs(
-                WerkstoffLoader.MagnetoResonaticDust.get(OrePrefixes.dust, 1),
-                WerkstoffLoader.ArInGaPhoBiBoTe.get(OrePrefixes.dust, 4)
-            )
-            .itemOutputs(
-                BW_Meta_Items.NEWCIRCUITS.getStack(2)
-            )
-            .noFluidInputs()
-            .noFluidOutputs()
-            .duration(15*SECONDS)
-            .eut(TierEU.RECIPE_HV)
-            .addTo(sPressRecipes);
+                .itemInputs(
+                        WerkstoffLoader.MagnetoResonaticDust.get(OrePrefixes.dust, 1),
+                        WerkstoffLoader.ArInGaPhoBiBoTe.get(OrePrefixes.dust, 4))
+                .itemOutputs(BW_Meta_Items.NEWCIRCUITS.getStack(2)).noFluidInputs().noFluidOutputs()
+                .duration(15 * SECONDS).eut(TierEU.RECIPE_HV).addTo(sPressRecipes);
 
         GT_Recipe.GT_Recipe_Map.sAutoclaveRecipes.add(
                 new BWRecipes.DynamicGTRecipe(

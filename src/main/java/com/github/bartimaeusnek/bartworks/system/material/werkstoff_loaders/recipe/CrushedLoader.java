@@ -26,6 +26,7 @@ import static gregtech.api.enums.OrePrefixes.nugget;
 import static gregtech.api.enums.OrePrefixes.ore;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sAutoclaveRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sChemicalBathRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sElectroMagneticSeparatorRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sHammerRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.MINUTES;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
@@ -295,36 +296,63 @@ public class CrushedLoader implements IWerkstoffRunnable {
 
         }
         if (werkstoff.contains(SubTag.ELECTROMAGNETIC_SEPERATION_GOLD)) {
-            GT_Values.RA.addElectromagneticSeparatorRecipe(
-                werkstoff.get(dustPure),
-                werkstoff.get(dust),
-                GT_OreDictUnificator.get(dustSmall, Materials.Gold, 1L),
-                GT_OreDictUnificator.get(nugget, Materials.Gold, 1L),
-                new int[] { 10000, 4000, 2000 },
-                400,
-                24);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(dustPure)
+                )
+                .itemOutputs(
+                    werkstoff.get(dust),
+                    GT_OreDictUnificator.get(dustSmall, Materials.Gold, 1L),
+                    GT_OreDictUnificator.get(nugget, Materials.Gold, 1L)
+                )
+                .outputChances(10000, 4000, 2000)
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(20 * SECONDS)
+                .eut(24)
+                .addTo(sElectroMagneticSeparatorRecipes);
+
         }
         else if (werkstoff.contains(SubTag.ELECTROMAGNETIC_SEPERATION_IRON))
         {
-            GT_Values.RA.addElectromagneticSeparatorRecipe(
-                werkstoff.get(dustPure),
-                werkstoff.get(dust),
-                GT_OreDictUnificator.get(dustSmall, Materials.Iron, 1L),
-                GT_OreDictUnificator.get(nugget, Materials.Iron, 1L),
-                new int[] { 10000, 4000, 2000 },
-                400,
-                24);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(dustPure)
+                )
+                .itemOutputs(
+                    werkstoff.get(dust),
+                    GT_OreDictUnificator.get(dustSmall, Materials.Iron, 1L),
+                    GT_OreDictUnificator.get(nugget, Materials.Iron, 1L)
+                )
+                .outputChances(10000, 4000, 2000)
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(20 * SECONDS)
+                .eut(24)
+                .addTo(sElectroMagneticSeparatorRecipes);
+
         }
         else if (werkstoff.contains(SubTag.ELECTROMAGNETIC_SEPERATION_NEODYMIUM))
         {
-            GT_Values.RA.addElectromagneticSeparatorRecipe(
-                werkstoff.get(dustPure),
-                werkstoff.get(dust),
-                GT_OreDictUnificator.get(dustSmall, Materials.Neodymium, 1L),
-                GT_OreDictUnificator.get(nugget, Materials.Neodymium, 1L),
-                new int[] { 10000, 4000, 2000 },
-                400,
-                24);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(dustPure)
+                )
+                .itemOutputs(
+                    werkstoff.get(dust),
+                    GT_OreDictUnificator.get(dustSmall, Materials.Neodymium, 1L),
+                    GT_OreDictUnificator.get(nugget, Materials.Neodymium, 1L)
+                )
+                .outputChances(10000, 4000, 2000)
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(20 * SECONDS)
+                .eut(24)
+                .addTo(sElectroMagneticSeparatorRecipes);
+
         }
     }
 }

@@ -27,6 +27,9 @@ import static gregtech.api.enums.OrePrefixes.gemExquisite;
 import static gregtech.api.enums.OrePrefixes.gemFlawed;
 import static gregtech.api.enums.OrePrefixes.stick;
 import static gregtech.api.enums.OrePrefixes.stickLong;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sPrimitiveBlastRecipes;
+import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
+import static gregtech.api.util.GT_RecipeConstants.ADDITIVE_AMOUNT;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -318,13 +321,17 @@ public class AdditionalRecipes {
                 800,
                 (int) TierEU.RECIPE_MV,
                 500);
-        GT_Values.RA.addPrimitiveBlastRecipe(
-                GT_OreDictUnificator.get(dust, Materials.Quartzite, 40L),
-                Materials.Amethyst.getDust(10),
-                6,
-                WerkstoffLoader.Prasiolite.get(OrePrefixes.gemFlawed, 20),
-                GT_Values.NI,
-                800);
+
+        GT_Values.RA.stdBuilder()
+            .itemInputs(GT_OreDictUnificator.get(dust, Materials.Quartzite, 40L))
+            .itemOutputs(Materials.Amethyst.getDust(10))
+            .noFluidInputs()
+            .noFluidOutputs()
+            .duration(40*SECONDS)
+            .eut(0)
+            .metadata(ADDITIVE_AMOUNT, 6)
+            .addTo(sPrimitiveBlastRecipes);
+
         // Cubic Circonia
         // 2Y + 3O = Y2O3
         GT_Values.RA.addChemicalRecipe(

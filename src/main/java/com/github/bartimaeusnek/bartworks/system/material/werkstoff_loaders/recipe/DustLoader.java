@@ -24,7 +24,9 @@ import static gregtech.api.enums.OrePrefixes.ingotHot;
 import static gregtech.api.enums.OrePrefixes.nugget;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBlastRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBoxinatorRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sPrimitiveBlastRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
+import static gregtech.api.util.GT_RecipeConstants.ADDITIVE_AMOUNT;
 import static gregtech.api.util.GT_RecipeConstants.COIL_HEAT;
 
 import java.util.ArrayList;
@@ -416,14 +418,16 @@ public class DustLoader implements IWerkstoffRunnable {
                                 .addTo(sBlastRecipes);
 
                             if (werkstoff.getStats().getMeltingPoint() <= 1000) {
-                                GT_Values.RA.addPrimitiveBlastRecipe(
-                                        werkstoff.get(dust),
-                                        null,
-                                        9,
-                                        werkstoff.get(ingot),
-                                        null,
-                                        (int) Math.max(werkstoff.getStats().getMass() / 40L, 1L)
-                                                * werkstoff.getStats().getMeltingPoint());
+                                GT_Values.RA.stdBuilder()
+                                    .itemInputs(werkstoff.get(dust))
+                                    .itemOutputs(werkstoff.get(ingot))
+                                    .noFluidInputs()
+                                    .noFluidOutputs()
+                                    .duration((int) Math.max(werkstoff.getStats().getMass() / 40L, 1L)
+                                        * werkstoff.getStats().getMeltingPoint())
+                                    .eut(0)
+                                    .metadata(ADDITIVE_AMOUNT, 9)
+                                    .addTo(sPrimitiveBlastRecipes);
                             }
                         }
                     }

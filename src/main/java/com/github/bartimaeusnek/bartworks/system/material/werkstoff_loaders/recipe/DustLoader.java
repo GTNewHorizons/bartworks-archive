@@ -24,6 +24,7 @@ import static gregtech.api.enums.OrePrefixes.ingotHot;
 import static gregtech.api.enums.OrePrefixes.nugget;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBlastRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBoxinatorRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sMaceratorRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sPrimitiveBlastRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sVacuumRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
@@ -446,11 +447,50 @@ public class DustLoader implements IWerkstoffRunnable {
             }
 
             if (werkstoff.hasItemType(ingot)) {
-                GT_ModHandler.addPulverisationRecipe(werkstoff.get(ingot), werkstoff.get(dust));
-                GT_ModHandler.addPulverisationRecipe(werkstoff.get(nugget), werkstoff.get(dustTiny));
+
+                GT_Values.RA.stdBuilder()
+                    .itemInputs(
+                        werkstoff.get(ingot)
+                    )
+                    .itemOutputs(
+                        werkstoff.get(dust)
+                    )
+                    .noFluidInputs()
+                    .noFluidOutputs()
+                    .duration(400)
+                    .eut(2)
+                    .addTo(sMaceratorRecipes);
+
+                GT_Values.RA.stdBuilder()
+                    .itemInputs(
+                        werkstoff.get(nugget)
+                    )
+                    .itemOutputs(
+                        werkstoff.get(dustTiny)
+                    )
+                    .noFluidInputs()
+                    .noFluidOutputs()
+                    .duration(400)
+                    .eut(2)
+                    .addTo(sMaceratorRecipes);
+
+
             }
             if (werkstoff.hasItemType(ingot) || werkstoff.hasItemType(gem)) {
-                GT_ModHandler.addPulverisationRecipe(werkstoff.get(block), werkstoff.get(dust, 9));
+
+                GT_Values.RA.stdBuilder()
+                    .itemInputs(
+                        werkstoff.get(block)
+                    )
+                    .itemOutputs(
+                        werkstoff.get(dust, 9)
+                    )
+                    .noFluidInputs()
+                    .noFluidOutputs()
+                    .duration(400)
+                    .eut(2)
+                    .addTo(sMaceratorRecipes);
+
             }
         }
     }

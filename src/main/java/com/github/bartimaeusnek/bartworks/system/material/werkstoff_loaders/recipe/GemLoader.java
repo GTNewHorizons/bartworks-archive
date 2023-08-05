@@ -31,6 +31,7 @@ import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sHammerRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sImplosionRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sLaserEngraverRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sLatheRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sMaceratorRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.MINUTES;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 import static gregtech.api.util.GT_RecipeBuilder.TICKS;
@@ -87,11 +88,72 @@ public class GemLoader implements IWerkstoffRunnable {
                         16);
             }
 
-            GT_ModHandler.addPulverisationRecipe(werkstoff.get(gemExquisite), werkstoff.get(dust, 4));
-            GT_ModHandler.addPulverisationRecipe(werkstoff.get(gemFlawless), werkstoff.get(dust, 2));
-            GT_ModHandler.addPulverisationRecipe(werkstoff.get(gem), werkstoff.get(dust));
-            GT_ModHandler.addPulverisationRecipe(werkstoff.get(gemFlawed), werkstoff.get(dustSmall, 2));
-            GT_ModHandler.addPulverisationRecipe(werkstoff.get(gemChipped), werkstoff.get(dustSmall));
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(gemExquisite)
+                )
+                .itemOutputs(
+                    werkstoff.get(dust, 4)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(400)
+                .eut(2)
+                .addTo(sMaceratorRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(gemFlawless)
+                )
+                .itemOutputs(
+                    werkstoff.get(dust, 2)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(400)
+                .eut(2)
+                .addTo(sMaceratorRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(gem)
+                )
+                .itemOutputs(
+                    werkstoff.get(dust)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(400)
+                .eut(2)
+                .addTo(sMaceratorRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(gemFlawed)
+                )
+                .itemOutputs(
+                    werkstoff.get(dustSmall, 2)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(400)
+                .eut(2)
+                .addTo(sMaceratorRecipes);
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(gemChipped)
+                )
+                .itemOutputs(
+                    werkstoff.get(dustSmall)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(400)
+                .eut(2)
+                .addTo(sMaceratorRecipes);
+
 
             GT_ModHandler.addCraftingRecipe(
                     werkstoff.get(gemFlawless, 2),
@@ -272,7 +334,21 @@ public class GemLoader implements IWerkstoffRunnable {
                             Textures.BlockIcons.MACHINE_CASINGS[2][0],
                             TextureFactory.of(Textures.BlockIcons.OVERLAY_LENS, werkstoff.getRGBA(), false)),
                     new gregtech.common.covers.GT_Cover_Lens(BW_ColorUtil.getDyeFromColor(werkstoff.getRGBA()).mIndex));
-            GT_ModHandler.addPulverisationRecipe(werkstoff.get(lens), werkstoff.get(dustSmall, 3));
+
+
+            GT_Values.RA.stdBuilder()
+                .itemInputs(
+                    werkstoff.get(lens)
+                )
+                .itemOutputs(
+                    werkstoff.get(dustSmall, 3)
+                )
+                .noFluidInputs()
+                .noFluidOutputs()
+                .duration(400)
+                .eut(2)
+                .addTo(sMaceratorRecipes);
+
 
             for (ItemStack is : OreDictionary.getOres(
                     "craftingLens" + BW_ColorUtil.getDyeFromColor(werkstoff.getRGBA()).mName.replace(" ", ""))) {

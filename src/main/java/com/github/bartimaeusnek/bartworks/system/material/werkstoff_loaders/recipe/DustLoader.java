@@ -457,7 +457,7 @@ public class DustLoader implements IWerkstoffRunnable {
                     )
                     .noFluidInputs()
                     .noFluidOutputs()
-                    .duration(400)
+                    .duration(20*SECONDS)
                     .eut(2)
                     .addTo(sMaceratorRecipes);
 
@@ -470,7 +470,7 @@ public class DustLoader implements IWerkstoffRunnable {
                     )
                     .noFluidInputs()
                     .noFluidOutputs()
-                    .duration(400)
+                    .duration(20*SECONDS)
                     .eut(2)
                     .addTo(sMaceratorRecipes);
 
@@ -487,7 +487,7 @@ public class DustLoader implements IWerkstoffRunnable {
                     )
                     .noFluidInputs()
                     .noFluidOutputs()
-                    .duration(400)
+                    .duration(20*SECONDS)
                     .eut(2)
                     .addTo(sMaceratorRecipes);
 

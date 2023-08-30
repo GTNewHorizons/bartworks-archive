@@ -328,37 +328,37 @@ public class GT_TileEntity_MegaOilCracker extends GT_TileEntity_MegaMultiBlockBa
     public ArrayList<FluidStack> getStoredFluids() {
         final ArrayList<FluidStack> rList = new ArrayList<>();
         for (final GT_MetaTileEntity_Hatch_Input tHatch : mInputHatches) {
-            tHatch.mRecipeMap = getRecipeMap();
-            if (tHatch instanceof GT_MetaTileEntity_Hatch_MultiInput) {
-                if (isValidMetaTileEntity(tHatch)) {
+            if (isValidMetaTileEntity(tHatch)) {
+                tHatch.mRecipeMap = getRecipeMap();
+                if (tHatch instanceof GT_MetaTileEntity_Hatch_MultiInput) {
                     for (final FluidStack tFluid : ((GT_MetaTileEntity_Hatch_MultiInput) tHatch).getStoredFluid()) {
                         if (tFluid != null && !GT_Recipe.GT_Recipe_Map.sCrackingRecipes.isValidCatalystFluid(tFluid)) {
                             rList.add(tFluid);
                         }
                     }
-                }
-            } else {
-                if (isValidMetaTileEntity(tHatch) && tHatch.getFillableStack() != null) {
-                    if (!GT_Recipe.GT_Recipe_Map.sCrackingRecipes.isValidCatalystFluid(tHatch.getFillableStack()))
-                        rList.add(tHatch.getFillableStack());
+                } else {
+                    if (tHatch.getFillableStack() != null) {
+                        if (!GT_Recipe.GT_Recipe_Map.sCrackingRecipes.isValidCatalystFluid(tHatch.getFillableStack()))
+                            rList.add(tHatch.getFillableStack());
+                    }
                 }
             }
         }
         for (final GT_MetaTileEntity_Hatch_Input tHatch : mMiddleInputHatches) {
-            tHatch.mRecipeMap = getRecipeMap();
-            if (tHatch instanceof GT_MetaTileEntity_Hatch_MultiInput) {
-                if (isValidMetaTileEntity(tHatch)) {
+            if (isValidMetaTileEntity(tHatch)) {
+                tHatch.mRecipeMap = getRecipeMap();
+                if (tHatch instanceof GT_MetaTileEntity_Hatch_MultiInput) {
                     for (final FluidStack tFluid : ((GT_MetaTileEntity_Hatch_MultiInput) tHatch).getStoredFluid()) {
                         if (tFluid != null && GT_Recipe.GT_Recipe_Map.sCrackingRecipes.isValidCatalystFluid(tFluid)) {
                             rList.add(tFluid);
                         }
                     }
-                }
-            } else {
-                if (isValidMetaTileEntity(tHatch) && tHatch.getFillableStack() != null) {
-                    final FluidStack tStack = tHatch.getFillableStack();
-                    if (GT_Recipe.GT_Recipe_Map.sCrackingRecipes.isValidCatalystFluid(tStack)) {
-                        rList.add(tStack);
+                } else {
+                    if (tHatch.getFillableStack() != null) {
+                        final FluidStack tStack = tHatch.getFillableStack();
+                        if (GT_Recipe.GT_Recipe_Map.sCrackingRecipes.isValidCatalystFluid(tStack)) {
+                            rList.add(tStack);
+                        }
                     }
                 }
             }

@@ -203,7 +203,7 @@ public class PlatinumSludgeOverHaul {
                 .fluidOutputs(AquaRegia.getFluidOrGas(2000)).duration(1 * SECONDS + 10 * TICKS).eut(TierEU.RECIPE_LV)
                 .addTo(sMixerRecipes);
 
-        // AmmoniumCloride
+        // AmmoniumChloride
         // NH3 + HCl = NH4Cl
 
         GT_Values.RA.stdBuilder().itemInputs(Materials.Ammonia.getCells(1), GT_Utility.getIntegratedCircuit(1))
@@ -222,7 +222,7 @@ public class PlatinumSludgeOverHaul {
                 null,
                 60,
                 480);
-        // base sollution
+        // base solution
         for (Werkstoff w : Werkstoff.werkstoffHashSet) if (w.containsStuff(Materials.Sulfur)
                 && (w.containsStuff(Materials.Copper) || w.containsStuff(Materials.Nickel))) {
 

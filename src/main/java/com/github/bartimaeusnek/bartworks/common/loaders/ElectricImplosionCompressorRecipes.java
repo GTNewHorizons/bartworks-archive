@@ -1,6 +1,5 @@
 package com.github.bartimaeusnek.bartworks.common.loaders;
 
-import static com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_TileEntity_ElectricImplosionCompressor.eicMap;
 import static gregtech.api.enums.GT_Values.M;
 import static gregtech.api.enums.Mods.EternalSingularity;
 import static gregtech.api.enums.Mods.GoodGenerator;
@@ -12,6 +11,8 @@ import static gregtech.api.util.GT_ModHandler.getModItem;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.github.bartimaeusnek.bartworks.util.BWRecipes;
+
 import gregtech.api.enums.*;
 import gregtech.api.util.GT_OreDictUnificator;
 
@@ -20,7 +21,7 @@ public class ElectricImplosionCompressorRecipes implements Runnable {
     private static void addElectricImplosionRecipe(final ItemStack[] inputItems, final FluidStack[] inputFluids,
             final ItemStack[] outputItems, final FluidStack[] outputFluids, final int durationInTicks,
             final int EUPerTick) {
-        eicMap.addRecipe(
+        BWRecipes.instance.eicMap.addRecipe(
                 false,
                 inputItems,
                 outputItems,
@@ -72,7 +73,7 @@ public class ElectricImplosionCompressorRecipes implements Runnable {
         addElectricImplosionRecipe(
                 // IN.
                 new ItemStack[] { getModItem(GoodGenerator.ID, "highDensityPlutoniumNugget", 5L) },
-                new FluidStack[] { Materials.Infinity.getMolten(9L) },
+                new FluidStack[] { Materials.Neutronium.getMolten(72L) },
                 // OUT.
                 new ItemStack[] { getModItem(GoodGenerator.ID, "highDensityPlutonium", 1L) },
                 new FluidStack[] { GT_Values.NF },
@@ -83,7 +84,7 @@ public class ElectricImplosionCompressorRecipes implements Runnable {
         addElectricImplosionRecipe(
                 // IN.
                 new ItemStack[] { getModItem(GoodGenerator.ID, "highDensityUraniumNugget", 5L) },
-                new FluidStack[] { Materials.Infinity.getMolten(9L) },
+                new FluidStack[] { Materials.Neutronium.getMolten(72L) },
                 // OUT.
                 new ItemStack[] { getModItem(GoodGenerator.ID, "highDensityUranium", 1L) },
                 new FluidStack[] { GT_Values.NF },
@@ -94,7 +95,7 @@ public class ElectricImplosionCompressorRecipes implements Runnable {
         addElectricImplosionRecipe(
                 // IN.
                 new ItemStack[] { getModItem(GoodGenerator.ID, "highDensityThoriumNugget", 5L) },
-                new FluidStack[] { Materials.Infinity.getMolten(9L) },
+                new FluidStack[] { Materials.Neutronium.getMolten(72L) },
                 // OUT.
                 new ItemStack[] { getModItem(GoodGenerator.ID, "highDensityThorium", 1L) },
                 new FluidStack[] { GT_Values.NF },

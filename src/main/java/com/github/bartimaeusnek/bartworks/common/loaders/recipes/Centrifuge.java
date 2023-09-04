@@ -79,8 +79,8 @@ public class Centrifuge implements Runnable {
                             new ItemStack(GT_TileEntity_HTGR.HTGRMaterials.aHTGR_Materials, 1, i + 5),
                             GT_Utility.getIntegratedCircuit(17))
                     .itemOutputs(new ItemStack(GT_TileEntity_HTGR.HTGRMaterials.aHTGR_Materials, 64, i + 6))
-                    .noFluidInputs().noFluidOutputs().duration(2 * MINUTES + 30 * SECONDS)
-                    .eut(TierEU.RECIPE_LV).addTo(sCentrifugeRecipes);
+                    .noFluidInputs().noFluidOutputs().duration(2 * MINUTES + 30 * SECONDS).eut(TierEU.RECIPE_LV)
+                    .addTo(sCentrifugeRecipes);
 
             GT_Values.RA.stdBuilder()
                     .itemInputs(new ItemStack(GT_TileEntity_HTGR.HTGRMaterials.aHTGR_Materials, 1, i + 6))

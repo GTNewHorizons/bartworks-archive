@@ -59,7 +59,6 @@ import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.SubTag;
 import gregtech.api.enums.TierEU;
-import gregtech.api.gui.modularui.GT_UITextures;
 import gregtech.api.objects.GT_ItemStack;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_OreDictUnificator;

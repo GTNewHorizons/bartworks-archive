@@ -74,6 +74,7 @@ import static gregtech.api.enums.OrePrefixes.ingot;
 import static gregtech.api.enums.OrePrefixes.nugget;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBlastRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sCentrifugeRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sFluidHeaterRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sMixerRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sSifterRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.MINUTES;
@@ -90,6 +91,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.github.bartimaeusnek.bartworks.common.loaders.FluidLoader;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -416,12 +418,13 @@ public class PlatinumSludgeOverHaul {
                 .fluidOutputs(RutheniumTetroxideSollution.getFluidOrGas(9000)).duration(15 * SECONDS)
                 .eut(TierEU.RECIPE_LV).addTo(UniversalChemical);
 
-        GT_Values.RA.addFluidHeaterRecipe(
-                GT_Utility.getIntegratedCircuit(1),
-                RutheniumTetroxideSollution.getFluidOrGas(800),
-                HotRutheniumTetroxideSollution.getFluidOrGas(800),
-                300,
-                480);
+        GT_Values.RA.stdBuilder()
+            .itemInputs(GT_Utility.getIntegratedCircuit(11))
+            .noItemOutputs()
+            .fluidInputs(RutheniumTetroxideSollution.getFluidOrGas(800))
+            .fluidOutputs(HotRutheniumTetroxideSollution.getFluidOrGas(800))
+            .duration(15*SECONDS).eut(TierEU.RECIPE_HV).addTo(sFluidHeaterRecipes);
+
         GT_Values.RA.addCrackingRecipe(
                 17,
                 RutheniumTetroxideSollution.getFluidOrGas(1000),

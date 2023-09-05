@@ -8,15 +8,19 @@ import gregtech.api.enums.GT_Values;
 import gregtech.api.enums.TierEU;
 import gregtech.api.util.GT_Utility;
 
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sFluidHeaterRecipes;
+import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
+import static gregtech.api.util.GT_RecipeBuilder.TICKS;
+
 public class FluidHeater implements Runnable {
 
     @Override
     public void run() {
-        GT_Values.RA.addFluidHeaterRecipe(
-                GT_Utility.getIntegratedCircuit(10),
-                new FluidStack(FluidLoader.fulvicAcid, 1000),
-                new FluidStack(FluidLoader.heatedfulvicAcid, 1000),
-                90,
-                (int) TierEU.RECIPE_MV);
+        GT_Values.RA.stdBuilder()
+            .itemInputs(GT_Utility.getIntegratedCircuit(10))
+            .noItemOutputs()
+            .fluidInputs(new FluidStack(FluidLoader.fulvicAcid, 1000))
+            .fluidOutputs(new FluidStack(FluidLoader.heatedfulvicAcid, 1000))
+            .duration(4*SECONDS+10*TICKS).eut(TierEU.RECIPE_MV).addTo(sFluidHeaterRecipes);
     }
 }

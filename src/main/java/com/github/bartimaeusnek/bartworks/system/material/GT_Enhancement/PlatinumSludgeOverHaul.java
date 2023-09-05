@@ -417,7 +417,7 @@ public class PlatinumSludgeOverHaul {
                 .fluidOutputs(RutheniumTetroxideSollution.getFluidOrGas(9000)).duration(15 * SECONDS)
                 .eut(TierEU.RECIPE_LV).addTo(UniversalChemical);
 
-        GT_Values.RA.stdBuilder().itemInputs(GT_Utility.getIntegratedCircuit(11)).noItemOutputs()
+        GT_Values.RA.stdBuilder().itemInputs(GT_Utility.getIntegratedCircuit(1)).noItemOutputs()
                 .fluidInputs(RutheniumTetroxideSollution.getFluidOrGas(800))
                 .fluidOutputs(HotRutheniumTetroxideSollution.getFluidOrGas(800)).duration(15 * SECONDS)
                 .eut(TierEU.RECIPE_HV).addTo(sFluidHeaterRecipes);

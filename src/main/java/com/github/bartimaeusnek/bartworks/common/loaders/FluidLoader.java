@@ -20,7 +20,6 @@ import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 import java.awt.*;
 import java.util.Arrays;
 
-import gregtech.api.enums.TierEU;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -39,6 +38,7 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import gregtech.api.enums.GT_Values;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.TierEU;
 import gregtech.api.objects.GT_Fluid;
 import gregtech.api.util.GT_LanguageManager;
 import gregtech.api.util.GT_Utility;

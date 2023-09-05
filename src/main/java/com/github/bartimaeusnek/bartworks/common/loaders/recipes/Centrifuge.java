@@ -35,8 +35,8 @@ public class Centrifuge implements Runnable {
                         WerkstoffLoader.Thorium232.get(OrePrefixes.dust, 1),
                         WerkstoffLoader.Thorium232.get(OrePrefixes.dust, 1),
                         WerkstoffLoader.Thorium232.get(OrePrefixes.dust, 1))
-                .outputChances(800, 375, 22, 22, 5).noFluidInputs().noFluidOutputs().duration(8*MINUTES+20 * SECONDS).eut(TierEU.RECIPE_EV)
-                .addTo(sCentrifugeRecipes);
+                .outputChances(800, 375, 22, 22, 5).noFluidInputs().noFluidOutputs()
+                .duration(8 * MINUTES + 20 * SECONDS).eut(TierEU.RECIPE_EV).addTo(sCentrifugeRecipes);
 
         ItemStack[] pellets = new ItemStack[6];
         Arrays.fill(pellets, new ItemStack(GT_TileEntity_THTR.THTRMaterials.aTHTR_Materials, 64, 4));
@@ -98,18 +98,18 @@ public class Centrifuge implements Runnable {
 
         GT_Values.RA.stdBuilder().itemInputs(GT_Utility.getIntegratedCircuit(17)).itemOutputs(BioItemList.getOther(4))
                 .fluidInputs(new FluidStack(BioCultureLoader.eColi.getFluid(), 1000))
-                .fluidOutputs(new FluidStack(FluidLoader.BioLabFluidMaterials[1], 10)).duration(60 * SECONDS).eut(TierEU.RECIPE_HV)
-                .addTo(sCentrifugeRecipes);
+                .fluidOutputs(new FluidStack(FluidLoader.BioLabFluidMaterials[1], 10)).duration(60 * SECONDS)
+                .eut(TierEU.RECIPE_HV).addTo(sCentrifugeRecipes);
 
         GT_Values.RA.stdBuilder().itemInputs(GT_Utility.getIntegratedCircuit(17)).noItemOutputs()
                 .fluidInputs(new FluidStack(FluidLoader.BioLabFluidMaterials[1], 1000))
-                .fluidOutputs(new FluidStack(FluidLoader.BioLabFluidMaterials[3], 250)).duration(60 * SECONDS).eut(TierEU.RECIPE_HV)
-                .addTo(sCentrifugeRecipes);
+                .fluidOutputs(new FluidStack(FluidLoader.BioLabFluidMaterials[3], 250)).duration(60 * SECONDS)
+                .eut(TierEU.RECIPE_HV).addTo(sCentrifugeRecipes);
 
         GT_Values.RA.stdBuilder().itemInputs(GT_Utility.getIntegratedCircuit(17)).noItemOutputs()
                 .fluidInputs(new FluidStack(BioCultureLoader.CommonYeast.getFluid(), 1000))
-                .fluidOutputs(new FluidStack(FluidLoader.BioLabFluidMaterials[2], 10)).duration(60 * SECONDS).eut(TierEU.RECIPE_HV)
-                .addTo(sCentrifugeRecipes);
+                .fluidOutputs(new FluidStack(FluidLoader.BioLabFluidMaterials[2], 10)).duration(60 * SECONDS)
+                .eut(TierEU.RECIPE_HV).addTo(sCentrifugeRecipes);
 
     }
 }

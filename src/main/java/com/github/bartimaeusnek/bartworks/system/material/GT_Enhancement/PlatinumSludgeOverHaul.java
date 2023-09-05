@@ -91,7 +91,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.github.bartimaeusnek.bartworks.common.loaders.FluidLoader;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -418,12 +417,10 @@ public class PlatinumSludgeOverHaul {
                 .fluidOutputs(RutheniumTetroxideSollution.getFluidOrGas(9000)).duration(15 * SECONDS)
                 .eut(TierEU.RECIPE_LV).addTo(UniversalChemical);
 
-        GT_Values.RA.stdBuilder()
-            .itemInputs(GT_Utility.getIntegratedCircuit(11))
-            .noItemOutputs()
-            .fluidInputs(RutheniumTetroxideSollution.getFluidOrGas(800))
-            .fluidOutputs(HotRutheniumTetroxideSollution.getFluidOrGas(800))
-            .duration(15*SECONDS).eut(TierEU.RECIPE_HV).addTo(sFluidHeaterRecipes);
+        GT_Values.RA.stdBuilder().itemInputs(GT_Utility.getIntegratedCircuit(11)).noItemOutputs()
+                .fluidInputs(RutheniumTetroxideSollution.getFluidOrGas(800))
+                .fluidOutputs(HotRutheniumTetroxideSollution.getFluidOrGas(800)).duration(15 * SECONDS)
+                .eut(TierEU.RECIPE_HV).addTo(sFluidHeaterRecipes);
 
         GT_Values.RA.addCrackingRecipe(
                 17,

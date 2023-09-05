@@ -19,7 +19,6 @@ import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 
 import java.awt.*;
 
-import gregtech.api.enums.TierEU;
 import net.minecraft.item.EnumRarity;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -31,11 +30,13 @@ import com.github.bartimaeusnek.bartworks.util.BioPlasmid;
 
 import gregtech.api.enums.GT_Values;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.TierEU;
 import gregtech.api.objects.GT_Fluid;
 import gregtech.api.util.GT_Utility;
 
 @SuppressWarnings("ALL")
 public final class BioObjectAdder {
+
     /**
      * @param color     the color of the Culture
      * @param name      the name of the Culture

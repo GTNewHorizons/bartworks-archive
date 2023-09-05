@@ -42,8 +42,8 @@ public class AddSomeRecipes implements Runnable {
                         GT_OreDictUnificator.get(dust, Materials.TungstenSteel, 8L),
                         GT_OreDictUnificator.get(dust, Materials.Platinum, 1L))
                 .outputChances(100_00, 50_00, 50_00, 25_00, 100_00, 100_00).noFluidInputs()
-                .fluidOutputs(WerkstoffLoader.Xenon.getFluidOrGas(1)).duration(12 * SECONDS+10*TICKS).eut(TierEU.RECIPE_EV)
-                .addTo(sCentrifugeRecipes);
+                .fluidOutputs(WerkstoffLoader.Xenon.getFluidOrGas(1)).duration(12 * SECONDS + 10 * TICKS)
+                .eut(TierEU.RECIPE_EV).addTo(sCentrifugeRecipes);
 
         GT_Values.RA.stdBuilder().itemInputs(BW_NonMeta_MaterialItems.Depleted_Tiberium_2.get(1))
                 .itemOutputs(
@@ -54,8 +54,8 @@ public class AddSomeRecipes implements Runnable {
                         GT_OreDictUnificator.get(dust, Materials.TungstenSteel, 18L),
                         GT_OreDictUnificator.get(dust, Materials.Platinum, 2L))
                 .outputChances(100_00, 50_00, 50_00, 25_00, 100_00, 100_00).noFluidInputs()
-                .fluidOutputs(WerkstoffLoader.Xenon.getFluidOrGas(2)).duration(12 * SECONDS+10*TICKS).eut(TierEU.RECIPE_EV)
-                .addTo(sCentrifugeRecipes);
+                .fluidOutputs(WerkstoffLoader.Xenon.getFluidOrGas(2)).duration(12 * SECONDS + 10 * TICKS)
+                .eut(TierEU.RECIPE_EV).addTo(sCentrifugeRecipes);
 
         GT_Values.RA.stdBuilder().itemInputs(BW_NonMeta_MaterialItems.Depleted_Tiberium_4.get(1))
                 .itemOutputs(
@@ -78,7 +78,7 @@ public class AddSomeRecipes implements Runnable {
                         GT_OreDictUnificator.get(dust, Materials.TungstenSteel, 64L),
                         GT_OreDictUnificator.get(dust, Materials.TungstenSteel, 48L))
                 .outputChances(100_00, 50_00, 50_00, 100_00, 100_00, 100_00).noFluidInputs().noFluidOutputs()
-                .duration(1*MINUTES+40 * SECONDS).eut(TierEU.RECIPE_IV).addTo(sCentrifugeRecipes);
+                .duration(1 * MINUTES + 40 * SECONDS).eut(TierEU.RECIPE_IV).addTo(sCentrifugeRecipes);
 
     }
 }

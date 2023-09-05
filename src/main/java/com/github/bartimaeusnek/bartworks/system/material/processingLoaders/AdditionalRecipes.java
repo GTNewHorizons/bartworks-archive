@@ -413,7 +413,8 @@ public class AdditionalRecipes {
                         Materials.Sodium.getDustTiny(4),
                         Materials.Phosphor.getDustTiny(1))
                 .outputChances(100_00, 100_00, 10_00, 100_00, 10_00, 10_00).fluidInputs(Materials.Milk.getFluid(10000))
-                .fluidOutputs(Materials.Water.getFluid(8832)).duration(2 * SECONDS+10*TICKS).eut(TierEU.RECIPE_MV).addTo(sCentrifugeRecipes);
+                .fluidOutputs(Materials.Water.getFluid(8832)).duration(2 * SECONDS + 10 * TICKS).eut(TierEU.RECIPE_MV)
+                .addTo(sCentrifugeRecipes);
 
         // Magneto Resonatic Circuits
 

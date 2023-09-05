@@ -15,6 +15,7 @@ import gregtech.api.util.GT_OreDictUnificator;
 
 public class Electrolyzer implements Runnable {
 
+    // TODO: fix the chemical balance issues there are below
     @Override
     public void run() {
 

@@ -20,6 +20,7 @@ import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 import java.awt.*;
 import java.util.Arrays;
 
+import gregtech.api.enums.TierEU;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -97,8 +98,8 @@ public class FluidLoader {
                         .addStringLocalization(B.getFluid().getUnlocalizedName(), B.getLocalisedName() + " Fluid");
 
                 GT_Values.RA.stdBuilder().itemInputs(GT_Utility.getIntegratedCircuit(10)).noItemOutputs()
-                        .fluidInputs(new FluidStack(B.getFluid(), 1000)).fluidOutputs(dnaFluid).duration(15 * SECONDS)
-                        .eut(2).addTo(sCentrifugeRecipes);
+                        .fluidInputs(new FluidStack(B.getFluid(), 1000)).fluidOutputs(dnaFluid).duration(25 * SECONDS)
+                        .eut(TierEU.RECIPE_MV).addTo(sCentrifugeRecipes);
 
             }
         }

@@ -298,7 +298,7 @@ public class PlatinumSludgeOverHaul {
                         Materials.NitrogenDioxide.getCells(1),
                         Materials.DilutedSulfuricAcid.getCells(1))
                 .fluidInputs(AmmoniumChloride.getFluidOrGas(400)).fluidOutputs(PDAmmonia.getFluidOrGas(400))
-                .duration(15 * SECONDS).eut(2).addTo(sCentrifugeRecipes);
+                .duration(60 * SECONDS).eut(TierEU.RECIPE_LV).addTo(sCentrifugeRecipes);
 
         GT_Values.RA.addMultiblockChemicalRecipe(
                 new ItemStack[] { GT_Utility.getIntegratedCircuit(1) },

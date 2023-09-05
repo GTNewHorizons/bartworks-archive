@@ -33,6 +33,7 @@ import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sPrimitiveBlastRecipes;
 import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sSifterRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.MINUTES;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
+import static gregtech.api.util.GT_RecipeBuilder.TICKS;
 import static gregtech.api.util.GT_RecipeConstants.ADDITIVE_AMOUNT;
 
 import java.lang.reflect.Field;
@@ -412,7 +413,7 @@ public class AdditionalRecipes {
                         Materials.Sodium.getDustTiny(4),
                         Materials.Phosphor.getDustTiny(1))
                 .outputChances(100_00, 100_00, 10_00, 100_00, 10_00, 10_00).fluidInputs(Materials.Milk.getFluid(10000))
-                .fluidOutputs(Materials.Water.getFluid(8832)).duration(15 * SECONDS).eut(2).addTo(sCentrifugeRecipes);
+                .fluidOutputs(Materials.Water.getFluid(8832)).duration(2 * SECONDS+10*TICKS).eut(TierEU.RECIPE_MV).addTo(sCentrifugeRecipes);
 
         // Magneto Resonatic Circuits
 

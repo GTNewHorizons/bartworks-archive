@@ -19,6 +19,7 @@ import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 
 import java.awt.*;
 
+import gregtech.api.enums.TierEU;
 import net.minecraft.item.EnumRarity;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -35,13 +36,6 @@ import gregtech.api.util.GT_Utility;
 
 @SuppressWarnings("ALL")
 public final class BioObjectAdder {
-
-    // @Deprecated
-    // public static BioCulture createAndRegisterBioCulture(Color color, String name, long ID, BioPlasmid plasmid,
-    // BioDNA dna, EnumRarity rarity){
-    // return BioCulture.createAndRegisterBioCulture(color,name,ID,plasmid,dna,rarity);
-    // }
-
     /**
      * @param color     the color of the Culture
      * @param name      the name of the Culture
@@ -184,8 +178,8 @@ public final class BioObjectAdder {
                 }
 
                 GT_Values.RA.stdBuilder().itemInputs(GT_Utility.getIntegratedCircuit(10)).noItemOutputs()
-                        .fluidInputs(new FluidStack(B.getFluid(), 1000)).fluidOutputs(dnaFluid).duration(15 * SECONDS)
-                        .eut(2).addTo(sCentrifugeRecipes);
+                        .fluidInputs(new FluidStack(B.getFluid(), 1000)).fluidOutputs(dnaFluid).duration(25 * SECONDS)
+                        .eut(TierEU.RECIPE_MV).addTo(sCentrifugeRecipes);
             }
         }
     }

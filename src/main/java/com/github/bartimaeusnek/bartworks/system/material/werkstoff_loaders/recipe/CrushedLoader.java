@@ -126,11 +126,11 @@ public class CrushedLoader implements IWerkstoffRunnable {
 
         GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dustImpure))
                 .itemOutputs(werkstoff.get(dust), werkstoff.getOreByProduct(0, dust)).outputChances(100_00, 11_11)
-                .noFluidInputs().noFluidOutputs().duration(15 * SECONDS).eut(2).addTo(sCentrifugeRecipes);
+                .noFluidInputs().noFluidOutputs().duration(Math.max(1L, werkstoff.getStats().getMass() * 8L)).eut(5).addTo(sCentrifugeRecipes);
 
         GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dustPure))
                 .itemOutputs(werkstoff.get(dust), werkstoff.getOreByProduct(1, dust)).outputChances(100_00, 11_11)
-                .noFluidInputs().noFluidOutputs().duration(15 * SECONDS).eut(2).addTo(sCentrifugeRecipes);
+                .noFluidInputs().noFluidOutputs().duration(Math.max(1L, werkstoff.getStats().getMass() * 8L)).eut(5).addTo(sCentrifugeRecipes);
 
         if (werkstoff.contains(SubTag.CRYSTALLISABLE)) {
 

@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -30,6 +31,7 @@ import javax.annotation.Nonnegative;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
@@ -41,6 +43,7 @@ import com.github.bartimaeusnek.bartworks.MainMod;
 import com.github.bartimaeusnek.bartworks.common.loaders.BioItemList;
 import com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_TileEntity_BioVat;
 import com.gtnewhorizons.modularui.api.drawable.IDrawable;
+import com.gtnewhorizons.modularui.api.math.Alignment;
 import com.gtnewhorizons.modularui.api.math.Pos2d;
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.common.widget.DrawableWidget;
@@ -53,6 +56,7 @@ import gregtech.api.gui.modularui.GT_UITextures;
 import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
+import gregtech.nei.GT_NEI_DefaultHandler;
 import gregtech.nei.NEIRecipeInfo;
 import ic2.core.Ic2Items;
 import ic2.core.item.ItemFluidCell;
@@ -794,6 +798,50 @@ public class BWRecipes {
                         != null);
             }
             return this.addRecipe(aRecipe, false, false, false);
+        }
+
+        @Override
+        protected List<String> handleNEIItemInputTooltip(List<String> currentTip,
+                GT_NEI_DefaultHandler.FixedPositionedStack pStack) {
+            if (pStack.isFluid()) {
+                currentTip.add(EnumChatFormatting.GRAY + StatCollector.translateToLocal("nei.biovat.input.tooltip"));
+                return currentTip;
+            }
+            return super.handleNEIItemInputTooltip(currentTip, pStack);
+        }
+
+        @Override
+        protected List<String> handleNEIItemOutputTooltip(List<String> currentTip,
+                GT_NEI_DefaultHandler.FixedPositionedStack pStack) {
+            if (pStack.isFluid()) {
+                currentTip.add(EnumChatFormatting.GRAY + StatCollector.translateToLocal("nei.biovat.output.tooltip"));
+                return currentTip;
+            }
+            return super.handleNEIItemOutputTooltip(currentTip, pStack);
+        }
+
+        @Override
+        protected void drawNEIOverlayForInput(GT_NEI_DefaultHandler.FixedPositionedStack stack) {
+            drawFluidOverlay(stack);
+        }
+
+        @Override
+        protected void drawNEIOverlayForOutput(GT_NEI_DefaultHandler.FixedPositionedStack stack) {
+            drawFluidOverlay(stack);
+        }
+
+        private void drawFluidOverlay(GT_NEI_DefaultHandler.FixedPositionedStack stack) {
+            if (stack.isFluid()) {
+                drawNEIOverlayText(
+                        "+",
+                        stack,
+                        colorOverride.getTextColorOrDefault("nei_overlay_yellow", 0xFDD835),
+                        0.5f,
+                        true,
+                        Alignment.TopRight);
+                return;
+            }
+            super.drawNEIOverlayForOutput(stack);
         }
     }
 

@@ -175,7 +175,7 @@ public final class BioObjectAdder {
                                                 (short) B.getColor().getGreen() })
                                 .withStateAndTemperature(FluidState.LIQUID, 300).buildAndRegister().asFluid());
 
-                GT_Values.RA.stdBuilder().itemInputs(GT_Utility.getIntegratedCircuit(10)).noItemOutputs()
+                GT_Values.RA.stdBuilder().itemInputs(GT_Utility.getIntegratedCircuit(10))
                         .fluidInputs(new FluidStack(B.getFluid(), 1000)).fluidOutputs(dnaFluid).duration(25 * SECONDS)
                         .eut(TierEU.RECIPE_MV).addTo(sCentrifugeRecipes);
             }

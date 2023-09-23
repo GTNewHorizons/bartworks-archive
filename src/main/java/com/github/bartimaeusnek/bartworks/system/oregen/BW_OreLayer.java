@@ -229,8 +229,8 @@ public abstract class BW_OreLayer extends GT_Worldgen {
             aMetaData += 5000;
             aWorld.setBlock(aX, aY, aZ, tOreBlock, aMetaData, 0);
             TileEntity tTileEntity = aWorld.getTileEntity(aX, aY, aZ);
-            if (tTileEntity instanceof GT_TileEntity_Ores) {
-                ((GT_TileEntity_Ores) tTileEntity).mMetaData = (short) aMetaData;
+            if (tTileEntity instanceof GT_TileEntity_Ores ore) {
+                ore.mMetaData = (short) aMetaData;
             }
             return true;
         }

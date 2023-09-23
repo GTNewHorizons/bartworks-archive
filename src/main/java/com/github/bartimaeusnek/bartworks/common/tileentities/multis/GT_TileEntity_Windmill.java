@@ -32,6 +32,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityDispenser;
@@ -74,6 +75,7 @@ import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.modularui.IGetTitleColor;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_EnhancedMultiBlockBase;
+import gregtech.api.objects.ItemData;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
 import gregtech.api.util.GT_OreDictUnificator;
@@ -227,46 +229,51 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
 
     private float[] multiplierRecipe(ItemStack itemStack) {
         // will return max and min value of the multiplier, the average of these is used to calculate the multiplier.
-        if (itemStack.getItem().equals(Items.wheat)) return new float[] { 1.13f, 1.5f };
-        if (itemStack.getItem().equals(Items.bone)
-                || Block.getBlockFromItem(itemStack.getItem()).equals(Blocks.glowstone)
-                || Block.getBlockFromItem(itemStack.getItem()).equals(Blocks.pumpkin))
+        final Item item = itemStack.getItem();
+        if (item == Items.wheat) {
+            return new float[] { 1.13f, 1.5f };
+        }
+        final Block block = Block.getBlockFromItem(item);
+        if (item == Items.bone || block == Blocks.glowstone || block == Blocks.pumpkin) {
             return new float[] { 0.8f, 1f };
-        else if (Block.getBlockFromItem(itemStack.getItem()).equals(Blocks.gravel)
-                || Block.getBlockFromItem(itemStack.getItem()).equals(Blocks.cobblestone)
-                || Block.getBlockFromItem(itemStack.getItem()).equals(Blocks.stone)
-                || Block.getBlockFromItem(itemStack.getItem()).equals(Blocks.sandstone)
-                || Block.getBlockFromItem(itemStack.getItem()).equals(Blocks.clay)
-                || Block.getBlockFromItem(itemStack.getItem()).equals(Blocks.hardened_clay)
-                || Block.getBlockFromItem(itemStack.getItem()).equals(Blocks.stained_hardened_clay)
-                || Block.getBlockFromItem(itemStack.getItem()).equals(Blocks.wool)
-                || Block.getBlockFromItem(itemStack.getItem()).equals(Blocks.netherrack)
-                || Block.getBlockFromItem(itemStack.getItem()).equals(Blocks.log)
-                || Block.getBlockFromItem(itemStack.getItem()).equals(Blocks.log2))
+        }
+        if (block == Blocks.gravel || block == Blocks.cobblestone
+                || block == Blocks.stone
+                || block == Blocks.sandstone
+                || block == Blocks.clay
+                || block == Blocks.hardened_clay
+                || block == Blocks.stained_hardened_clay
+                || block == Blocks.wool
+                || block == Blocks.netherrack
+                || block == Blocks.log
+                || block == Blocks.log2) {
             return new float[] { 1f, 1.5f };
-        else if (GT_OreDictUnificator.getAssociation(itemStack) == null
-                || GT_OreDictUnificator.getAssociation(itemStack).mPrefix == null
-                || GT_OreDictUnificator.getAssociation(itemStack).mMaterial == null
-                || GT_OreDictUnificator.getAssociation(itemStack).mMaterial.mMaterial == null
-                || GT_OreDictUnificator.getAssociation(itemStack).mMaterial.mMaterial.getDust(1) == null) {} else
-            if (OrePrefixes.ore.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                    || OrePrefixes.oreNetherrack.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                    || OrePrefixes.oreEndstone.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                    || OrePrefixes.oreBlackgranite.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                    || OrePrefixes.oreRedgranite.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                    || OrePrefixes.oreMarble.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                    || OrePrefixes.oreBasalt.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix))
-                return new float[] { 0.5f, 1f };
-            else if (OrePrefixes.stone.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                    || OrePrefixes.stoneBricks.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                    || OrePrefixes.stoneChiseled.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                    || OrePrefixes.stoneCobble.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                    || OrePrefixes.stoneCracked.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                    || OrePrefixes.stoneMossy.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                    || OrePrefixes.stoneMossyBricks.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                    || OrePrefixes.stoneSmooth.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                    || OrePrefixes.cobblestone.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix))
-                return new float[] { 1f, 1.5f };
+        }
+        final ItemData association = GT_OreDictUnificator.getAssociation(itemStack);
+        final OrePrefixes prefix = association == null ? null : association.mPrefix;
+        if (prefix == null || association.mMaterial == null
+                || association.mMaterial.mMaterial == null
+                || association.mMaterial.mMaterial.getDust(1) == null) {
+            return new float[] { 1f, 1f };
+        }
+        if (OrePrefixes.ore == prefix || OrePrefixes.oreNetherrack == prefix
+                || OrePrefixes.oreEndstone == prefix
+                || OrePrefixes.oreBlackgranite == prefix
+                || OrePrefixes.oreRedgranite == prefix
+                || OrePrefixes.oreMarble == prefix
+                || OrePrefixes.oreBasalt == prefix) {
+            return new float[] { 0.5f, 1f };
+        }
+        if (OrePrefixes.stone == prefix || OrePrefixes.stoneBricks == prefix
+                || OrePrefixes.stoneChiseled == prefix
+                || OrePrefixes.stoneCobble == prefix
+                || OrePrefixes.stoneCracked == prefix
+                || OrePrefixes.stoneMossy == prefix
+                || OrePrefixes.stoneMossyBricks == prefix
+                || OrePrefixes.stoneSmooth == prefix
+                || OrePrefixes.cobblestone == prefix) {
+            return new float[] { 1f, 1.5f };
+        }
         return new float[] { 1f, 1f };
     }
 

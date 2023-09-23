@@ -501,205 +501,6 @@ public class BW_Util {
         };
     }
 
-    public static boolean check_layer(IGregTechTileEntity aBaseMetaTileEntity, int radius, int yLevel, int height,
-            Block block, int dmg, int offset, boolean insideCheck, Block inside, int dmginside, int aBaseCasingIndex) {
-        return BW_Util.check_layer(
-                aBaseMetaTileEntity,
-                radius,
-                yLevel,
-                height,
-                block,
-                dmg,
-                offset,
-                false,
-                insideCheck,
-                inside,
-                dmginside,
-                aBaseCasingIndex);
-    }
-
-    public static boolean check_layer(IGregTechTileEntity aBaseMetaTileEntity, int radius, int yLevel, int height,
-            Block block, int dmg, int offset, int aBaseCasingIndex) {
-        return BW_Util
-                .check_layer(aBaseMetaTileEntity, radius, yLevel, height, block, dmg, offset, false, aBaseCasingIndex);
-    }
-
-    public static boolean check_layer(IGregTechTileEntity aBaseMetaTileEntity, int radius, int yLevel, int height,
-            Block block, int dmg, int offset, boolean controllerLayer, int aBaseCasingIndex) {
-        return BW_Util.check_layer(
-                aBaseMetaTileEntity,
-                radius,
-                yLevel,
-                height,
-                block,
-                dmg,
-                offset,
-                controllerLayer,
-                false,
-                aBaseCasingIndex);
-    }
-
-    public static boolean check_layer(IGregTechTileEntity aBaseMetaTileEntity, int radius, int yLevel, int height,
-            Block block, int dmg, int offset, boolean controllerLayer, boolean freeCorners, int aBaseCasingIndex) {
-        return BW_Util.check_layer(
-                aBaseMetaTileEntity,
-                radius,
-                yLevel,
-                height,
-                block,
-                dmg,
-                offset,
-                controllerLayer,
-                freeCorners,
-                false,
-                block,
-                dmg,
-                true,
-                aBaseCasingIndex);
-    }
-
-    public static boolean check_layer(IGregTechTileEntity aBaseMetaTileEntity, int radius, int yLevel, int height,
-            Block block, int dmg, int offset, boolean controllerLayer, boolean insideCheck, Block inside, int dmginside,
-            int aBaseCasingIndex) {
-        return BW_Util.check_layer(
-                aBaseMetaTileEntity,
-                radius,
-                yLevel,
-                height,
-                block,
-                dmg,
-                offset,
-                controllerLayer,
-                false,
-                insideCheck,
-                inside,
-                dmginside,
-                true,
-                aBaseCasingIndex);
-    }
-
-    /**
-     * @param aBaseMetaTileEntity the Multiblock controller, usually a parameter
-     * @param radius              the radius of the layer
-     * @param yLevel              the starting y level of the Layer, referenced to the Multiblock
-     * @param height              the height of the Layers, referenced to the Multiblock
-     * @param block               the block for the walls
-     * @param offset              the offset in most cases should be the same as the radius
-     * @param controllerLayer     if the layer contains the controller
-     * @param freeCorners         if the corners should be checked
-     * @param insideCheck         if the inside should be empty/filled
-     * @param inside              which block should be inside
-     * @param allowHatches        if hatches are allowed in this Layer
-     * @param aBaseCasingIndex    the Index for the hatches texture
-     * @return if the layer check was completed
-     */
-    public static boolean check_layer(IGregTechTileEntity aBaseMetaTileEntity, int radius, int yLevel, int height,
-            Block block, int dmg, int offset, boolean controllerLayer, boolean freeCorners, boolean insideCheck,
-            Block inside, int dmginside, boolean allowHatches, int aBaseCasingIndex) {
-        int xDir = aBaseMetaTileEntity.getBackFacing().offsetX * offset;
-        int zDir = aBaseMetaTileEntity.getBackFacing().offsetZ * offset;
-        for (int x = -radius; x <= radius; x++) {
-            for (int y = yLevel; y < height; y++) {
-                for (int z = -radius; z <= radius; z++) {
-                    if (freeCorners && Math.abs(x) == radius && Math.abs(z) == radius) continue;
-                    if (controllerLayer && xDir + x == 0 && zDir + z == 0) continue;
-                    boolean b = Math.abs(x) < radius && Math.abs(z) != radius;
-                    if (insideCheck && b) {
-                        if (!(inside.equals(Blocks.air) ? aBaseMetaTileEntity.getAirOffset(xDir + x, y, zDir + z)
-                                : aBaseMetaTileEntity.getBlockOffset(xDir + x, y, zDir + z).equals(inside))
-                                && (aBaseMetaTileEntity.getMetaIDOffset(xDir + x, y, zDir + z) != dmginside
-                                        || dmginside > -1)) {
-                            if (!allowHatches
-                                    || !((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
-                                            .addDynamoToMachineList(
-                                                    aBaseMetaTileEntity
-                                                            .getIGregTechTileEntityOffset(xDir + x, y, zDir + z),
-                                                    aBaseCasingIndex)
-                                            && !((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity
-                                                    .getMetaTileEntity())
-                                                            .addEnergyInputToMachineList(
-                                                                    aBaseMetaTileEntity.getIGregTechTileEntityOffset(
-                                                                            xDir + x,
-                                                                            y,
-                                                                            zDir + z),
-                                                                    aBaseCasingIndex)
-                                            && !((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity
-                                                    .getMetaTileEntity())
-                                                            .addMaintenanceToMachineList(
-                                                                    aBaseMetaTileEntity.getIGregTechTileEntityOffset(
-                                                                            xDir + x,
-                                                                            y,
-                                                                            zDir + z),
-                                                                    aBaseCasingIndex)
-                                            && !((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity
-                                                    .getMetaTileEntity())
-                                                            .addMufflerToMachineList(
-                                                                    aBaseMetaTileEntity.getIGregTechTileEntityOffset(
-                                                                            xDir + x,
-                                                                            y,
-                                                                            zDir + z),
-                                                                    aBaseCasingIndex)
-                                            && !((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity
-                                                    .getMetaTileEntity())
-                                                            .addInputToMachineList(
-                                                                    aBaseMetaTileEntity.getIGregTechTileEntityOffset(
-                                                                            xDir + x,
-                                                                            y,
-                                                                            zDir + z),
-                                                                    aBaseCasingIndex)
-                                            && !((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity
-                                                    .getMetaTileEntity())
-                                                            .addOutputToMachineList(
-                                                                    aBaseMetaTileEntity.getIGregTechTileEntityOffset(
-                                                                            xDir + x,
-                                                                            y,
-                                                                            zDir + z),
-                                                                    aBaseCasingIndex)) {
-                                return false;
-                            }
-                        }
-                    }
-                    if (!b && !aBaseMetaTileEntity.getBlockOffset(xDir + x, y, zDir + z).equals(block)
-                            && (aBaseMetaTileEntity.getMetaIDOffset(xDir + x, y, zDir + z) != dmg || dmg > -1)) {
-                        if (!allowHatches
-                                || !((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
-                                        .addDynamoToMachineList(
-                                                aBaseMetaTileEntity.getIGregTechTileEntityOffset(xDir + x, y, zDir + z),
-                                                aBaseCasingIndex)
-                                        && !((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
-                                                .addEnergyInputToMachineList(
-                                                        aBaseMetaTileEntity
-                                                                .getIGregTechTileEntityOffset(xDir + x, y, zDir + z),
-                                                        aBaseCasingIndex)
-                                        && !((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
-                                                .addMaintenanceToMachineList(
-                                                        aBaseMetaTileEntity
-                                                                .getIGregTechTileEntityOffset(xDir + x, y, zDir + z),
-                                                        aBaseCasingIndex)
-                                        && !((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
-                                                .addMufflerToMachineList(
-                                                        aBaseMetaTileEntity
-                                                                .getIGregTechTileEntityOffset(xDir + x, y, zDir + z),
-                                                        aBaseCasingIndex)
-                                        && !((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
-                                                .addInputToMachineList(
-                                                        aBaseMetaTileEntity
-                                                                .getIGregTechTileEntityOffset(xDir + x, y, zDir + z),
-                                                        aBaseCasingIndex)
-                                        && !((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
-                                                .addOutputToMachineList(
-                                                        aBaseMetaTileEntity
-                                                                .getIGregTechTileEntityOffset(xDir + x, y, zDir + z),
-                                                        aBaseCasingIndex)) {
-                            return false;
-                        }
-                    }
-                }
-            }
-        }
-        return true;
-    }
-
     public static List<Byte> getMetasFromLayer(IGregTechTileEntity aBaseMetaTileEntity, int radius, int yLevel,
             int height, int offset, boolean controllerLayer, boolean freeCorners, boolean insideCheck) {
         ArrayList<Byte> ret = new ArrayList<>();
@@ -902,13 +703,20 @@ public class BW_Util {
         boolean tThereWasARecipe = false;
 
         for (byte i = 0; i < aRecipe.length; i++) {
-            if (aRecipe[i] instanceof IItemContainer) aRecipe[i] = ((IItemContainer) aRecipe[i]).get(1);
-            else if (aRecipe[i] instanceof Enum) aRecipe[i] = ((Enum<?>) aRecipe[i]).name();
-            else if (aRecipe[i] != null && !(aRecipe[i] instanceof ItemStack)
+            if (aRecipe[i] instanceof IItemContainer itemContainer) {
+                aRecipe[i] = itemContainer.get(1);
+                continue;
+            }
+            if (aRecipe[i] instanceof Enum<?>enum_) {
+                aRecipe[i] = enum_.name();
+                continue;
+            }
+            if (aRecipe[i] != null && !(aRecipe[i] instanceof ItemStack)
                     && !(aRecipe[i] instanceof ItemData)
                     && !(aRecipe[i] instanceof String)
-                    && !(aRecipe[i] instanceof Character))
+                    && !(aRecipe[i] instanceof Character)) {
                 aRecipe[i] = aRecipe[i].toString();
+            }
         }
 
         try {
@@ -920,8 +728,8 @@ public class BW_Util {
 
             ArrayList<Object> tRecipeList = new ArrayList<>(Arrays.asList(aRecipe));
 
-            while (aRecipe[idx] instanceof String) {
-                StringBuilder s = new StringBuilder((String) aRecipe[idx]);
+            while (aRecipe[idx] instanceof String string) {
+                StringBuilder s = new StringBuilder(string);
                 idx++;
                 shape.append(s);
                 while (s.length() < 3) s.append(" ");

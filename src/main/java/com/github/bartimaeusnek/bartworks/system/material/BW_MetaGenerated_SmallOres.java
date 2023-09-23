@@ -66,8 +66,8 @@ public class BW_MetaGenerated_SmallOres extends BW_MetaGenerated_Ores {
 
         aWorld.setBlock(aX, aY, aZ, tOreBlock, aMetaData, 0);
         TileEntity tTileEntity = aWorld.getTileEntity(aX, aY, aZ);
-        if (tTileEntity instanceof BW_MetaGeneratedOreTE) {
-            ((BW_MetaGeneratedOreTE) tTileEntity).mMetaData = (short) aMetaData;
+        if (tTileEntity instanceof BW_MetaGeneratedOreTE metaTE) {
+            metaTE.mMetaData = (short) aMetaData;
         }
 
         return true;

@@ -202,17 +202,15 @@ public class GT_TileEntity_ElectricImplosionCompressor
         }
         if (block == LudicrousBlocks.resource_block && meta == 1) {
             return 2; // Infinity
-        } else if (block == GregTech_API.sBlockMetal9) {
-            switch (meta) {
-                case 4: // Transcendent Metal
-                    return 3;
-                case 3: // SpaceTime
-                    return 4;
-                case 8: // Universium
-                    return 5;
-            }
         }
-
+        if (block == GregTech_API.sBlockMetal9) {
+            return switch (meta) {
+                case 4 -> 3; // Transcendent Metal
+                case 3 -> 4; // SpaceTime
+                case 8 -> 5; // Universium
+                default -> -1;
+            };
+        }
         return -1;
     }
 

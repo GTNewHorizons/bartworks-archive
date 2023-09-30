@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -30,6 +31,7 @@ import javax.annotation.Nonnegative;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
@@ -41,6 +43,7 @@ import com.github.bartimaeusnek.bartworks.MainMod;
 import com.github.bartimaeusnek.bartworks.common.loaders.BioItemList;
 import com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_TileEntity_BioVat;
 import com.gtnewhorizons.modularui.api.drawable.IDrawable;
+import com.gtnewhorizons.modularui.api.math.Alignment;
 import com.gtnewhorizons.modularui.api.math.Pos2d;
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.common.widget.DrawableWidget;
@@ -53,6 +56,7 @@ import gregtech.api.gui.modularui.GT_UITextures;
 import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
+import gregtech.nei.GT_NEI_DefaultHandler;
 import gregtech.nei.NEIRecipeInfo;
 import ic2.core.Ic2Items;
 import ic2.core.item.ItemFluidCell;
@@ -230,20 +234,14 @@ public class BWRecipes {
      * @param machine 0 = biolab; 1 = BacterialVat; 2 = sAcidGenFuels; 3 = circuitAssemblyLine
      */
     public GT_Recipe.GT_Recipe_Map getMappingsFor(byte machine) {
-        switch (machine) {
-            case 0:
-                return sBiolab;
-            case 1:
-                return sBacteriaVat;
-            case 2:
-                return sAcidGenFuels;
-            case 3:
-                return sCircuitAssemblyLineMap;
-            case 4:
-                return sRadHatch;
-            default:
-                return null;
-        }
+        return switch (machine) {
+            case 0 -> this.sBiolab;
+            case 1 -> this.sBacteriaVat;
+            case 2 -> this.sAcidGenFuels;
+            case 3 -> this.sCircuitAssemblyLineMap;
+            case 4 -> this.sRadHatch;
+            default -> null;
+        };
     }
 
     public static long calcDecayTicks(int x) {
@@ -251,12 +249,12 @@ public class BWRecipes {
         if (x == 43) ret = 5000;
         else if (x == 61) ret = 4500;
         else if (x <= 100) ret = MathUtils.ceilLong((8000D * Math.tanh(-x / 20D) + 8000D) * 1000D);
-        else ret = MathUtils.ceilLong(((8000D * Math.tanh(-x / 65D) + 8000D)));
+        else ret = MathUtils.ceilLong(8000D * Math.tanh(-x / 65D) + 8000D);
         return ret;
     }
 
     public boolean addRadHatch(ItemStack item, int radioLevel, int amount, short[] rgba) {
-        return sRadHatch.addRecipe(
+        return this.sRadHatch.addRecipe(
                 new DynamicGTRecipe(
                         false,
                         new ItemStack[] { item },
@@ -272,7 +270,7 @@ public class BWRecipes {
     }
 
     public boolean addRadHatch(ItemStack item, int radioLevel, int amount, int time, short[] rgba) {
-        return sRadHatch.addRecipe(
+        return this.sRadHatch.addRecipe(
                 new DynamicGTRecipe(
                         false,
                         new ItemStack[] { item },
@@ -289,7 +287,7 @@ public class BWRecipes {
 
     public boolean addBioLabRecipe(ItemStack[] aInputs, ItemStack aOutput, ItemStack aSpecialItems, int[] aChances,
             FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs, int aDuration, int aEUt, int aSpecialValue) {
-        return sBiolab.addRecipe(
+        return this.sBiolab.addRecipe(
                 new DynamicGTRecipe(
                         true,
                         aInputs,
@@ -306,7 +304,7 @@ public class BWRecipes {
 
     public boolean addBioLabRecipeIncubation(ItemStack aInput, BioCulture aOutput, int[] aChances,
             FluidStack[] aFluidInputs, int aDuration, int aEUt, int aSpecialValue) {
-        return sBiolab.addRecipe(
+        return this.sBiolab.addRecipe(
                 new DynamicGTRecipe(
                         true,
                         new ItemStack[] { BioItemList.getPetriDish(null), aInput },
@@ -323,7 +321,7 @@ public class BWRecipes {
 
     public boolean addBioLabRecipeIncubation(ItemStack aInput, BioCulture aOutput, int[] aChances,
             FluidStack aFluidInputs, int aDuration, int aEUt, int aSpecialValue) {
-        return sBiolab.addRecipe(
+        return this.sBiolab.addRecipe(
                 new DynamicGTRecipe(
                         true,
                         new ItemStack[] { BioItemList.getPetriDish(null), aInput },
@@ -341,7 +339,7 @@ public class BWRecipes {
     @Deprecated
     public boolean addBioLabRecipeDNAExtraction(ItemStack[] aInputs, ItemStack aOutput, int[] aChances,
             FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs, int aDuration, int aEUt, int aSpecialValue) {
-        return sBiolab.addRecipe(
+        return this.sBiolab.addRecipe(
                 new DynamicGTRecipe(
                         true,
                         aInputs,
@@ -359,7 +357,7 @@ public class BWRecipes {
     @Deprecated
     public boolean addBioLabRecipePCRThermoclycling(ItemStack[] aInputs, ItemStack aOutput, int[] aChances,
             FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs, int aDuration, int aEUt, int aSpecialValue) {
-        return sBiolab.addRecipe(
+        return this.sBiolab.addRecipe(
                 new DynamicGTRecipe(
                         true,
                         aInputs,
@@ -377,7 +375,7 @@ public class BWRecipes {
     @Deprecated
     public boolean addBioLabRecipePlasmidSynthesis(ItemStack[] aInputs, ItemStack aOutput, int[] aChances,
             FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs, int aDuration, int aEUt, int aSpecialValue) {
-        return sBiolab.addRecipe(
+        return this.sBiolab.addRecipe(
                 new DynamicGTRecipe(
                         true,
                         aInputs,
@@ -395,7 +393,7 @@ public class BWRecipes {
     @Deprecated
     public boolean addBioLabRecipeTransformation(ItemStack[] aInputs, ItemStack aOutput, int[] aChances,
             FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs, int aDuration, int aEUt, int aSpecialValue) {
-        return sBiolab.addRecipe(
+        return this.sBiolab.addRecipe(
                 new DynamicGTRecipe(
                         true,
                         aInputs,
@@ -413,7 +411,7 @@ public class BWRecipes {
     @Deprecated
     public boolean addBioLabRecipeClonalCellularSynthesis(ItemStack[] aInputs, ItemStack aOutput, int[] aChances,
             FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs, int aDuration, int aEUt, int aSpecialValue) {
-        return sBiolab.addRecipe(
+        return this.sBiolab.addRecipe(
                 new DynamicGTRecipe(
                         true,
                         aInputs,
@@ -436,7 +434,7 @@ public class BWRecipes {
             aSievert += calculateSv(material);
         aSievert = aSievert << 6;
         aSievert = aSievert | glasTier;
-        return sBacteriaVat.addRecipe(
+        return this.sBacteriaVat.addRecipe(
                 new BacteriaVatRecipe(
                         false,
                         aInputs,
@@ -454,7 +452,6 @@ public class BWRecipes {
     public boolean addBacterialVatRecipe(ItemStack[] aInputs, BioCulture aCulture, FluidStack[] aFluidInputs,
             FluidStack[] aFluidOutputs, @Nonnegative int aDuration, @Nonnegative int aEUt, @Nonnegative int aSv,
             @Nonnegative int glasTier, int aSpecialValue, boolean exactSv) {
-        byte gTier = (byte) glasTier;
         int aSievert = 0;
         if (aSv >= 83 || aSv == 61 || aSv == 43) aSievert += aSv;
         aSievert = aSievert << 1;
@@ -462,8 +459,8 @@ public class BWRecipes {
         aSievert = aSievert << 2;
         aSievert = aSievert | specialToByte(aSpecialValue);
         aSievert = aSievert << 4;
-        aSievert = aSievert | gTier;
-        return sBacteriaVat.addRecipe(
+        aSievert = aSievert | glasTier;
+        return this.sBacteriaVat.addRecipe(
                 new BacteriaVatRecipe(
                         false,
                         aInputs,
@@ -492,7 +489,7 @@ public class BWRecipes {
         aSievert = aSievert | specialToByte(aSpecialValue);
         aSievert = aSievert << 4;
         aSievert = aSievert | gTier;
-        return sBacteriaVat.addRecipe(
+        return this.sBacteriaVat.addRecipe(
                 new BacteriaVatRecipe(
                         false,
                         aInputs,
@@ -516,7 +513,7 @@ public class BWRecipes {
         aSievert = aSievert << 1;
         aSievert = aSievert | (exactSv ? 1 : 0);
         aSievert = aSievert << 6;
-        return sBacteriaVat.addRecipe(
+        return this.sBacteriaVat.addRecipe(
                 new BacteriaVatRecipe(
                         false,
                         aInputs,
@@ -543,7 +540,7 @@ public class BWRecipes {
         aSievert = aSievert << 2;
         aSievert = aSievert | specialToByte(aSpecialValue);
         aSievert = aSievert << 4;
-        return sBacteriaVat.addRecipe(
+        return this.sBacteriaVat.addRecipe(
                 new BacteriaVatRecipe(
                         false,
                         aInputs,
@@ -565,7 +562,7 @@ public class BWRecipes {
             FluidStack[] aFluidOutputs, int aDuration, int aEUt, byte glasTier) {
         int aSievert = 0;
         aSievert = aSievert | glasTier;
-        return sBacteriaVat.addRecipe(
+        return this.sBacteriaVat.addRecipe(
                 new BacteriaVatRecipe(
                         false,
                         aInputs,
@@ -585,7 +582,7 @@ public class BWRecipes {
      */
     public boolean addBacterialVatRecipe(ItemStack[] aInputs, FluidStack[] aFluidInputs, BioCulture culture,
             FluidStack[] aFluidOutputs, int aDuration, int aEUt) {
-        return sBacteriaVat.addRecipe(
+        return this.sBacteriaVat.addRecipe(
                 new BacteriaVatRecipe(
                         false,
                         aInputs,
@@ -613,7 +610,7 @@ public class BWRecipes {
         aSievert = aSievert | specialToByte(aSpecialValue);
         aSievert = aSievert << 4;
         aSievert = aSievert | gTier;
-        return sBacteriaVat.addRecipe(
+        return this.sBacteriaVat.addRecipe(
                 new BacteriaVatRecipe(
                         true,
                         aInputs,
@@ -754,6 +751,7 @@ public class BWRecipes {
                     aNEIAllowed);
         }
 
+        @Override
         protected GT_Recipe addRecipe(GT_Recipe aRecipe, boolean aCheckForCollisions, boolean aFakeRecipe,
                 boolean aHidden) {
             aRecipe.mHidden = aHidden;
@@ -764,30 +762,29 @@ public class BWRecipes {
             if (aRecipe.mFluidInputs.length < this.mMinimalInputFluids
                     && aRecipe.mInputs.length < this.mMinimalInputItems) {
                 return null;
-            } else {
-                return aCheckForCollisions && isthere != null
-                        && BW_Util.areStacksEqualOrNull(
-                                (ItemStack) isthere.mSpecialItems,
-                                (ItemStack) aRecipe.mSpecialItems) ? null : this.add(aRecipe);
             }
+            return aCheckForCollisions && isthere != null
+                    && BW_Util
+                            .areStacksEqualOrNull((ItemStack) isthere.mSpecialItems, (ItemStack) aRecipe.mSpecialItems)
+                                    ? null
+                                    : this.add(aRecipe);
         }
 
         public GT_Recipe addRecipe(GT_Recipe aRecipe, boolean VanillaGT) {
-            if (VanillaGT) return addRecipe(aRecipe, true, false, false);
-            else return addRecipe(aRecipe);
+            if (VanillaGT) return this.addRecipe(aRecipe, true, false, false);
+            return this.addRecipe(aRecipe);
         }
 
+        @Override
         public GT_Recipe addRecipe(GT_Recipe aRecipe) {
 
             if (aRecipe.mInputs.length > 0 && GT_Utility.areStacksEqual(
                     aRecipe.mInputs[aRecipe.mInputs.length - 1],
                     GT_Utility.getIntegratedCircuit(32767)))
                 return aRecipe;
-            else {
-                ItemStack[] nu1 = Arrays.copyOf(aRecipe.mInputs, aRecipe.mInputs.length + 1);
-                nu1[nu1.length - 1] = GT_Utility.getIntegratedCircuit(9 + nu1.length);
-                aRecipe.mInputs = nu1;
-            }
+            ItemStack[] nu1 = Arrays.copyOf(aRecipe.mInputs, aRecipe.mInputs.length + 1);
+            nu1[nu1.length - 1] = GT_Utility.getIntegratedCircuit(9 + nu1.length);
+            aRecipe.mInputs = nu1;
             if (this.findRecipe(null, false, 9223372036854775807L, aRecipe.mFluidInputs, aRecipe.mInputs) != null) {
                 ItemStack[] nu = Arrays.copyOf(aRecipe.mInputs, aRecipe.mInputs.length + 1);
                 int i = 9 + nu.length;
@@ -801,6 +798,50 @@ public class BWRecipes {
                         != null);
             }
             return this.addRecipe(aRecipe, false, false, false);
+        }
+
+        @Override
+        protected List<String> handleNEIItemInputTooltip(List<String> currentTip,
+                GT_NEI_DefaultHandler.FixedPositionedStack pStack) {
+            if (pStack.isFluid()) {
+                currentTip.add(EnumChatFormatting.GRAY + StatCollector.translateToLocal("nei.biovat.input.tooltip"));
+                return currentTip;
+            }
+            return super.handleNEIItemInputTooltip(currentTip, pStack);
+        }
+
+        @Override
+        protected List<String> handleNEIItemOutputTooltip(List<String> currentTip,
+                GT_NEI_DefaultHandler.FixedPositionedStack pStack) {
+            if (pStack.isFluid()) {
+                currentTip.add(EnumChatFormatting.GRAY + StatCollector.translateToLocal("nei.biovat.output.tooltip"));
+                return currentTip;
+            }
+            return super.handleNEIItemOutputTooltip(currentTip, pStack);
+        }
+
+        @Override
+        protected void drawNEIOverlayForInput(GT_NEI_DefaultHandler.FixedPositionedStack stack) {
+            drawFluidOverlay(stack);
+        }
+
+        @Override
+        protected void drawNEIOverlayForOutput(GT_NEI_DefaultHandler.FixedPositionedStack stack) {
+            drawFluidOverlay(stack);
+        }
+
+        private void drawFluidOverlay(GT_NEI_DefaultHandler.FixedPositionedStack stack) {
+            if (stack.isFluid()) {
+                drawNEIOverlayText(
+                        "+",
+                        stack,
+                        colorOverride.getTextColorOrDefault("nei_overlay_yellow", 0xFDD835),
+                        0.5f,
+                        true,
+                        Alignment.TopRight);
+                return;
+            }
+            super.drawNEIOverlayForOutput(stack);
         }
     }
 
@@ -827,7 +868,7 @@ public class BWRecipes {
                     aNEISpecialValuePost,
                     aShowVoltageAmperageInNEI,
                     aNEIAllowed);
-            setSpecialSlotSensitive(true);
+            this.setSpecialSlotSensitive(true);
         }
     }
 
@@ -851,12 +892,10 @@ public class BWRecipes {
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (!(o instanceof BWRecipes.BWNBTDependantCraftingRecipe)) return false;
+            if (!(o instanceof BWRecipes.BWNBTDependantCraftingRecipe that)) return false;
 
-            BWRecipes.BWNBTDependantCraftingRecipe that = (BWRecipes.BWNBTDependantCraftingRecipe) o;
-
-            if (!Objects.equals(this.result, that.result)) return false;
-            if (!Objects.equals(this.charToStackMap, that.charToStackMap)) return false;
+            if (!Objects.equals(this.result, that.result) || !Objects.equals(this.charToStackMap, that.charToStackMap))
+                return false;
             // Probably incorrect - comparing Object[] arrays with Arrays.equals
             return Arrays.equals(this.shape, that.shape);
         }
@@ -865,8 +904,7 @@ public class BWRecipes {
         public int hashCode() {
             int result1 = this.result != null ? this.result.hashCode() : 0;
             result1 = 31 * result1 + (this.charToStackMap != null ? this.charToStackMap.hashCode() : 0);
-            result1 = 31 * result1 + Arrays.hashCode(this.shape);
-            return result1;
+            return 31 * result1 + Arrays.hashCode(this.shape);
         }
 
         @Override

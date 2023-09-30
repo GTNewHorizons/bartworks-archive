@@ -18,6 +18,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import com.github.bartimaeusnek.bartworks.common.configs.ConfigHandler;
 import com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference;
 import com.github.bartimaeusnek.bartworks.util.ChatColorHelper;
@@ -61,12 +63,11 @@ public class GT_MetaTileEntity_Diode extends GT_MetaTileEntity_BasicHull {
         if (!aPlayer.isSneaking()) {
             --this.aAmps;
             if (this.aAmps < 0) this.aAmps = this.maxAmps;
-            GT_Utility.sendChatToPlayer(aPlayer, "Max Amps: " + this.aAmps);
         } else {
             ++this.aAmps;
             if (this.aAmps > this.maxAmps) this.aAmps = 0;
-            GT_Utility.sendChatToPlayer(aPlayer, "Max Amps: " + this.aAmps);
         }
+        GT_Utility.sendChatToPlayer(aPlayer, "Max Amps: " + this.aAmps);
     }
 
     @Override
@@ -102,7 +103,7 @@ public class GT_MetaTileEntity_Diode extends GT_MetaTileEntity_BasicHull {
         if (meta > ConfigHandler.IDOffset + GT_Values.VN.length
                 && meta <= ConfigHandler.IDOffset + GT_Values.VN.length * 2)
             return 2L;
-        else if (meta > ConfigHandler.IDOffset + GT_Values.VN.length * 2
+        if (meta > ConfigHandler.IDOffset + GT_Values.VN.length * 2
                 && meta <= ConfigHandler.IDOffset + GT_Values.VN.length * 3)
             return 4L;
         else if (meta > ConfigHandler.IDOffset + GT_Values.VN.length * 3
@@ -117,9 +118,11 @@ public class GT_MetaTileEntity_Diode extends GT_MetaTileEntity_BasicHull {
         else return 0L;
     }
 
+    @Override
     @SuppressWarnings("deprecation")
     public String[] getDescription() {
-        return new String[] { this.mDescription,
+        return ArrayUtils.addAll(
+                this.mDescriptionArray,
                 StatCollector.translateToLocal("tooltip.tile.tiereddsc.0.name") + " "
                         + ChatColorHelper.YELLOW
                         + GT_Utility.formatNumbers(GT_Values.V[this.mTier]),
@@ -129,6 +132,6 @@ public class GT_MetaTileEntity_Diode extends GT_MetaTileEntity_BasicHull {
                 StatCollector.translateToLocal("tooltip.tile.tiereddsc.2.name") + " "
                         + ChatColorHelper.YELLOW
                         + GT_Utility.formatNumbers(this.maxAmperesOut()),
-                BW_Tooltip_Reference.ADDED_BY_BARTIMAEUSNEK_VIA_BARTWORKS.get() };
+                BW_Tooltip_Reference.ADDED_BY_BARTIMAEUSNEK_VIA_BARTWORKS.get());
     }
 }

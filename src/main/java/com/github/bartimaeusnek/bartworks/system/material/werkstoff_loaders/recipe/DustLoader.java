@@ -22,6 +22,14 @@ import static gregtech.api.enums.OrePrefixes.gem;
 import static gregtech.api.enums.OrePrefixes.ingot;
 import static gregtech.api.enums.OrePrefixes.ingotHot;
 import static gregtech.api.enums.OrePrefixes.nugget;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBlastRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBoxinatorRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sMaceratorRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sPrimitiveBlastRecipes;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sVacuumRecipes;
+import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
+import static gregtech.api.util.GT_RecipeConstants.ADDITIVE_AMOUNT;
+import static gregtech.api.util.GT_RecipeConstants.COIL_HEAT;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,6 +48,7 @@ import gregtech.api.enums.GT_Values;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.TextureSet;
+import gregtech.api.enums.TierEU;
 import gregtech.api.interfaces.ISubTagContainer;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_Recipe;
@@ -61,104 +70,80 @@ public class DustLoader implements IWerkstoffRunnable {
                     || werkstoff.getGenerationFeatures().hasChemicalRecipes()) {
                 for (Pair<ISubTagContainer, Integer> container : werkstoff.getContents().getValue()
                         .toArray(new Pair[0])) {
-                    if (container.getKey() instanceof Materials) {
-                        if ((((Materials) container.getKey()).getGas(0) != null
-                                || ((Materials) container.getKey()).getFluid(0) != null
-                                || ((Materials) container.getKey()).mIconSet == TextureSet.SET_FLUID)
-                                && ((Materials) container.getKey()).getDust(0) == null) {
-                            FluidStack tmpFl = ((Materials) container.getKey()).getGas(1000L * container.getValue());
+                    final ISubTagContainer key = container.getKey();
+                    final int value = container.getValue();
+                    if (key instanceof Materials materialKey) {
+                        if ((materialKey.getGas(0) != null || materialKey.getFluid(0) != null
+                                || materialKey.mIconSet == TextureSet.SET_FLUID) && materialKey.getDust(0) == null) {
+                            FluidStack tmpFl = materialKey.getGas(1000L * value);
                             if (tmpFl == null || tmpFl.getFluid() == null) {
-                                tmpFl = ((Materials) container.getKey()).getFluid(1000L * container.getValue());
+                                tmpFl = materialKey.getFluid(1000L * value);
                             }
                             flOutputs.add(tmpFl);
                             if (flOutputs.size() > 1) {
-                                if (!tracker.containsKey(container.getKey())) {
-                                    stOutputs.add(((Materials) container.getKey()).getCells(container.getValue()));
-                                    tracker.put(
-                                            container.getKey(),
-                                            new Pair<>(container.getValue(), stOutputs.size() - 1));
+                                if (!tracker.containsKey(key)) {
+                                    stOutputs.add(materialKey.getCells(value));
+                                    tracker.put(key, new Pair<>(value, stOutputs.size() - 1));
                                 } else {
-                                    stOutputs.add(
-                                            ((Materials) container.getKey()).getCells(
-                                                    tracker.get(container.getKey()).getKey() + container.getValue()));
-                                    stOutputs.remove(tracker.get(container.getKey()).getValue() + 1);
+                                    stOutputs.add(materialKey.getCells(tracker.get(key).getKey() + value));
+                                    stOutputs.remove(tracker.get(key).getValue() + 1);
                                 }
-                                cells += container.getValue();
+                                cells += value;
                             }
                         } else {
-                            if (((Materials) container.getKey()).getDust(container.getValue()) == null) {
-                                if (((Materials) container.getKey()).getCells(container.getValue()) != null
-                                        && (((Materials) container.getKey()).getMolten(0) != null
-                                                || ((Materials) container.getKey()).getSolid(0) != null)) {
-                                    FluidStack tmpFl = ((Materials) container.getKey())
-                                            .getMolten(1000L * container.getValue());
-                                    if (tmpFl == null || tmpFl.getFluid() == null) {
-                                        tmpFl = ((Materials) container.getKey()).getSolid(1000L * container.getValue());
+                            if (materialKey.getDust(value) == null) {
+                                if (materialKey.getCells(value) == null
+                                        || materialKey.getMolten(0) == null && materialKey.getSolid(0) == null)
+                                    continue;
+                                FluidStack tmpFl = materialKey.getMolten(1000L * value);
+                                if (tmpFl == null || tmpFl.getFluid() == null) {
+                                    tmpFl = materialKey.getSolid(1000L * value);
+                                }
+                                flOutputs.add(tmpFl);
+                                if (flOutputs.size() > 1) {
+                                    if (!tracker.containsKey(key)) {
+                                        stOutputs.add(materialKey.getCells(value));
+                                        tracker.put(key, new Pair<>(value, stOutputs.size() - 1));
+                                    } else {
+                                        stOutputs.add(materialKey.getCells(tracker.get(key).getKey() + value));
+                                        stOutputs.remove(tracker.get(key).getValue() + 1);
                                     }
-                                    flOutputs.add(tmpFl);
-                                    if (flOutputs.size() > 1) {
-                                        if (!tracker.containsKey(container.getKey())) {
-                                            stOutputs.add(
-                                                    ((Materials) container.getKey()).getCells(container.getValue()));
-                                            tracker.put(
-                                                    container.getKey(),
-                                                    new Pair<>(container.getValue(), stOutputs.size() - 1));
-                                        } else {
-                                            stOutputs.add(
-                                                    ((Materials) container.getKey()).getCells(
-                                                            tracker.get(container.getKey()).getKey()
-                                                                    + container.getValue()));
-                                            stOutputs.remove(tracker.get(container.getKey()).getValue() + 1);
-                                        }
-                                        cells += container.getValue();
-                                    }
-                                } else continue;
+                                    cells += value;
+                                }
                             }
-                            if (!tracker.containsKey(container.getKey())) {
-                                stOutputs.add(((Materials) container.getKey()).getDust(container.getValue()));
-                                tracker.put(container.getKey(), new Pair<>(container.getValue(), stOutputs.size() - 1));
+                            if (!tracker.containsKey(key)) {
+                                stOutputs.add(materialKey.getDust(value));
+                                tracker.put(key, new Pair<>(value, stOutputs.size() - 1));
                             } else {
-                                stOutputs.add(
-                                        ((Materials) container.getKey()).getDust(
-                                                tracker.get(container.getKey()).getKey() + container.getValue()));
-                                stOutputs.remove(tracker.get(container.getKey()).getValue() + 1);
+                                stOutputs.add(materialKey.getDust(tracker.get(key).getKey() + value));
+                                stOutputs.remove(tracker.get(key).getValue() + 1);
                             }
                         }
-                    } else if (container.getKey() instanceof Werkstoff) {
-                        if (((Werkstoff) container.getKey()).getStats().isGas()
-                                || ((Werkstoff) container.getKey()).hasItemType(cell)) {
-                            FluidStack tmpFl = ((Werkstoff) container.getKey())
-                                    .getFluidOrGas(1000 * container.getValue());
+                    } else if (key instanceof Werkstoff werkstoffKey) {
+                        if (werkstoffKey.getStats().isGas() || werkstoffKey.hasItemType(cell)) {
+                            FluidStack tmpFl = werkstoffKey.getFluidOrGas(1000 * value);
                             if (tmpFl == null || tmpFl.getFluid() == null) {
-                                tmpFl = ((Werkstoff) container.getKey()).getFluidOrGas(1000 * container.getValue());
+                                tmpFl = werkstoffKey.getFluidOrGas(1000 * value);
                             }
                             flOutputs.add(tmpFl);
                             if (flOutputs.size() > 1) {
-                                if (!tracker.containsKey(container.getKey())) {
-                                    stOutputs.add(((Werkstoff) container.getKey()).get(cell, container.getValue()));
-                                    tracker.put(
-                                            container.getKey(),
-                                            new Pair<>(container.getValue(), stOutputs.size() - 1));
+                                if (!tracker.containsKey(key)) {
+                                    stOutputs.add(werkstoffKey.get(cell, value));
+                                    tracker.put(key, new Pair<>(value, stOutputs.size() - 1));
                                 } else {
-                                    stOutputs.add(
-                                            ((Werkstoff) container.getKey()).get(
-                                                    cell,
-                                                    tracker.get(container.getKey()).getKey() + container.getValue()));
-                                    stOutputs.remove(tracker.get(container.getKey()).getValue() + 1);
+                                    stOutputs.add(werkstoffKey.get(cell, tracker.get(key).getKey() + value));
+                                    stOutputs.remove(tracker.get(key).getValue() + 1);
                                 }
-                                cells += container.getValue();
+                                cells += value;
                             }
                         } else {
-                            if (!((Werkstoff) container.getKey()).hasItemType(dust)) continue;
-                            if (!tracker.containsKey(container.getKey())) {
-                                stOutputs.add(((Werkstoff) container.getKey()).get(dust, container.getValue()));
-                                tracker.put(container.getKey(), new Pair<>(container.getValue(), stOutputs.size() - 1));
+                            if (!werkstoffKey.hasItemType(dust)) continue;
+                            if (!tracker.containsKey(key)) {
+                                stOutputs.add(werkstoffKey.get(dust, value));
+                                tracker.put(key, new Pair<>(value, stOutputs.size() - 1));
                             } else {
-                                stOutputs.add(
-                                        ((Werkstoff) container.getKey()).get(
-                                                dust,
-                                                (tracker.get(container.getKey()).getKey() + container.getValue())));
-                                stOutputs.remove(tracker.get(container.getKey()).getValue() + 1);
+                                stOutputs.add(werkstoffKey.get(dust, tracker.get(key).getKey() + value));
+                                stOutputs.remove(tracker.get(key).getValue() + 1);
                             }
                         }
                     }
@@ -306,30 +291,17 @@ public class DustLoader implements IWerkstoffRunnable {
                     WerkstoffLoader.getCorrespondingItemStack(dustTiny, werkstoff, 9),
                     new Object[] { "T  ", 'T', werkstoff.get(dust) });
 
-            GT_Values.RA.addBoxingRecipe(
-                    werkstoff.get(dustTiny, 9),
-                    ItemList.Schematic_Dust.get(0L),
-                    werkstoff.get(dust),
-                    100,
-                    4);
-            GT_Values.RA.addBoxingRecipe(
-                    werkstoff.get(dustSmall, 4),
-                    ItemList.Schematic_Dust.get(0L),
-                    werkstoff.get(dust),
-                    100,
-                    4);
-            GT_Values.RA.addBoxingRecipe(
-                    werkstoff.get(dustTiny, 9),
-                    ItemList.Schematic_3by3.get(0L),
-                    werkstoff.get(dust),
-                    100,
-                    4);
-            GT_Values.RA.addBoxingRecipe(
-                    werkstoff.get(dustSmall, 4),
-                    ItemList.Schematic_2by2.get(0L),
-                    werkstoff.get(dust),
-                    100,
-                    4);
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dustTiny, 9), ItemList.Schematic_Dust.get(0L))
+                    .itemOutputs(werkstoff.get(dust)).duration(5 * SECONDS).eut(4).addTo(sBoxinatorRecipes);
+
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dustSmall, 4), ItemList.Schematic_Dust.get(0L))
+                    .itemOutputs(werkstoff.get(dust)).duration(5 * SECONDS).eut(4).addTo(sBoxinatorRecipes);
+
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dustTiny, 9), ItemList.Schematic_3by3.get(0L))
+                    .itemOutputs(werkstoff.get(dust)).duration(5 * SECONDS).eut(4).addTo(sBoxinatorRecipes);
+
+            GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dustSmall, 4), ItemList.Schematic_2by2.get(0L))
+                    .itemOutputs(werkstoff.get(dust)).duration(5 * SECONDS).eut(4).addTo(sBoxinatorRecipes);
 
             if (werkstoff.hasItemType(ingot) && !werkstoff.getStats().isBlastFurnace()) {
                 GT_ModHandler.addSmeltingRecipe(werkstoff.get(dust), werkstoff.get(ingot));
@@ -337,70 +309,74 @@ public class DustLoader implements IWerkstoffRunnable {
             } else if (werkstoff.hasItemType(ingot) && werkstoff.getStats().isBlastFurnace()
                     && werkstoff.getStats().getMeltingPoint() != 0) {
                         if (werkstoff.contains(WerkstoffLoader.ANAEROBE_SMELTING)) {
-                            GT_Values.RA.addBlastRecipe(
-                                    werkstoff.get(dust),
-                                    GT_Utility.getIntegratedCircuit(11),
-                                    Materials.Nitrogen.getGas(1000),
-                                    null,
-                                    werkstoff.getStats().getMeltingPoint() < 1750 ? werkstoff.get(ingot)
-                                            : werkstoff.get(ingotHot),
-                                    null,
-                                    (int) Math.max(werkstoff.getStats().getMass() / 40L, 1L)
-                                            * werkstoff.getStats().getMeltingPoint(),
-                                    werkstoff.getStats().getMeltingVoltage(),
-                                    werkstoff.getStats().getMeltingPoint());
+                            GT_Values.RA.stdBuilder()
+                                    .itemInputs(werkstoff.get(dust), GT_Utility.getIntegratedCircuit(11))
+                                    .itemOutputs(
+                                            werkstoff.getStats().getMeltingPoint() < 1750 ? werkstoff.get(ingot)
+                                                    : werkstoff.get(ingotHot))
+                                    .fluidInputs(Materials.Nitrogen.getGas(1000))
+                                    .duration(
+                                            Math.max(werkstoff.getStats().getMass() / 40L, 1L)
+                                                    * werkstoff.getStats().getMeltingPoint())
+                                    .eut(werkstoff.getStats().getMeltingVoltage())
+                                    .metadata(COIL_HEAT, werkstoff.getStats().getMeltingPoint()).addTo(sBlastRecipes);
+
                         } else if (werkstoff.contains(WerkstoffLoader.NOBLE_GAS_SMELTING)) {
-                            GT_Values.RA.addBlastRecipe(
-                                    werkstoff.get(dust),
-                                    GT_Utility.getIntegratedCircuit(11),
-                                    Materials.Argon.getGas(1000),
-                                    null,
-                                    werkstoff.getStats().getMeltingPoint() < 1750 ? werkstoff.get(ingot)
-                                            : werkstoff.get(ingotHot),
-                                    null,
-                                    (int) Math.max(werkstoff.getStats().getMass() / 40L, 1L)
-                                            * werkstoff.getStats().getMeltingPoint(),
-                                    werkstoff.getStats().getMeltingVoltage(),
-                                    werkstoff.getStats().getMeltingPoint());
+                            GT_Values.RA.stdBuilder()
+                                    .itemInputs(werkstoff.get(dust), GT_Utility.getIntegratedCircuit(11))
+                                    .itemOutputs(
+                                            werkstoff.getStats().getMeltingPoint() < 1750 ? werkstoff.get(ingot)
+                                                    : werkstoff.get(ingotHot))
+                                    .fluidInputs(Materials.Argon.getGas(1000))
+                                    .duration(
+                                            Math.max(werkstoff.getStats().getMass() / 40L, 1L)
+                                                    * werkstoff.getStats().getMeltingPoint())
+                                    .eut(werkstoff.getStats().getMeltingVoltage())
+                                    .metadata(COIL_HEAT, werkstoff.getStats().getMeltingPoint()).addTo(sBlastRecipes);
+
                         } else {
-                            GT_Values.RA.addBlastRecipe(
-                                    werkstoff.get(dust),
-                                    GT_Utility.getIntegratedCircuit(1),
-                                    null,
-                                    null,
-                                    werkstoff.getStats().getMeltingPoint() < 1750 ? werkstoff.get(ingot)
-                                            : werkstoff.get(ingotHot),
-                                    null,
-                                    (int) Math.max(werkstoff.getStats().getMass() / 40L, 1L)
-                                            * werkstoff.getStats().getMeltingPoint(),
-                                    werkstoff.getStats().getMeltingVoltage(),
-                                    werkstoff.getStats().getMeltingPoint());
+                            GT_Values.RA.stdBuilder()
+                                    .itemInputs(werkstoff.get(dust), GT_Utility.getIntegratedCircuit(1))
+                                    .itemOutputs(
+                                            werkstoff.getStats().getMeltingPoint() < 1750 ? werkstoff.get(ingot)
+                                                    : werkstoff.get(ingotHot))
+                                    .duration(
+                                            Math.max(werkstoff.getStats().getMass() / 40L, 1L)
+                                                    * werkstoff.getStats().getMeltingPoint())
+                                    .eut(werkstoff.getStats().getMeltingVoltage())
+                                    .metadata(COIL_HEAT, werkstoff.getStats().getMeltingPoint()).addTo(sBlastRecipes);
+
                             if (werkstoff.getStats().getMeltingPoint() <= 1000) {
-                                GT_Values.RA.addPrimitiveBlastRecipe(
-                                        werkstoff.get(dust),
-                                        null,
-                                        9,
-                                        werkstoff.get(ingot),
-                                        null,
-                                        (int) Math.max(werkstoff.getStats().getMass() / 40L, 1L)
-                                                * werkstoff.getStats().getMeltingPoint());
+                                GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dust))
+                                        .itemOutputs(werkstoff.get(ingot))
+                                        .duration(
+                                                (int) Math.max(werkstoff.getStats().getMass() / 40L, 1L)
+                                                        * werkstoff.getStats().getMeltingPoint())
+                                        .eut(0).metadata(ADDITIVE_AMOUNT, 9).addTo(sPrimitiveBlastRecipes);
                             }
                         }
                     }
 
             if (werkstoff.getStats().isBlastFurnace() && werkstoff.getStats().getMeltingPoint() > 1750) {
-                GT_Values.RA.addVacuumFreezerRecipe(
-                        werkstoff.get(ingotHot),
-                        werkstoff.get(ingot),
-                        (int) Math.max(werkstoff.getStats().getMass() * 3L, 1L));
+                GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ingotHot)).itemOutputs(werkstoff.get(ingot))
+                        .duration((int) Math.max(werkstoff.getStats().getMass() * 3L, 1L)).eut(TierEU.RECIPE_MV)
+                        .addTo(sVacuumRecipes);
             }
 
             if (werkstoff.hasItemType(ingot)) {
-                GT_ModHandler.addPulverisationRecipe(werkstoff.get(ingot), werkstoff.get(dust));
-                GT_ModHandler.addPulverisationRecipe(werkstoff.get(nugget), werkstoff.get(dustTiny));
+
+                GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ingot)).itemOutputs(werkstoff.get(dust))
+                        .duration(20 * SECONDS).eut(2).addTo(sMaceratorRecipes);
+
+                GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(nugget)).itemOutputs(werkstoff.get(dustTiny))
+                        .duration(20 * SECONDS).eut(2).addTo(sMaceratorRecipes);
+
             }
             if (werkstoff.hasItemType(ingot) || werkstoff.hasItemType(gem)) {
-                GT_ModHandler.addPulverisationRecipe(werkstoff.get(block), werkstoff.get(dust, 9));
+
+                GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(block)).itemOutputs(werkstoff.get(dust, 9))
+                        .duration(20 * SECONDS).eut(2).addTo(sMaceratorRecipes);
+
             }
         }
     }

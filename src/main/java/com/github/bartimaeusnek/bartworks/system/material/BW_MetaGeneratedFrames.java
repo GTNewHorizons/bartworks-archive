@@ -14,6 +14,9 @@
 package com.github.bartimaeusnek.bartworks.system.material;
 
 import static gregtech.api.enums.GT_Values.RA;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sAssemblerRecipes;
+import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
+import static gregtech.api.util.GT_RecipeBuilder.TICKS;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -37,24 +40,24 @@ public class BW_MetaGeneratedFrames extends MetaPipeEntity {
 
     public BW_MetaGeneratedFrames(int aID, String aName, String aNameRegional, Werkstoff aMaterial) {
         super(aID, aName, aNameRegional, 0);
-        mMaterial = aMaterial;
+        this.mMaterial = aMaterial;
 
-        GT_OreDictUnificator.registerOre(OrePrefixes.frameGt, aMaterial, getStackForm(1));
+        GT_OreDictUnificator.registerOre(OrePrefixes.frameGt, aMaterial, this.getStackForm(1));
         GT_ModHandler.addCraftingRecipe(
-                getStackForm(2),
+                this.getStackForm(2),
                 RecipeBits.NOT_REMOVABLE | GT_ModHandler.RecipeBits.BUFFERED,
-                new Object[] { "SSS", "SwS", "SSS", 'S', mMaterial.get(OrePrefixes.stick) });
-        RA.addAssemblerRecipe(
-                GT_OreDictUnificator.get(OrePrefixes.stick, aMaterial.getVarName(), 4),
-                ItemList.Circuit_Integrated.getWithDamage(0, 4),
-                getStackForm(1),
-                64,
-                8);
+                new Object[] { "SSS", "SwS", "SSS", 'S', this.mMaterial.get(OrePrefixes.stick) });
+
+        RA.stdBuilder()
+                .itemInputs(
+                        GT_OreDictUnificator.get(OrePrefixes.stick, aMaterial.getVarName(), 4),
+                        ItemList.Circuit_Integrated.getWithDamage(0, 4))
+                .itemOutputs(getStackForm(1)).duration(3 * SECONDS + 4 * TICKS).eut(8).addTo(sAssemblerRecipes);
     }
 
     private BW_MetaGeneratedFrames(String aName, Werkstoff aMaterial) {
         super(aName, 0);
-        mMaterial = aMaterial;
+        this.mMaterial = aMaterial;
     }
 
     @Override
@@ -126,10 +129,12 @@ public class BW_MetaGeneratedFrames extends MetaPipeEntity {
         return false;
     }
 
+    @Override
     public int connect(ForgeDirection side) {
         return 0;
     }
 
+    @Override
     public void disconnect(ForgeDirection side) {
         /* Do nothing */
     }

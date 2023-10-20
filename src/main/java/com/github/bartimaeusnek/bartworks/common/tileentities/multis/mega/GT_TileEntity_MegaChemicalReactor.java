@@ -198,8 +198,13 @@ public class GT_TileEntity_MegaChemicalReactor
             .addElement('r', Maintenance.newAny(CASING_INDEX, 2))
             .addElement(
                     'e',
-                    buildHatchAdder(GT_TileEntity_MegaChemicalReactor.class).atLeast(Energy.or(ExoticEnergy))
-                            .casingIndex(CASING_INDEX).dot(3).buildAndChain(GregTech_API.sBlockCasings8, 0))
+                    ofChain(
+                            ofBlock(GregTech_API.sBlockCasings8, 0),
+                            buildHatchAdder(GT_TileEntity_MegaChemicalReactor.class)
+                                    .anyOf(InputBus, InputHatch, OutputBus, OutputHatch).casingIndex(CASING_INDEX)
+                                    .dot(3).build(),
+                            buildHatchAdder(GT_TileEntity_MegaChemicalReactor.class).atLeast(Energy.or(ExoticEnergy))
+                                    .casingIndex(CASING_INDEX).dot(3).build()))
             .addElement('c', ofChain(ofBlock(GregTech_API.sBlockCasings4, 7), ofBlock(GregTech_API.sBlockCasings5, 13)))
             .addElement(
                     'g',

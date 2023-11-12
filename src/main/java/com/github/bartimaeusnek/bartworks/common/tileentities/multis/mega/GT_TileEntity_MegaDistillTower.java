@@ -56,6 +56,7 @@ import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
+import gregtech.common.tileentities.machines.GT_MetaTileEntity_Hatch_Output_ME;
 
 public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlockBase<GT_TileEntity_MegaDistillTower>
         implements ISurvivalConstructable {
@@ -374,6 +375,32 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
     @Override
     protected ProcessingLogic createProcessingLogic() {
         return new ProcessingLogic().setMaxParallel(ConfigHandler.megaMachinesMax);
+    }
+
+    @Override
+    public boolean canDumpFluidToME() {
+        int tHatchCount = 0;
+
+        for (List<GT_MetaTileEntity_Hatch_Output> tLayerOutputHatches : this.mOutputHatchesByLayer) {
+
+            boolean tHatchFound = false;
+
+            for (IFluidStore tHatch : tLayerOutputHatches) {
+                if (tHatch instanceof GT_MetaTileEntity_Hatch_Output_ME) {
+                    tHatchCount++;
+                    tHatchFound = true;
+                    break;
+                }
+            }
+
+            // Early exit if we didn't find a valid hatch on this layer.
+            if (!tHatchFound) {
+                break;
+            }
+        }
+
+        // All fluids can be dumped to ME only if each layer contains a ME Output Hatch.
+        return tHatchCount == this.mOutputHatchesByLayer.size();
     }
 
     @Override

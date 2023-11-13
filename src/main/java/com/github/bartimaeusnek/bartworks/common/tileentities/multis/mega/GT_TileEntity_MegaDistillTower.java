@@ -379,28 +379,26 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
 
     @Override
     public boolean canDumpFluidToME() {
-        int tHatchCount = 0;
 
+        // All fluids can be dumped to ME only if each layer contains a ME Output Hatch.
         for (List<GT_MetaTileEntity_Hatch_Output> tLayerOutputHatches : this.mOutputHatchesByLayer) {
 
-            boolean tHatchFound = false;
+            boolean foundMEHatch = false;
 
             for (IFluidStore tHatch : tLayerOutputHatches) {
                 if (tHatch instanceof GT_MetaTileEntity_Hatch_Output_ME) {
-                    tHatchCount++;
-                    tHatchFound = true;
+                    foundMEHatch = true;
                     break;
                 }
             }
 
-            // Early exit if we didn't find a valid hatch on this layer.
-            if (!tHatchFound) {
-                break;
+            // Exit if we didn't find a valid hatch on this layer.
+            if (!foundMEHatch) {
+                return false;
             }
         }
 
-        // All fluids can be dumped to ME only if each layer contains a ME Output Hatch.
-        return tHatchCount == this.mOutputHatchesByLayer.size();
+        return true;
     }
 
     @Override

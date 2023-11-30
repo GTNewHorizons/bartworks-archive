@@ -54,12 +54,12 @@ public class BWCoreTransformer implements IClassTransformer {
 
     public static final String[] DESCRIPTIONFORCONFIG = { "REMOVING RAIN FROM LAST MILLENNIUM (EXU)",
             "REMOVING CREATURES FROM LAST MILLENNIUM (EXU)",
-            "PATCHING THAUMCRAFT WAND PEDESTAL TO PREVENT VIS DUPLICATION", "DUCTTAPING RWG WORLDGEN FAILS",
+            "PATCHING THAUMCRAFT WAND PEDESTAL TO PREVENT VIS DUPLICATION",
             "PATCHING CRAFTING MANAGER FOR CACHING RECIPES" };
     public static final String[] CLASSESBEINGTRANSFORMED = {
             "com.rwtema.extrautils.worldgen.endoftime.WorldProviderEndOfTime",
             "com.rwtema.extrautils.worldgen.endoftime.ChunkProviderEndOfTime",
-            "thaumcraft.common.tiles.TileWandPedestal", "rwg.world.ChunkGeneratorRealistic",
+            "thaumcraft.common.tiles.TileWandPedestal",
             "net.minecraft.item.crafting.CraftingManager" };
     static boolean obfs;
 
@@ -182,42 +182,6 @@ public class BWCoreTransformer implements IClassTransformer {
                     }
                 }
                 case 3: {
-                    BWCore.BWCORE_LOG.info("Could find: " + BWCoreTransformer.CLASSESBEINGTRANSFORMED[id]);
-                    String name_deObfs = "getNewNoise";
-                    for (MethodNode toPatch : methods) {
-                        if (ASMUtils.isCorrectMethod(toPatch, name_deObfs)) {
-                            BWCore.BWCORE_LOG.info("Found " + name_deObfs + "! Patching!");
-                            LabelNode[] LabelNodes = { new LabelNode(), new LabelNode() };
-                            InsnList nu = new InsnList();
-                            // if (x < -28675) x %= -28675;
-                            nu.add(new VarInsnNode(ILOAD, 2));
-                            nu.add(new IntInsnNode(SIPUSH, -28675));
-                            nu.add(new JumpInsnNode(IF_ICMPGE, LabelNodes[0]));
-                            nu.add(new VarInsnNode(ILOAD, 2));
-                            nu.add(new LdcInsnNode(-28675));
-                            nu.add(new InsnNode(IREM));
-                            nu.add(new VarInsnNode(ISTORE, 2));
-                            nu.add(LabelNodes[0]);
-                            // if (y < -28675) y %= -28675;
-                            nu.add(new VarInsnNode(ILOAD, 3));
-                            nu.add(new IntInsnNode(SIPUSH, -28675));
-                            nu.add(new JumpInsnNode(IF_ICMPGE, LabelNodes[1]));
-                            nu.add(new VarInsnNode(ILOAD, 3));
-                            nu.add(new LdcInsnNode(-28675));
-                            nu.add(new InsnNode(IREM));
-                            nu.add(new VarInsnNode(ISTORE, 3));
-                            nu.add(LabelNodes[1]);
-
-                            for (int j = 1; j < toPatch.instructions.size(); j++) {
-                                nu.add(toPatch.instructions.get(j));
-                            }
-
-                            toPatch.instructions = nu;
-                            break scase;
-                        }
-                    }
-                }
-                case 4: {
                     BWCore.BWCORE_LOG.info("Could find: " + BWCoreTransformer.CLASSESBEINGTRANSFORMED[id]);
                     String name_deObfs = "findMatchingRecipe";
                     String name_Obfs = "a";

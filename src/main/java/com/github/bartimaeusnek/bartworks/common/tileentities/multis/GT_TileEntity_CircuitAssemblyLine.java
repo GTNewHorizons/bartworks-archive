@@ -454,7 +454,16 @@ public class GT_TileEntity_CircuitAssemblyLine extends
         int tLength = Math.min(stackSize.stackSize + 1, 7);
 
         for (int i = 1; i < tLength - 1; ++i) {
-            built = survivialBuildPiece(STRUCTURE_PIECE_NEXT_HINT, stackSize, -i, 0, 0, elementBudget, env, false, true);
+            built = survivialBuildPiece(
+                    STRUCTURE_PIECE_NEXT_HINT,
+                    stackSize,
+                    -i,
+                    0,
+                    0,
+                    elementBudget,
+                    env,
+                    false,
+                    true);
             if (built >= 0) return built;
         }
         return survivialBuildPiece(

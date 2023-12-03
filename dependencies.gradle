@@ -9,6 +9,6 @@ dependencies {
     api("com.github.GTNewHorizons:Avaritia:1.46:dev")
     implementation("com.github.GTNewHorizons:TinkersConstruct:1.10.12-GTNH:dev")
 
-    compileOnly("TGregworks:TGregworks:1.7.10-GTNH-1.0.25:deobf") {transitive = false}
+    compileOnly("com.github.GTNewHorizons:TinkersGregworks:GTNH-1.0.25-pre:dev") {transitive = false}
     compileOnly("com.github.GTNewHorizons:OpenComputers:1.9.19-GTNH:api") {transitive = false}
 }

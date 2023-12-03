@@ -386,6 +386,11 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
     }
 
     @Override
+    public int getRecipeCatalystPriority() {
+        return -2;
+    }
+
+    @Override
     public boolean supportsInputSeparation() {
         return true;
     }

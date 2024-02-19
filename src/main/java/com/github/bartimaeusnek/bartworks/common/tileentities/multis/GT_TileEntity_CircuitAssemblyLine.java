@@ -38,6 +38,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import gregtech.api.util.GT_Recipe;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -79,6 +80,7 @@ import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Input
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.recipe.check.CheckRecipeResult;
+import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GT_LanguageManager;
@@ -168,8 +170,10 @@ public class GT_TileEntity_CircuitAssemblyLine extends
                         "Does Circuit Assembler recipes, Minimum Length: " + EnumChatFormatting.RED
                                 + MINIMUM_CIRCUIT_ASSEMBLER_LENGTH
                                 + EnumChatFormatting.GRAY)
+                .addInfo("Recipe tier is hatch tier - 1")
                 .addInfo("This mode supports Crafting Input Buffer/Bus and allows bus separation").addInfo("")
-                .addInfo(BW_Tooltip_Reference.TT_BLUEPRINT).addSeparator()
+                .addSeparator()
+                .addInfo(BW_Tooltip_Reference.TT_BLUEPRINT)
                 .beginVariableStructureBlock(2, 7, 3, 3, 3, 3, false)
                 .addStructureInfo("From Bottom to Top, Left to Right")
                 .addStructureInfo(
@@ -283,7 +287,19 @@ public class GT_TileEntity_CircuitAssemblyLine extends
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
-        return new ProcessingLogic().enablePerfectOverclock();
+        return new ProcessingLogic() {
+
+            @Override
+            @Nonnull
+            protected CheckRecipeResult validateRecipe(@Nonnull GT_Recipe recipe) {
+                //limit CA mode recipes to hatch tier - 1
+                if (GT_TileEntity_CircuitAssemblyLine.this.mode == 1
+                        && recipe.mEUt > GT_TileEntity_CircuitAssemblyLine.this.getMaxInputVoltage() / 4) {
+                    return CheckRecipeResultRegistry.NO_RECIPE;
+                }
+                return CheckRecipeResultRegistry.SUCCESSFUL;
+            }
+        }.enablePerfectOverclock();
     }
 
     @NotNull

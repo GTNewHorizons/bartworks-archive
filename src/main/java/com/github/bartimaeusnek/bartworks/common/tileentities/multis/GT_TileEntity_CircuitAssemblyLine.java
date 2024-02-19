@@ -170,7 +170,7 @@ public class GT_TileEntity_CircuitAssemblyLine extends
                         "Does Circuit Assembler recipes, Minimum Length: " + EnumChatFormatting.RED
                                 + MINIMUM_CIRCUIT_ASSEMBLER_LENGTH
                                 + EnumChatFormatting.GRAY)
-                .addInfo("Recipe tier is hatch tier - 1")
+                .addInfo("Recipe tier in Circuit Assembler mode is at most Energy Hatch tier - 1.")
                 .addInfo("This mode supports Crafting Input Buffer/Bus and allows bus separation").addInfo("")
                 .addSeparator().addInfo(BW_Tooltip_Reference.TT_BLUEPRINT)
                 .beginVariableStructureBlock(2, 7, 3, 3, 3, 3, false)

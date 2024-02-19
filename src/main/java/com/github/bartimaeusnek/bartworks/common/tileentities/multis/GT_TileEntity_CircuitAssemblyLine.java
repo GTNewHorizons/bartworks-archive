@@ -38,7 +38,6 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import gregtech.api.util.GT_Recipe;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -85,6 +84,7 @@ import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GT_LanguageManager;
 import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
+import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
@@ -172,8 +172,7 @@ public class GT_TileEntity_CircuitAssemblyLine extends
                                 + EnumChatFormatting.GRAY)
                 .addInfo("Recipe tier is hatch tier - 1")
                 .addInfo("This mode supports Crafting Input Buffer/Bus and allows bus separation").addInfo("")
-                .addSeparator()
-                .addInfo(BW_Tooltip_Reference.TT_BLUEPRINT)
+                .addSeparator().addInfo(BW_Tooltip_Reference.TT_BLUEPRINT)
                 .beginVariableStructureBlock(2, 7, 3, 3, 3, 3, false)
                 .addStructureInfo("From Bottom to Top, Left to Right")
                 .addStructureInfo(
@@ -292,7 +291,7 @@ public class GT_TileEntity_CircuitAssemblyLine extends
             @Override
             @Nonnull
             protected CheckRecipeResult validateRecipe(@Nonnull GT_Recipe recipe) {
-                //limit CA mode recipes to hatch tier - 1
+                // limit CA mode recipes to hatch tier - 1
                 if (GT_TileEntity_CircuitAssemblyLine.this.mode == 1
                         && recipe.mEUt > GT_TileEntity_CircuitAssemblyLine.this.getMaxInputVoltage() / 4) {
                     return CheckRecipeResultRegistry.NO_RECIPE;

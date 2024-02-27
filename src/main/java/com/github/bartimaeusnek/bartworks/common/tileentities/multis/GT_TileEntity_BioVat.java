@@ -269,6 +269,7 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
         GT_Recipe tRecipe = recipe.copy();
         int multiplier = getExpectedMultiplier(recipe.getFluidOutput(0), true);
         mExpectedMultiplier = multiplier;
+        // Calculate max multiplier limited by input fluids
         long fluidAmount = 0;
         for (FluidStack fluid : fluidInputs) {
             if (recipe.mFluidInputs[0].isFluidEqual(fluid)) {
@@ -276,6 +277,7 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
             }
         }
         multiplier = (int) Math.min(multiplier, fluidAmount / recipe.mFluidInputs[0].amount);
+        // In case multiplier is 0
         multiplier = Math.max(multiplier, 1);
         mTimes = multiplier;
         tRecipe.mFluidInputs[0].amount *= multiplier;

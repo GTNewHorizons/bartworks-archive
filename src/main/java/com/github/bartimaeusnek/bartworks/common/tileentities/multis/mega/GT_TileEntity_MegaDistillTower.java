@@ -303,6 +303,7 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
 
         // validate final invariants...
         return this.mCasing >= 75 * this.mHeight + 10 && this.mHeight >= 2
+                && this.checkPiece(STRUCTURE_PIECE_TOP_HINT, 7, this.mHeight * 5, 0)
                 && this.mTopLayerFound
                 && this.mMaintenanceHatches.size() == 1;
     }
